@@ -1,0 +1,108 @@
+# 第 2 章「喜用神详解」素材样板（5 条）
+# 规范见 rules/texts/README.md；槽位定义见 rules/report-sections.md §3 第 2 章。
+# 一致性约束：CH2-METHOD 只讲“扶抑（或格局）这一步”的结论，最终结论由代码模板 CH2-SUMMARY 给出。
+# 联调建议：C12（杀重用印 + 用神缺位互换）、C04/C05（比劫重用食伤）、C14（从财）、C01/C13（冬/夏调候一致，C01 为冬）。
+
+- id: CH2-METHOD-W-SHA
+  slot: CH2-METHOD
+  when:
+    all:
+      - {f: yongshen.fy_rule, eq: Y-FY-W-SHA}
+  asserts:
+    - {f: strength.direction, eq: 偏弱}
+    - {f: gods.top_yidang, eq: 官杀}
+  priority: 50
+  length: [150, 230]
+  polish_allowed: true
+  variants:
+    - "先看扶抑。你的命局偏弱，帮扶力量只占 {strength.S_pct}%，而消耗你的几方里最重的是官杀，占 {gods.官杀_pct}%。官杀代表外部的规则、要求和压力。古法对这种结构的处理叫“杀重用印”：不和压力硬碰，而是借印星把压力转成支持——官杀生印星，印星再生你，称为“杀印相生”。在你的命局里，印星对应的五行是{el.印}。所以按扶抑这一步，{el.印}为用，{el.比劫}为喜，{el.官杀}需要节制。"
+    - "扶抑是取用神的主干方法：偏弱就扶，偏旺就抑。你属于偏弱，帮扶力量占 {strength.S_pct}%；压在你身上最重的是官杀，占 {gods.官杀_pct}%。面对较重的压力，古人的思路不是硬顶，而是“化”：让印星把官杀的力量接过来，再转交给你。你命中印星对应{el.印}，和你同类的比劫对应{el.比劫}。因此扶抑这一步的结论是：{el.印}为用、{el.比劫}为喜、{el.官杀}宜节制。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "对应 yongshen.md Y-FY-W-SHA。若随后触发 Y-SWAP（如 C12 原局无火），由 CH2-SWAP 说明用神改为比劫，本段措辞“按扶抑这一步”不与之冲突。"
+
+- id: CH2-METHOD-S-BI-SHI
+  slot: CH2-METHOD
+  when:
+    all:
+      - {f: yongshen.fy_rule, eq: Y-FY-S-BI-SHI}
+  asserts:
+    - {f: strength.direction, eq: 偏旺}
+    - {f: gods.top_tongdang, eq: 比劫}
+    - {f: gods.官杀_pct, lt: 15}
+  priority: 50
+  length: [150, 230]
+  polish_allowed: true
+  variants:
+    - "先看扶抑。你的命局偏旺，帮扶力量占 {strength.S_pct}%，其中又以比劫为主，占 {gods.比劫_pct}%——和你同类的力量很多。按古法，比劫过重本该由官杀来约束，但你命中官杀只占 {gods.官杀_pct}%，担不起这个角色；于是改用食伤，把多余的能量“泄”出去，古人称为“泄秀”。落到生活里，就是把精力转化成作品、技能和表达。按扶抑这一步，{el.食伤}为用，{el.财}为喜，{el.比劫}与{el.印}需要节制。"
+    - "你属于偏旺：帮扶力量占 {strength.S_pct}%，比劫一项就有 {gods.比劫_pct}%。能量足是好事，关键是给它找到出口。负责约束的官杀在你命中只有 {gods.官杀_pct}%，压不住；更顺的办法是让食伤把力量引导出去——古法叫“泄秀”，好比水满了就开渠，而不是一味加高堤坝。食伤在你命里对应{el.食伤}，它所生的财星对应{el.财}。所以扶抑这一步取{el.食伤}为用、{el.财}为喜。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "对应 yongshen.md Y-FY-S-BI-SHI（官杀力量 < 1.0，约为全盘 11% 以下）。四柱总分约 9.1 时官杀约 < 11%，三柱总分 7.1 时约 < 14%；asserts 里的 15% 是为“官杀只占 x%，担不起”这句话兜底。"
+
+- id: CH2-METHOD-CONG-CAI
+  slot: CH2-METHOD
+  when:
+    all:
+      - {f: strength.special, eq: 从财}
+  asserts:
+    - {f: yongshen.fy_rule, eq: Y-CONG}
+  priority: 80
+  length: [150, 230]
+  polish_allowed: true
+  quote:
+    text: "从得真者只论从，从神又有吉和凶。"
+    source: "《滴天髓·从象》"
+    verified: false
+    edition: ""
+  variants:
+    - "你的命局属于特殊的“从财格”。日主{day.stem}{day.element}在四个地支里找不到本气或中气的根，年、月、时三干也没有帮手，而财星占了全盘 {gods.财_pct}%。遇到这种情况，古法不再勉强去扶一个扶不起来的日主，而是顺着最强的一方走，称为“从”。所以你的喜忌和普通偏弱命局正好相反：{el.财}为用，{el.食伤}为喜，{el.比劫}与{el.印}反而需要节制。本项目只认条件最严的“真从”，你的命局全部满足。"
+    - "多数命局按“弱则扶、强则抑”取用神，你的命局是少数例外——“从财格”。判断依据有三条：日主{day.stem}在地支里没有本气、中气的根；天干没有比劫和印星；财星独占 {gods.财_pct}%。日主既然无根可依，与其逆势去扶，不如顺势而行。所以按格局，{el.财}为用，{el.食伤}为喜，帮身的{el.比劫}、{el.印}反而容易打破平衡，需要节制。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "对应 strength.md S-CONG（只认真从）与 yongshen.md §2 从财行。从格跳过调候、通关，所以本章不会再出现 TIAOHOU/TONGGUAN 段落。案例 C14。"
+
+- id: CH2-SWAP-GENERIC
+  slot: CH2-SWAP
+  when:
+    all:
+      - {f: yongshen.swap, eq: true}
+  asserts: []
+  priority: 50
+  length: [80, 130]
+  polish_allowed: true
+  variants:
+    - "需要补充一点：按上一步，你最需要的是{yongshen.swap_from}，但你的原局四柱里完全没有{yongshen.swap_from}。本报告的做法是以命中已有的{yongshen.swap_to}为用神，把{yongshen.swap_from}排在喜神第一位。这只是先后顺序的调整，方向没有变：将来遇到{yongshen.swap_from}的大运、流年，同样算对你有利的阶段。"
+    - "这里有一个细节。理论上排第一的{yongshen.swap_from}，在你的原局里一点都没有。古法强调用神最好取自命中本有的力量，所以本报告把命中已有的{yongshen.swap_to}定为用神，{yongshen.swap_from}降为第一喜神。两者都是对你有利的五行，只是谁打头阵的区别；遇到{yongshen.swap_from}旺的年份，依然是助力。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "对应 yongshen.md §3.3 Y-SWAP（用户确认保留）。全部用占位符，一条覆盖所有互换组合。三柱时也适用。"
+
+- id: CH2-TIAOHOU-AGREE-WINTER
+  slot: CH2-TIAOHOU
+  when:
+    all:
+      - {f: yongshen.th, eq: AGREE}
+      - {f: month.season, eq: 冬}
+  asserts:
+    - {f: yongshen.th_element, eq: 火}
+    - {f: yongshen.favorable, contains: 火}
+  priority: 50
+  length: [100, 160]
+  polish_allowed: true
+  variants:
+    - "再看季节。你生在{month.branch}月，是一年里最冷的时段，而命局里火只占 {power_pct.火}%。《穷通宝鉴》论冬天出生的命局，大多先看有没有火来“暖局”，这叫调候。你的扶抑结论本来就把火列为有利的五行，两条思路指向同一处，“火对你有利”这个判断因此更有把握。"
+    - "从季节看，{month.branch}月天寒地冻，命局需要温度；而你的火只占 {power_pct.火}%，明显偏少。古籍把这种按冷暖做的调整叫调候，冬季命局通常以火为先。按扶抑你本来就需要火——扶抑与调候一致，是取用神时比较理想的情况；后面大运、流年遇到火旺的阶段，可以更积极地安排计划。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "对应 yongshen.md Y-TH-AGREE（冬）。正文直接写“火”，已用 asserts 锁定。未加引文：《穷通宝鉴》各月条目原文需对照底本后再决定是否引用。案例 C01（丑月，火占 2%）、C16 为 NEUTRAL-OVERRIDE 不触发本条。"

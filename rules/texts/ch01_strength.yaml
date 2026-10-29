@@ -1,0 +1,104 @@
+# 第 1 章「你的日主与旺衰」素材样板（5 条）
+# 规范见 rules/texts/README.md；槽位定义见 rules/report-sections.md §3 第 1 章。
+# 全部为 draft；古籍原文 verified=false，上线前需逐字对照底本。
+# 联调建议：C04/C05（乙日主）、C01（戊日主、得令却身弱）、C12（戊日主、身弱）。
+
+- id: CH1-DAYMASTER-YI
+  slot: CH1-DAYMASTER
+  when:
+    all:
+      - {f: day.stem, eq: 乙}
+  asserts: []
+  priority: 50
+  length: [120, 180]
+  polish_allowed: true
+  quote:
+    text: "乙木虽柔，刲羊解牛。"
+    source: "《滴天髓·天干论》"
+    verified: false
+    edition: ""
+  variants:
+    - "你的日主是乙木。如果说甲木是一棵大树，乙木就是花草和藤蔓：看上去柔，却很有韧性，总能顺着环境找到向上生长的路。落到性格上，常见的底色是适应力强、心思细、懂得借力；需要留意的是，想得周全的同时也容易顾虑偏多，重要的事情给自己定一个决定的期限，会更从容。"
+    - "日主乙木，意象是花草藤蔓。它的长处不在硬碰硬，而在柔中有韧：环境变了，它能调整姿态继续生长。这类日主往往外在温和、内里有主意，擅长在复杂的人际关系里找到合适的位置。相应地，你可能比别人更在意周围的反应，给自己留一些不必向任何人解释的空间，会轻松很多。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "引文只取前两句。后文“怀丁抱丙，跨凤乘猴”暗含乙木喜火之意，与部分乙日主的忌神冲突，故不引。“刲羊解牛”指乙木能克制未、丑之土，这里只借用“柔而不弱”的意思，解释为作者自拟，未参考现代译本。关键词与 report-sections.md §6.1（柔韧、善适应、细腻；顾虑多）一致。"
+
+- id: CH1-DAYMASTER-WU
+  slot: CH1-DAYMASTER
+  when:
+    all:
+      - {f: day.stem, eq: 戊}
+  asserts: []
+  priority: 50
+  length: [120, 180]
+  polish_allowed: true
+  quote:
+    text: "戊土固重，既中且正。"
+    source: "《滴天髓·天干论》"
+    verified: false
+    edition: ""
+  variants:
+    - "你的日主是戊土，意象是高山与城墙。山的特点是厚重、稳定，不轻易被外力推动。这类日主给人的第一印象往往是可靠、有主见、说到做到，身边的人遇事也愿意来找你商量。它的另一面是，一旦拿定主意就不太愿意改；遇到需要快速转向的情况，先把别人的理由听完再决定，会让你的稳重更有分量。"
+    - "日主戊土，古人以高山、堤岸作比。山不追着风跑，所以这类日主做事讲究根基，愿意花时间把一件事做扎实，在团队里常常是那个让人放心的人。需要留意的是，稳重有时会被别人看成固执；在你不熟悉的领域，多给自己留一点试错的余地，反而能更快站稳。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "引文只取前两句，不涉及喜忌。关键词与 §6.1（稳重、可靠、有主见；固执）一致。"
+
+- id: CH1-BALANCE-PARADOX-WEAK
+  slot: CH1-BALANCE
+  when:
+    all:
+      - {f: strength.paradox, eq: 得令却身弱}
+  asserts:
+    - {f: strength.de_ling, eq: true}
+    - {f: strength.direction, eq: 偏弱}
+  priority: 80
+  length: [150, 220]
+  polish_allowed: true
+  variants:
+    - "按老口诀，你生在{month.branch}月，月令本气是{month.main_god|名}，站在你这一边，这叫“得令”，常常被直接当成身旺。但本报告把四柱的力量全部计入后发现：帮扶你的一方合计只占 {strength.S_pct}%，消耗你的一方占 {strength.yidang_pct}%，其中最重的是{gods.top_yidang|名}，占 {gods.top_yidang_pct}%。好比主场作战，但对面的人更多——所以结论是偏弱，而不是“得令就旺”。"
+    - "你的月令是向着你的：{month.branch}月本气为{month.main_god|名}，传统上叫“得令”。不过月令只是全局的一部分。把年、月、日、时的天干地支都算进来，帮扶力量占 {strength.S_pct}%，而以{gods.top_yidang|名}为首的消耗力量合计占 {strength.yidang_pct}%。也就是说，你的根基不差，但需要应对的事情更多，整体仍属偏弱。这正是本报告用计分、不只看口诀的原因。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "对应 strength.md §3 的说明（案例 C01：戊土生丑月得令，S=0.324 身弱）。月令本气得令时 main_god 只可能是比劫或印，两种都说得通。"
+
+- id: CH1-BALANCE-FALLBACK
+  slot: CH1-BALANCE
+  when: {}
+  asserts: []
+  priority: 0
+  fallback: true
+  length: [60, 120]
+  polish_allowed: false
+  variants:
+    - "在你的命局里，帮扶你的力量合计占 {strength.S_pct}%，消耗你的力量合计占 {strength.yidang_pct}%，其中最强的一方是{gods.top_yidang|名}，占 {gods.top_yidang_pct}%。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "兜底条目：只陈述数字，不做任何判断。生产环境命中会记 fallback_used 日志；覆盖率测试命中即失败。"
+
+- id: CH1-CONCLUSION-SHENRUO
+  slot: CH1-CONCLUSION
+  when:
+    all:
+      - {f: strength.level, eq: 身弱}
+  asserts: []
+  priority: 50
+  length: [80, 130]
+  polish_allowed: false
+  variants:
+    - "综合来看，你的日主属于“身弱”：帮扶力量占 {strength.S_pct}%，不到一半。身弱不等于能力弱，也不等于运气差，它描述的是一种结构——你更适合借助平台、团队和资源发力，而不是凡事单打独斗。下一章的喜用神，讲的就是哪些力量能把这一块补上。"
+    - "结论是“身弱”。帮扶你的力量占 {strength.S_pct}%，消耗你的力量占 {strength.yidang_pct}%。在命理里，这只说明你的能量需要“借力”才能发挥得更充分：选对环境、找对合作的人，往往比硬扛更有效。具体借哪几种力量，见下一章。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "修饰字段默认值（borderline=false、time_known=true）下使用；borderline=true 与 time_known=false 各有专用条目（priority 更高，待写）。"

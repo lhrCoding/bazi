@@ -1,0 +1,2100 @@
+{
+  "_meta": {
+    "version": "v2",
+    "date": "2026-10-29",
+    "author": "mingli-expert",
+    "changelog": [
+      "v2：子时改为早晚子时派（23:00–23:59 日柱算当日、时干按次日日干起；对应 lunar 库 setSect(2)）。受影响的只有 C05（四柱、旺衰、喜忌全部更新）；C19 交节说明文字更新。",
+      "v2：原 alt_late_zi_school 字段改名为 alt_zi_huanri_school，存放不再采用的“23:00 换日派”结果，供将来切换时对照。",
+      "v2：时辰扫描由 12 个时柱改为 13 个（新增晚子时），C18、C19 的 no_hour 计数更新。",
+      "v2：每个案例新增 expected.shensha_ji（只含 shensha.md 的 4 个吉神）。",
+      "v2.1（2026-10-29）：按用户决定，天乙、文昌、太极改为日干、年干兼查；shensha_ji 格式由 positions 改为 hits[{pos, by}]，19 个案例全部重查（人工查表）。"
+    ],
+    "verification_note_v2": "v2 本轮无代码环境（v1 的 scratchpad 参考实现已清理）。v2 新增或改动的数值——C05 的旺衰/喜用、C18/C19 新增晚子时的扫描结果、全部 19 个案例的 shensha_ji（v2.1 日干、年干兼查后重新人工查表，逐案按 shensha.md §1 四张表核对一遍，未用代码复核）——均为 mingli-expert 人工查表/手算，已在各案例 verified 字段注明；其余字段沿用 v1 的代码核对结果。",
+    "conventions": {
+      "zi_hour": "早晚子时派（calendar.md CAL-DH-ZI 方案 B，lunar 库 setSect(2)）：23:00–23:59 日柱算当日、时干按次日日干起；alt_zi_huanri_school 给出不采用的 23:00 换日派结果",
+      "year_boundary": "立春交节时刻",
+      "month_boundary": "十二节交节时刻，用绝对时刻比较，不用真太阳时",
+      "true_solar_time": "仅在 input.birthplace 非空时校正，只影响日柱、时柱",
+      "timezone": "IANA Asia/Shanghai（含 1986–1991 夏令时）",
+      "dayun": "阳男阴女顺、阴男阳女逆；3 天=1 年，按分钟折算；start_age_xusui 为虚岁，对外展示请换周岁",
+      "no_hour_default_time": "12:00（本地钟表时间）",
+      "jieqi_reference_time": "取 PyEphem（VSOP87）计算值，与 lunar-python 相差 < 15 秒；测试只要求分钟级一致，且所有案例出生时刻距交节 ≥ 17 分钟"
+    },
+    "test_guidance": [
+      "pillars、dayun.direction、dayun.first3[].ganzhi、yongshen.*、strength.level、strength.special 必须完全一致",
+      "strength.S 容差 ±0.001；power/gods 容差 ±0.01",
+      "dayun.qiyun_date 允许 ±1 天（不同库节气秒级差异）",
+      "rules_hit_expected 中每一项按冒号前的编号（如 Y-FY-W-SHA、S-COMBO）必须出现在实际输出里；实际输出可以多出 S-POWER、S-LEVEL 等通用编号；冒号后的文字不比对",
+      "shensha_ji 必须完全一致（名称、hits[].pos、hits[].by、顺序；吉神顺序固定为 天乙贵人、月德贵人、文昌贵人、太极贵人，hits 按 年→月→日→时，by 中日干在前）；天乙、文昌、太极按日干、年干兼查，同一位置两者都查到只出现一次、by 为 [日干, 年干]；月德的 by 为 [月支]",
+      "alt_zi_huanri_school 只在 23:00–23:59 出生的案例里与主结果不同（v2 中仅 C05），测试校验 alt.zi_huanri_day_pillar",
+      "verified 字段如实记录核对方式；凡标注“v2 人工手算、未用代码重跑”的数值，开发实现后若与代码结果不一致，先找 mingli-expert 复核，不要直接改期望值"
+    ]
+  },
+  "cases": [
+    {
+      "id": "C01",
+      "title": "立春交节前 17 分钟（仍是上一年）",
+      "tags": [
+        "节气交接-交节前",
+        "立春换年",
+        "身弱",
+        "调候一致"
+      ],
+      "input": {
+        "calendar": "solar",
+        "solar_datetime": "2024-02-04 16:10",
+        "solar_date": "2024-02-04",
+        "time_known": true,
+        "gender": "男",
+        "timezone": "Asia/Shanghai",
+        "birthplace": null
+      },
+      "derived": {
+        "utc_offset_hours": 8.0,
+        "beijing_standard_time": "2024-02-04 16:10"
+      },
+      "jieqi_reference": {
+        "name": "立春",
+        "time_beijing": "2024-02-04 16:26:56",
+        "note": "交节前 17 分钟出生 → 年柱仍癸卯、月柱仍乙丑"
+      },
+      "expected": {
+        "pillars": {
+          "year": "癸卯",
+          "month": "乙丑",
+          "day": "戊戌",
+          "hour": "庚申"
+        },
+        "shensha_ji": [
+          {"name": "天乙贵人", "hits": [{"pos": "年支", "by": ["年干"]}, {"pos": "月支", "by": ["日干"]}]},
+          {"name": "月德贵人", "hits": [{"pos": "时干", "by": ["月支"]}]},
+          {"name": "文昌贵人", "hits": [{"pos": "年支", "by": ["年干"]}, {"pos": "时支", "by": ["日干"]}]},
+          {"name": "太极贵人", "hits": [{"pos": "月支", "by": ["日干"]}, {"pos": "日支", "by": ["日干"]}, {"pos": "时支", "by": ["年干"]}]}
+        ],
+        "alt_zi_huanri_school": {
+          "day": "戊戌",
+          "hour": "庚申",
+          "same_as_main": true
+        },
+        "dayun": {
+          "direction": "逆",
+          "qiyun_offset": "9年9月26天18时",
+          "qiyun_date": "2033-12-01",
+          "first3": [
+            {
+              "ganzhi": "甲子",
+              "start_year": 2033,
+              "start_age_xusui": 10
+            },
+            {
+              "ganzhi": "癸亥",
+              "start_year": 2043,
+              "start_age_xusui": 20
+            },
+            {
+              "ganzhi": "壬戌",
+              "start_year": 2053,
+              "start_age_xusui": 30
+            }
+          ]
+        },
+        "strength": {
+          "S": 0.324,
+          "level": "身弱",
+          "special": null,
+          "de_ling": true,
+          "de_di": true,
+          "de_shi": 0,
+          "power": {
+            "木": 1.8,
+            "火": 0.15,
+            "土": 2.8,
+            "金": 2.35,
+            "水": 2.0
+          },
+          "gods": {
+            "比劫": 2.8,
+            "印": 0.15,
+            "食伤": 2.35,
+            "财": 2.0,
+            "官杀": 1.8
+          },
+          "borderline": false
+        },
+        "yongshen": {
+          "yong": "火",
+          "xi": [
+            "土"
+          ],
+          "ji": [
+            "金",
+            "水"
+          ],
+          "xian": [
+            "木"
+          ]
+        },
+        "rules_hit_expected": [
+          "Y-FY-W-SHI",
+          "Y-TH-AGREE"
+        ]
+      },
+      "reasoning": "戊土生丑月，丑中己土为比劫，得令；日支戌土有根。但年月干癸、乙，时柱庚申，金（食伤 2.35）、水（财 2.0）、木（官杀 1.8）三方消耗，同党只占 32% → 身弱。“得令却身弱”正是计分法比口诀细的地方。异党中食伤最重 → 用印（火）制食伤、生日主；丑月寒冻，原局火不足全盘 2%（仅戌中丁火），调候同样要火，扶抑与调候一致。喜比劫土；忌金、水；木生火，列闲神。",
+      "verified": "四柱：lunar-python 1.4.8（EightChar.setSect(1)）与 sxtwl 2.0.7 两个库独立计算一致；立春时刻：PyEphem 4.x（VSOP87，视黄经）独立计算，与 lunar-python 结果相差 < 15 秒；大运：lunar-python getYun(gender, 2)（按分钟折算）；旺衰/喜用：按 rules/strength.md + yongshen.md v1 写的参考实现（scratchpad，非项目代码）计算，再由 mingli-expert 逐条人工复核，结论认可。"
+    },
+    {
+      "id": "C02",
+      "title": "立春交节后 18 分钟（已是新一年）",
+      "tags": [
+        "节气交接-交节后",
+        "立春换年",
+        "中和偏弱",
+        "大运-起运极早"
+      ],
+      "input": {
+        "calendar": "solar",
+        "solar_datetime": "2024-02-04 16:45",
+        "solar_date": "2024-02-04",
+        "time_known": true,
+        "gender": "女",
+        "timezone": "Asia/Shanghai",
+        "birthplace": null
+      },
+      "derived": {
+        "utc_offset_hours": 8.0,
+        "beijing_standard_time": "2024-02-04 16:45"
+      },
+      "jieqi_reference": {
+        "name": "立春",
+        "time_beijing": "2024-02-04 16:26:56",
+        "note": "交节后 18 分钟出生 → 年柱甲辰、月柱丙寅；女命阳年逆排，距上一个节仅 18 分钟 → 约 1 天半起运"
+      },
+      "expected": {
+        "pillars": {
+          "year": "甲辰",
+          "month": "丙寅",
+          "day": "戊戌",
+          "hour": "庚申"
+        },
+        "shensha_ji": [
+          {"name": "月德贵人", "hits": [{"pos": "月干", "by": ["月支"]}]},
+          {"name": "文昌贵人", "hits": [{"pos": "时支", "by": ["日干"]}]},
+          {"name": "太极贵人", "hits": [{"pos": "年支", "by": ["日干"]}, {"pos": "日支", "by": ["日干"]}]}
+        ],
+        "alt_zi_huanri_school": {
+          "day": "戊戌",
+          "hour": "庚申",
+          "same_as_main": true
+        },
+        "dayun": {
+          "direction": "逆",
+          "qiyun_offset": "0年0月1天12时",
+          "qiyun_date": "2024-02-06",
+          "first3": [
+            {
+              "ganzhi": "乙丑",
+              "start_year": 2024,
+              "start_age_xusui": 1
+            },
+            {
+              "ganzhi": "甲子",
+              "start_year": 2034,
+              "start_age_xusui": 11
+            },
+            {
+              "ganzhi": "癸亥",
+              "start_year": 2044,
+              "start_age_xusui": 21
+            }
+          ]
+        },
+        "strength": {
+          "S": 0.421,
+          "level": "中和偏弱",
+          "special": null,
+          "de_ling": false,
+          "de_di": true,
+          "de_shi": 1,
+          "power": {
+            "木": 2.84,
+            "火": 2.05,
+            "土": 1.78,
+            "金": 2.05,
+            "水": 0.38
+          },
+          "gods": {
+            "比劫": 1.78,
+            "印": 2.05,
+            "食伤": 2.05,
+            "财": 0.38,
+            "官杀": 2.84
+          },
+          "borderline": false
+        },
+        "yongshen": {
+          "yong": "火",
+          "xi": [
+            "土"
+          ],
+          "ji": [
+            "木",
+            "金"
+          ],
+          "xian": [
+            "水"
+          ]
+        },
+        "rules_hit_expected": [
+          "Y-FY-W-SHA"
+        ]
+      },
+      "reasoning": "戊土生寅月，寅中甲木为七杀当令，失令；甲木又透年干，官杀 2.84 为异党最强。月干丙火透出（印 2.05），日支戌、年支辰为比劫根，同党 42% → 中和偏弱。杀重用印化杀：用火，喜土；忌木、金；水闲。与 C01 只差 35 分钟，年、月柱和喜忌都变了，是交节精度的关键测试。",
+      "verified": "四柱：lunar-python 1.4.8（EightChar.setSect(1)）与 sxtwl 2.0.7 两个库独立计算一致；立春时刻：PyEphem 4.x（VSOP87，视黄经）独立计算，与 lunar-python 结果相差 < 15 秒；大运：lunar-python getYun(gender, 2)（按分钟折算）；旺衰/喜用：按 rules/strength.md + yongshen.md v1 写的参考实现（scratchpad，非项目代码）计算，再由 mingli-expert 逐条人工复核，结论认可。"
+    },
+    {
+      "id": "C03",
+      "title": "春节后、立春前（农历已新年，干支年未换）",
+      "tags": [
+        "立春换年",
+        "春节不换年",
+        "身弱-极弱但不从"
+      ],
+      "input": {
+        "calendar": "solar",
+        "solar_datetime": "2023-01-28 10:00",
+        "solar_date": "2023-01-28",
+        "time_known": true,
+        "gender": "男",
+        "timezone": "Asia/Shanghai",
+        "birthplace": null,
+        "lunar": {
+          "year": 2023,
+          "month": 1,
+          "day": 7,
+          "is_leap": false,
+          "note": "仅供对照：农历癸卯年正月初七"
+        }
+      },
+      "derived": {
+        "utc_offset_hours": 8.0,
+        "beijing_standard_time": "2023-01-28 10:00"
+      },
+      "jieqi_reference": {
+        "name": "立春",
+        "time_beijing": "2023-02-04 10:42:23",
+        "note": "出生在立春前 → 年柱壬寅（不是癸卯）"
+      },
+      "expected": {
+        "pillars": {
+          "year": "壬寅",
+          "month": "癸丑",
+          "day": "丙戌",
+          "hour": "癸巳"
+        },
+        "shensha_ji": [
+          {"name": "天乙贵人", "hits": [{"pos": "时支", "by": ["年干"]}]},
+          {"name": "文昌贵人", "hits": [{"pos": "年支", "by": ["年干"]}]},
+          {"name": "太极贵人", "hits": [{"pos": "时支", "by": ["年干"]}]}
+        ],
+        "alt_zi_huanri_school": {
+          "day": "丙戌",
+          "hour": "癸巳",
+          "same_as_main": true
+        },
+        "dayun": {
+          "direction": "顺",
+          "qiyun_offset": "2年4月3天12时",
+          "qiyun_date": "2025-05-31",
+          "first3": [
+            {
+              "ganzhi": "甲寅",
+              "start_year": 2025,
+              "start_age_xusui": 3
+            },
+            {
+              "ganzhi": "乙卯",
+              "start_year": 2035,
+              "start_age_xusui": 13
+            },
+            {
+              "ganzhi": "丙辰",
+              "start_year": 2045,
+              "start_age_xusui": 23
+            }
+          ]
+        },
+        "strength": {
+          "S": 0.162,
+          "level": "身弱",
+          "special": null,
+          "de_ling": false,
+          "de_di": true,
+          "de_shi": 0,
+          "power": {
+            "木": 0.48,
+            "火": 0.99,
+            "土": 2.88,
+            "金": 1.05,
+            "水": 3.7
+          },
+          "gods": {
+            "比劫": 0.99,
+            "印": 0.48,
+            "食伤": 2.88,
+            "财": 1.05,
+            "官杀": 3.7
+          },
+          "borderline": false
+        },
+        "yongshen": {
+          "yong": "木",
+          "xi": [
+            "火"
+          ],
+          "ji": [
+            "水",
+            "土"
+          ],
+          "xian": [
+            "金"
+          ]
+        },
+        "rules_hit_expected": [
+          "Y-FY-W-SHA"
+        ]
+      },
+      "reasoning": "丙火生丑月，年月时三干壬、癸、癸透出，加丑中癸水，官杀 3.7 最重；丑、戌食伤晦火（2.88）。同党仅 16%，但时支巳火是丙火本气根（禄），不满足“真从”条件 → 按身弱处理。杀重用印：用木（寅中甲木，杀印相生），喜火；忌水、土；金闲。",
+      "verified": "四柱：lunar-python 1.4.8（EightChar.setSect(1)）与 sxtwl 2.0.7 两个库独立计算一致；立春时刻：PyEphem 4.x（VSOP87，视黄经）独立计算，与 lunar-python 结果相差 < 15 秒；大运：lunar-python getYun(gender, 2)（按分钟折算）；旺衰/喜用：按 rules/strength.md + yongshen.md v1 写的参考实现（scratchpad，非项目代码）计算，再由 mingli-expert 逐条人工复核，结论认可。"
+    },
+    {
+      "id": "C04",
+      "title": "早子时 00:30（两派结果相同）",
+      "tags": [
+        "子时-早子",
+        "身旺"
+      ],
+      "input": {
+        "calendar": "solar",
+        "solar_datetime": "1995-03-15 00:30",
+        "solar_date": "1995-03-15",
+        "time_known": true,
+        "gender": "女",
+        "timezone": "Asia/Shanghai",
+        "birthplace": null
+      },
+      "derived": {
+        "utc_offset_hours": 8.0,
+        "beijing_standard_time": "1995-03-15 00:30"
+      },
+      "expected": {
+        "pillars": {
+          "year": "乙亥",
+          "month": "己卯",
+          "day": "乙巳",
+          "hour": "丙子"
+        },
+        "shensha_ji": [
+          {"name": "天乙贵人", "hits": [{"pos": "时支", "by": ["日干", "年干"]}]},
+          {"name": "太极贵人", "hits": [{"pos": "时支", "by": ["日干", "年干"]}]}
+        ],
+        "alt_zi_huanri_school": {
+          "day": "乙巳",
+          "hour": "丙子",
+          "same_as_main": true
+        },
+        "dayun": {
+          "direction": "顺",
+          "qiyun_offset": "7年2月8天4时",
+          "qiyun_date": "2002-05-23",
+          "first3": [
+            {
+              "ganzhi": "庚辰",
+              "start_year": 2002,
+              "start_age_xusui": 8
+            },
+            {
+              "ganzhi": "辛巳",
+              "start_year": 2012,
+              "start_age_xusui": 18
+            },
+            {
+              "ganzhi": "壬午",
+              "start_year": 2022,
+              "start_age_xusui": 28
+            }
+          ]
+        },
+        "strength": {
+          "S": 0.615,
+          "level": "身旺",
+          "special": null,
+          "de_ling": true,
+          "de_di": true,
+          "de_shi": 1,
+          "power": {
+            "木": 4.04,
+            "火": 1.9,
+            "土": 1.15,
+            "金": 0.45,
+            "水": 1.56
+          },
+          "gods": {
+            "比劫": 4.04,
+            "印": 1.56,
+            "食伤": 1.9,
+            "财": 1.15,
+            "官杀": 0.45
+          },
+          "borderline": false
+        },
+        "yongshen": {
+          "yong": "火",
+          "xi": [
+            "土"
+          ],
+          "ji": [
+            "木",
+            "水"
+          ],
+          "xian": [
+            "金"
+          ]
+        },
+        "rules_hit_expected": [
+          "Y-FY-S-BI-SHI"
+        ]
+      },
+      "reasoning": "00:00–00:59 出生，日柱按当天（乙巳），时柱丙子；“23 点换日”与“早晚子时”两派结论一致。乙木生卯月建禄，亥卯会木，年干乙木透，比劫 4.04，同党 62% → 身旺。比劫为主，官杀只有巳中庚金 0.45，制不住 → 用食伤火泄秀（丙火透时干、巳中丙火有根，古称“木火通明”），喜土（财）；忌木、水；金闲。",
+      "verified": "四柱：lunar-python 1.4.8（EightChar.setSect(1)）与 sxtwl 2.0.7 两个库独立计算一致；大运：lunar-python getYun(gender, 2)（按分钟折算）；旺衰/喜用：按 rules/strength.md + yongshen.md v1 写的参考实现（scratchpad，非项目代码）计算，再由 mingli-expert 逐条人工复核，结论认可。"
+    },
+    {
+      "id": "C05",
+      "title": "晚子时 23:30（早晚子时派：日柱仍算当日，时干按次日起）",
+      "tags": [
+        "子时-晚子",
+        "身旺",
+        "早晚子时派-与换日派结论不同"
+      ],
+      "input": {
+        "calendar": "solar",
+        "solar_datetime": "1995-03-15 23:30",
+        "solar_date": "1995-03-15",
+        "time_known": true,
+        "gender": "男",
+        "timezone": "Asia/Shanghai",
+        "birthplace": null
+      },
+      "derived": {
+        "utc_offset_hours": 8.0,
+        "beijing_standard_time": "1995-03-15 23:30"
+      },
+      "expected": {
+        "pillars": {
+          "year": "乙亥",
+          "month": "己卯",
+          "day": "乙巳",
+          "hour": "戊子"
+        },
+        "shensha_ji": [
+          {"name": "天乙贵人", "hits": [{"pos": "时支", "by": ["日干", "年干"]}]},
+          {"name": "太极贵人", "hits": [{"pos": "时支", "by": ["日干", "年干"]}]}
+        ],
+        "alt_zi_huanri_school": {
+          "day": "丙午",
+          "hour": "戊子",
+          "same_as_main": false,
+          "note": "23:00 换日派（v1 曾采用）：日柱丙午。该派下 v1 结论为：S 0.559 身旺；用土、喜金、忌木火、闲水（触发 Y-FY-S-YIN + Y-SWAP）。仅供对照，不再作为期望值。"
+        },
+        "dayun": {
+          "direction": "逆",
+          "qiyun_offset": "3年2月11天4时",
+          "qiyun_date": "1998-05-27",
+          "first3": [
+            {
+              "ganzhi": "戊寅",
+              "start_year": 1998,
+              "start_age_xusui": 4
+            },
+            {
+              "ganzhi": "丁丑",
+              "start_year": 2008,
+              "start_age_xusui": 14
+            },
+            {
+              "ganzhi": "丙子",
+              "start_year": 2018,
+              "start_age_xusui": 24
+            }
+          ]
+        },
+        "strength": {
+          "S": 0.615,
+          "level": "身旺",
+          "special": null,
+          "de_ling": true,
+          "de_di": true,
+          "de_shi": 1,
+          "power": {
+            "木": 4.04,
+            "火": 0.9,
+            "土": 2.15,
+            "金": 0.45,
+            "水": 1.56
+          },
+          "gods": {
+            "比劫": 4.04,
+            "印": 1.56,
+            "食伤": 0.9,
+            "财": 2.15,
+            "官杀": 0.45
+          },
+          "borderline": false
+        },
+        "yongshen": {
+          "yong": "火",
+          "xi": [
+            "土"
+          ],
+          "ji": [
+            "木",
+            "水"
+          ],
+          "xian": [
+            "金"
+          ]
+        },
+        "rules_hit_expected": [
+          "Y-FY-S-BI-SHI"
+        ]
+      },
+      "reasoning": "23:30 出生，按早晚子时派：日柱仍是当日乙巳，时柱子时、时干按次日丙午的“丙辛日戊子时”起 → 戊子（与 C04 同日 00:30 的丙子时对照，两者只差时干）。计分（手算）：天干 年乙 0.8（亥、卯有木根）、月己 1.0（巳中戊土余气为根）、时戊 1.0；地支 亥(0.8)=壬0.56+甲0.24，卯(3.0)=乙3.0，巳(1.5)=丙0.9+庚0.45+戊0.15，子(1.0)=癸1.0；无三会三合。木 4.04、火 0.9、土 2.15、金 0.45、水 1.56，总 9.10；同党（木+水）5.60 → S=0.615 → 身旺。得令（卯本气乙为比劫）、得地、得势 1（年干乙）。偏旺且比劫 4.04 ≥ 印 1.56，官杀（金）仅巳中庚 0.45 < 1.0 → Y-FY-S-BI-SHI：用食伤火、喜财土；忌比劫木、印水；金闲。火力量 0.9 > 0（巳中丙火），不触发用神缺位互换；卯月不做调候；最强两行木 44%、土 24%，土不足 25%，不触发通关。结论与 C04（同日早子时）相同，可作为“早子/晚子时干不同、结论可以相同”的对照。若按不再采用的 23:00 换日派，日柱为丙午，结论完全不同（见 alt_zi_huanri_school.note）。",
+      "verified": "四柱：v1 核对时 lunar-python 1.4.8 与 sxtwl 2.0.7 已同时算出早晚子时派结果（乙巳日、戊子时，当时存于 alt 字段），v2 直接沿用；本轮 scratchpad 核对环境已清理，未重新运行代码。大运：只依赖出生绝对时刻与年柱，与子时口径无关，沿用 v1 的 lunar-python getYun(gender, 2) 结果。旺衰/喜用：v2 由 mingli-expert 按 strength.md / yongshen.md 人工逐项手算（过程见 reasoning），并与 C04（年月日三柱相同、仅时柱不同）的代码结果交叉核对：除时干一项外各项分值吻合（C04 火 1.9 = 本例火 0.9 + 丙火透干 1.0；C04 土 1.15 = 本例土 2.15 − 戊土透干 1.0）。吉神：人工查 shensha.md 表，未用代码复核。开发实现后请以代码重跑确认。"
+    },
+    {
+      "id": "C06",
+      "title": "农历闰二月十八（闰月输入）",
+      "tags": [
+        "闰月",
+        "农历输入",
+        "身弱"
+      ],
+      "input": {
+        "calendar": "lunar",
+        "solar_datetime": "2023-04-08 10:00",
+        "solar_date": "2023-04-08",
+        "time_known": true,
+        "gender": "女",
+        "timezone": "Asia/Shanghai",
+        "birthplace": null,
+        "lunar": {
+          "year": 2023,
+          "month": 2,
+          "day": 18,
+          "is_leap": true,
+          "time": "10:00"
+        }
+      },
+      "derived": {
+        "utc_offset_hours": 8.0,
+        "beijing_standard_time": "2023-04-08 10:00"
+      },
+      "jieqi_reference": {
+        "name": "清明",
+        "time_beijing": "2023-04-05 09:12:59",
+        "note": "已过清明 → 辰月"
+      },
+      "expected": {
+        "pillars": {
+          "year": "癸卯",
+          "month": "丙辰",
+          "day": "丙申",
+          "hour": "癸巳"
+        },
+        "shensha_ji": [
+          {"name": "天乙贵人", "hits": [{"pos": "年支", "by": ["年干"]}, {"pos": "时支", "by": ["年干"]}]},
+          {"name": "文昌贵人", "hits": [{"pos": "年支", "by": ["年干"]}, {"pos": "日支", "by": ["日干"]}]},
+          {"name": "太极贵人", "hits": [{"pos": "年支", "by": ["日干"]}, {"pos": "日支", "by": ["年干"]}, {"pos": "时支", "by": ["年干"]}]}
+        ],
+        "alt_zi_huanri_school": {
+          "day": "丙申",
+          "hour": "癸巳",
+          "same_as_main": true
+        },
+        "dayun": {
+          "direction": "顺",
+          "qiyun_offset": "9年2月21天12时",
+          "qiyun_date": "2032-06-29",
+          "first3": [
+            {
+              "ganzhi": "丁巳",
+              "start_year": 2032,
+              "start_age_xusui": 10
+            },
+            {
+              "ganzhi": "戊午",
+              "start_year": 2042,
+              "start_age_xusui": 20
+            },
+            {
+              "ganzhi": "己未",
+              "start_year": 2052,
+              "start_age_xusui": 30
+            }
+          ]
+        },
+        "strength": {
+          "S": 0.363,
+          "level": "身弱",
+          "special": null,
+          "de_ling": false,
+          "de_di": true,
+          "de_shi": 1,
+          "power": {
+            "木": 1.7,
+            "火": 1.6,
+            "土": 2.05,
+            "金": 1.2,
+            "水": 2.55
+          },
+          "gods": {
+            "比劫": 1.6,
+            "印": 1.7,
+            "食伤": 2.05,
+            "财": 1.2,
+            "官杀": 2.55
+          },
+          "borderline": false
+        },
+        "yongshen": {
+          "yong": "木",
+          "xi": [
+            "火"
+          ],
+          "ji": [
+            "水",
+            "土"
+          ],
+          "xian": [
+            "金"
+          ]
+        },
+        "rules_hit_expected": [
+          "Y-FY-W-SHA"
+        ]
+      },
+      "reasoning": "农历 2023 年闰二月十八 = 公历 2023-04-08（不是二月十八的 2023-03-09，那天是乙卯月丙寅日）。丙火生辰月，年时双癸透出，辰中癸、申中壬，官杀 2.55 为异党最强；辰土食伤晦火。月干丙火透、巳时有根，年支卯木为印，同党 36% → 身弱。杀重用印：用木，喜火；忌水、土；金闲。",
+      "verified": "四柱：lunar-python 1.4.8（EightChar.setSect(1)）与 sxtwl 2.0.7 两个库独立计算一致；清明时刻：PyEphem 4.x（VSOP87，视黄经）独立计算，与 lunar-python 结果相差 < 15 秒；大运：lunar-python getYun(gender, 2)（按分钟折算）；旺衰/喜用：按 rules/strength.md + yongshen.md v1 写的参考实现（scratchpad，非项目代码）计算，再由 mingli-expert 逐条人工复核，结论认可。"
+    },
+    {
+      "id": "C07",
+      "title": "闰二月十五，清明交节前 43 分钟",
+      "tags": [
+        "闰月",
+        "农历输入",
+        "节气交接-交节前",
+        "身弱-极弱但不从"
+      ],
+      "input": {
+        "calendar": "lunar",
+        "solar_datetime": "2023-04-05 08:30",
+        "solar_date": "2023-04-05",
+        "time_known": true,
+        "gender": "男",
+        "timezone": "Asia/Shanghai",
+        "birthplace": null,
+        "lunar": {
+          "year": 2023,
+          "month": 2,
+          "day": 15,
+          "is_leap": true,
+          "time": "08:30"
+        }
+      },
+      "derived": {
+        "utc_offset_hours": 8.0,
+        "beijing_standard_time": "2023-04-05 08:30"
+      },
+      "jieqi_reference": {
+        "name": "清明",
+        "time_beijing": "2023-04-05 09:12:59",
+        "note": "闰二月不等于辰月：交节前仍是乙卯月；同一天 10:00 出生则为丙辰月、丁巳时"
+      },
+      "expected": {
+        "pillars": {
+          "year": "癸卯",
+          "month": "乙卯",
+          "day": "癸巳",
+          "hour": "丙辰"
+        },
+        "shensha_ji": [
+          {"name": "天乙贵人", "hits": [{"pos": "年支", "by": ["日干", "年干"]}, {"pos": "月支", "by": ["日干", "年干"]}, {"pos": "日支", "by": ["日干", "年干"]}]},
+          {"name": "文昌贵人", "hits": [{"pos": "年支", "by": ["日干", "年干"]}, {"pos": "月支", "by": ["日干", "年干"]}]},
+          {"name": "太极贵人", "hits": [{"pos": "日支", "by": ["日干", "年干"]}]}
+        ],
+        "alt_zi_huanri_school": {
+          "day": "癸巳",
+          "hour": "丙辰",
+          "same_as_main": true
+        },
+        "dayun": {
+          "direction": "逆",
+          "qiyun_offset": "10年0月19天12时",
+          "qiyun_date": "2033-04-24",
+          "first3": [
+            {
+              "ganzhi": "甲寅",
+              "start_year": 2033,
+              "start_age_xusui": 11
+            },
+            {
+              "ganzhi": "癸丑",
+              "start_year": 2043,
+              "start_age_xusui": 21
+            },
+            {
+              "ganzhi": "壬子",
+              "start_year": 2053,
+              "start_age_xusui": 31
+            }
+          ]
+        },
+        "strength": {
+          "S": 0.148,
+          "level": "身弱",
+          "special": null,
+          "de_ling": false,
+          "de_di": false,
+          "de_shi": 1,
+          "power": {
+            "木": 5.1,
+            "火": 1.9,
+            "土": 0.75,
+            "金": 0.45,
+            "水": 0.9
+          },
+          "gods": {
+            "比劫": 0.9,
+            "印": 0.45,
+            "食伤": 5.1,
+            "财": 1.9,
+            "官杀": 0.75
+          },
+          "borderline": false
+        },
+        "yongshen": {
+          "yong": "金",
+          "xi": [
+            "水"
+          ],
+          "ji": [
+            "木",
+            "火"
+          ],
+          "xian": [
+            "土"
+          ]
+        },
+        "rules_hit_expected": [
+          "Y-FY-W-SHI"
+        ]
+      },
+      "reasoning": "癸水生卯月，失令；两卯一乙加辰中乙木，食伤 5.1 极重，同党 15%。但巳中庚金是印的中气根，不满足“真从”条件 → 按身弱。食伤最重 → 用印（金）制食伤、生日主，喜比劫水；忌木、火；土闲。与《穷通宝鉴》二月癸水“庚辛为用”一致。",
+      "verified": "四柱：lunar-python 1.4.8（EightChar.setSect(1)）与 sxtwl 2.0.7 两个库独立计算一致；清明时刻：PyEphem 4.x（VSOP87，视黄经）独立计算，与 lunar-python 结果相差 < 15 秒；大运：lunar-python getYun(gender, 2)（按分钟折算）；旺衰/喜用：按 rules/strength.md + yongshen.md v1 写的参考实现（scratchpad，非项目代码）计算，再由 mingli-expert 逐条人工复核，结论认可。"
+    },
+    {
+      "id": "C08",
+      "title": "真太阳时跨日：乌鲁木齐 00:40",
+      "tags": [
+        "真太阳时",
+        "真太阳时-跨日",
+        "身弱",
+        "三合"
+      ],
+      "input": {
+        "calendar": "solar",
+        "solar_datetime": "2001-03-10 00:40",
+        "solar_date": "2001-03-10",
+        "time_known": true,
+        "gender": "男",
+        "timezone": "Asia/Shanghai",
+        "birthplace": {
+          "name": "新疆乌鲁木齐",
+          "longitude": 87.62
+        }
+      },
+      "derived": {
+        "utc_offset_hours": 8.0,
+        "beijing_standard_time": "2001-03-10 00:40",
+        "true_solar_time": "2001-03-09 22:19",
+        "longitude_correction_min": -129.52,
+        "equation_of_time_min": -11.18,
+        "equation_of_time_min_ephem": -10.44
+      },
+      "expected": {
+        "pillars": {
+          "year": "辛巳",
+          "month": "辛卯",
+          "day": "辛未",
+          "hour": "己亥"
+        },
+        "shensha_ji": [
+          {"name": "太极贵人", "hits": [{"pos": "时支", "by": ["日干", "年干"]}]}
+        ],
+        "alt_zi_huanri_school": {
+          "day": "辛未",
+          "hour": "己亥",
+          "same_as_main": true
+        },
+        "wrong_if_not_corrected": {
+          "year": "辛巳",
+          "month": "辛卯",
+          "day": "壬申",
+          "hour": "庚子"
+        },
+        "dayun": {
+          "direction": "逆",
+          "qiyun_offset": "1年4月20天16时",
+          "qiyun_date": "2002-07-30",
+          "first3": [
+            {
+              "ganzhi": "庚寅",
+              "start_year": 2002,
+              "start_age_xusui": 2
+            },
+            {
+              "ganzhi": "己丑",
+              "start_year": 2012,
+              "start_age_xusui": 12
+            },
+            {
+              "ganzhi": "戊子",
+              "start_year": 2022,
+              "start_age_xusui": 22
+            }
+          ]
+        },
+        "strength": {
+          "S": 0.379,
+          "level": "身弱",
+          "special": null,
+          "de_ling": false,
+          "de_di": true,
+          "de_shi": 3,
+          "power": {
+            "木": 4.95,
+            "火": 0.93,
+            "土": 1.98,
+            "金": 2.04,
+            "水": 0.7
+          },
+          "gods": {
+            "比劫": 2.04,
+            "印": 1.98,
+            "食伤": 0.7,
+            "财": 4.95,
+            "官杀": 0.93
+          },
+          "borderline": false
+        },
+        "yongshen": {
+          "yong": "金",
+          "xi": [
+            "土"
+          ],
+          "ji": [
+            "木",
+            "火"
+          ],
+          "xian": [
+            "水"
+          ]
+        },
+        "rules_hit_expected": [
+          "S-COMBO:三合亥卯未木+1.5",
+          "Y-FY-W-CAI"
+        ]
+      },
+      "reasoning": "北京时间 3 月 10 日 00:40，经度修正 −129.5 分、均时差约 −11 分 → 真太阳时 3 月 9 日 22:19，日柱回到前一天辛未，时柱己亥（不校正会排成壬申日庚子时）。年月柱按绝对时刻比节气，不受影响。辛金生卯月失令，亥卯未三合木局，财 4.95 最重；三辛透、巳中庚为比劫，己土、未土为印，同党 38% → 身弱。财多身弱用比劫：用金，喜土；忌木、火；水闲。",
+      "verified": "四柱：lunar-python 1.4.8（EightChar.setSect(1)）与 sxtwl 2.0.7 两个库独立计算一致；真太阳时：NOAA 均时差公式 -11.18 分，PyEphem 计算 -10.44 分，差 < 1 分钟，距时辰边界 > 30 分钟；大运：lunar-python getYun(gender, 2)（按分钟折算）；旺衰/喜用：按 rules/strength.md + yongshen.md v1 写的参考实现（scratchpad，非项目代码）计算，再由 mingli-expert 逐条人工复核，结论认可。"
+    },
+    {
+      "id": "C09",
+      "title": "真太阳时跨时辰：哈尔滨 06:50",
+      "tags": [
+        "真太阳时",
+        "真太阳时-跨时辰",
+        "身弱"
+      ],
+      "input": {
+        "calendar": "solar",
+        "solar_datetime": "1990-11-03 06:50",
+        "solar_date": "1990-11-03",
+        "time_known": true,
+        "gender": "女",
+        "timezone": "Asia/Shanghai",
+        "birthplace": {
+          "name": "黑龙江哈尔滨",
+          "longitude": 126.63
+        }
+      },
+      "derived": {
+        "utc_offset_hours": 8.0,
+        "beijing_standard_time": "1990-11-03 06:50",
+        "true_solar_time": "1990-11-03 07:32",
+        "longitude_correction_min": 26.52,
+        "equation_of_time_min": 16.37,
+        "equation_of_time_min_ephem": 16.41
+      },
+      "expected": {
+        "pillars": {
+          "year": "庚午",
+          "month": "丙戌",
+          "day": "壬申",
+          "hour": "甲辰"
+        },
+        "shensha_ji": [
+          {"name": "月德贵人", "hits": [{"pos": "月干", "by": ["月支"]}]},
+          {"name": "太极贵人", "hits": [{"pos": "日支", "by": ["日干"]}]}
+        ],
+        "alt_zi_huanri_school": {
+          "day": "壬申",
+          "hour": "甲辰",
+          "same_as_main": true
+        },
+        "wrong_if_not_corrected": {
+          "year": "庚午",
+          "month": "丙戌",
+          "day": "壬申",
+          "hour": "癸卯"
+        },
+        "dayun": {
+          "direction": "逆",
+          "qiyun_offset": "8年5月18天2时",
+          "qiyun_date": "1999-04-21",
+          "first3": [
+            {
+              "ganzhi": "乙酉",
+              "start_year": 1999,
+              "start_age_xusui": 10
+            },
+            {
+              "ganzhi": "甲申",
+              "start_year": 2009,
+              "start_age_xusui": 20
+            },
+            {
+              "ganzhi": "癸未",
+              "start_year": 2019,
+              "start_age_xusui": 30
+            }
+          ]
+        },
+        "strength": {
+          "S": 0.346,
+          "level": "身弱",
+          "special": null,
+          "de_ling": false,
+          "de_di": true,
+          "de_shi": 1,
+          "power": {
+            "木": 1.3,
+            "火": 1.86,
+            "土": 2.79,
+            "金": 2.6,
+            "水": 0.55
+          },
+          "gods": {
+            "比劫": 0.55,
+            "印": 2.6,
+            "食伤": 1.3,
+            "财": 1.86,
+            "官杀": 2.79
+          },
+          "borderline": false
+        },
+        "yongshen": {
+          "yong": "金",
+          "xi": [
+            "水"
+          ],
+          "ji": [
+            "土",
+            "火"
+          ],
+          "xian": [
+            "木"
+          ]
+        },
+        "rules_hit_expected": [
+          "Y-FY-W-SHA"
+        ]
+      },
+      "reasoning": "北京时间 06:50，经度修正 +26.5 分、11 月初均时差约 +16.4 分 → 真太阳时 07:33，从卯时变为辰时（时柱甲辰；不校正为癸卯）。壬水生戌月，戌中戊土七杀当令，辰戌土合计官杀 2.79；庚金透年、坐申长生，印 2.6；午戌半合火为财。同党 35% → 身弱。杀重用印：用金，喜水；忌土、火；木闲。",
+      "verified": "四柱：lunar-python 1.4.8（EightChar.setSect(1)）与 sxtwl 2.0.7 两个库独立计算一致；真太阳时：NOAA 均时差公式 16.37 分，PyEphem 计算 16.41 分，差 < 1 分钟，距时辰边界 > 30 分钟；大运：lunar-python getYun(gender, 2)（按分钟折算）；旺衰/喜用：按 rules/strength.md + yongshen.md v1 写的参考实现（scratchpad，非项目代码）计算，再由 mingli-expert 逐条人工复核，结论认可。"
+    },
+    {
+      "id": "C10",
+      "title": "1988 年夏令时 11:30（实际 10:30）",
+      "tags": [
+        "夏令时",
+        "时区",
+        "身旺"
+      ],
+      "input": {
+        "calendar": "solar",
+        "solar_datetime": "1988-07-15 11:30",
+        "solar_date": "1988-07-15",
+        "time_known": true,
+        "gender": "男",
+        "timezone": "Asia/Shanghai",
+        "birthplace": null
+      },
+      "derived": {
+        "utc_offset_hours": 9.0,
+        "beijing_standard_time": "1988-07-15 10:30"
+      },
+      "expected": {
+        "pillars": {
+          "year": "戊辰",
+          "month": "己未",
+          "day": "辛未",
+          "hour": "癸巳"
+        },
+        "shensha_ji": [
+          {"name": "天乙贵人", "hits": [{"pos": "月支", "by": ["年干"]}, {"pos": "日支", "by": ["年干"]}]},
+          {"name": "太极贵人", "hits": [{"pos": "年支", "by": ["年干"]}, {"pos": "月支", "by": ["年干"]}, {"pos": "日支", "by": ["年干"]}]}
+        ],
+        "alt_zi_huanri_school": {
+          "day": "辛未",
+          "hour": "癸巳",
+          "same_as_main": true
+        },
+        "wrong_if_not_corrected": {
+          "year": "戊辰",
+          "month": "己未",
+          "day": "辛未",
+          "hour": "甲午"
+        },
+        "dayun": {
+          "direction": "顺",
+          "qiyun_offset": "7年8月24天4时",
+          "qiyun_date": "1996-04-08",
+          "first3": [
+            {
+              "ganzhi": "庚申",
+              "start_year": 1996,
+              "start_age_xusui": 9
+            },
+            {
+              "ganzhi": "辛酉",
+              "start_year": 2006,
+              "start_age_xusui": 19
+            },
+            {
+              "ganzhi": "壬戌",
+              "start_year": 2016,
+              "start_age_xusui": 29
+            }
+          ]
+        },
+        "strength": {
+          "S": 0.591,
+          "level": "身旺",
+          "special": null,
+          "de_ling": true,
+          "de_di": true,
+          "de_shi": 2,
+          "power": {
+            "木": 0.69,
+            "火": 1.95,
+            "土": 5.08,
+            "金": 0.3,
+            "水": 1.08
+          },
+          "gods": {
+            "比劫": 0.3,
+            "印": 5.08,
+            "食伤": 1.08,
+            "财": 0.69,
+            "官杀": 1.95
+          },
+          "borderline": false
+        },
+        "yongshen": {
+          "yong": "木",
+          "xi": [
+            "水"
+          ],
+          "ji": [
+            "土",
+            "金"
+          ],
+          "xian": [
+            "火"
+          ]
+        },
+        "rules_hit_expected": [
+          "Y-FY-S-YIN"
+        ]
+      },
+      "reasoning": "1988-07-15 处于中国夏令时期间，钟表 11:30 = 标准时间 10:30 → 巳时（癸巳）；不扣夏令时会错排成午时（甲午）。辛金生未月，戊、己两透，辰、未土厚，印 5.08，同党 59% → 身旺；印旺用财：用木（疏土），喜水（癸水透时，淘洗）；忌土、金；火闲。",
+      "verified": "四柱：lunar-python 1.4.8（EightChar.setSect(1)）与 sxtwl 2.0.7 两个库独立计算一致；夏令时：Python zoneinfo（IANA tzdata Asia/Shanghai）确认当日 UTC+9；大运：lunar-python getYun(gender, 2)（按分钟折算）；旺衰/喜用：按 rules/strength.md + yongshen.md v1 写的参考实现（scratchpad，非项目代码）计算，再由 mingli-expert 逐条人工复核，结论认可。"
+    },
+    {
+      "id": "C11",
+      "title": "身旺：戊土比劫重、火局生身",
+      "tags": [
+        "身旺",
+        "三合",
+        "用食伤"
+      ],
+      "input": {
+        "calendar": "solar",
+        "solar_datetime": "1981-10-27 11:28",
+        "solar_date": "1981-10-27",
+        "time_known": true,
+        "gender": "男",
+        "timezone": "Asia/Shanghai",
+        "birthplace": null
+      },
+      "derived": {
+        "utc_offset_hours": 8.0,
+        "beijing_standard_time": "1981-10-27 11:28"
+      },
+      "expected": {
+        "pillars": {
+          "year": "辛酉",
+          "month": "戊戌",
+          "day": "戊寅",
+          "hour": "戊午"
+        },
+        "shensha_ji": [
+          {"name": "天乙贵人", "hits": [{"pos": "日支", "by": ["年干"]}, {"pos": "时支", "by": ["年干"]}]},
+          {"name": "太极贵人", "hits": [{"pos": "月支", "by": ["日干"]}, {"pos": "日支", "by": ["年干"]}]}
+        ],
+        "alt_zi_huanri_school": {
+          "day": "戊寅",
+          "hour": "戊午",
+          "same_as_main": true
+        },
+        "dayun": {
+          "direction": "逆",
+          "qiyun_offset": "6年3月1天14时",
+          "qiyun_date": "1988-01-29",
+          "first3": [
+            {
+              "ganzhi": "丁酉",
+              "start_year": 1988,
+              "start_age_xusui": 8
+            },
+            {
+              "ganzhi": "丙申",
+              "start_year": 1998,
+              "start_age_xusui": 18
+            },
+            {
+              "ganzhi": "乙未",
+              "start_year": 2008,
+              "start_age_xusui": 28
+            }
+          ]
+        },
+        "strength": {
+          "S": 0.679,
+          "level": "身旺",
+          "special": null,
+          "de_ling": true,
+          "de_di": true,
+          "de_shi": 2,
+          "power": {
+            "木": 0.9,
+            "火": 2.95,
+            "土": 4.25,
+            "金": 2.5,
+            "水": 0.0
+          },
+          "gods": {
+            "比劫": 4.25,
+            "印": 2.95,
+            "食伤": 2.5,
+            "财": 0.0,
+            "官杀": 0.9
+          },
+          "borderline": false
+        },
+        "yongshen": {
+          "yong": "金",
+          "xi": [
+            "水"
+          ],
+          "ji": [
+            "土",
+            "火"
+          ],
+          "xian": [
+            "木"
+          ]
+        },
+        "rules_hit_expected": [
+          "S-COMBO:三合寅午戌火+1.5",
+          "Y-FY-S-BI-SHI"
+        ]
+      },
+      "reasoning": "戊土生戌月得令，年月时三戊透出，寅午戌三合火局生身，比劫 4.25、印 2.95，同党 68% → 身旺。比劫重于印；寅中甲木官杀只有 0.9 且已入火局，制不住比劫 → 用食伤金（辛酉年柱泄秀），喜水（财，润燥土，原局无水需运补）；忌土、火；木闲。",
+      "verified": "四柱：lunar-python 1.4.8（EightChar.setSect(1)）与 sxtwl 2.0.7 两个库独立计算一致；大运：lunar-python getYun(gender, 2)（按分钟折算）；旺衰/喜用：按 rules/strength.md + yongshen.md v1 写的参考实现（scratchpad，非项目代码）计算，再由 mingli-expert 逐条人工复核，结论认可。"
+    },
+    {
+      "id": "C12",
+      "title": "身弱：戊土杀重、原局无印",
+      "tags": [
+        "身弱",
+        "杀重",
+        "用神缺位互换"
+      ],
+      "input": {
+        "calendar": "solar",
+        "solar_datetime": "1985-03-10 01:18",
+        "solar_date": "1985-03-10",
+        "time_known": true,
+        "gender": "女",
+        "timezone": "Asia/Shanghai",
+        "birthplace": null
+      },
+      "derived": {
+        "utc_offset_hours": 8.0,
+        "beijing_standard_time": "1985-03-10 01:18"
+      },
+      "expected": {
+        "pillars": {
+          "year": "乙丑",
+          "month": "己卯",
+          "day": "戊申",
+          "hour": "癸丑"
+        },
+        "shensha_ji": [
+          {"name": "天乙贵人", "hits": [{"pos": "年支", "by": ["日干"]}, {"pos": "日支", "by": ["年干"]}, {"pos": "时支", "by": ["日干"]}]},
+          {"name": "文昌贵人", "hits": [{"pos": "日支", "by": ["日干"]}]},
+          {"name": "太极贵人", "hits": [{"pos": "年支", "by": ["日干"]}, {"pos": "时支", "by": ["日干"]}]}
+        ],
+        "alt_zi_huanri_school": {
+          "day": "戊申",
+          "hour": "癸丑",
+          "same_as_main": true
+        },
+        "dayun": {
+          "direction": "顺",
+          "qiyun_offset": "8年8月14天14时",
+          "qiyun_date": "1993-11-24",
+          "first3": [
+            {
+              "ganzhi": "庚辰",
+              "start_year": 1993,
+              "start_age_xusui": 9
+            },
+            {
+              "ganzhi": "辛巳",
+              "start_year": 2003,
+              "start_age_xusui": 19
+            },
+            {
+              "ganzhi": "壬午",
+              "start_year": 2013,
+              "start_age_xusui": 29
+            }
+          ]
+        },
+        "strength": {
+          "S": 0.245,
+          "level": "身弱",
+          "special": null,
+          "de_ling": false,
+          "de_di": true,
+          "de_shi": 1,
+          "power": {
+            "木": 3.8,
+            "火": 0.0,
+            "土": 2.23,
+            "金": 1.08,
+            "水": 1.99
+          },
+          "gods": {
+            "比劫": 2.23,
+            "印": 0.0,
+            "食伤": 1.08,
+            "财": 1.99,
+            "官杀": 3.8
+          },
+          "borderline": false
+        },
+        "yongshen": {
+          "yong": "土",
+          "xi": [
+            "火"
+          ],
+          "ji": [
+            "木",
+            "水"
+          ],
+          "xian": [
+            "金"
+          ]
+        },
+        "rules_hit_expected": [
+          "Y-FY-W-SHA",
+          "Y-SWAP:用神原局不现，与第一喜神互换"
+        ]
+      },
+      "reasoning": "戊土生卯月，乙木透年、卯木当令，官杀 3.8 最重；月干己土与两丑为比劫根（2.23）；申金食伤、癸水财。同党 25% → 身弱。杀重本应取印（火）化杀，但原局一点火都没有 → 用神缺位互换：用土（比劫帮身敌杀），火为第一喜神；忌木、水；金闲。《穷通宝鉴》二月戊土“先用丙火”，火在喜神首位，方向一致。",
+      "verified": "四柱：lunar-python 1.4.8（EightChar.setSect(1)）与 sxtwl 2.0.7 两个库独立计算一致；大运：lunar-python getYun(gender, 2)（按分钟折算）；旺衰/喜用：按 rules/strength.md + yongshen.md v1 写的参考实现（scratchpad，非项目代码）计算，再由 mingli-expert 逐条人工复核，结论认可。"
+    },
+    {
+      "id": "C13",
+      "title": "身弱：夏水财多（小暑前 10 小时）",
+      "tags": [
+        "身弱",
+        "财多身弱",
+        "调候一致",
+        "节气交接-交节前"
+      ],
+      "input": {
+        "calendar": "solar",
+        "solar_datetime": "1967-07-07 18:11",
+        "solar_date": "1967-07-07",
+        "time_known": true,
+        "gender": "男",
+        "timezone": "Asia/Shanghai",
+        "birthplace": null
+      },
+      "derived": {
+        "utc_offset_hours": 8.0,
+        "beijing_standard_time": "1967-07-07 18:11"
+      },
+      "jieqi_reference": {
+        "name": "小暑",
+        "time_beijing": "1967-07-08 03:53:29",
+        "note": "交节前约 10 小时 → 仍是丙午月"
+      },
+      "expected": {
+        "pillars": {
+          "year": "丁未",
+          "month": "丙午",
+          "day": "壬申",
+          "hour": "己酉"
+        },
+        "shensha_ji": [
+          {"name": "天乙贵人", "hits": [{"pos": "时支", "by": ["年干"]}]},
+          {"name": "月德贵人", "hits": [{"pos": "月干", "by": ["月支"]}]},
+          {"name": "文昌贵人", "hits": [{"pos": "时支", "by": ["年干"]}]},
+          {"name": "太极贵人", "hits": [{"pos": "日支", "by": ["日干"]}, {"pos": "时支", "by": ["年干"]}]}
+        ],
+        "alt_zi_huanri_school": {
+          "day": "壬申",
+          "hour": "己酉",
+          "same_as_main": true
+        },
+        "dayun": {
+          "direction": "逆",
+          "qiyun_offset": "10年4月2天22时",
+          "qiyun_date": "1977-11-10",
+          "first3": [
+            {
+              "ganzhi": "乙巳",
+              "start_year": 1977,
+              "start_age_xusui": 11
+            },
+            {
+              "ganzhi": "甲辰",
+              "start_year": 1987,
+              "start_age_xusui": 21
+            },
+            {
+              "ganzhi": "癸卯",
+              "start_year": 1997,
+              "start_age_xusui": 31
+            }
+          ]
+        },
+        "strength": {
+          "S": 0.258,
+          "level": "身弱",
+          "special": null,
+          "de_ling": false,
+          "de_di": true,
+          "de_shi": 0,
+          "power": {
+            "木": 0.08,
+            "火": 4.14,
+            "土": 2.53,
+            "金": 1.9,
+            "水": 0.45
+          },
+          "gods": {
+            "比劫": 0.45,
+            "印": 1.9,
+            "食伤": 0.08,
+            "财": 4.14,
+            "官杀": 2.53
+          },
+          "borderline": false
+        },
+        "yongshen": {
+          "yong": "水",
+          "xi": [
+            "金"
+          ],
+          "ji": [
+            "火",
+            "土"
+          ],
+          "xian": [
+            "木"
+          ]
+        },
+        "rules_hit_expected": [
+          "Y-FY-W-CAI",
+          "Y-TH-AGREE"
+        ]
+      },
+      "reasoning": "壬水生午月，丁、丙透年月，午、未火土成势，财 4.14 最重，己土官杀 2.53；申、酉金为印 1.9，无比劫透出。同党 26% → 身弱。财多身弱用比劫：用水，喜金；忌火、土；木闲。夏月水只占约 5%，调候也要水，与扶抑一致；与《穷通宝鉴》五月壬水“取癸为用、庚辛为佐”一致。",
+      "verified": "四柱：lunar-python 1.4.8（EightChar.setSect(1)）与 sxtwl 2.0.7 两个库独立计算一致；小暑时刻：PyEphem 4.x（VSOP87，视黄经）独立计算，与 lunar-python 结果相差 < 15 秒；大运：lunar-python getYun(gender, 2)（按分钟折算）；旺衰/喜用：按 rules/strength.md + yongshen.md v1 写的参考实现（scratchpad，非项目代码）计算，再由 mingli-expert 逐条人工复核，结论认可。"
+    },
+    {
+      "id": "C14",
+      "title": "从财格：丁火满盘金",
+      "tags": [
+        "从格",
+        "从财"
+      ],
+      "input": {
+        "calendar": "solar",
+        "solar_datetime": "1968-09-24 18:19",
+        "solar_date": "1968-09-24",
+        "time_known": true,
+        "gender": "女",
+        "timezone": "Asia/Shanghai",
+        "birthplace": null
+      },
+      "derived": {
+        "utc_offset_hours": 8.0,
+        "beijing_standard_time": "1968-09-24 18:19"
+      },
+      "expected": {
+        "pillars": {
+          "year": "戊申",
+          "month": "辛酉",
+          "day": "丁酉",
+          "hour": "己酉"
+        },
+        "shensha_ji": [
+          {"name": "天乙贵人", "hits": [{"pos": "月支", "by": ["日干"]}, {"pos": "日支", "by": ["日干"]}, {"pos": "时支", "by": ["日干"]}]},
+          {"name": "文昌贵人", "hits": [{"pos": "年支", "by": ["年干"]}, {"pos": "月支", "by": ["日干"]}, {"pos": "日支", "by": ["日干"]}, {"pos": "时支", "by": ["日干"]}]},
+          {"name": "太极贵人", "hits": [{"pos": "月支", "by": ["日干"]}, {"pos": "日支", "by": ["日干"]}, {"pos": "时支", "by": ["日干"]}]}
+        ],
+        "alt_zi_huanri_school": {
+          "day": "丁酉",
+          "hour": "己酉",
+          "same_as_main": true
+        },
+        "dayun": {
+          "direction": "逆",
+          "qiyun_offset": "5年7月10天16时",
+          "qiyun_date": "1974-05-05",
+          "first3": [
+            {
+              "ganzhi": "庚申",
+              "start_year": 1974,
+              "start_age_xusui": 7
+            },
+            {
+              "ganzhi": "己未",
+              "start_year": 1984,
+              "start_age_xusui": 17
+            },
+            {
+              "ganzhi": "戊午",
+              "start_year": 1994,
+              "start_age_xusui": 27
+            }
+          ]
+        },
+        "strength": {
+          "S": 0.0,
+          "level": "从弱",
+          "special": "从财",
+          "de_ling": false,
+          "de_di": false,
+          "de_shi": 0,
+          "power": {
+            "木": 0.0,
+            "火": 0.0,
+            "土": 1.88,
+            "金": 6.98,
+            "水": 0.24
+          },
+          "gods": {
+            "比劫": 0.0,
+            "印": 0.0,
+            "食伤": 1.88,
+            "财": 6.98,
+            "官杀": 0.24
+          },
+          "borderline": false
+        },
+        "yongshen": {
+          "yong": "金",
+          "xi": [
+            "土"
+          ],
+          "ji": [
+            "火",
+            "木"
+          ],
+          "xian": [
+            "水"
+          ]
+        },
+        "rules_hit_expected": [
+          "S-CONG:从财",
+          "Y-CONG"
+        ]
+      },
+      "reasoning": "丁火生酉月，申酉酉酉加辛金透月干，财 6.98；戊、己食伤透出生财。四个地支的藏干里完全没有火、木（连余气都没有），三干也无印比 → 同党 0%，满足“真从”全部条件 → 从财格。顺势：用金，喜土；忌比劫火、印木；水（官杀 0.24）闲。",
+      "verified": "四柱：lunar-python 1.4.8（EightChar.setSect(1)）与 sxtwl 2.0.7 两个库独立计算一致；大运：lunar-python getYun(gender, 2)（按分钟折算）；旺衰/喜用：按 rules/strength.md + yongshen.md v1 写的参考实现（scratchpad，非项目代码）计算，再由 mingli-expert 逐条人工复核，结论认可。"
+    },
+    {
+      "id": "C15",
+      "title": "专旺格（曲直）：乙木亥卯未",
+      "tags": [
+        "从格",
+        "专旺",
+        "从强",
+        "三合"
+      ],
+      "input": {
+        "calendar": "solar",
+        "solar_datetime": "1983-03-28 14:43",
+        "solar_date": "1983-03-28",
+        "time_known": true,
+        "gender": "男",
+        "timezone": "Asia/Shanghai",
+        "birthplace": null
+      },
+      "derived": {
+        "utc_offset_hours": 8.0,
+        "beijing_standard_time": "1983-03-28 14:43"
+      },
+      "expected": {
+        "pillars": {
+          "year": "癸亥",
+          "month": "乙卯",
+          "day": "乙卯",
+          "hour": "癸未"
+        },
+        "shensha_ji": [
+          {"name": "天乙贵人", "hits": [{"pos": "月支", "by": ["年干"]}, {"pos": "日支", "by": ["年干"]}]},
+          {"name": "文昌贵人", "hits": [{"pos": "月支", "by": ["年干"]}, {"pos": "日支", "by": ["年干"]}]}
+        ],
+        "alt_zi_huanri_school": {
+          "day": "乙卯",
+          "hour": "癸未",
+          "same_as_main": true
+        },
+        "dayun": {
+          "direction": "逆",
+          "qiyun_offset": "7年4月14天16时",
+          "qiyun_date": "1990-08-12",
+          "first3": [
+            {
+              "ganzhi": "甲寅",
+              "start_year": 1990,
+              "start_age_xusui": 8
+            },
+            {
+              "ganzhi": "癸丑",
+              "start_year": 2000,
+              "start_age_xusui": 18
+            },
+            {
+              "ganzhi": "壬子",
+              "start_year": 2010,
+              "start_age_xusui": 28
+            }
+          ]
+        },
+        "strength": {
+          "S": 0.915,
+          "level": "从强",
+          "special": "专旺",
+          "de_ling": true,
+          "de_di": true,
+          "de_shi": 3,
+          "power": {
+            "木": 7.34,
+            "火": 0.3,
+            "土": 0.6,
+            "金": 0.0,
+            "水": 2.36
+          },
+          "gods": {
+            "比劫": 7.34,
+            "印": 2.36,
+            "食伤": 0.3,
+            "财": 0.6,
+            "官杀": 0.0
+          },
+          "borderline": false
+        },
+        "yongshen": {
+          "yong": "木",
+          "xi": [
+            "水",
+            "火"
+          ],
+          "ji": [
+            "金",
+            "土"
+          ],
+          "xian": []
+        },
+        "rules_hit_expected": [
+          "S-COMBO:三合亥卯未木+1.5",
+          "S-ZHUANWANG:专旺",
+          "Y-ZHUANWANG"
+        ]
+      },
+      "reasoning": "乙木生卯月建禄，亥卯未三合木局，月日两乙透出，年时两癸生木，同党 92%；原局无金（官杀 0），财只有未中己土 0.6（<10%）→ 专旺（曲直格）。顺其旺势：用木，喜水（印）、火（食伤泄秀）；忌金、土。",
+      "verified": "四柱：lunar-python 1.4.8（EightChar.setSect(1)）与 sxtwl 2.0.7 两个库独立计算一致；大运：lunar-python getYun(gender, 2)（按分钟折算）；旺衰/喜用：按 rules/strength.md + yongshen.md v1 写的参考实现（scratchpad，非项目代码）计算，再由 mingli-expert 逐条人工复核，结论认可。"
+    },
+    {
+      "id": "C16",
+      "title": "中和 + 冬木调候：乙木丑月取火",
+      "tags": [
+        "中和",
+        "调候",
+        "调候覆盖用神"
+      ],
+      "input": {
+        "calendar": "solar",
+        "solar_datetime": "1994-01-09 06:45",
+        "solar_date": "1994-01-09",
+        "time_known": true,
+        "gender": "女",
+        "timezone": "Asia/Shanghai",
+        "birthplace": null
+      },
+      "derived": {
+        "utc_offset_hours": 8.0,
+        "beijing_standard_time": "1994-01-09 06:45"
+      },
+      "expected": {
+        "pillars": {
+          "year": "癸酉",
+          "month": "乙丑",
+          "day": "乙未",
+          "hour": "己卯"
+        },
+        "shensha_ji": [
+          {"name": "天乙贵人", "hits": [{"pos": "时支", "by": ["年干"]}]},
+          {"name": "文昌贵人", "hits": [{"pos": "时支", "by": ["年干"]}]}
+        ],
+        "alt_zi_huanri_school": {
+          "day": "乙未",
+          "hour": "己卯",
+          "same_as_main": true
+        },
+        "dayun": {
+          "direction": "顺",
+          "qiyun_offset": "8年8月13天18时",
+          "qiyun_date": "2002-09-23",
+          "first3": [
+            {
+              "ganzhi": "丙寅",
+              "start_year": 2002,
+              "start_age_xusui": 9
+            },
+            {
+              "ganzhi": "丁卯",
+              "start_year": 2012,
+              "start_age_xusui": 19
+            },
+            {
+              "ganzhi": "戊辰",
+              "start_year": 2022,
+              "start_age_xusui": 29
+            }
+          ]
+        },
+        "strength": {
+          "S": 0.423,
+          "level": "中和偏弱",
+          "special": null,
+          "de_ling": false,
+          "de_di": true,
+          "de_shi": 2,
+          "power": {
+            "木": 2.15,
+            "火": 0.45,
+            "土": 3.7,
+            "金": 1.1,
+            "水": 1.7
+          },
+          "gods": {
+            "比劫": 2.15,
+            "印": 1.7,
+            "食伤": 0.45,
+            "财": 3.7,
+            "官杀": 1.1
+          },
+          "borderline": false
+        },
+        "yongshen": {
+          "yong": "火",
+          "xi": [
+            "木"
+          ],
+          "ji": [
+            "土",
+            "金"
+          ],
+          "xian": [
+            "水"
+          ]
+        },
+        "rules_hit_expected": [
+          "Y-FY-W-CAI",
+          "Y-TH-NEUTRAL-OVERRIDE"
+        ]
+      },
+      "reasoning": "乙木生丑月，失令；卯时比劫有根、癸水印透年，丑未土为财（3.7）。同党 42% → 中和偏弱，扶抑本取比劫木。但丑月严寒，火只占全盘约 5% → 中和命局由调候做主：用火，木降为喜神；水是寒气来源，从喜神里删去，列闲；忌土、金。与《穷通宝鉴》十二月乙木“专用丙火”一致。公历 1994 年 1 月，年柱仍是癸酉（未过立春）。",
+      "verified": "四柱：lunar-python 1.4.8（EightChar.setSect(1)）与 sxtwl 2.0.7 两个库独立计算一致；大运：lunar-python getYun(gender, 2)（按分钟折算）；旺衰/喜用：按 rules/strength.md + yongshen.md v1 写的参考实现（scratchpad，非项目代码）计算，再由 mingli-expert 逐条人工复核，结论认可。"
+    },
+    {
+      "id": "C17",
+      "title": "从杀格：癸水满盘土",
+      "tags": [
+        "从格",
+        "从杀"
+      ],
+      "input": {
+        "calendar": "solar",
+        "solar_datetime": "1998-08-04 12:27",
+        "solar_date": "1998-08-04",
+        "time_known": true,
+        "gender": "男",
+        "timezone": "Asia/Shanghai",
+        "birthplace": null
+      },
+      "derived": {
+        "utc_offset_hours": 8.0,
+        "beijing_standard_time": "1998-08-04 12:27"
+      },
+      "expected": {
+        "pillars": {
+          "year": "戊寅",
+          "month": "己未",
+          "day": "癸未",
+          "hour": "戊午"
+        },
+        "shensha_ji": [
+          {"name": "天乙贵人", "hits": [{"pos": "月支", "by": ["年干"]}, {"pos": "日支", "by": ["年干"]}]},
+          {"name": "太极贵人", "hits": [{"pos": "月支", "by": ["年干"]}, {"pos": "日支", "by": ["年干"]}]}
+        ],
+        "alt_zi_huanri_school": {
+          "day": "癸未",
+          "hour": "戊午",
+          "same_as_main": true
+        },
+        "dayun": {
+          "direction": "顺",
+          "qiyun_offset": "1年2月4天8时",
+          "qiyun_date": "1999-10-08",
+          "first3": [
+            {
+              "ganzhi": "庚申",
+              "start_year": 1999,
+              "start_age_xusui": 2
+            },
+            {
+              "ganzhi": "辛酉",
+              "start_year": 2009,
+              "start_age_xusui": 12
+            },
+            {
+              "ganzhi": "壬戌",
+              "start_year": 2019,
+              "start_age_xusui": 22
+            }
+          ]
+        },
+        "strength": {
+          "S": 0.0,
+          "level": "从弱",
+          "special": "从杀",
+          "de_ling": false,
+          "de_di": false,
+          "de_shi": 0,
+          "power": {
+            "木": 0.93,
+            "火": 2.29,
+            "土": 5.88,
+            "金": 0.0,
+            "水": 0.0
+          },
+          "gods": {
+            "比劫": 0.0,
+            "印": 0.0,
+            "食伤": 0.93,
+            "财": 2.29,
+            "官杀": 5.88
+          },
+          "borderline": false
+        },
+        "yongshen": {
+          "yong": "土",
+          "xi": [
+            "火"
+          ],
+          "ji": [
+            "金",
+            "水",
+            "木"
+          ],
+          "xian": []
+        },
+        "rules_hit_expected": [
+          "S-CONG:从杀",
+          "Y-CONG"
+        ]
+      },
+      "reasoning": "癸水生未月，戊土两透、己土透月，未未加午中己土，官杀 5.88；午、未中丁火为财 2.29，生杀。四支藏干无金、无水，三干无印比 → 从杀格。顺势：用土，喜火（财生杀）；忌印金、比劫水、食伤木（寅中甲木制杀，破格）。",
+      "verified": "四柱：lunar-python 1.4.8（EightChar.setSect(1)）与 sxtwl 2.0.7 两个库独立计算一致；大运：lunar-python getYun(gender, 2)（按分钟折算）；旺衰/喜用：按 rules/strength.md + yongshen.md v1 写的参考实现（scratchpad，非项目代码）计算，再由 mingli-expert 逐条人工复核，结论认可。"
+    },
+    {
+      "id": "C18",
+      "title": "不知道时辰：三柱 + 12 时辰扫描（高置信）",
+      "tags": [
+        "无时辰",
+        "三柱",
+        "身弱",
+        "夏令时期间"
+      ],
+      "input": {
+        "calendar": "solar",
+        "solar_datetime": null,
+        "solar_date": "1990-05-20",
+        "time_known": false,
+        "gender": "女",
+        "timezone": "Asia/Shanghai",
+        "birthplace": null
+      },
+      "derived": {
+        "utc_offset_hours": 9.0,
+        "beijing_standard_time": null
+      },
+      "expected": {
+        "pillars": {
+          "year": "庚午",
+          "month": "辛巳",
+          "day": "乙酉",
+          "hour": null
+        },
+        "shensha_ji": [
+          {"name": "月德贵人", "hits": [{"pos": "年干", "by": ["月支"]}]},
+          {"name": "文昌贵人", "hits": [{"pos": "年支", "by": ["日干"]}]},
+          {"name": "太极贵人", "hits": [{"pos": "年支", "by": ["日干"]}]}
+        ],
+        "no_hour": {
+          "scan_slots": 13,
+          "direction_agree": 13,
+          "yong_agree": 10,
+          "added_late_zi_slot": {
+            "hour": "戊子",
+            "S": 0.11,
+            "level": "身弱",
+            "yong": "水",
+            "note": "v2 手算：木 0、火 2.36、土 1.54、金 4.2、水 1.0，总 9.1；同党 1.0 → S 0.110。S<0.20 但时支子为印（癸水本气），不满足从弱条件 3 → 身弱；异党最强官杀金 4.2 → Y-FY-W-SHA 用水；水占 11% ≥ 10%，不触发调候。方向、用神均与三柱一致。"
+          },
+          "confidence": "高",
+          "cong_possible_hours": [
+            "辛巳",
+            "丙戌"
+          ]
+        },
+        "strength": {
+          "S": 0.0,
+          "level": "身弱",
+          "special": null,
+          "de_ling": false,
+          "de_di": false,
+          "de_shi": 0,
+          "power": {
+            "木": 0.0,
+            "火": 2.36,
+            "土": 0.54,
+            "金": 4.2,
+            "水": 0.0
+          },
+          "gods": {
+            "比劫": 0.0,
+            "印": 0.0,
+            "食伤": 2.36,
+            "财": 0.54,
+            "官杀": 4.2
+          },
+          "borderline": false
+        },
+        "yongshen": {
+          "yong": "水",
+          "xi": [
+            "木"
+          ],
+          "ji": [
+            "金",
+            "火"
+          ],
+          "xian": [
+            "土"
+          ]
+        },
+        "rules_hit_expected": [
+          "Y-FY-W-SHA",
+          "Y-TH-AGREE"
+        ]
+      },
+      "reasoning": "只有三柱：乙木生巳月，庚、辛透年月，酉金坐下，官杀 4.2；巳、午火食伤 2.36；三柱里没有水、没有木根，同党 0%。三柱不判从格 → 身弱（极弱）。杀重用印：用水，喜木；忌金、火；土闲。与《穷通宝鉴》四月乙木“癸水为用”一致。时辰扫描（v2，13 个时柱）：13 个全部偏弱、10 个用水 → 高置信（13/13 ≥ 0.80，10/13 ≈ 0.77 ≥ 0.75）；但若生于辛巳时或丙戌时会成从格，需在付费页提示。",
+      "verified": "三柱：lunar-python 1.4.8 与 sxtwl 2.0.7 两个库独立计算一致（无时辰，与子时口径无关）；夏令时：Python zoneinfo（IANA tzdata Asia/Shanghai）确认当日 UTC+9；三柱旺衰/喜用与原 12 个时柱的扫描：v1 参考实现（scratchpad，非项目代码）计算 + mingli-expert 人工复核；v2 新增的晚子戊子时一项为人工手算（见 no_hour.added_late_zi_slot），未用代码重跑；吉神为人工查表。"
+    },
+    {
+      "id": "C19",
+      "title": "不知道时辰 + 出生当天立春交节（年月柱不确定）",
+      "tags": [
+        "无时辰",
+        "三柱",
+        "节气交接-当天",
+        "置信度-低"
+      ],
+      "input": {
+        "calendar": "solar",
+        "solar_datetime": null,
+        "solar_date": "2024-02-04",
+        "time_known": false,
+        "gender": "男",
+        "timezone": "Asia/Shanghai",
+        "birthplace": null
+      },
+      "derived": {
+        "utc_offset_hours": 8.0,
+        "beijing_standard_time": null
+      },
+      "jieqi_reference": {
+        "name": "立春",
+        "time_beijing": "2024-02-04 16:26:56",
+        "note": "当天交节：00:00–16:26 为癸卯年乙丑月；约 16:27 以后为甲辰年丙寅月。早晚子时派下 23:00–23:59 日柱仍是戊戌（不变成己亥），时柱为甲子（按次日己亥的“甲己日甲子时”起）"
+      },
+      "expected": {
+        "pillars": {
+          "year": "癸卯",
+          "month": "乙丑",
+          "day": "戊戌",
+          "hour": null
+        },
+        "shensha_ji": [
+          {"name": "天乙贵人", "hits": [{"pos": "年支", "by": ["年干"]}, {"pos": "月支", "by": ["日干"]}]},
+          {"name": "文昌贵人", "hits": [{"pos": "年支", "by": ["年干"]}]},
+          {"name": "太极贵人", "hits": [{"pos": "月支", "by": ["日干"]}, {"pos": "日支", "by": ["日干"]}]}
+        ],
+        "shensha_ji_alt_group": [
+          {"name": "月德贵人", "hits": [{"pos": "月干", "by": ["月支"]}]},
+          {"name": "太极贵人", "hits": [{"pos": "年支", "by": ["日干"]}, {"pos": "日支", "by": ["日干"]}]}
+        ],
+        "shensha_ji_display_if_uncertain": [
+          {"name": "太极贵人", "hits": [{"pos": "日支", "by": ["日干"]}]}
+        ],
+        "no_hour": {
+          "scan_slots": 13,
+          "direction_agree": 9,
+          "yong_agree": 5,
+          "added_late_zi_slot": {
+            "hour": "甲子",
+            "S": 0.313,
+            "level": "身弱",
+            "yong": "火",
+            "note": "v2 手算：木 2.8、火 0.15、土 2.7、金 0.75、水 2.7，总 9.1；同党 2.85 → S 0.313；异党最强官杀木 2.8 → Y-FY-W-SHA 用火（0.15>0 不互换），丑月火<10% → Y-TH-AGREE。方向、用神均与三柱一致。"
+          },
+          "confidence": "低",
+          "cong_possible_hours": [],
+          "uncertain_year_month": [
+            [
+              "癸卯",
+              "乙丑"
+            ],
+            [
+              "甲辰",
+              "丙寅"
+            ]
+          ],
+          "alt_conclusion": {
+            "pillars": [
+              "甲辰",
+              "丙寅",
+              "戊戌"
+            ],
+            "level": "身旺",
+            "S": 0.525,
+            "yong": "水",
+            "xi": [
+              "金"
+            ],
+            "ji": [
+              "火",
+              "土"
+            ]
+          }
+        },
+        "strength": {
+          "S": 0.401,
+          "level": "中和偏弱",
+          "special": null,
+          "de_ling": true,
+          "de_di": true,
+          "de_shi": 0,
+          "power": {
+            "木": 1.8,
+            "火": 0.15,
+            "土": 2.7,
+            "金": 0.75,
+            "水": 1.7
+          },
+          "gods": {
+            "比劫": 2.7,
+            "印": 0.15,
+            "食伤": 0.75,
+            "财": 1.7,
+            "官杀": 1.8
+          },
+          "borderline": true
+        },
+        "yongshen": {
+          "yong": "火",
+          "xi": [
+            "土"
+          ],
+          "ji": [
+            "木",
+            "水"
+          ],
+          "xian": [
+            "金"
+          ]
+        },
+        "rules_hit_expected": [
+          "Y-FY-W-SHA",
+          "Y-TH-AGREE"
+        ]
+      },
+      "reasoning": "按规则以当天 12:00 计算：癸卯、乙丑、戊戌，同党 40.1%（贴近 0.40 阈值，borderline）→ 中和偏弱，用火、喜土、忌木水、金闲；时辰扫描（v2，13 个时柱，含新增的晚子甲子时）方向一致 9/13、用神一致 5/13，按比例本为“中”。另一组年月柱（甲辰、丙寅、戊戌）结论为身旺、用水，与之相反 → 置信度定为“低”，免费页喜用神标“仅供参考”，并提示用户补充是否在 16:27 之后出生。吉神（日干、年干兼查）：默认三柱（年干癸）为天乙贵人（年支·年干、月支·日干）、文昌贵人（年支·年干）、太极贵人（月支、日支·日干）；另一组甲辰、丙寅（年干甲）为月德贵人（月干）、太极贵人（年支、日支·日干）；用户选“不确定”时只展示两组共有的太极贵人（日支）。",
+      "verified": "三柱：lunar-python 1.4.8 与 sxtwl 2.0.7 两个库独立计算一致；立春时刻：PyEphem 4.x（VSOP87，视黄经）独立计算，与 lunar-python 结果相差 < 15 秒；三柱旺衰/喜用与原 12 个时柱的扫描：v1 参考实现（scratchpad，非项目代码）计算 + mingli-expert 人工复核；v2 新增的晚子甲子时一项为人工手算（见 no_hour.added_late_zi_slot），未用代码重跑；吉神为人工查表。"
+    }
+  ]
+}
