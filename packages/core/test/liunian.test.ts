@@ -2,14 +2,15 @@
  * T10：流年表与参考日期（rules/calendar.md §8 末条、report-sections.md §8.2）。
  * - 起始年 = 参考日期所在干支年（立春为界，交节时刻本身属新年），连续 5 年。
  * - 参考日期在立春前后各一个用例；同一出生信息、不同 refDate 起始年不同；流年年份与干支一一对应。
- * - 所在大运：流年跨两步大运时取立春交节时刻所在的那一步；尚未起运 / 超出 8 步为 null。
+ * - 所在大运：流年跨两步大运时取立春交节时刻所在的那一步；尚未起运为 null；
+ *   超出 8 步按顺逆规则继续推第 9 步及以后（高龄用户）。
  * cases.json 中没有流年期望字段（流年随参考日期变化），故只有本文件的用例，无 PENDING_FIELDS 变动。
  */
 import { describe, expect, it } from 'vitest';
 import { tymePillarsAt } from '../src/bazi/calendar-adapter';
 import { clockToUtc } from '../src/bazi/clock';
-import { computeDayun } from '../src/bazi/dayun';
-import { ganZhiIndex, type GanZhi } from '../src/bazi/ganzhi';
+import { computeDayun, dayunStepGanzhi } from '../src/bazi/dayun';
+import { ganZhiAt, ganZhiIndex, type GanZhi } from '../src/bazi/ganzhi';
 import {
   computeLiunian,
   dayunAtBeijing,
@@ -188,12 +189,47 @@ describe('所在大运（立春交节时刻所在的那一步）', () => {
     expect(dayunAtBeijing(d, '2020-02-04 03:07:59')).toBeNull();
   });
 
-  it('超出 8 步大运（起运后 80 年）为 null', () => {
-    // C01 第 8 步丁巳 2103-12-01 起，至 2113-12-01 止；2100 年参考日期可覆盖到 2104
+  it('超出 8 步大运（起运后 80 年）：按顺逆继续推第 9 步，不为 null', () => {
+    // C01 逆排，第 8 步丁巳 2103-12-01 起，第 9 步丙辰 2113-12-01 起
     const ln = computeLiunian(bj('2100-06-01', '12:00'), C01_DAYUN);
     expect(ln.map((x) => x.dayun)).toEqual(['戊午', '戊午', '戊午', '戊午', '丁巳']);
     expect(dayunAtBeijing(C01_DAYUN, '2113-12-01 08:09:59')).toBe('丁巳');
-    expect(dayunAtBeijing(C01_DAYUN, '2113-12-01 08:10:00')).toBeNull();
+    expect(dayunAtBeijing(C01_DAYUN, '2113-12-01 08:10:00')).toBe('丙辰');
+    expect(dayunAtBeijing(C01_DAYUN, '2123-12-01 08:10:00')).toBe('乙卯');
+    expect(C01_DAYUN.steps).toHaveLength(8); // 对外大运表不变
+  });
+
+  it('1930 年出生、参考日期 2026 年（90 余岁）：流年大运落在第 9、10 步', () => {
+    const utcMs = bj('1930-05-15', '10:00');
+    const ym = computeYearMonth(utcMs);
+    const d = computeDayun(utcMs, '男', ym).dayun;
+    expect(d.steps).toHaveLength(8);
+    const ln = computeLiunian(bj('2026-10-29', '12:00'), d);
+    for (const x of ln) {
+      expect(x.dayun).not.toBeNull();
+      // 立春所在步序 i → 干支 = 月柱按顺逆推 i + 1 位
+      const qy = Number(d.qiyunTime.slice(0, 4));
+      let i = Math.floor((x.year - qy) / 10);
+      if (x.lichun.slice(5, 16) < d.qiyunTime.slice(5, 16) && (x.year - qy) % 10 === 0) i -= 1;
+      expect(i).toBeGreaterThanOrEqual(8);
+      const step = d.direction === '顺' ? i + 1 : -(i + 1);
+      expect(x.dayun, `${x.year}`).toBe(ganZhiAt(ganZhiIndex(ym.month) + step));
+      expect(x.dayun).toBe(dayunStepGanzhi(d, i));
+    }
+  });
+
+  it('dayunStepGanzhi：前 8 步与大运表一致，顺逆各自连续推进', () => {
+    for (const g of ['男', '女'] as const) {
+      const d = dayunOf('1990-08-08', '08:00', g);
+      d.steps.forEach((s, i) => expect(dayunStepGanzhi(d, i)).toBe(s.ganzhi));
+      const delta = d.direction === '顺' ? 1 : 59;
+      for (let i = 8; i < 15; i++) {
+        expect(ganZhiIndex(dayunStepGanzhi(d, i))).toBe(
+          (ganZhiIndex(dayunStepGanzhi(d, i - 1)) + delta) % 60,
+        );
+      }
+    }
+    expect(() => dayunStepGanzhi(C01_DAYUN, -1)).toThrow();
   });
 
   it('2 月 29 日起运：平年换运时刻按 2 月 28 日之后、3 月 1 日之前处理', () => {

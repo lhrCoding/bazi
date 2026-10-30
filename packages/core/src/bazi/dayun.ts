@@ -100,6 +100,17 @@ export function zhousuiAt(birth: DateTimeParts, at: DateTimeParts): number {
   return at.year - birth.year - (beforeBirthday ? 1 : 0);
 }
 
+/**
+ * 第 i 步（0 起）大运干支，i 可超过 DAYUN_STEP_COUNT − 1：按同一顺逆规则从第 1 步继续顺推 / 逆推。
+ * 内部用于高龄用户的流年「所在大运」归属；对外的大运表仍只有 8 步。
+ */
+export function dayunStepGanzhi(dayun: Dayun, i: number): GanZhi {
+  if (!Number.isInteger(i) || i < 0) throw new Error('大运步序不合法');
+  const first = dayun.steps[0];
+  if (first === undefined) throw new Error('大运表为空');
+  return ganZhiAt(ganZhiIndex(first.ganzhi) + (dayun.direction === '顺' ? i : -i));
+}
+
 const pad = (n: number, w = 2) => String(n).padStart(w, '0');
 
 /**

@@ -8,10 +8,12 @@
  * - 所在大运：流年跨两步大运时，取**立春交节时刻**所在的那一步（report-sections.md §8.2）。
  *   第 i 步大运（0 起）自「起运时刻 + 10·i 年」起，至下一步开始前止；起运时刻取 dayun.qiyunTime（精确到分钟），
  *   年份加 10·i、月日时分不变（2 月 29 日起运时，平年按字符串顺序落在 2 月 28 日与 3 月 1 日之间）。
- *   立春早于起运时刻 → 尚未起运，dayun = null；晚于第 8 步结束（起运后 80 年）→ 超出已排大运，dayun = null。
+ *   立春早于起运时刻 → 尚未起运，dayun = null。
+ *   晚于第 8 步结束（起运后 80 年，高龄用户）→ 按同一顺逆规则继续推第 9 步及以后（dayunStepGanzhi），
+ *   只用于流年归属；computeDayun 对外的 8 步大运表不变。
  */
 import { solarTermMoment } from './calendar-adapter';
-import { DAYUN_STEP_YEARS } from './dayun';
+import { dayunStepGanzhi, DAYUN_STEP_YEARS } from './dayun';
 import { ganZhiAt } from './ganzhi';
 import { formatBeijing, toBeijingParts } from './time';
 import type { Dayun, LiunianYear } from './types';
@@ -49,19 +51,17 @@ export function liunianStartYear(refUtcMs: number): number {
 const withYear = (time: string, year: number) => `${String(year).padStart(4, '0')}${time.slice(4)}`;
 
 /**
- * 某一时刻（北京时间 'YYYY-MM-DD HH:MM:SS'）所在的大运干支；尚未起运或超出 8 步为 null。
+ * 某一时刻（北京时间 'YYYY-MM-DD HH:MM:SS'）所在的大运干支；尚未起运为 null。
+ * 超出已排的 8 步时按顺逆规则继续推算（第 9 步及以后）。
  */
 export function dayunAtBeijing(dayun: Dayun, beijing: string): LiunianYear['dayun'] {
   const moment = beijing.slice(0, 16); // 精确到分钟，与 qiyunTime 同口径
   const qiyunYear = Number(dayun.qiyunTime.slice(0, 4));
-  let found: LiunianYear['dayun'] = null;
-  for (let i = 0; i < dayun.steps.length; i++) {
-    const start = withYear(dayun.qiyunTime, qiyunYear + DAYUN_STEP_YEARS * i);
-    if (moment >= start) found = (dayun.steps[i] as Dayun['steps'][number]).ganzhi;
-  }
-  if (found === null) return null;
-  const end = withYear(dayun.qiyunTime, qiyunYear + DAYUN_STEP_YEARS * dayun.steps.length);
-  return moment >= end ? null : found;
+  const startOf = (i: number) => withYear(dayun.qiyunTime, qiyunYear + DAYUN_STEP_YEARS * i);
+  if (moment < startOf(0)) return null;
+  let i = 0;
+  while (moment >= startOf(i + 1)) i++;
+  return dayunStepGanzhi(dayun, i);
 }
 
 /**

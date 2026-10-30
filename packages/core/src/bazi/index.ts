@@ -40,6 +40,7 @@ export {
   addQiyunOffset,
   computeDayun,
   dayunDirection,
+  dayunStepGanzhi,
   isYangGan,
   qiyunOffsetOf,
   zhousuiAt,
