@@ -48,3 +48,10 @@ export {
   type DayunOptions,
   type DayunResult,
 } from './dayun';
+export {
+  computeLiunian,
+  dayunAtBeijing,
+  lichunUtcMs,
+  liunianStartYear,
+  LIUNIAN_YEAR_COUNT,
+} from './liunian';
