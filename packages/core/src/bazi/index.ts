@@ -57,3 +57,16 @@ export {
   LIUNIAN_YEAR_COUNT,
 } from './liunian';
 export { computeNoHour, NO_HOUR_DEFAULT_TIME, type NoHourResult } from './no-hour';
+export {
+  HIDDEN_STEMS,
+  TEN_GOD_NAMES,
+  ganWuXing,
+  tenGodOf,
+  type StemTenGod,
+  type TenGod,
+  type WuXingName,
+} from './ten-gods';
+export { describeUtc } from './clock';
+export * from './schema';
+export { ENGINE_VERSION } from './version';
+export { computeChart } from './chart';

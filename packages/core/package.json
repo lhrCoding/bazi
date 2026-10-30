@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "luxon": "3.7.2",
-    "tyme4ts": "1.5.4"
+    "tyme4ts": "1.5.4",
+    "zod": "4.6.7"
   }
 }

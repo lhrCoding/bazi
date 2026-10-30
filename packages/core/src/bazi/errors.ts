@@ -16,7 +16,13 @@ export type BaziErrorCode =
   /** 农历：所选年份没有这个闰月（CAL-INPUT） */
   | 'E_LUNAR_NO_LEAP'
   /** 农历：该月是小月（29 天），没有三十（CAL-INPUT） */
-  | 'E_LUNAR_DAY_OVERFLOW';
+  | 'E_LUNAR_DAY_OVERFLOW'
+  /** 出生信息结构不合法（缺字段、多字段、类型或格式不对；computeChart 的 Zod 输入校验） */
+  | 'E_INVALID_INPUT'
+  /** 出生地代码在地区表中不存在 */
+  | 'E_UNKNOWN_PLACE'
+  /** 参考日期不合法（须为 1900–2100 年内的 Unix 毫秒整数；由服务端传入，不是用户输入） */
+  | 'E_INVALID_REF_DATE';
 
 /** 错误码 → 面向用户的中文提示（不含任何输入值）。 */
 export const BAZI_ERROR_MESSAGES: Readonly<Record<BaziErrorCode, string>> = {
@@ -27,6 +33,9 @@ export const BAZI_ERROR_MESSAGES: Readonly<Record<BaziErrorCode, string>> = {
   E_INVALID_LONGITUDE: '出生地经度无效，请重新选择出生地。',
   E_LUNAR_NO_LEAP: '所选农历年份没有这个闰月，请核对是否为闰月。',
   E_LUNAR_DAY_OVERFLOW: '所选农历月份是小月，只有二十九天，请核对出生日期。',
+  E_INVALID_INPUT: '出生信息填写不完整或格式不正确，请检查后重新提交。',
+  E_UNKNOWN_PLACE: '未找到所选出生地，请重新选择。',
+  E_INVALID_REF_DATE: '系统时间异常，请稍后重试。',
 };
 
 /** 取错误码对应的中文提示。 */

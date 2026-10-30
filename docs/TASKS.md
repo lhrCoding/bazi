@@ -94,7 +94,7 @@
   内容：① 1950–2050 年每个「节」前 / 后 1 分钟自动用例，断言月柱（立春含年柱）切换；② 香港天文台 / 紫金山天文台若干年份节气时刻固定数据（文件头注明来源 URL），误差 ≤ 1 分钟；③ lunar-javascript（devDependency，显式 `setSect(2)`）随机 ≥ 1,000 个时刻四柱比对，其中至少 100 个在 23:00–23:59。
   验收：三类测试全部通过；不一致样例为 0（若有，列出后停下交 mingli-expert / 用户）。
 
-- [ ] **T13 Chart 输出定稿 + 确定性 / 快照 / 性能**
+- [x] **T13 Chart 输出定稿 + 确定性 / 快照 / 性能**
   依赖：T08, T10, T11, T12
   内容：Chart 用 Zod schema 定义并导出，字段按 calendar.md §9（`input_echo`、`clock_to_utc`、`true_solar_time`、`tst_status`、`jieqi_*`、`rules_hit`、`alt`、`uncertain`）；`engineVersion`；`computeChart(input, refDate)` 作为公开 API；快照测试；性能测试。
   验收：全部排盘测试通过；同输入两次深度相等；单次排盘 p95 < 20 ms。

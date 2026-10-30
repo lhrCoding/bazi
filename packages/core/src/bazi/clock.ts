@@ -55,6 +55,23 @@ function formatUtc(ms: number): string {
 }
 
 /**
+ * 由已确定的绝对时刻生成 Chart.clock_to_utc（三柱模式实际计算时刻可能是交节一侧时段中点，不是某个钟表读数）。
+ * @param dstAmbiguous 该时刻是否来自夏令时结束日的重复钟表读数
+ */
+export function describeUtc(utcMs: number, timezone: string, dstAmbiguous = false): ClockToUtc {
+  const zone = IANAZone.create(timezone);
+  if (!zone.isValid) {
+    throw new BaziError('E_INVALID_TIMEZONE', '时区无效');
+  }
+  return {
+    utc: formatUtc(utcMs),
+    timezone: zone.name,
+    utcOffsetMinutes: zone.offset(utcMs),
+    dstAmbiguous,
+  };
+}
+
+/**
  * 本地钟表时间 → UTC。
  * @param date 'YYYY-MM-DD'（公历）
  * @param time 'HH:MM'（出生证上的钟表时间）
@@ -89,12 +106,7 @@ export function clockToUtc(
   const utcMs = Math.max(...solutions);
   return {
     utcMs,
-    clock_to_utc: {
-      utc: formatUtc(utcMs),
-      timezone: zone.name,
-      utcOffsetMinutes: zone.offset(utcMs),
-      dstAmbiguous: solutions.size > 1,
-    },
+    clock_to_utc: describeUtc(utcMs, timezone, solutions.size > 1),
     rules_hit: ['CAL-TZ'],
   };
 }

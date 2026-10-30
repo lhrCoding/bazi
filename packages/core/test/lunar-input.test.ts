@@ -237,6 +237,9 @@ describe('错误码中文提示映射', () => {
     'E_INVALID_LONGITUDE',
     'E_LUNAR_NO_LEAP',
     'E_LUNAR_DAY_OVERFLOW',
+    'E_INVALID_INPUT',
+    'E_UNKNOWN_PLACE',
+    'E_INVALID_REF_DATE',
   ];
 
   it('每个错误码都有中文提示，且映射表没有多余键', () => {

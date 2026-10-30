@@ -4,7 +4,7 @@
  * - 有时辰案例去掉时辰：前三柱与原案例一致、时柱为空（交节日按真实出生时刻所在一侧选 before / after）；
  * - jieqiChoice = before / after / unsure / null；12:00 不在所选一侧时取该侧时段中点；
  * - 起运按 12:00 计算并标记 approximate（「约 X 岁起运」），与真实时辰的起运日期相差不超过 4 个月。
- * cases.json 中 C18、C19 的三柱、alt 日柱由 cases.test.ts 经 computeNoHour 比对；
+ * cases.json 中 C18、C19 的三柱、alt 日柱由 cases.test.ts 经 computeChart（三柱模式走 computeNoHour）比对；
  * C19 的 no_hour.uncertain_year_month 与 jieqi_reference 在本文件比对（no_hour 其余字段属 T18）。
  */
 import { describe, expect, it } from 'vitest';
