@@ -43,3 +43,17 @@ export function isGanZhi(s: string): s is GanZhi {
   if (!isGan(g) || !isZhi(z)) return false;
   return TIAN_GAN.indexOf(g) % 2 === DI_ZHI.indexOf(z) % 2;
 }
+
+/** 60 甲子序号 → 干支（0 = 甲子；任意整数按 60 取模，负数同样适用）。 */
+export function ganZhiAt(index: number): GanZhi {
+  const i = ((index % 60) + 60) % 60;
+  return `${TIAN_GAN[i % 10] as Gan}${DI_ZHI[i % 12] as Zhi}`;
+}
+
+/** 由天干序号（0 = 甲）与地支序号（0 = 子）组成干支；两者阴阳不同时抛错。 */
+export function ganZhiOf(ganIndex: number, zhiIndex: number): GanZhi {
+  const g = ((ganIndex % 10) + 10) % 10;
+  const z = ((zhiIndex % 12) + 12) % 12;
+  if (g % 2 !== z % 2) throw new Error('天干地支阴阳不一致，不是合法的 60 甲子');
+  return `${TIAN_GAN[g] as Gan}${DI_ZHI[z] as Zhi}`;
+}

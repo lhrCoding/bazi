@@ -43,7 +43,14 @@ const restrictedPatterns = [
     group: ['pino', 'pino/*'],
     message: 'core 不写日志，日志放 apps/web/server/log.ts。',
   },
+  {
+    group: ['tyme4ts', 'tyme4ts/*'],
+    message:
+      '只有 src/bazi/calendar-adapter.ts 可以 import tyme4ts（provider 是全局状态，必须集中设置）；其他文件请调用适配层。',
+  },
 ];
+
+const isTymeRule = (p) => p.group.includes('tyme4ts');
 
 export default tseslint.config(
   { ignores: ['node_modules/**', 'dist/**', 'coverage/**'] },
@@ -59,6 +66,16 @@ export default tseslint.config(
         { name: 'Buffer', message: 'core 不使用 Node Buffer，用 Uint8Array。' },
         { name: 'require', message: 'core 只用 ESM import。' },
         { name: 'fetch', message: 'core 不做网络 IO。' },
+      ],
+    },
+  },
+  {
+    // 唯一允许 import tyme4ts 的文件（ARCHITECTURE §3：库调用集中在一个适配文件）
+    files: ['src/bazi/calendar-adapter.ts'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        { patterns: restrictedPatterns.filter((p) => !isTymeRule(p)) },
       ],
     },
   },

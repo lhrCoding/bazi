@@ -333,8 +333,6 @@ export const FIELD_CHECKS: readonly FieldCheck[] = [
  * 某任务完成后，从这里删掉对应字段，并在 cases.test.ts 的 computeActual 中输出该字段。
  */
 export const PENDING_FIELDS: Readonly<Record<string, string>> = {
-  'pillars.year': 'T04',
-  'pillars.month': 'T04',
   'pillars.day': 'T07',
   'pillars.hour': 'T07 / T11',
   'alt.zi_huanri_day_pillar': 'T07',

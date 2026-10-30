@@ -25,5 +25,8 @@
     "typescript-eslint": "8.72.1",
     "vite": "6.4.5",
     "vitest": "4.1.12"
+  },
+  "dependencies": {
+    "tyme4ts": "1.5.4"
   }
 }

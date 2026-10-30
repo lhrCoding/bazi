@@ -49,7 +49,7 @@
   内容：定义 `BirthInput` / `Chart` 初版类型；读取 rules/cases.json v2，映射 `input` → `BirthInput`；按 `_meta.test_guidance` 写参数化断言工具（容差、rules_hit 前缀比对、shensha_ji 全等）；尚未实现的字段用显式「待实现」清单跳过，并在输出中列出，不能静默通过。
   验收：loader 单元测试通过；20 个案例全部解析成功；跳过清单在测试输出中可见。
 
-- [ ] **T04 历法适配层 + 年柱 / 月柱** 【rules】
+- [x] **T04 历法适配层 + 年柱 / 月柱** 【rules】
   依赖：T03
   内容：安装 tyme4ts（锁精确版本）；`calendar-adapter.ts` 是唯一 import tyme4ts 的文件，模块加载时显式设置 `LunarHour.provider = new LunarSect2EightCharProvider()`、`ChildLimit.provider = new LunarSect2ChildLimitProvider()`；用北京标准时间（绝对时刻）与节气比较得到年柱、月柱，输出 `jieqi_prev / jieqi_next`（名称 + 时刻）。
   验收：C01 / C02（立春前后）、C03（春节后立春前）、C16（公历 1 月）年月柱正确；测试断言 provider 已设置为 Sect2；`grep` 确认其他文件不 import tyme4ts。
