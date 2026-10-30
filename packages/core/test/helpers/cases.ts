@@ -7,6 +7,7 @@
  */
 import type { BirthInput, Gender } from '../../src/bazi/types';
 import { isGanZhi } from '../../src/bazi/ganzhi';
+import { resolveSolarDate } from '../../src/bazi/lunar-input';
 import { readRulesFile } from './fixtures';
 
 // ---------- cases.json 原始结构（只声明会被读取的字段） ----------
@@ -453,4 +454,12 @@ export function parseCasesFile(json: unknown): LoadedCases {
 /** 从仓库 rules/cases.json 读取并解析。 */
 export function loadCases(): LoadedCases {
   return parseCasesFile(JSON.parse(readRulesFile('cases.json')) as unknown);
+}
+
+/**
+ * 引擎实际使用的本地钟表时间 'YYYY-MM-DD HH:MM'：日期经 CAL-INPUT（农历走正式换算，T08），
+ * 时间取 BirthInput.time；无时辰按 cases.json 约定的 12:00（CAL-NOHOUR，正式实现见 T11）。
+ */
+export function engineClockOf(c: LoadedCase): string {
+  return `${resolveSolarDate(c.input).solarDate} ${c.input.time ?? '12:00'}`;
 }

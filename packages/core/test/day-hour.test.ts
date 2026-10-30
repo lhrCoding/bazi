@@ -12,7 +12,7 @@ import { computeDayHour, dayPillarIndex, dayPillarOf, shichenIndex } from '../sr
 import { ganZhiAt } from '../src/bazi/ganzhi';
 import { fromBeijingParts, toBeijingParts, type DateTimeParts } from '../src/bazi/time';
 import { computeTrueSolarTime } from '../src/bazi/true-solar-time';
-import { loadCases } from './helpers/cases';
+import { engineClockOf, loadCases } from './helpers/cases';
 
 const at = (s: string): DateTimeParts => {
   const m = /^(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2})$/.exec(s);
@@ -206,9 +206,9 @@ describe('真太阳时与日柱时柱', () => {
 
 describe('cases.json：全部有时辰案例日柱、时柱、A 派日柱', () => {
   const { cases } = loadCases();
-  for (const c of cases.filter((x) => x.solarDateTime !== null)) {
+  for (const c of cases.filter((x) => x.input.time !== null)) {
     it(`${c.id} ${c.title}`, () => {
-      const r = chain(c.solarDateTime as string, c.birthplace?.longitude ?? null);
+      const r = chain(engineClockOf(c), c.birthplace?.longitude ?? null);
       expect(r.dh.day).toBe(c.expected.pillars.day);
       expect(r.dh.hour).toBe(c.expected.pillars.hour);
       const alt = c.raw.expected.alt_zi_huanri_school as { day: string } | undefined;

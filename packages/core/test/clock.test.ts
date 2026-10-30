@@ -9,7 +9,7 @@ import { clockToUtc, DEFAULT_TIMEZONE } from '../src/bazi/clock';
 import { BaziError } from '../src/bazi/errors';
 import { computeYearMonth } from '../src/bazi/year-month';
 import { formatBeijing } from '../src/bazi/time';
-import { loadCases } from './helpers/cases';
+import { engineClockOf, loadCases } from './helpers/cases';
 
 const SH = 'Asia/Shanghai';
 
@@ -213,8 +213,8 @@ describe('cases.json derived 对照（utc_offset_hours、beijing_standard_time�
     const derived = c.raw.derived as Record<string, unknown> | undefined;
     if (!derived) continue;
     it(`${c.id} ${c.title}`, () => {
-      // 无时辰案例按 cases.json 约定的 12:00 本地钟表时间
-      const clock = c.solarDateTime ?? `${c.solarDate} 12:00`;
+      // 农历案例走 CAL-INPUT 换算；无时辰案例按 cases.json 约定的 12:00 本地钟表时间
+      const clock = engineClockOf(c);
       const r = brief(clock, c.raw.input.timezone);
       expect(r.offsetH).toBe(derived.utc_offset_hours);
       if (derived.beijing_standard_time != null) expect(r.bj).toBe(derived.beijing_standard_time);

@@ -23,3 +23,16 @@ export {
   DAY_PILLAR_EPOCH,
   type DayHourResult,
 } from './day-hour';
+export {
+  leapMonthOf,
+  lunarDayLabel,
+  lunarMonthLabel,
+  lunarMonthsOf,
+  lunarToSolar,
+  resolveSolarDate,
+  validateSolarDate,
+  LUNAR_YEAR_RANGE,
+  SOLAR_DATE_RANGE,
+  type LunarMonthOption,
+  type ResolvedSolarDate,
+} from './lunar-input';

@@ -13,11 +13,14 @@
  */
 import {
   ChildLimit,
+  LunarDay,
   LunarHour,
+  LunarMonth,
   LunarSect2ChildLimitProvider,
   LunarSect2EightCharProvider,
   SolarTerm,
   SolarTime,
+  LunarYear,
 } from 'tyme4ts';
 import type { GanZhi } from './ganzhi';
 import { isGanZhi } from './ganzhi';
@@ -135,4 +138,35 @@ export function tymePillarsAt(beijing: DateTimeParts): TymePillars {
     day: toGanZhi(ec.getDay().getName()),
     hour: toGanZhi(ec.getHour().getName()),
   };
+}
+
+// ---------- 农历（CAL-INPUT） ----------
+// 以下函数只做薄封装，参数合法性（年份范围、闰月是否存在、日数）由 lunar-input.ts 先行校验；
+// tyme4ts 对非法参数抛出的 Error 信息含输入值，不得进入日志；lunar-input.ts 保证不会传入非法参数。
+
+/** 农历某年的闰月月份（1–12）；无闰月为 0。 */
+export function lunarLeapMonth(year: number): number {
+  return LunarYear.fromYear(year).getLeapMonth();
+}
+
+/** 农历某月的天数（29 或 30）。isLeap = true 表示该年的闰月（调用方须先确认存在）。 */
+export function lunarMonthDayCount(year: number, month: number, isLeap: boolean): number {
+  return LunarMonth.fromYm(year, isLeap ? -month : month).getDayCount();
+}
+
+export interface YmdParts {
+  year: number;
+  month: number;
+  day: number;
+}
+
+/** 农历日期 → 公历日期（tyme4ts 约定：负数月 = 闰月）。 */
+export function lunarToSolarParts(
+  year: number,
+  month: number,
+  day: number,
+  isLeap: boolean,
+): YmdParts {
+  const s = LunarDay.fromYmd(year, isLeap ? -month : month, day).getSolarDay();
+  return { year: s.getYear(), month: s.getMonth(), day: s.getDay() };
 }

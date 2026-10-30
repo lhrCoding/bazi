@@ -18,7 +18,7 @@ import {
   minutesToShichenBoundary,
 } from '../src/bazi/true-solar-time';
 import { findPlace, listPlaces } from '../src/geo';
-import { loadCases, TEST_PLACE_CODES } from './helpers/cases';
+import { engineClockOf, loadCases, TEST_PLACE_CODES } from './helpers/cases';
 
 const split = (s: string): [string, string] => s.split(' ') as [string, string];
 const utcOf = (s: string, tz = 'Asia/Shanghai') => clockToUtc(...split(s), tz).utcMs;
@@ -61,7 +61,7 @@ describe('NOAA 均时差', () => {
 describe('cases.json 真太阳时对照', () => {
   const { cases } = loadCases();
   for (const c of cases) {
-    const clock = c.solarDateTime ?? `${c.solarDate} 12:00`;
+    const clock = engineClockOf(c);
     const derived = (c.raw.derived ?? {}) as Record<string, unknown>;
     const utcMs = utcOf(clock, c.raw.input.timezone);
 

@@ -14,8 +14,9 @@ import {
   checkCaseField,
   type CaseActual,
 } from './helpers/case-compare';
-import { loadCases, type LoadedCase } from './helpers/cases';
+import { engineClockOf, loadCases, type LoadedCase } from './helpers/cases';
 import { clockToUtc } from '../src/bazi/clock';
+import { resolveSolarDate } from '../src/bazi/lunar-input';
 import { computeYearMonth } from '../src/bazi/year-month';
 import { computeTrueSolarTime } from '../src/bazi/true-solar-time';
 import { computeDayHour, dayPillarOf } from '../src/bazi/day-hour';
@@ -26,18 +27,20 @@ const { cases } = loadCases();
  * 引擎实际输出 → 按字段键扁平化。
  * T13 起统一改为 computeChart / analyze；在此之前逐个接入已实现的模块：
  * - T04 年柱、月柱：computeYearMonth(出生绝对时刻)。
- * - T05 绝对时刻：clockToUtc（CAL-TZ，IANA 时区）。农历案例暂用案例给出的公历时间（农历换算见 T08）；
- *   无时辰按 cases.json 约定的 12:00 本地钟表时间（CAL-NOHOUR，正式实现见 T11）。
+ * - T08 日期：resolveSolarDate（CAL-INPUT，农历含闰月 → 公历），不再使用案例给出的公历换算结果。
+ * - T05 绝对时刻：clockToUtc（CAL-TZ，IANA 时区）。无时辰按 cases.json 约定的 12:00 本地钟表时间
+ *   （CAL-NOHOUR，正式实现见 T11）。
  * - T07 日柱、时柱：CAL-TST 当地时间（有出生地 = 真太阳时，经度取案例 birthplace）→ computeDayHour。
  *   无时辰：日柱按用户填的日期、时柱为 null（calendar.md §7，正式实现见 T11）。
  */
 function computeActual(c: LoadedCase): CaseActual {
-  const time = c.solarDateTime?.slice(11) ?? '12:00';
-  const { utcMs } = clockToUtc(c.solarDate, time, c.raw.input.timezone);
+  const { solarDate } = resolveSolarDate(c.input);
+  const clock = engineClockOf(c);
+  const { utcMs } = clockToUtc(solarDate, clock.slice(11), c.raw.input.timezone);
   const ym = computeYearMonth(utcMs);
   const base: CaseActual = { 'pillars.year': ym.year, 'pillars.month': ym.month };
-  if (c.solarDateTime === null) {
-    const [y, m, d] = c.solarDate.split('-').map(Number) as [number, number, number];
+  if (c.input.time === null) {
+    const [y, m, d] = solarDate.split('-').map(Number) as [number, number, number];
     const day = dayPillarOf(y, m, d);
     return { ...base, 'pillars.day': day, 'pillars.hour': null, 'alt.zi_huanri_day_pillar': day };
   }
