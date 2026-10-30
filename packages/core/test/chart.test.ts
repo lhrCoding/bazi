@@ -20,7 +20,6 @@ import { BaziError, type BaziErrorCode } from '../src/bazi/errors';
 import { TIAN_GAN, type Gan, type Zhi } from '../src/bazi/ganzhi';
 import { HIDDEN_STEMS, tenGodOf } from '../src/bazi/ten-gods';
 import { loadCases, type LoadedCase } from './helpers/cases';
-import { readRulesFile } from './helpers/fixtures';
 
 const { cases } = loadCases();
 const byId = (id: string): LoadedCase => {
@@ -93,21 +92,7 @@ describe('全部 cases.json 案例：schema、确定性、纯函数', () => {
 });
 
 describe('藏干与十神', () => {
-  it('S-HIDE 表与 rules/strength.md §1.2 的 JSON 参数块逐项一致，且各支合计 1.0', () => {
-    const md = readRulesFile('strength.md');
-    const sec = md.slice(md.indexOf('（S-HIDE）'));
-    const m = /```json\n([\s\S]*?)\n```/.exec(sec);
-    expect(m).not.toBeNull();
-    const fromMd = JSON.parse((m as RegExpExecArray)[1] as string) as Record<
-      string,
-      [string, number][]
-    >;
-    expect(Object.keys(fromMd).sort()).toEqual(Object.keys(HIDDEN_STEMS).sort());
-    for (const [zhi, list] of Object.entries(HIDDEN_STEMS)) {
-      expect(list.map(([g, r]) => [g, r])).toEqual(fromMd[zhi]);
-      expect(list.reduce((s, [, r]) => s + r, 0)).toBeCloseTo(1, 10);
-    }
-  });
+  // S-HIDE 表与 rules/strength.md §1.2 JSON 参数块的逐项比对见 rules-params.test.ts（T14 参数漂移测试统一维护）。
 
   it('十神 10 × 10 全表（生克 + 阴阳：同阴阳为偏）', () => {
     // 行：日干 甲…癸；列：目标天干 甲…癸

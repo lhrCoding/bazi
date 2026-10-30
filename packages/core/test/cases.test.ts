@@ -25,7 +25,7 @@ const REF_DATE_MS = Date.parse('2026-10-30T00:00:00+08:00');
 /**
  * 引擎实际输出 → 按字段键扁平化。
  * T13 起统一走公开 API computeChart（BirthInput 由 loader 从案例 input 映射：农历含闰月、出生地 → placeCode、
- * 无时辰 → time = null），不再逐个调用内部模块；T14 起规则字段改走 analyze(chart)。
+ * 无时辰 → time = null），不再逐个调用内部模块；T15 起规则字段改走 analyze(chart)（规则引擎公开入口）。
  */
 function computeActual(c: LoadedCase): CaseActual {
   const chart = computeChart(c.input, REF_DATE_MS);

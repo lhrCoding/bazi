@@ -1,7 +1,9 @@
 /**
  * 规则引擎输出类型（T03 初版，只含 cases.json 对照所需字段）。
- * T14–T20 逐步补全（power_display_pct、confidence、notes、basis、评分等）。
+ * T15–T20 逐步补全（power_display_pct、confidence、notes、basis、评分等）。
  */
+import type { RuleHit } from './rule-hit';
+
 export type WuXing = '木' | '火' | '土' | '金' | '水';
 export type GodGroup = '比劫' | '印' | '食伤' | '财' | '官杀';
 
@@ -42,6 +44,6 @@ export interface Analysis {
   shensha: {
     jishen: Jishen[];
   };
-  /** 命中的 S- / Y- / SS- 编号（T14 起改为 RuleHit 对象） */
-  rules_hit: string[];
+  /** 命中的 S- / Y- / SS- 规则（T14 起为 RuleHit 对象；cases.json 格式见 formatRuleHit） */
+  rules_hit: readonly RuleHit[];
 }

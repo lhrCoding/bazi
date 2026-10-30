@@ -30,3 +30,7 @@ export type {
   Pillars,
   TstStatus,
 } from './bazi/types';
+
+// ② 规则引擎（T14 起）
+export { RULES_VERSION, RULE_IDS, formatRuleHit } from './rules';
+export type { RuleHit, RuleEvidence, RuleEvidenceValue, RuleId } from './rules';

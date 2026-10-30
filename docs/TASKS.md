@@ -101,7 +101,7 @@
 
 ## C 规则引擎（`packages/core/src/rules`，纯函数）—— 全部 【rules】
 
-- [ ] **T14 规则注册表 + 编号覆盖测试 + 参数漂移测试**
+- [x] **T14 规则注册表 + 编号覆盖测试 + 参数漂移测试**
   依赖：T13
   内容：`RuleHit { ruleId, text, evidence }`；规则注册表；测试扫描 rules/*.md 中 `CAL- / S- / Y- / SS- / R-` 编号，断言每个编号已实现或在「仅文档编号」白名单；解析 strength.md 中的 JSON 参数块（S-HIDE、位置权重）与代码常量比对；`rulesVersion`。
   验收：故意删掉一个实现或改一个藏干比例时测试变红。
