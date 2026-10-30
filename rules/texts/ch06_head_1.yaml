@@ -1,0 +1,364 @@
+# 第 6 章 槽位 CH6-HEAD「年度主题」第 1 部分（第 1 批 B1，草稿）
+# 维度：item.stem_ten_god（10）× item.tier（5）= 50；本文件含 比肩、劫财、食神、伤官、偏财 共 25 条，其余在 ch06_head_2.yaml。
+# 每条 80–120 字，2 个变体。循环槽位：5 年流年天干两两不同，所以同一条 HEAD 在一份报告里不会被选两次。
+# 写法约定：
+#   - 十神名、tier 标签由 when 锁定，可直接写出；年份、干支只能用占位符（本批 HEAD 未使用）。
+#   - tier 由流年天干、地支与所在大运共同计分得出（report-sections.md §8.2），所以 HEAD 不写“X 是你的喜神 / 忌神”，
+#     只按 tier 定语气：顺势期、向好 → 积极；平稳 → 中性；宜稳守、宜保守、打基础 → 谨慎但不恐吓。
+#   - 不出现：灾、凶、破财、血光、贵人年 等（R-CHECK 禁用词）；不写具体月份（没有月份数据可追溯）。
+# tier 代码：SHUN=顺势期、HAO=向好、PING=平稳、WEN=宜稳守、BAO=宜保守、打基础。
+
+# ---------- 比肩 ----------
+- id: CH6-HEAD-BIJIAN-SHUN
+  slot: CH6-HEAD
+  when: {all: [{f: item.stem_ten_god, eq: 比肩}, {f: item.tier, eq: 顺势期}]}
+  priority: 50
+  length: [80, 120]
+  polish_allowed: true
+  variants:
+    - "这一年天干透出比肩，主题是自己做主。整体评分处在最好的“顺势期”，同类的力量在帮你：适合独立负责一摊事、开启个人项目，或与志同道合的人结伴发力。你的主见此时更容易被认可，可以大胆一点。"
+    - "比肩当头的年份，讲的是独立与同伴。今年评分为“顺势期”，自我的力量与外部环境配合得好，想单干、想牵头、想换一种更自主的工作方式，都有比较好的条件。把握节奏，别把好势头耗在小事上。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-HEAD-BIJIAN-HAO
+  slot: CH6-HEAD
+  when: {all: [{f: item.stem_ten_god, eq: 比肩}, {f: item.tier, eq: 向好}]}
+  priority: 50
+  length: [80, 120]
+  polish_allowed: true
+  variants:
+    - "这一年天干是比肩，评分“向好”。比肩代表与你同类的人和自身的主见，今年它带来的多是助力：朋友、同行愿意搭把手，你也更有底气推动自己想做的事。适合扩大圈子、找搭档，把一个人的计划变成几个人的行动。"
+    - "比肩之年，焦点在“我”和“我们”。评分为“向好”，自主性提升，身边能互相支持的人也多起来。可以把搁置已久的个人计划重新拿出来，同时多和同行交流，好的合作机会常在这些往来中出现。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-HEAD-BIJIAN-PING
+  slot: CH6-HEAD
+  when: {all: [{f: item.stem_ten_god, eq: 比肩}, {f: item.tier, eq: 平稳}]}
+  priority: 50
+  length: [80, 120]
+  polish_allowed: true
+  variants:
+    - "这一年天干是比肩，评分“平稳”。同类力量出现，但不偏帮也不添乱：独立处理事情的能力在线，人际上有往来也有比较。适合按自己的节奏推进既定计划，不必刻意求变，把手上的事情做扎实就是今年的收获。"
+    - "比肩主事、评分平稳的一年，好比在熟悉的路上走：方向清楚，没有大的顺风也没有大的逆风。适合巩固自己的专业和圈子，处理好与同事、朋友之间的分工，让独立和合作保持平衡。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-HEAD-BIJIAN-WEN
+  slot: CH6-HEAD
+  when: {all: [{f: item.stem_ten_god, eq: 比肩}, {f: item.tier, eq: 宜稳守}]}
+  priority: 50
+  length: [80, 120]
+  polish_allowed: true
+  variants:
+    - "这一年天干是比肩，评分“宜稳守”。比肩在今年更像竞争者而非帮手：同类增多，资源要分，意见也容易相左。适合守住自己的阵地，合作先把分工和规则说清楚，不急于和人比高低，把力气留给自己能掌控的事。"
+    - "比肩之年评分“宜稳守”，提示你留意人多事杂。身边争着做同一件事的人可能变多，自己的主见也容易变得固执。把精力放在自己能掌控的部分，遇到分歧先求共识、再谈推进，会更省力。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-HEAD-BIJIAN-BAO
+  slot: CH6-HEAD
+  when: {all: [{f: item.stem_ten_god, eq: 比肩}, {f: item.tier, eq: 宜保守、打基础}]}
+  priority: 50
+  length: [80, 120]
+  polish_allowed: true
+  variants:
+    - "这一年天干是比肩，评分落在“宜保守、打基础”。同类力量过旺，竞争和摩擦相对多，不是扩张的好时机。适合沉下心修炼基本功、梳理人际关系，合伙或共同出钱的事情尽量缓一缓，等形势明朗再说。"
+    - "比肩当头而评分偏低的一年，重点是守和养。外部的比较和竞争会让人想证明自己，但今年更值得做的是练内功：提升技能、整理计划、减少不必要的应酬。根基打牢了，后面的好年份才接得住。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+# ---------- 劫财 ----------
+- id: CH6-HEAD-JIECAI-SHUN
+  slot: CH6-HEAD
+  when: {all: [{f: item.stem_ten_god, eq: 劫财}, {f: item.tier, eq: 顺势期}]}
+  priority: 50
+  length: [80, 120]
+  polish_allowed: true
+  variants:
+    - "这一年天干是劫财，评分“顺势期”。劫财代表行动力、竞争心和社交能量，今年它站在你这一边：敢争取、善结交，团队作战尤其顺手。适合参与竞争性的项目、拓展人脉，把冲劲转化为看得见的成绩。"
+    - "劫财之年，节奏快、人气旺。今年评分处于最好的“顺势期”，好胜心和行动力能直接转成成果，适合冲业绩、带团队、参加比赛或竞聘。热闹之中记得留一份余力，别为了面子多花不必要的钱。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-HEAD-JIECAI-HAO
+  slot: CH6-HEAD
+  when: {all: [{f: item.stem_ten_god, eq: 劫财}, {f: item.tier, eq: 向好}]}
+  priority: 50
+  length: [80, 120]
+  polish_allowed: true
+  variants:
+    - "这一年天干是劫财，评分“向好”。社交圈活跃，朋友和同行带来的机会增多，你的行动力也被调动起来。适合主动出击、与人合作推进项目；开销会随着往来增加，提前留一点预算，热闹和实惠就能兼得。"
+    - "劫财主事、评分向好的一年，适合借众人之力。你更容易找到一起干事的人，竞争也能激发斗志。把热情用在明确的目标上，例如争取一个新职位或新客户，收获会比较实在，也不容易被琐碎的人情分散精力。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-HEAD-JIECAI-PING
+  slot: CH6-HEAD
+  when: {all: [{f: item.stem_ten_god, eq: 劫财}, {f: item.tier, eq: 平稳}]}
+  priority: 50
+  length: [80, 120]
+  polish_allowed: true
+  variants:
+    - "这一年天干是劫财，评分“平稳”。人际往来增多，有合作也有竞争，两者大致相抵。适合维持现有节奏，在团队里发挥行动快的长处，同时对人情开销和冲动决定多一分克制，这一年就能过得踏实。"
+    - "劫财之年评分平稳，好比热闹的集市：人多、事多，机会和干扰并存。按计划行事最稳妥，社交可以多但要有选择，钱上的往来记清楚，就能把这一年过得从容，也不会因人情而乱了阵脚。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-HEAD-JIECAI-WEN
+  slot: CH6-HEAD
+  when: {all: [{f: item.stem_ten_god, eq: 劫财}, {f: item.tier, eq: 宜稳守}]}
+  priority: 50
+  length: [80, 120]
+  polish_allowed: true
+  variants:
+    - "这一年天干是劫财，评分“宜稳守”。劫财偏旺时，容易出现争抢和额外开销：别人分走机会，或自己一时冲动多花钱。适合守住既有成果，合作、共同出钱的事先把规则写清楚，少做意气之争。"
+    - "劫财之年评分“宜稳守”，提醒你留意冲动二字。好胜心容易被激起，人情往来也可能让开支变大。重要决定给自己一晚冷静期，钱物往来尽量明明白白，就能少很多麻烦，也能守住手上已有的成果。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-HEAD-JIECAI-BAO
+  slot: CH6-HEAD
+  when: {all: [{f: item.stem_ten_god, eq: 劫财}, {f: item.tier, eq: 宜保守、打基础}]}
+  priority: 50
+  length: [80, 120]
+  polish_allowed: true
+  variants:
+    - "这一年天干是劫财，评分落在“宜保守、打基础”。竞争与消耗都偏多，不宜大举扩张，也不宜为别人的财务承担责任。适合收缩战线、积累实力，先把基本盘稳住，把精力放在提升自己而不是与人比拼上。"
+    - "劫财当头而评分偏低的一年，宜慢不宜抢。外部的竞争会催着你出手，但今年更适合打磨技能、整理收支、清理不必要的社交。把自己的基本盘守住，等运势回升时再发力，效果会好得多。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+# ---------- 食神 ----------
+- id: CH6-HEAD-SHISHEN-SHUN
+  slot: CH6-HEAD
+  when: {all: [{f: item.stem_ten_god, eq: 食神}, {f: item.tier, eq: 顺势期}]}
+  priority: 50
+  length: [80, 120]
+  polish_allowed: true
+  variants:
+    - "这一年天干是食神，评分“顺势期”。食神代表才华的自然流露、生活的品味与从容，今年它与你的需要相合：作品、手艺、内容输出容易得到好评，心情也比较舒展。适合推出个人作品、开设课程或发展兴趣副业。"
+    - "食神之年，讲究从容地做出好东西。今年评分处于“顺势期”，灵感充足、节奏舒服，做自己擅长的事情往往事半功倍。可以把一项爱好认真经营起来，或者在工作中主导一个更有创意的部分。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-HEAD-SHISHEN-HAO
+  slot: CH6-HEAD
+  when: {all: [{f: item.stem_ten_god, eq: 食神}, {f: item.tier, eq: 向好}]}
+  priority: 50
+  length: [80, 120]
+  polish_allowed: true
+  variants:
+    - "这一年天干是食神，评分“向好”。表达和创造的欲望增强，人也更放松，适合学一门手艺、做内容、讲课或组织活动。好心情会带来好人缘，顺势把擅长的东西展示出来，往往能收获意外的认可。"
+    - "食神主事、评分向好的一年，适合慢工出细活。你有更多心思打磨作品和技能，生活上也懂得享受。给自己定一个可交付的小目标，比如完成一组作品或学完一门课程，成果会比较明显。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-HEAD-SHISHEN-PING
+  slot: CH6-HEAD
+  when: {all: [{f: item.stem_ten_god, eq: 食神}, {f: item.tier, eq: 平稳}]}
+  priority: 50
+  length: [80, 120]
+  polish_allowed: true
+  variants:
+    - "这一年天干是食神，评分“平稳”。日子比较安稳，有余力照顾生活和兴趣，工作上按部就班即可。适合培养一项长期爱好，或在本职中多做一点有创意的改进，不必急于求成，慢慢积累就有收获。"
+    - "食神之年评分平稳，像一段可以喘口气的时间。没有特别大的推动，也少有阻碍，适合调整生活节奏、改善饮食作息，顺便把一些想做很久的小事做完，让身心都松快一些。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-HEAD-SHISHEN-WEN
+  slot: CH6-HEAD
+  when: {all: [{f: item.stem_ten_god, eq: 食神}, {f: item.tier, eq: 宜稳守}]}
+  priority: 50
+  length: [80, 120]
+  polish_allowed: true
+  variants:
+    - "这一年天干是食神，评分“宜稳守”。安逸感较强，容易松懈，或者想法多、落实少。适合给自己定清楚的进度，把创意落到具体的交付上；享受生活之余，也要留意开销和时间别被慢慢消磨掉。"
+    - "食神之年评分“宜稳守”，提醒你防懒与散。舒服的状态容易让计划一拖再拖。把每周要完成的事写下来，减少无目的的消遣，就能把这一年稳稳过好，年底回头看也有东西拿得出手。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-HEAD-SHISHEN-BAO
+  slot: CH6-HEAD
+  when: {all: [{f: item.stem_ten_god, eq: 食神}, {f: item.tier, eq: 宜保守、打基础}]}
+  priority: 50
+  length: [80, 120]
+  polish_allowed: true
+  variants:
+    - "这一年天干是食神，评分落在“宜保守、打基础”。精力容易分散在享受和琐事上，新开的头多、做完的少。适合收拢目标，只保留一两件最重要的事，专心把基本功练扎实，其余的留到明年再说。"
+    - "食神当头而评分偏低的一年，适合少而精。与其四处尝试，不如沉下来打磨一项技能、调整好作息。不急于展示，先把东西做好，等运势回暖时，自然有拿得出手的成果。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+# ---------- 伤官 ----------
+- id: CH6-HEAD-SHANGGUAN-SHUN
+  slot: CH6-HEAD
+  when: {all: [{f: item.stem_ten_god, eq: 伤官}, {f: item.tier, eq: 顺势期}]}
+  priority: 50
+  length: [80, 120]
+  polish_allowed: true
+  variants:
+    - "这一年天干是伤官，评分“顺势期”。伤官代表锋芒毕露的才华和敢于打破常规的勇气，今年它正合你的需要：提出新方案、做有突破的作品、在公开场合表达观点，都容易被看见。适合大胆创新，同时注意表达方式。"
+    - "伤官之年，才气外露、点子多。今年评分处于“顺势期”，你的独到见解有机会转化为成果，适合创业、转型、做技术攻关或打造个人品牌。锋芒正盛时，给合作者留些面子，路会更宽。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-HEAD-SHANGGUAN-HAO
+  slot: CH6-HEAD
+  when: {all: [{f: item.stem_ten_god, eq: 伤官}, {f: item.tier, eq: 向好}]}
+  priority: 50
+  length: [80, 120]
+  polish_allowed: true
+  variants:
+    - "这一年天干是伤官，评分“向好”。表达欲和创造力都在上升，适合写作、演讲、设计、技术改进等需要个人见解的事情。你说的话更有分量，也更容易得罪人，好主意配上好语气，效果加倍。"
+    - "伤官主事、评分向好的一年，适合把想法亮出来。旧规则里不合理的地方，你可能看得比别人清楚；用建设性的方式提出改进，容易得到认可。可以考虑学习一项新技术，或拓展自己的表达渠道。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-HEAD-SHANGGUAN-PING
+  slot: CH6-HEAD
+  when: {all: [{f: item.stem_ten_god, eq: 伤官}, {f: item.tier, eq: 平稳}]}
+  priority: 50
+  length: [80, 120]
+  polish_allowed: true
+  variants:
+    - "这一年天干是伤官，评分“平稳”。想法多、表达欲强，但外部环境不特别推动，也不特别阻拦。适合在本职范围内做些创新尝试，有意见先私下沟通，避免在公开场合与人正面冲突。"
+    - "伤官之年评分平稳，才华有发挥的地方，但需要找对场合。按计划推进本职工作的同时，可以把一些新点子做成小规模的试验，看到效果再决定是否扩大；对规则有意见时，先提方案、再提批评。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-HEAD-SHANGGUAN-WEN
+  slot: CH6-HEAD
+  when: {all: [{f: item.stem_ten_god, eq: 伤官}, {f: item.tier, eq: 宜稳守}]}
+  priority: 50
+  length: [80, 120]
+  polish_allowed: true
+  variants:
+    - "这一年天干是伤官，评分“宜稳守”。伤官偏旺时，容易对规则和上级产生不满，说话直、摩擦多。适合把锋芒收一收，重要的意见用书面、讲理的方式提出；签字、承诺之前多看一遍细则。"
+    - "伤官之年评分“宜稳守”，提醒你留意口舌。看不惯的事情可能变多，一时痛快的话容易留下隐患。把不满转化为具体的改进建议，或者投入到个人作品里，是更好的出口。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-HEAD-SHANGGUAN-BAO
+  slot: CH6-HEAD
+  when: {all: [{f: item.stem_ten_god, eq: 伤官}, {f: item.tier, eq: 宜保守、打基础}]}
+  priority: 50
+  length: [80, 120]
+  polish_allowed: true
+  variants:
+    - "这一年天干是伤官，评分落在“宜保守、打基础”。情绪和言语都容易失控，与规则、权威的摩擦偏多，不宜贸然辞职、转行或公开对抗。适合低调做事、钻研技术，把锐气积蓄成真本事。"
+    - "伤官当头而评分偏低的一年，宜收不宜放。想法很多，但时机不成熟，急于证明自己反而容易碰壁。今年适合学习、练手、打磨作品，在安静中把实力攒起来，等时机合适再亮相。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+# ---------- 偏财 ----------
+- id: CH6-HEAD-PIANCAI-SHUN
+  slot: CH6-HEAD
+  when: {all: [{f: item.stem_ten_god, eq: 偏财}, {f: item.tier, eq: 顺势期}]}
+  priority: 50
+  length: [80, 120]
+  polish_allowed: true
+  variants:
+    - "这一年天干是偏财，评分“顺势期”。偏财代表灵活的机会、额外的收入来源和广泛的人脉，今年它与你相合：商务往来顺畅，新渠道容易打开。适合拓展业务、尝试新的收入方式，好机会来时可以果断一些。"
+    - "偏财之年，机会多、流动快。今年评分处在“顺势期”，人缘好，整合资源的能力也强，适合谈合作、做推广、开拓新市场。手头宽裕时记得留出储备，让一时的好运变成长久的积累。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-HEAD-PIANCAI-HAO
+  slot: CH6-HEAD
+  when: {all: [{f: item.stem_ten_god, eq: 偏财}, {f: item.tier, eq: 向好}]}
+  priority: 50
+  length: [80, 120]
+  polish_allowed: true
+  variants:
+    - "这一年天干是偏财，评分“向好”。社交与商务机会增多，额外的收入来源可能出现。适合多参加行业活动、维护客户关系，对新机会保持开放，但每一笔都先算清付出和回报，再决定要不要做。"
+    - "偏财主事、评分向好的一年，适合广结善缘。你更容易遇到愿意合作的人，也更擅长把资源串起来。把握机会的同时，给自己设一个支出上限，热闹之中保持清醒，收获才留得住。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-HEAD-PIANCAI-PING
+  slot: CH6-HEAD
+  when: {all: [{f: item.stem_ten_god, eq: 偏财}, {f: item.tier, eq: 平稳}]}
+  priority: 50
+  length: [80, 120]
+  polish_allowed: true
+  variants:
+    - "这一年天干是偏财，评分“平稳”。机会时有出现，但不必每个都抓，挑和自己专长相关的去做就好。适合维持主要收入，适度尝试小规模的新项目；人情往来量力而行，账目随时理清楚。"
+    - "偏财之年评分平稳，进出都不算大起大落。适合把注意力放在提高效率和优化开支上，人脉可以拓展，但不必为了应酬透支时间和精力。年底回头看钱花在了哪里、哪些往来真正有价值，心里会更有数。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-HEAD-PIANCAI-WEN
+  slot: CH6-HEAD
+  when: {all: [{f: item.stem_ten_god, eq: 偏财}, {f: item.tier, eq: 宜稳守}]}
+  priority: 50
+  length: [80, 120]
+  polish_allowed: true
+  variants:
+    - "这一年天干是偏财，评分“宜稳守”。看似机会多，实际不少是来得快、去得也快。适合守住稳定收入，对快钱和陌生人的合作邀约多做核实，大额开支先放一放，等看清楚再决定。"
+    - "偏财之年评分“宜稳守”，提醒你防贪多。诱惑和应酬增多，容易花得多、收得少。凡是听起来过于轻松的赚钱机会都多问几句，钱物往来留好凭据，就能把损耗降到最低。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-HEAD-PIANCAI-BAO
+  slot: CH6-HEAD
+  when: {all: [{f: item.stem_ten_god, eq: 偏财}, {f: item.tier, eq: 宜保守、打基础}]}
+  priority: 50
+  length: [80, 120]
+  polish_allowed: true
+  variants:
+    - "这一年天干是偏财，评分落在“宜保守、打基础”。收支上波动的可能性偏大，不宜冒进，不宜为别人的财务承担责任，也不宜被高回报的说法打动。适合精简开支、积累储备，把精力放在提升赚钱能力本身。"
+    - "偏财当头而评分偏低的一年，宜守财不宜求财。外面的机会看着热闹，却未必适合你。今年适合理清收支、减少不必要的应酬，把时间花在能长期增值的技能上，为下一个好年份做准备。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29

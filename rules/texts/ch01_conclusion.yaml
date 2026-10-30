@@ -1,0 +1,417 @@
+# 第 1 章 槽位 CH1-CONCLUSION「结论」与 CH1-QUOTE「古籍一句」（第 1 批 B1，草稿）
+#
+# CH1-CONCLUSION：维度 strength.level（6）；修饰字段 strength.borderline、profile.time_known、profile.confidence。
+#   - 普通条目（priority 50）：6 个等级各 1 条，修饰字段取默认值（borderline=false、time_known=true、confidence=高）时使用。
+#   - 贴线条目（priority 60）：borderline=true，6 个等级各 1 条。
+#   - 无时辰条目（priority 70）：time_known=false × 置信（高/中/低）× 方向（偏弱组/偏旺组）= 6 条。三柱不判从格，等级只会是 4 种普通等级。
+#     无时辰且贴线时，无时辰条目优先（置信度信息比贴线更重要）。
+#   - 结论段“润色 = 否”。每条 80–130 字，2 个变体；另 1 条兜底。
+#   - L7：正文不出现“时柱 / 时干 / 时支 / 出生时辰”，只用“时辰”，所以无时辰条目不需要 requires_hour。
+#
+# CH1-QUOTE：非必需槽位，维度 strength.direction / strength.special（另用 level 区分中和）。
+#   本批起第 1 章古籍引文只放在这里（DAYMASTER 不再带 quote）。正文是一句 20–60 字的引子，原文由引擎单独成行放在段后。
+#   全部 verified=false（未核对底本），上线前须逐字对照并填写 edition。
+
+# ======================= CH1-CONCLUSION 普通条目 =======================
+- id: CH1-CONCLUSION-SHENRUO
+  slot: CH1-CONCLUSION
+  when: {all: [{f: strength.level, eq: 身弱}]}
+  asserts: []
+  priority: 50
+  length: [80, 130]
+  polish_allowed: false
+  variants:
+    - "综合来看，你的日主属于“身弱”：帮扶力量占 {strength.S_pct}%，不到一半。身弱不等于能力弱，也不等于运气差，它描述的是一种结构——你更适合借助平台、团队和资源发力，而不是凡事单打独斗。下一章的喜用神，讲的就是哪些力量能把这一块补上。"
+    - "结论是“身弱”。帮扶你的力量占 {strength.S_pct}%，消耗你的力量占 {strength.yidang_pct}%。在命理里，这只说明你的能量需要借力才能发挥得更充分：选对环境、找对合作的人，往往比硬扛更有效。具体借哪几种力量，见下一章。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "样板并入 B1，正文未改（第二变体去掉了“借力”外的引号以免与术语引号混淆）。修饰字段默认值下使用；贴线、无时辰各有专用条目。"
+
+- id: CH1-CONCLUSION-ZHONGHE-RUO
+  slot: CH1-CONCLUSION
+  when: {all: [{f: strength.level, eq: 中和偏弱}]}
+  asserts: []
+  priority: 50
+  length: [80, 130]
+  polish_allowed: false
+  variants:
+    - "综合来看，你的日主属于“中和偏弱”：帮扶力量占 {strength.S_pct}%，略少于一半，但离平衡点不远。这是一种比较好调整的结构，不需要大补，适当借力就能把状态拉回平衡。下一章会说明哪几种力量最适合用来补上这一点差距。"
+    - "结论是“中和偏弱”。帮扶你的力量占 {strength.S_pct}%，消耗你的力量占 {strength.yidang_pct}%，两边相差不大。这类结构的人多数时候能自己应付，压力集中时才会感到吃力；所以重点不是改变自己，而是在关键阶段找到合适的支持。具体是哪些五行，见下一章。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH1-CONCLUSION-ZHONGHE-WANG
+  slot: CH1-CONCLUSION
+  when: {all: [{f: strength.level, eq: 中和偏旺}]}
+  asserts: []
+  priority: 50
+  length: [80, 130]
+  polish_allowed: false
+  variants:
+    - "综合来看，你的日主属于“中和偏旺”：帮扶力量占 {strength.S_pct}%，略多于对面，整体接近平衡。这种结构的人通常有主见、能扛事，同时又不至于过分强势。要做的是给多出来的那一点能量找到出口，下一章会说明具体方向。"
+    - "结论是“中和偏旺”。帮扶力量 {strength.S_pct}%、消耗力量 {strength.yidang_pct}%，你这一方稍占上风。状态均衡、略偏主动，是这类命局常见的底色。偏旺的那一点不需要压制，而是需要合适的去处：把它投到能产出结果的事情上，效果最好。具体方向见下一章。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH1-CONCLUSION-SHENWANG
+  slot: CH1-CONCLUSION
+  when: {all: [{f: strength.level, eq: 身旺}]}
+  asserts: []
+  priority: 50
+  length: [80, 130]
+  polish_allowed: false
+  variants:
+    - "综合来看，你的日主属于“身旺”：帮扶力量占 {strength.S_pct}%，超过一半。身旺说明你自身能量足、抗压能力强，但不等于样样顺利——能量太满又没有去处时，容易固执或急躁。所以对你来说，关键是给力量找到出口和方向，下一章的喜用神讲的就是这个。"
+    - "结论是“身旺”。帮扶你的力量占 {strength.S_pct}%，消耗你的力量只有 {strength.yidang_pct}%。这类命局的人通常自我驱动力强，能独立扛事；需要留意的是，力量越足，越需要合适的约束与输出，否则容易有劲没处使。下一章会说明哪几种力量能帮你把能量发挥好。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH1-CONCLUSION-CONGRUO
+  slot: CH1-CONCLUSION
+  when: {all: [{f: strength.level, eq: 从弱}]}
+  asserts: [{f: strength.direction, eq: 偏弱}]
+  priority: 50
+  length: [80, 130]
+  polish_allowed: false
+  variants:
+    - "综合来看，你的命局属于特殊的“从弱”一类：帮扶力量只有 {strength.S_pct}%，而且日主无根。这种情况不按“身弱就补”来处理，而是顺着命局里最强的力量走。这一点会直接决定下一章的喜忌方向，与普通身弱命局大致相反。"
+    - "结论：你的命局属于“从弱”格局，帮扶力量 {strength.S_pct}%，日主在地支中没有可依靠的根。这类命局比较少见，本报告的判定条件也定得很严。它的含义不是“弱”，而是“顺”：顺着最强的那股力量发展，往往比逆势去补更合适。喜忌细节见下一章。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "“大致相反”：从儿不忌比劫（列闲神），所以不写“完全相反”。"
+
+- id: CH1-CONCLUSION-CONGQIANG
+  slot: CH1-CONCLUSION
+  when: {all: [{f: strength.level, eq: 从强}]}
+  asserts: [{f: strength.direction, eq: 偏旺}]
+  priority: 50
+  length: [80, 130]
+  polish_allowed: false
+  variants:
+    - "综合来看，你的命局属于特殊的“从强”一类：帮扶力量高达 {strength.S_pct}%，同类与生扶的力量几乎占满全局。这种情况不按“身旺就压”来处理，而是顺着旺势、给它疏导的出路。这会直接影响下一章的喜忌，与普通身旺命局不同。"
+    - "结论：你的命局属于“从强”一类，帮扶力量 {strength.S_pct}%，能制约你的力量非常少。这类命局比较少见，本报告的判定条件也定得很严。它提示的方向是顺势：专注发挥自己最强的那一面，往往比勉强去补短板更有效。具体喜忌见下一章。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "level=从强 同时包含 special=专旺 与 special=从强，正文对两者都成立。"
+
+# ======================= CH1-CONCLUSION 贴线条目（borderline=true） =======================
+- id: CH1-CONCLUSION-BL-SHENRUO
+  slot: CH1-CONCLUSION
+  when: {all: [{f: strength.level, eq: 身弱}, {f: strength.borderline, eq: true}]}
+  asserts: []
+  priority: 60
+  length: [80, 130]
+  polish_allowed: false
+  variants:
+    - "综合来看，你的日主属于“身弱”，帮扶力量占 {strength.S_pct}%。需要说明的是，这个数值离分档线不到一个百分点，所以更准确的说法是“偏弱”，而不是明显的弱。后面的喜忌仍按偏弱推导，但它的力度你可以理解得温和一些。"
+    - "结论是“身弱”，不过属于贴着分档线的情况：帮扶力量 {strength.S_pct}%，与相邻档位只差不到一个百分点。命理判断本来就有边界上的模糊地带，本报告如实告诉你：方向是偏弱，程度并不重。读下一章时，可以把“需要帮扶”理解为“适当借力”。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "身弱贴线可能贴 0.40（邻中和偏弱）也可能贴 0.20（但从格其余条件不满足），故只写“分档线 / 相邻档位”，不点名是哪一档。strength.md §4.3 要求贴线时用“偏……”措辞。"
+
+- id: CH1-CONCLUSION-BL-ZHONGHE-RUO
+  slot: CH1-CONCLUSION
+  when: {all: [{f: strength.level, eq: 中和偏弱}, {f: strength.borderline, eq: true}]}
+  asserts: []
+  priority: 60
+  length: [80, 130]
+  polish_allowed: false
+  variants:
+    - "综合来看，你的日主属于“中和偏弱”，帮扶力量占 {strength.S_pct}%。这个数值紧挨着分档线，与相邻档位相差不到一个百分点，说明你的状态非常接近平衡。本报告仍按偏弱的方向推导喜忌，但力度很轻，读到“帮扶”时可以理解为稍加支持。"
+    - "结论是“中和偏弱”，而且是贴着分档线的那一种：帮扶力量 {strength.S_pct}%，再多或再少一点点就会换档。这样的命局弹性很大，环境和选择的影响往往比结构本身更明显。下一章的喜忌按偏弱的方向给出，你可以把它当作微调的参考。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "可能贴 0.40 或 0.45，正文不点名相邻档位。"
+
+- id: CH1-CONCLUSION-BL-ZHONGHE-WANG
+  slot: CH1-CONCLUSION
+  when: {all: [{f: strength.level, eq: 中和偏旺}, {f: strength.borderline, eq: true}]}
+  asserts: []
+  priority: 60
+  length: [80, 130]
+  polish_allowed: false
+  variants:
+    - "综合来看，你的日主属于“中和偏旺”，帮扶力量占 {strength.S_pct}%。这个数值离分档线不到一个百分点，说明你的状态十分接近平衡，偏旺只是一点点。喜忌仍按偏旺的方向推导，但力度很轻，下一章说到约束、输出时，可以理解为微调而不是大改。"
+    - "结论是“中和偏旺”，属于贴着分档线的情形：帮扶力量 {strength.S_pct}%，与相邻档位只差不到一个百分点。这说明你的力量结构本身就比较平衡，后天的环境和习惯影响更大。下一章的喜忌按偏旺方向给出，当作方向上的参考即可。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH1-CONCLUSION-BL-SHENWANG
+  slot: CH1-CONCLUSION
+  when: {all: [{f: strength.level, eq: 身旺}, {f: strength.borderline, eq: true}]}
+  asserts: []
+  priority: 60
+  length: [80, 130]
+  polish_allowed: false
+  variants:
+    - "综合来看，你的日主属于“身旺”，帮扶力量占 {strength.S_pct}%。需要说明的是，这个数值离分档线不到一个百分点，更准确的说法是“偏旺”，而不是明显的旺。后面的喜忌按偏旺推导，你可以把它理解为温和的调整方向。"
+    - "结论是“身旺”，不过贴着分档线：帮扶力量 {strength.S_pct}%，与相邻档位相差不到一个百分点。本报告如实标出这一点，是因为边界附近的判断本来就有弹性。方向是偏旺，程度不重；下一章说的出口和约束，按适度的分寸来理解即可。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH1-CONCLUSION-BL-CONGRUO
+  slot: CH1-CONCLUSION
+  when: {all: [{f: strength.level, eq: 从弱}, {f: strength.borderline, eq: true}]}
+  asserts: [{f: strength.direction, eq: 偏弱}]
+  priority: 60
+  length: [80, 130]
+  polish_allowed: false
+  variants:
+    - "综合来看，你的命局按规则判为“从弱”，但帮扶力量刚好落在 20% 的门槛之下，差距不到一个百分点。这说明从格成立，但并不算特别稳固。本报告仍按从格给出喜忌；读下一章时，建议结合自己的经历去体会，而不是把它当成唯一答案。"
+    - "结论是“从弱”，属于贴着门槛的情形：判定从格要求帮扶力量低于 20%，你的数值只比门槛低一点点。其余几项条件你都满足，所以本报告仍按从格处理。不过边界上的判断天然带有弹性，下一章的喜忌请当作参考方向。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "从弱贴线只可能贴 0.20。不显示 S_pct：S∈[0.19,0.20) 四舍五入可能显示为 20%，与“低于 20%”字面冲突。"
+
+- id: CH1-CONCLUSION-BL-CONGQIANG
+  slot: CH1-CONCLUSION
+  when: {all: [{f: strength.level, eq: 从强}, {f: strength.borderline, eq: true}]}
+  asserts: [{f: strength.direction, eq: 偏旺}]
+  priority: 60
+  length: [80, 130]
+  polish_allowed: false
+  variants:
+    - "综合来看，你的命局按规则判为“从强”，但帮扶力量刚好越过 80% 的门槛，差距不到一个百分点。从格成立，但不算特别稳固。本报告仍按顺势的思路给出喜忌，建议你结合自己的经历来体会下一章的结论，不必把它看成唯一答案。"
+    - "结论是“从强”，属于贴着门槛的情形：判定要求帮扶力量达到 80%，你的数值只多出一点点。其余条件全部满足，所以仍按从强处理；但边界上的判断有弹性，下一章的喜忌请当作方向参考，再结合自己的实际经历来理解。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+# ======================= CH1-CONCLUSION 无时辰条目（time_known=false） =======================
+- id: CH1-CONCLUSION-NOHOUR-RUO-GAO
+  slot: CH1-CONCLUSION
+  when: {all: [{f: profile.time_known, eq: false}, {f: profile.confidence, eq: 高}, {f: strength.level, in: [身弱, 中和偏弱]}]}
+  asserts: [{f: strength.direction, eq: 偏弱}]
+  priority: 70
+  length: [80, 130]
+  polish_allowed: false
+  variants:
+    - "综合来看，你的日主属于“{strength.level}”，帮扶力量占 {strength.S_pct}%。因为没有时辰信息，本报告按三柱计算，并把一天里所有可能的时辰逐一补上试算：绝大多数情况下结论都是偏弱，用神也基本一致，所以可信度为“高”。"
+    - "结论是“{strength.level}”，帮扶力量 {strength.S_pct}%。你没有提供时辰，所以本报告只用年、月、日三柱计分，又把每个可能的时辰都代入验算了一遍：结论在绝大多数时辰下保持偏弱，因此可信度定为“高”，下一章可以照常参考。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "置信“高”= 方向一致 ≥80% 且用神一致 ≥75%（strength.md §5），“绝大多数”“基本一致”与此相符。"
+
+- id: CH1-CONCLUSION-NOHOUR-RUO-ZHONG
+  slot: CH1-CONCLUSION
+  when: {all: [{f: profile.time_known, eq: false}, {f: profile.confidence, eq: 中}, {f: strength.level, in: [身弱, 中和偏弱]}]}
+  asserts: [{f: strength.direction, eq: 偏弱}]
+  priority: 70
+  length: [80, 130]
+  polish_allowed: false
+  variants:
+    - "综合来看，按三柱计算，你的日主属于“{strength.level}”，帮扶力量占 {strength.S_pct}%。由于没有时辰信息，本报告把每个可能的时辰代入验算：多数时辰下结论是偏弱，但也有一部分时辰会偏旺，所以可信度为“中”，这个结论大概率成立，但不是百分之百。"
+    - "结论是“{strength.level}”，可信度“中”。没有时辰时只能用三柱计分，帮扶力量为 {strength.S_pct}%；把可能的时辰逐一代入后，大多数结果仍是偏弱，少数会变成偏旺。如果你日后查到准确时辰，重新排一次会得到更确定的结论。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH1-CONCLUSION-NOHOUR-RUO-DI
+  slot: CH1-CONCLUSION
+  when: {all: [{f: profile.time_known, eq: false}, {f: profile.confidence, eq: 低}, {f: strength.level, in: [身弱, 中和偏弱]}]}
+  asserts: [{f: strength.direction, eq: 偏弱}]
+  priority: 70
+  length: [80, 130]
+  polish_allowed: false
+  variants:
+    - "按三柱计算，你的日主暂判为“{strength.level}”，帮扶力量占 {strength.S_pct}%。但要坦白说明：缺少时辰时，把不同时辰代入验算，偏弱和偏旺的结果都不少，所以可信度只有“低”。本章和下一章的结论请仅作参考，有条件的话补上时辰重新排盘会更可靠。"
+    - "暂定结论是“{strength.level}”，可信度“低”。主要原因是缺少时辰：三柱算出的帮扶力量为 {strength.S_pct}%，可一旦代入不同的时辰，结果在偏弱与偏旺之间摇摆较大。本报告不回避这一点，后面的内容请当作参考；若能查到出生时间，建议重新排一次。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "置信“低”也可能来自交节日年月柱不确定（strength.md §5 第 5 条），其根源仍是缺时辰，故写“主要原因”。"
+
+- id: CH1-CONCLUSION-NOHOUR-WANG-GAO
+  slot: CH1-CONCLUSION
+  when: {all: [{f: profile.time_known, eq: false}, {f: profile.confidence, eq: 高}, {f: strength.level, in: [中和偏旺, 身旺]}]}
+  asserts: [{f: strength.direction, eq: 偏旺}]
+  priority: 70
+  length: [80, 130]
+  polish_allowed: false
+  variants:
+    - "按三柱计算，你的日主属于“{strength.level}”，帮扶力量 {strength.S_pct}%，你这一方占上风。没有时辰信息并不影响这个方向：本报告把一天中每个可能的时辰都代入验算，绝大多数结果同样偏旺、用神也一致，可信度因此为“高”。"
+    - "结论是“{strength.level}”，可信度“高”。虽然缺少时辰、只能用年月日三柱计分，但把各个可能的时辰补进去复核后，偏旺的判断几乎没有动摇，帮扶力量仍以你这一方为主。下一章的喜忌可以照常参考。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH1-CONCLUSION-NOHOUR-WANG-ZHONG
+  slot: CH1-CONCLUSION
+  when: {all: [{f: profile.time_known, eq: false}, {f: profile.confidence, eq: 中}, {f: strength.level, in: [中和偏旺, 身旺]}]}
+  asserts: [{f: strength.direction, eq: 偏旺}]
+  priority: 70
+  length: [80, 130]
+  polish_allowed: false
+  variants:
+    - "三柱计分的结果是“{strength.level}”，帮扶力量 {strength.S_pct}%。不过时辰未知，本报告逐一代入可能的时辰复核后发现，多数情况仍偏旺，也有一部分会转为偏弱，可信度定为“中”：方向大概率对，细节留有余地。"
+    - "结论是“{strength.level}”，可信度“中”。缺少时辰时，那一份力量无从计入；按可能的时辰逐个补上后，偏旺占多数，偏弱也占了一部分。若之后能确认时辰，重新排盘可以把结论定得更实，后面的推导也会更有把握。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH1-CONCLUSION-NOHOUR-WANG-DI
+  slot: CH1-CONCLUSION
+  when: {all: [{f: profile.time_known, eq: false}, {f: profile.confidence, eq: 低}, {f: strength.level, in: [中和偏旺, 身旺]}]}
+  asserts: [{f: strength.direction, eq: 偏旺}]
+  priority: 70
+  length: [80, 130]
+  polish_allowed: false
+  variants:
+    - "按三柱暂判为“{strength.level}”，帮扶力量 {strength.S_pct}%，但可信度只有“低”。代入不同的时辰复核时，偏旺与偏弱的结果都占了相当比例，说明时辰对你的结论影响很大。请把本章与下一章当作参考，能补上时辰时最好重新排一次。"
+    - "暂定结论“{strength.level}”，可信度“低”。三柱给出的帮扶力量是 {strength.S_pct}%，然而一天之中不同时辰会把结果推向不同方向，本报告无法替你选定其中一个。后面的分析请保持参考心态，补充准确的出生时间后再排一次会更可靠。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+# ======================= CH1-CONCLUSION 兜底 =======================
+- id: CH1-CONCLUSION-FALLBACK
+  slot: CH1-CONCLUSION
+  when: {}
+  asserts: []
+  priority: 0
+  fallback: true
+  length: [40, 100]
+  polish_allowed: false
+  variants:
+    - "综合来看，你的日主旺衰等级为“{strength.level}”，帮扶力量占 {strength.S_pct}%，消耗力量占 {strength.yidang_pct}%。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "兜底：只陈述规则结果。"
+
+# ======================= CH1-QUOTE（非必需，无兜底） =======================
+- id: CH1-QUOTE-PIANRUO
+  slot: CH1-QUOTE
+  when: {all: [{f: strength.direction, eq: 偏弱}, {f: strength.level, eq: 身弱}]}
+  asserts: []
+  priority: 50
+  length: [20, 60]
+  polish_allowed: false
+  quote:
+    text: "能知衰旺之真机，其于三命之奥，思过半矣。"
+    source: "《滴天髓·衰旺》"
+    verified: false
+    edition: ""
+  variants:
+    - "旺衰放在报告最前面，是因为后面的喜忌、大运、流年都从这里推出。古人对此有一句评价："
+    - "强弱看准了，后面的推导才站得住。你的命局偏弱，下一章就从怎样借力讲起。正如古人所说："
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "未核对底本。原句不含喜忌暗示，可挂在任何旺衰结论下。"
+
+- id: CH1-QUOTE-PIANWANG
+  slot: CH1-QUOTE
+  when: {all: [{f: strength.direction, eq: 偏旺}, {f: strength.level, eq: 身旺}]}
+  asserts: []
+  priority: 50
+  length: [20, 60]
+  polish_allowed: false
+  quote:
+    text: "能知衰旺之真机，其于三命之奥，思过半矣。"
+    source: "《滴天髓·衰旺》"
+    verified: false
+    edition: ""
+  variants:
+    - "旺衰是整份报告的地基：你的命局偏旺，后面的喜忌就围绕给力量找出口展开。古人把看清旺衰视为论命的关键："
+    - "先定强弱，再论喜忌，这是子平法的老规矩，本报告也照此展开。古人说："
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "未核对底本。"
+
+- id: CH1-QUOTE-ZHONGHE
+  slot: CH1-QUOTE
+  when: {all: [{f: strength.level, in: [中和偏弱, 中和偏旺]}]}
+  asserts: []
+  priority: 50
+  length: [20, 60]
+  polish_allowed: false
+  quote:
+    text: "既识中和之正理，而于五行之妙，有全能焉。"
+    source: "《滴天髓·中和》"
+    verified: false
+    edition: ""
+  variants:
+    - "你的命局接近中和，在古人眼里这是值得珍惜的状态：不用大补大泄，顺势微调即可。古人专门谈过中和："
+    - "接近平衡的命局，调整的空间大、回旋的余地也大。古人对中和有这样的评价："
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "未核对底本。三柱时也会命中（中和等级可在三柱出现），引文本身不涉及时辰。"
+
+- id: CH1-QUOTE-CONG
+  slot: CH1-QUOTE
+  when: {all: [{f: strength.special, in: [从财, 从杀, 从儿, 从势]}]}
+  asserts: [{f: strength.direction, eq: 偏弱}]
+  priority: 80
+  length: [20, 60]
+  polish_allowed: false
+  quote:
+    text: "从得真者只论从，从神又有吉和凶。"
+    source: "《滴天髓·从象》"
+    verified: false
+    edition: ""
+  variants:
+    - "从格是子平法里最需要谨慎判断的格局之一，判错了喜忌会整体颠倒，所以本报告只认条件最严的真从。古人的原话是："
+    - "顺势而行，是从格命局的核心思路；判断时宁严勿宽，本报告也是这样做的。古人论从格时说："
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "未核对底本。此句原挂在样板 CH2-METHOD-CONG-CAI 上，B1 移到本条（第 1 章与第 2 章各最多 1 句，同一份报告不重复引同一句）。下半句“从神又有吉和凶”只是说从神本身也分好坏，不构成恐吓，L4 词表不命中（“吉和凶”≠“大凶 / 凶年”）。"
+
+- id: CH1-QUOTE-ZHUANWANG
+  slot: CH1-QUOTE
+  when: {all: [{f: strength.special, in: [专旺, 从强]}]}
+  asserts: [{f: strength.direction, eq: 偏旺}]
+  priority: 80
+  length: [20, 60]
+  polish_allowed: false
+  quote:
+    text: "能知衰旺之真机，其于三命之奥，思过半矣。"
+    source: "《滴天髓·衰旺》"
+    verified: false
+    edition: ""
+  variants:
+    - "力量高度集中的命局，关键在于认清旺势、顺势疏导，而不是硬去削弱。古人论旺衰时说："
+    - "旺到极处的命局，和普通身旺要分开看待。古人把看清这一层视为论命的要领："
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "未核对底本。没有选“一行得气”相关原文：现存说法多见于注本，出处待核。"

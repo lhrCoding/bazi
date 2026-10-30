@@ -1,0 +1,293 @@
+# 第 2 章 槽位 CH2-ROLE-YONG / CH2-ROLE-XI / CH2-ROLE-JI「各五行的作用」（第 1 批 B1，草稿）
+# 维度：角色 × 该五行对应的十神组（3×5=15）。每条 80–130 字，2 个变体；三个槽位各 1 条兜底。
+# 触发字段：ROLE-YONG 用 yongshen.yong_god；ROLE-XI 用 yongshen.xi1_god；ROLE-JI 用 yongshen.ji1_god。
+#   说明：report-sections.md 写“喜 1–2、忌 1–2”，但字段字典只有 xi1_god / ji1_god，没有第二喜神 / 忌神的十神字段，
+#   本批先按“第一喜神、第一忌神各 1 条”写；完整列表在部分变体里用 {yongshen.xi} / {yongshen.ji} 带出。
+#   若要写第二条，需要先在字段字典增加 xi2_god / ji2_god（见 batches.yaml 自检记录）。
+# 写法约定：
+#   - 五行只用占位符（{yongshen.yong} 等），十神组名直接写出（when 已锁定），百分比用对应的 gods.<组>_pct。
+#   - 用神可能来自扶抑、从格或调候覆盖，同一十神组在不同来源下方向不同（如官杀为用可能是身旺制比劫，也可能是从杀），
+#     所以正文只讲“这股力量在生活里是什么、怎么用好”，不写“因为你偏弱 / 偏旺”。
+#   - 百分比可能很小（用神缺位且未互换、调候五行 <10%），正文不写“充足”“很多”之类与数值可能冲突的词。
+#   - 忌神段不恐吓：“节制不等于排斥”。
+
+# ======================= CH2-ROLE-YONG =======================
+- id: CH2-ROLE-YONG-BIJIE
+  slot: CH2-ROLE-YONG
+  when: {all: [{f: yongshen.yong_god, eq: 比劫}]}
+  asserts: []
+  priority: 50
+  length: [80, 130]
+  polish_allowed: true
+  variants:
+    - "你的用神是{yongshen.yong}。在你的命局里，它是比劫，也就是和你同类、能并肩的力量，目前占 {gods.比劫_pct}%。比劫的帮助来自同伴、团队和自身的底气。对你来说，找到志同道合的合作者、建立自己的圈子、多做能增强自信的事，都是在用好这股力量。"
+    - "{yongshen.yong}是你的用神，对应十神里的比劫，占全盘 {gods.比劫_pct}%。比劫像身边一起扛事的兄弟姐妹：有它在，压力会被分摊，你也更敢做决定。现实中，与可靠的伙伴合作、加入能互相支持的社群，往往比单打独斗更顺。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH2-ROLE-YONG-YIN
+  slot: CH2-ROLE-YONG
+  when: {all: [{f: yongshen.yong_god, eq: 印}]}
+  asserts: []
+  priority: 50
+  length: [80, 130]
+  polish_allowed: true
+  variants:
+    - "你的用神是{yongshen.yong}。在你的命局里，它扮演印星的角色，目前占 {gods.印_pct}%。印星代表生扶与支持：学习、资质、长辈和体系的帮助，也包括让你能停下来恢复的时间和空间。所以对你来说，系统地学、找对平台、给自己留出充电期，都是在补用神。"
+    - "{yongshen.yong}是你的用神，对应十神里的印星，占全盘 {gods.印_pct}%。印星的作用像一个稳定的后方：它不替你冲锋，却让你有底气、有退路。现实中，考取资质、跟随好老师、进入重视培养的团队，往往能让这股力量真正发挥出来。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH2-ROLE-YONG-SHISHANG
+  slot: CH2-ROLE-YONG
+  when: {all: [{f: yongshen.yong_god, eq: 食伤}]}
+  asserts: []
+  priority: 50
+  length: [80, 130]
+  polish_allowed: true
+  variants:
+    - "你的用神是{yongshen.yong}。在你的命局里，它是食伤，代表你向外输出的才华、表达和技能，目前占 {gods.食伤_pct}%。食伤为用，说明你的能量需要一个出口：写、说、做、创造，把想法变成看得见的成果。长期憋着不输出，反而容易不顺。"
+    - "{yongshen.yong}是你的用神，对应十神里的食伤，占全盘 {gods.食伤_pct}%。食伤像一条把能量引出去的渠道，流动起来，田地才会有收成。对你来说，打磨一门手艺、经营自己的作品、在合适的场合表达观点，都是让用神发挥作用的方式。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH2-ROLE-YONG-CAI
+  slot: CH2-ROLE-YONG
+  when: {all: [{f: yongshen.yong_god, eq: 财}]}
+  asserts: []
+  priority: 50
+  length: [80, 130]
+  polish_allowed: true
+  variants:
+    - "你的用神是{yongshen.yong}。在你的命局里，它是财星，代表你能掌握和经营的资源，目前占 {gods.财_pct}%。财星为用，意味着把精力落在具体的事务和成果上，对你最有帮助：做预算、管项目、经营客户，越务实，越能把自身的力量转化为收获。"
+    - "{yongshen.yong}是你的用神，对应十神里的财星，占全盘 {gods.财_pct}%。财星不只是钱，更是可以被你经营的东西：时间、项目、人脉和手上的业务。对你来说，设定可衡量的目标、一步步把事情做出结果，就是让用神发力的方式。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH2-ROLE-YONG-GUANSHA
+  slot: CH2-ROLE-YONG
+  when: {all: [{f: yongshen.yong_god, eq: 官杀}]}
+  asserts: []
+  priority: 50
+  length: [80, 130]
+  polish_allowed: true
+  variants:
+    - "你的用神是{yongshen.yong}。在你的命局里，它是官杀，代表规则、责任与外部要求，目前占 {gods.官杀_pct}%。官杀为用，说明适度的约束对你是好事：明确的目标、清晰的考核、需要担当的位置，能把你的能量引到清楚的方向上。"
+    - "{yongshen.yong}是你的用神，对应十神里的官杀，占全盘 {gods.官杀_pct}%。很多人把官杀只理解为压力，其实它也是秩序和方向。对你来说，进入规则清楚的环境、接受有挑战的任务、承担一份明确的责任，往往能让你发挥得更好。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "官杀为用可能来自 S-BI-GUAN（偏旺）、从杀（偏弱）或调候覆盖，正文不写“充沛的能量”等只对偏旺成立的话。"
+
+- id: CH2-ROLE-YONG-FALLBACK
+  slot: CH2-ROLE-YONG
+  when: {}
+  asserts: []
+  priority: 0
+  fallback: true
+  length: [20, 80]
+  polish_allowed: false
+  variants:
+    - "你的用神是{yongshen.yong}，在你的命局里对应{yongshen.yong_god|名}。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "兜底。"
+
+# ======================= CH2-ROLE-XI =======================
+- id: CH2-ROLE-XI-BIJIE
+  slot: CH2-ROLE-XI
+  when: {all: [{f: yongshen.xi1_god, eq: 比劫}]}
+  asserts: []
+  priority: 50
+  length: [80, 130]
+  polish_allowed: true
+  variants:
+    - "排在第一位的喜神是{yongshen.xi1}，在你的命局里它是比劫，占 {gods.比劫_pct}%。比劫是并肩的同类力量，作为喜神，它从同伴与自信的方向配合用神：有可靠的合作者、有能一起打拼的团队，你会更敢做、更能扛。"
+    - "{yongshen.xi1}是你的第一喜神，对应比劫，占 {gods.比劫_pct}%。比劫这股后援来自身边的人和你自身的底气。现实中，结交能互相支持的朋友、与人合作分担任务，都是在借喜神的力。全部喜神为{yongshen.xi}，遇到时都算加分。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH2-ROLE-XI-YIN
+  slot: CH2-ROLE-XI
+  when: {all: [{f: yongshen.xi1_god, eq: 印}]}
+  asserts: []
+  priority: 50
+  length: [80, 130]
+  polish_allowed: true
+  variants:
+    - "排在第一位的喜神是{yongshen.xi1}，在你的命局里它是印星，占 {gods.印_pct}%。它的作用是配合用神，从支持与积累的方向给你加分：学习新东西、获得认可的资质、身边有可以请教的人，都会让你的状态更稳。"
+    - "{yongshen.xi1}是你的第一喜神，对应印星，占 {gods.印_pct}%。如果说用神是主力，喜神就是后援。印星这股后援偏向给养：读书、进修、休整，或者向有经验的人请教。你的全部喜神为{yongshen.xi}，它们出现时都算助力。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH2-ROLE-XI-SHISHANG
+  slot: CH2-ROLE-XI
+  when: {all: [{f: yongshen.xi1_god, eq: 食伤}]}
+  asserts: []
+  priority: 50
+  length: [80, 130]
+  polish_allowed: true
+  variants:
+    - "排在第一位的喜神是{yongshen.xi1}，在你的命局里它是食伤，占 {gods.食伤_pct}%。食伤是才华与表达，作为喜神，它帮你把能量变成作品和口碑：多展示、多分享、多动手做，会让用神的作用更顺畅地发挥出来。"
+    - "{yongshen.xi1}是你的第一喜神，对应食伤，占 {gods.食伤_pct}%。用神负责方向，食伤这股后援负责出口：表达观点、打磨技能、做出可以被看见的东西。全部喜神为{yongshen.xi}，它们旺起来的阶段，往往也是你更容易被看见的时候。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH2-ROLE-XI-CAI
+  slot: CH2-ROLE-XI
+  when: {all: [{f: yongshen.xi1_god, eq: 财}]}
+  asserts: []
+  priority: 50
+  length: [80, 130]
+  polish_allowed: true
+  variants:
+    - "排在第一位的喜神是{yongshen.xi1}，在你的命局里它是财星，占 {gods.财_pct}%。财星是可经营的资源，作为喜神，它把你的努力落到实处：把精力投向有明确产出的事情，比空想更能帮到你，也更容易看到阶段性的回报。"
+    - "{yongshen.xi1}是你的第一喜神，对应财星，占 {gods.财_pct}%。财星这股后援偏重落地：项目、客户、收入和看得见的成绩。给自己设定具体的目标并按期复盘，是借助喜神力量的好办法。你的全部喜神为{yongshen.xi}。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH2-ROLE-XI-GUANSHA
+  slot: CH2-ROLE-XI
+  when: {all: [{f: yongshen.xi1_god, eq: 官杀}]}
+  asserts: []
+  priority: 50
+  length: [80, 130]
+  polish_allowed: true
+  variants:
+    - "排在第一位的喜神是{yongshen.xi1}，在你的命局里它是官杀，占 {gods.官杀_pct}%。官杀是规则与责任，作为喜神，它给你提供框架和方向感：接受适度的约束、承担明确的职责，反而能让你更专注，把力气用在刀刃上。"
+    - "{yongshen.xi1}是你的第一喜神，对应官杀，占 {gods.官杀_pct}%。官杀这股后援以秩序的形式出现：截止日期、考核标准、需要负责的岗位。对你来说，它们不只是压力，也是把能量集中起来的抓手。全部喜神为{yongshen.xi}。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "官杀为第一喜神的来源：扶抑与从格的喜神首位都不是官杀（从势喜神首位为食伤），只在调候覆盖（原用神官杀降为第一喜神）或 Y-SWAP（S-BI-GUAN 用神缺位、与财星互换）时出现。正文不依赖来源。"
+
+- id: CH2-ROLE-XI-FALLBACK
+  slot: CH2-ROLE-XI
+  when: {}
+  asserts: []
+  priority: 0
+  fallback: true
+  length: [20, 80]
+  polish_allowed: false
+  variants:
+    - "你的喜神是{yongshen.xi}，其中排在第一位的{yongshen.xi1}对应{yongshen.xi1_god|名}。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "兜底。"
+
+# ======================= CH2-ROLE-JI =======================
+- id: CH2-ROLE-JI-BIJIE
+  slot: CH2-ROLE-JI
+  when: {all: [{f: yongshen.ji1_god, eq: 比劫}]}
+  asserts: []
+  priority: 50
+  length: [80, 130]
+  polish_allowed: true
+  variants:
+    - "需要节制的五行里，排第一位的是{yongshen.ji1}，在你的命局里它是比劫，占 {gods.比劫_pct}%。比劫是同类的力量，过多时容易变成固执己见或与人争抢。节制并不是疏远朋友，而是在合作中把分工和利益讲清楚，也给别人的意见留出位置。"
+    - "{yongshen.ji1}是你需要节制的第一个五行，对应比劫，占 {gods.比劫_pct}%。在你的命局里，“我”这一方的力量已经不弱，再加码容易冲动、好胜。遇到它旺的阶段，凡事多听一种意见，合伙、共同出钱之类的事情尤其要把规则谈在前面。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "比劫为第一忌神：偏旺（S-BI-*）或从财。从财时日主本身极弱，故第二变体写“不弱”而非“够强”，避免与从财的结构字面冲突。"
+
+- id: CH2-ROLE-JI-YIN
+  slot: CH2-ROLE-JI
+  when: {all: [{f: yongshen.ji1_god, eq: 印}]}
+  asserts: []
+  priority: 50
+  length: [80, 130]
+  polish_allowed: true
+  variants:
+    - "需要节制的五行里，排第一位的是{yongshen.ji1}，在你的命局里它是印星，占 {gods.印_pct}%。印星代表支持与庇护，过多时容易变成依赖和拖延：想得多、动得少。节制的办法是给自己设截止日期，把学到的东西尽快用起来。"
+    - "{yongshen.ji1}是你需要节制的第一个五行，对应印星，占 {gods.印_pct}%。对你的命局来说，再多的生扶就像被照顾过头，反而少了闯劲。遇到它旺的阶段，少一点准备、多一点行动，把计划尽早落到具体的一步上，往往更顺。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "印为第一忌神：S-YIN（偏旺）或从杀 / 从儿 / 从势（从弱）。从弱时原局印星很少，故不写“已经足够多”，只写“再多的生扶”。"
+
+- id: CH2-ROLE-JI-SHISHANG
+  slot: CH2-ROLE-JI
+  when: {all: [{f: yongshen.ji1_god, eq: 食伤}]}
+  asserts: []
+  priority: 50
+  length: [80, 130]
+  polish_allowed: true
+  variants:
+    - "需要节制的五行里，排第一位的是{yongshen.ji1}，在你的命局里它是食伤，占 {gods.食伤_pct}%。食伤是输出与表达，过多时容易精力分散、说得多做得少，或是言语上得罪人。节制的办法是聚焦：同一时期只推进少数几件事，重要的话想好再说。"
+    - "{yongshen.ji1}是你需要节制的第一个五行，对应食伤，占 {gods.食伤_pct}%。在你的命局里，向外付出的力量容易过头，再多就会透支。遇到它旺的阶段，宜控制节奏，先完成手上的事，再开新的头；表达观点时也留三分余地。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH2-ROLE-JI-CAI
+  slot: CH2-ROLE-JI
+  when: {all: [{f: yongshen.ji1_god, eq: 财}]}
+  asserts: []
+  priority: 50
+  length: [80, 130]
+  polish_allowed: true
+  variants:
+    - "需要节制的五行里，排第一位的是{yongshen.ji1}，在你的命局里它是财星，占 {gods.财_pct}%。财星是需要你去驾驭的资源和事务，过多时人会被事情拖着走，顾此失彼。节制的意思是量力而行：机会再多，也只接自己管得过来的那一部分。"
+    - "{yongshen.ji1}是你需要节制的第一个五行，对应财星，占 {gods.财_pct}%。在你的命局里，财星一旦加重，要打理的事务和诱惑跟着变多，人就容易分心或冒进。遇到它旺的阶段，宜守住预算、少做超出能力的承诺，把精力留给最重要的一两件事。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH2-ROLE-JI-GUANSHA
+  slot: CH2-ROLE-JI
+  when: {all: [{f: yongshen.ji1_god, eq: 官杀}]}
+  asserts: []
+  priority: 50
+  length: [80, 130]
+  polish_allowed: true
+  variants:
+    - "需要节制的五行里，排第一位的是{yongshen.ji1}，在你的命局里它是官杀，占 {gods.官杀_pct}%。官杀过多时，压力和要求会超出承受范围。节制不等于逃避规则，而是学会筛选：不必要的责任不揽，重要的事情分清先后，给自己留出喘息的余地。"
+    - "{yongshen.ji1}是你需要节制的第一个五行，对应官杀，占 {gods.官杀_pct}%。它代表外部的约束和考核，本身并不坏，只是对你的命局来说容易偏重。遇到它旺的阶段，宜量力承担、按部就班，避免同时接下太多高压任务。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "官杀为第一忌神：W-SHA（偏弱）或专旺（官杀极弱）。专旺时原局官杀很少，故不写“已经偏多”，写“容易偏重”。"
+
+- id: CH2-ROLE-JI-FALLBACK
+  slot: CH2-ROLE-JI
+  when: {}
+  asserts: []
+  priority: 0
+  fallback: true
+  length: [20, 80]
+  polish_allowed: false
+  variants:
+    - "需要节制的五行是{yongshen.ji}，其中排在第一位的{yongshen.ji1}对应{yongshen.ji1_god|名}。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "兜底。"

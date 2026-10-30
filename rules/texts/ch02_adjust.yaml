@@ -1,0 +1,252 @@
+# 第 2 章 修正类槽位（第 1 批 B1，草稿）：CH2-SWAP、CH2-TIAOHOU、CH2-TONGGUAN（均为非必需槽位，无兜底）
+#
+# CH2-SWAP：yongshen.swap=true，1 条通用条目（全部用占位符）。80–130 字。
+# CH2-TIAOHOU：yongshen.th（AGREE / NEUTRAL-OVERRIDE / ADD-XI）× month.season（冬 / 夏）= 6 条。100–160 字。
+#   调候五行由季节唯一决定（冬→火、夏→水），正文直接写出并用 asserts 锁定 th_element；
+#   写“有利 / 用神”时再锁 favorable 或 yong。
+#   NEUTRAL-OVERRIDE：yongshen.md v1.1 已明确原用神保留为第一喜神（冬删水 / 夏删土只作用于原喜神列表，案例 C20）。
+#   正文仍只写“扶抑结论没有作废、排序见下面的结论”，与新规则一致，未改正文。
+# CH2-NOHOUR-CONG：仅三柱；profile.time_known=false 且 strength.nohour_cong_possible=true。60–100 字，不送润色。
+#   只提示“可能符合从格条件”，不判定为从格；正文用“时辰”，不用“出生时辰 / 时柱”（L7）。
+# CH2-TONGGUAN：tg=true × tg_element（5）。80–130 字。
+#   通关五行 Z 唯一决定相战的两方：Z 的母（攻方）克 Z 的子（受克方）。如 Z=水 ⇔ 金克木。
+#   正文写出两方五行，并用 power_pct ≥25 锁定（与 yongshen.md §5 “各自 ≥ total×25%”一致）。
+
+# ======================= CH2-SWAP =======================
+- id: CH2-SWAP-GENERIC
+  slot: CH2-SWAP
+  when: {all: [{f: yongshen.swap, eq: true}]}
+  asserts: []
+  priority: 50
+  length: [80, 130]
+  polish_allowed: true
+  variants:
+    - "需要补充一点：按上一步，你最需要的是{yongshen.swap_from}，但你的原局里完全没有{yongshen.swap_from}。本报告的做法是以命中已有的{yongshen.swap_to}为用神，把{yongshen.swap_from}排在喜神第一位。这只是先后顺序的调整，方向没有变：将来遇到{yongshen.swap_from}的大运、流年，同样算对你有利的阶段。"
+    - "这里有一个细节。理论上排第一的{yongshen.swap_from}，在你的原局里一点都没有。古法强调用神最好取自命中本有的力量，所以本报告把命中已有的{yongshen.swap_to}定为用神，{yongshen.swap_from}降为第一喜神。两者都是对你有利的五行，只是谁打头阵的区别；遇到{yongshen.swap_from}旺的年份，依然是助力。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "样板并入 B1。修订：“原局四柱里”→“原局里”（三柱时也可能触发）。对应 yongshen.md §3.3 Y-SWAP（用户确认保留）。"
+
+# ======================= CH2-TIAOHOU =======================
+- id: CH2-TIAOHOU-AGREE-WINTER
+  slot: CH2-TIAOHOU
+  when: {all: [{f: yongshen.th, eq: AGREE}, {f: month.season, eq: 冬}]}
+  asserts:
+    - {f: yongshen.th_element, eq: 火}
+    - {f: yongshen.favorable, contains: 火}
+  priority: 50
+  length: [100, 160]
+  polish_allowed: true
+  variants:
+    - "再看季节。你生在{month.branch}月，是一年里最冷的时段，而命局里火只占 {power_pct.火}%。《穷通宝鉴》论冬天出生的命局，大多先看有没有火来暖局，这叫调候。你的扶抑结论本来就把火列为有利的五行，两条思路指向同一处，“火对你有利”这个判断因此更有把握。"
+    - "从季节看，{month.branch}月天寒地冻，命局需要温度；而你的火只占 {power_pct.火}%，明显偏少。古籍把这种按冷暖做的调整叫调候，冬季命局通常以火为先。按扶抑你本来就需要火——扶抑与调候一致，是取用神时比较理想的情况；后面大运、流年遇到火旺的阶段，可以更积极地安排计划。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "样板并入 B1，正文未改。对应 Y-TH-AGREE（冬）。案例 C01。"
+
+- id: CH2-TIAOHOU-AGREE-SUMMER
+  slot: CH2-TIAOHOU
+  when: {all: [{f: yongshen.th, eq: AGREE}, {f: month.season, eq: 夏}]}
+  asserts:
+    - {f: yongshen.th_element, eq: 水}
+    - {f: yongshen.favorable, contains: 水}
+  priority: 50
+  length: [100, 160]
+  polish_allowed: true
+  variants:
+    - "季节也要考虑。{month.branch}月是一年里最炎热干燥的时段，你的命局里水只有 {power_pct.水}%。古人论夏月命局，讲究先以水来降温润燥，这一步叫调候。巧的是，按扶抑你本来就需要水，两种方法得出了同一个答案。所以水在你这里既能平衡强弱，也能调节燥热，作用是双重的。"
+    - "从季节看，你生于盛夏的{month.branch}月，暑气正盛，而命局中的水仅占 {power_pct.水}%，显得不够。调候讲究夏月需水，这与扶抑给出的有利五行恰好一致。两条独立的思路相互印证时，结论通常更可靠；后面遇到水旺的大运、流年，可以更主动地推进计划。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "对应 Y-TH-AGREE（夏）。案例 C13。"
+
+- id: CH2-TIAOHOU-ADDXI-WINTER
+  slot: CH2-TIAOHOU
+  when: {all: [{f: yongshen.th, eq: ADD-XI}, {f: month.season, eq: 冬}]}
+  asserts:
+    - {f: yongshen.th_element, eq: 火}
+    - {f: yongshen.favorable, contains: 火}
+  priority: 50
+  length: [100, 160]
+  polish_allowed: true
+  variants:
+    - "再看季节。你生在{month.branch}月，天寒地冻，命局里火只占 {power_pct.火}%，偏冷。古法按冷暖做的这种调整叫调候。不过你的命局强弱失衡更明显，扶抑仍是根本，所以用神不变，只把火补进喜神，排在最后，起辅助作用。可以理解为：先解决力量够不够，再兼顾温度够不够。"
+    - "冬季出生的命局，古人常提醒要有一点暖意。你生在{month.branch}月，火仅占 {power_pct.火}%。本报告的规则是：强弱明显失衡时，扶抑优先，调候辅助。因此{yongshen.yong}仍是你的用神，火作为补充列入喜神。两者分工不同，一个管根本、一个管冷暖，并不矛盾。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "对应 Y-TH-ADD-XI（身弱 / 身旺）。yongshen.md §4 已知张力：冬季身弱木日主扶抑取水、调候要火，两者都进喜神——本条“一个管根本、一个管冷暖”即按规则要求说清，不写成矛盾。"
+
+- id: CH2-TIAOHOU-ADDXI-SUMMER
+  slot: CH2-TIAOHOU
+  when: {all: [{f: yongshen.th, eq: ADD-XI}, {f: month.season, eq: 夏}]}
+  asserts:
+    - {f: yongshen.th_element, eq: 水}
+    - {f: yongshen.favorable, contains: 水}
+  priority: 50
+  length: [100, 160]
+  polish_allowed: true
+  variants:
+    - "季节同样要看。{month.branch}月暑热当令，你的命局里水只有 {power_pct.水}%，偏燥。按调候的思路，燥局需要一些水来润泽。但你的强弱失衡更突出，扶抑仍然优先，所以用神保持不变，水作为辅助补进喜神末位。换句话说：先把力量的平衡找回来，再顾及燥湿。"
+    - "夏天出生、命局缺水，古人会提醒润燥。你生在{month.branch}月，水仅占 {power_pct.水}%。按本报告的规则，旺衰明显偏向一边时，调候只做辅助：{yongshen.yong}仍是用神，水加入喜神。一个负责强弱、一个负责燥湿，各管一摊，不会互相打架。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "对应 Y-TH-ADD-XI（夏）。"
+
+- id: CH2-TIAOHOU-OVERRIDE-WINTER
+  slot: CH2-TIAOHOU
+  when: {all: [{f: yongshen.th, eq: NEUTRAL-OVERRIDE}, {f: month.season, eq: 冬}]}
+  asserts:
+    - {f: yongshen.th_element, eq: 火}
+    - {f: yongshen.yong, eq: 火}
+  priority: 50
+  length: [100, 160]
+  polish_allowed: true
+  variants:
+    - "季节在你的命局里分量很重。你生在{month.branch}月，天寒地冻，而火只占 {power_pct.火}%。你的旺衰接近中和，扶抑的需求不算急，这时冷暖反而成了主要矛盾。按本报告的规则，中和命局遇到明显的寒冷，由调候五行直接担任用神，所以你的用神定为火。扶抑那一步的结论没有作废，最终的用、喜排序见下面的结论。"
+    - "这一步会改变用神。你的命局接近中和，强弱上不缺什么；真正突出的问题是冷：{month.branch}月严寒，火仅占 {power_pct.火}%。古人论冬月命局，常以火为先。所以本报告把调候放到首位，以火为用神；前面扶抑得出的结论改作参考，具体排序以下面的结论为准。这样调整，是为了先解决最明显的那个失衡。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "对应 Y-TH-NEUTRAL-OVERRIDE（冬）。案例 C16（扶抑取木，调候改火）、C20（扶抑取水，调候改火，水保留为第一喜神）。正文不写原用神的去向，由 SUMMARY 给出。"
+
+- id: CH2-TIAOHOU-OVERRIDE-SUMMER
+  slot: CH2-TIAOHOU
+  when: {all: [{f: yongshen.th, eq: NEUTRAL-OVERRIDE}, {f: month.season, eq: 夏}]}
+  asserts:
+    - {f: yongshen.th_element, eq: 水}
+    - {f: yongshen.yong, eq: 水}
+  priority: 50
+  length: [100, 160]
+  polish_allowed: true
+  variants:
+    - "季节在你的命局里是关键。{month.branch}月炎热干燥，你的命局里水只有 {power_pct.水}%。由于旺衰接近中和，扶抑并不急迫，燥热便成了最需要解决的问题。按本报告的规则，此时由调候五行直接做用神，所以你的用神定为水。扶抑那一步的结论仍有参考价值，最终排序见下面的结论。"
+    - "这一步会改变用神。你的强弱接近平衡，最突出的反而是燥：生在盛夏的{month.branch}月，水仅占 {power_pct.水}%。古人论夏月命局，讲究以水润泽。因此本报告让调候优先，以水为用神；扶抑得出的五行并未被否定，只是不再排第一，具体以下面的结论为准。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "对应 Y-TH-NEUTRAL-OVERRIDE（夏）。"
+
+# ======================= CH2-TONGGUAN =======================
+- id: CH2-TONGGUAN-SHUI
+  slot: CH2-TONGGUAN
+  when: {all: [{f: yongshen.tg, eq: true}, {f: yongshen.tg_element, eq: 水}]}
+  asserts:
+    - {f: yongshen.favorable, contains: 水}
+    - {f: power_pct.金, gte: 25}
+    - {f: power_pct.木, gte: 25}
+  priority: 50
+  length: [80, 130]
+  polish_allowed: true
+  variants:
+    - "另有一层关系：你命局里最强的两个五行是金和木，各占 {power_pct.金}% 和 {power_pct.木}%，金克木，好比刀斧对着大树，两强相争。古法调和的办法叫通关：取金所生、又能生木的水居中，让力量变成金生水、水生木的顺流。水与你的扶抑方向一致，所以列入喜神。"
+    - "你的命局里，金与木是最强的两股力量，分别占 {power_pct.金}%、{power_pct.木}%，而两者相克，好比两个强势的人针锋相对。这时最好有人居中斡旋，水正是这个角色：它承接金的力量，再转去滋养木。本报告确认水与扶抑方向不冲突后，才把它加为喜神。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "Z=水 ⇔ 金克木。"
+
+- id: CH2-TONGGUAN-MU
+  slot: CH2-TONGGUAN
+  when: {all: [{f: yongshen.tg, eq: true}, {f: yongshen.tg_element, eq: 木}]}
+  asserts:
+    - {f: yongshen.favorable, contains: 木}
+    - {f: power_pct.水, gte: 25}
+    - {f: power_pct.火, gte: 25}
+  priority: 50
+  length: [80, 130]
+  polish_allowed: true
+  variants:
+    - "你的命局还有一个特点：水与火是最强的两股力量，分别占 {power_pct.水}% 和 {power_pct.火}%，正是常说的水火相争。古人不主张帮一方压另一方，而是请木来居中：水去生木，木再生火，对立就变成了接力。木的方向与扶抑一致，因此本报告把它补为喜神。"
+    - "水火两强对峙，是你命局里很显眼的一组关系：水占 {power_pct.水}%，火占 {power_pct.火}%。通关的意思，是找一个能让双方都顺下来的中间人。木吸收水的力量，又能助火燃烧，正好架起这座桥。确认它与扶抑方向一致后，木被列为喜神。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "Z=木 ⇔ 水克火。"
+
+- id: CH2-TONGGUAN-HUO
+  slot: CH2-TONGGUAN
+  when: {all: [{f: yongshen.tg, eq: true}, {f: yongshen.tg_element, eq: 火}]}
+  asserts:
+    - {f: yongshen.favorable, contains: 火}
+    - {f: power_pct.木, gte: 25}
+    - {f: power_pct.土, gte: 25}
+  priority: 50
+  length: [80, 130]
+  polish_allowed: true
+  variants:
+    - "你的命局里，木和土是最强的两股力量，分别占 {power_pct.木}% 和 {power_pct.土}%，木克土，彼此牵制。古法把居中调和叫通关：火由木所生，又能生土，把相克改成相生的一条链。火与你的扶抑方向一致，所以加入喜神，起到缓和两方的作用。"
+    - "木占 {power_pct.木}%、土占 {power_pct.土}%，两股力量都很强，而且一个克一个，好比树根要钻进硬土，彼此僵持。火可以充当中间环节：木燃而生火，火过之处土更厚实。通关的作用就在于此。在确认火不违背扶抑方向之后，本报告把它列为喜神。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "Z=火 ⇔ 木克土。"
+
+- id: CH2-TONGGUAN-TU
+  slot: CH2-TONGGUAN
+  when: {all: [{f: yongshen.tg, eq: true}, {f: yongshen.tg_element, eq: 土}]}
+  asserts:
+    - {f: yongshen.favorable, contains: 土}
+    - {f: power_pct.火, gte: 25}
+    - {f: power_pct.金, gte: 25}
+  priority: 50
+  length: [80, 130]
+  polish_allowed: true
+  variants:
+    - "你的命局中，火和金是最强的两股力量，各占 {power_pct.火}% 和 {power_pct.金}%，火克金，针锋相对。土能承接火的力量，又能生金，放在中间，就把硬碰硬变成了火生土、土生金的传递，这就是通关。土的方向与扶抑一致，所以补为喜神。"
+    - "火与金两强并立，火占 {power_pct.火}%、金占 {power_pct.金}%，好比炉火与金属，直接接触就是熔炼。古人调和这种关系，会在中间加一层土：火先生土，土再生金，冲突被缓冲成滋养。本报告确认土与扶抑方向一致后，才把它列为喜神。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "Z=土 ⇔ 火克金。"
+
+- id: CH2-TONGGUAN-JIN
+  slot: CH2-TONGGUAN
+  when: {all: [{f: yongshen.tg, eq: true}, {f: yongshen.tg_element, eq: 金}]}
+  asserts:
+    - {f: yongshen.favorable, contains: 金}
+    - {f: power_pct.土, gte: 25}
+    - {f: power_pct.水, gte: 25}
+  priority: 50
+  length: [80, 130]
+  polish_allowed: true
+  variants:
+    - "你的命局里，土和水是最强的两股力量，各占 {power_pct.土}% 和 {power_pct.水}%，土克水，好比堤坝与洪流相持。金生于土，又能生水，放在两者之间正好起引导作用，让力量按土生金、金生水的顺序流动，这叫通关。金与你的扶抑方向一致，所以加入喜神。"
+    - "土占 {power_pct.土}%、水占 {power_pct.水}%，两强相遇而相克，是你命局中一组明显的对立。通关的思路不是削弱谁，而是找中间人：金既是土所生，又能生水，把双方连成一条顺流。在确认金与扶抑需求不冲突后，本报告把它列为喜神。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "Z=金 ⇔ 土克水。"
+
+# ======================= CH2-NOHOUR-CONG =======================
+- id: CH2-NOHOUR-CONG-GENERIC
+  slot: CH2-NOHOUR-CONG
+  when: {all: [{f: profile.time_known, eq: false}, {f: strength.nohour_cong_possible, eq: true}]}
+  asserts: []
+  priority: 50
+  length: [60, 100]
+  polish_allowed: false
+  variants:
+    - "另需说明：如果你实际生在{strength.nohour_cong_hours}时，命局可能符合较少见的从格条件，那时喜忌会和本章大体相反。没有时辰时本报告不作这一判定，仍以上面的结论为准；能确认时辰的话，建议重新排盘核对。"
+    - "还有一种可能需要告诉你：把{strength.nohour_cong_hours}时补进命盘，会满足从格的判定条件，喜忌方向随之改变。缺少时辰时本报告不判从格，所以以上内容照常参考；日后知道准确时辰，重新排一次就能确认。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-30
+  notes: "B1 补写（用户 2026-10-30 同意新增字段）。对应 strength.md v2.1 §5 第 4 条。列表占位符按“、”连接，如“子、丑时”。措辞只说“可能符合条件”，不判从格、不改结论；“大体相反”因从儿不忌比劫，不写“完全相反”。案例 C18（no_hour.cong_possible_hours 为辛巳、丙戌 → 巳、戌）。"

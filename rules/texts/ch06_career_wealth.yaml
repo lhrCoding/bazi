@@ -1,0 +1,461 @@
+# 第 6 章 槽位 CH6-CAREER「事业」与 CH6-WEALTH「财务」（第 1 批 B1，草稿）
+# 维度：item.stem_god（5）× item.tier_group（3：好 / 平 / 守）= 15 / 槽位。每条 40–70 字，2 个变体；各 1 条兜底。
+# 循环槽位：5 年中同一十神组可能出现两次（如甲、乙同组）。同一条目第二次命中时按 occurrence 重新哈希选变体，可能与上次相同
+#   （README §5.2，用户决定不改公式）；每条写 2 个实质不同的变体，后续可给高频条目追加第 3 个变体降低重复概率。
+# 写法约定：
+#   - 不写年份、干支、五行；不写“喜 / 忌”；语气按 tier_group：好 → 积极，平 → 中性，守 → 谨慎但不恐吓。
+#   - 财务段：只谈收支习惯与取舍，不出现任何投资品种、不承诺收入、不出现“破财 / 破产”；
+#     避免含五行字的日常词（资金、现金、金钱、薪水、水平 等），以免触发 L6 / R-CHECK 误报。
+# 组代码：BIJIE=比劫、YIN=印、SHISHANG=食伤、CAI=财、GUANSHA=官杀；HAO=好、PING=平、SHOU=守。
+
+# ======================= CH6-CAREER =======================
+- id: CH6-CAREER-BIJIE-HAO
+  slot: CH6-CAREER
+  when: {all: [{f: item.stem_god, eq: 比劫}, {f: item.tier_group, eq: 好}]}
+  priority: 50
+  length: [40, 70]
+  polish_allowed: true
+  variants:
+    - "事业上适合与人联手或独立牵头，同行和朋友能带来合作机会，团队作战比单打独斗更有效率，不妨主动组队。"
+    - "工作中你的主见更容易被接受，适合争取自主负责的项目，或与信得过的伙伴一起开拓新方向，把想法落到实处。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-CAREER-BIJIE-PING
+  slot: CH6-CAREER
+  when: {all: [{f: item.stem_god, eq: 比劫}, {f: item.tier_group, eq: 平}]}
+  priority: 50
+  length: [40, 70]
+  polish_allowed: true
+  variants:
+    - "事业上合作与竞争并存，按既定分工推进即可，保持自己的节奏，不必和同事在暗地里较劲，专心做好分内事。"
+    - "工作整体平稳，同类竞争存在但不激烈，适合巩固专业口碑，在团队里做好自己负责的那一块，稳扎稳打。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-CAREER-BIJIE-SHOU
+  slot: CH6-CAREER
+  when: {all: [{f: item.stem_god, eq: 比劫}, {f: item.tier_group, eq: 守}]}
+  priority: 50
+  length: [40, 70]
+  polish_allowed: true
+  variants:
+    - "事业上同行竞争偏多，功劳和资源容易被分走，宜守住核心业务，合作之前先把分工和署名谈清楚，避免事后争执。"
+    - "工作中意见分歧可能增多，宜多沟通、少争执，不急于另起炉灶，也不宜仓促与人合伙创业，先把本职做稳。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-CAREER-YIN-HAO
+  slot: CH6-CAREER
+  when: {all: [{f: item.stem_god, eq: 印}, {f: item.tier_group, eq: 好}]}
+  priority: 50
+  length: [40, 70]
+  polish_allowed: true
+  variants:
+    - "事业上容易得到上级或前辈的支持，适合进修、考取资格，或者争取调到更重视人才培养的岗位，为下一步蓄力。"
+    - "工作中你的专业积累会被看见，适合争取培训机会、参与制定规范，或承担带新人的工作，口碑会越来越好。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-CAREER-YIN-PING
+  slot: CH6-CAREER
+  when: {all: [{f: item.stem_god, eq: 印}, {f: item.tier_group, eq: 平}]}
+  priority: 50
+  length: [40, 70]
+  polish_allowed: true
+  variants:
+    - "事业节奏整体平稳，适合在现有岗位上补充知识、整理经验，踏踏实实为下一次机会做准备，不必急着跳槽。"
+    - "工作上没有大的变动，适合系统学习一项与本职相关的新技能，慢慢提升自己在专业上的分量和话语权。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-CAREER-YIN-SHOU
+  slot: CH6-CAREER
+  when: {all: [{f: item.stem_god, eq: 印}, {f: item.tier_group, eq: 守}]}
+  priority: 50
+  length: [40, 70]
+  polish_allowed: true
+  variants:
+    - "事业上容易犹豫不决、行动偏慢，宜给手上的项目设定明确的时间节点，避免一味等待更好的条件而错过时机。"
+    - "工作中对他人和团队支持的依赖要适度，关键任务尽量自己扛起来，学到的东西及时落到实处，用结果说话。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-CAREER-SHISHANG-HAO
+  slot: CH6-CAREER
+  when: {all: [{f: item.stem_god, eq: 食伤}, {f: item.tier_group, eq: 好}]}
+  priority: 50
+  length: [40, 70]
+  polish_allowed: true
+  variants:
+    - "事业上适合发挥创意和技术，做出有个人风格的作品，或在内容、设计、研发类工作中崭露头角，大胆展示自己。"
+    - "工作中你的想法更容易落地并获得好评，适合提出改进方案、主导新项目，或者在本职之外发展一项副业。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-CAREER-SHISHANG-PING
+  slot: CH6-CAREER
+  when: {all: [{f: item.stem_god, eq: 食伤}, {f: item.tier_group, eq: 平}]}
+  priority: 50
+  length: [40, 70]
+  polish_allowed: true
+  variants:
+    - "事业上可以做些小范围的创新尝试，但主要精力仍放在本职，表达意见时注意场合和方式，效果会更好。"
+    - "工作节奏平稳，适合打磨手上的技能和作品，把好想法先做成小样，验证可行之后再争取资源向上推动。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-CAREER-SHISHANG-SHOU
+  slot: CH6-CAREER
+  when: {all: [{f: item.stem_god, eq: 食伤}, {f: item.tier_group, eq: 守}]}
+  priority: 50
+  length: [40, 70]
+  polish_allowed: true
+  variants:
+    - "事业上容易与规则或上级产生摩擦，宜收敛锋芒，意见用书面、讲理的方式表达，不轻易辞职或公开表态。"
+    - "工作中想法多而落实少，宜聚焦一两件事做完，避免同时铺开太多新项目，把已经答应的事优先交付。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-CAREER-CAI-HAO
+  slot: CH6-CAREER
+  when: {all: [{f: item.stem_god, eq: 财}, {f: item.tier_group, eq: 好}]}
+  priority: 50
+  length: [40, 70]
+  polish_allowed: true
+  variants:
+    - "事业上适合拓展业务、争取更好的待遇或业绩回报，付出与收获比较对得上，可以主动多承担一些责任。"
+    - "工作中资源和客户机会增多，适合谈合作、开拓市场，把能力转化为实际收益，也为自己积累长期客户。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-CAREER-CAI-PING
+  slot: CH6-CAREER
+  when: {all: [{f: item.stem_god, eq: 财}, {f: item.tier_group, eq: 平}]}
+  priority: 50
+  length: [40, 70]
+  polish_allowed: true
+  variants:
+    - "事业上业绩和收支大致平稳，适合优化流程、提升效率，把现有客户和项目维护好，稳住基本盘再谋扩展。"
+    - "工作按部就班，适合做好预算与计划，把精力放在能产生实际结果的事务上，少做看起来忙碌却无产出的事。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-CAREER-CAI-SHOU
+  slot: CH6-CAREER
+  when: {all: [{f: item.stem_god, eq: 财}, {f: item.tier_group, eq: 守}]}
+  priority: 50
+  length: [40, 70]
+  polish_allowed: true
+  variants:
+    - "事业上看似机会多，但并非都值得做，宜挑选与专长相符的项目，避免为短期收益分散精力、透支自己。"
+    - "工作中容易被琐事和业绩压力拖着走，宜分清主次，量力承接任务，把有限的精力留给最关键的客户和项目。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-CAREER-GUANSHA-HAO
+  slot: CH6-CAREER
+  when: {all: [{f: item.stem_god, eq: 官杀}, {f: item.tier_group, eq: 好}]}
+  priority: 50
+  length: [40, 70]
+  polish_allowed: true
+  variants:
+    - "事业上适合争取晋升、竞聘或接手重要职责，规则清晰的环境能让你更快出成绩，努力也更容易被看见。"
+    - "工作中你的担当容易被认可，适合挑战难度更高的任务，或在体系内承担管理角色，逐步建立自己的威信。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-CAREER-GUANSHA-PING
+  slot: CH6-CAREER
+  when: {all: [{f: item.stem_god, eq: 官杀}, {f: item.tier_group, eq: 平}]}
+  priority: 50
+  length: [40, 70]
+  polish_allowed: true
+  variants:
+    - "事业上要求和责任都在，但大体可控，按流程办事、按时交付，就能稳步积累信用，为后面的机会铺路。"
+    - "工作节奏平稳中带一点压力，适合完善工作方法，把重要事项按优先级排好，避免临时救火、疲于应付。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-CAREER-GUANSHA-SHOU
+  slot: CH6-CAREER
+  when: {all: [{f: item.stem_god, eq: 官杀}, {f: item.tier_group, eq: 守}]}
+  priority: 50
+  length: [40, 70]
+  polish_allowed: true
+  variants:
+    - "事业上压力和考核偏重，宜守住本职、按规矩办事，不主动揽下超出能力的任务，重要事项留好记录。"
+    - "工作中变动和要求可能集中出现，宜稳住节奏，重要决定多征求意见，避免与上级正面冲突，以稳为先。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-CAREER-FALLBACK
+  slot: CH6-CAREER
+  when: {}
+  priority: 0
+  fallback: true
+  length: [20, 70]
+  polish_allowed: false
+  variants:
+    - "事业方面，这一年天干十神为{item.stem_ten_god}，整体评分“{item.tier}”，宜按计划稳步推进。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "兜底。"
+
+# ======================= CH6-WEALTH =======================
+- id: CH6-WEALTH-BIJIE-HAO
+  slot: CH6-WEALTH
+  when: {all: [{f: item.stem_god, eq: 比劫}, {f: item.tier_group, eq: 好}]}
+  priority: 50
+  length: [40, 70]
+  polish_allowed: true
+  variants:
+    - "财务上可以借助合作扩大收入来源，但与人共事的账目要清楚，好朋友也要明算账，免得伤了和气。"
+    - "收入上有通过团队和人脉增加的机会，开销也会随社交增多，提前留出一笔交际预算会更从容、不至于超支。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-WEALTH-BIJIE-PING
+  slot: CH6-WEALTH
+  when: {all: [{f: item.stem_god, eq: 比劫}, {f: item.tier_group, eq: 平}]}
+  priority: 50
+  length: [40, 70]
+  polish_allowed: true
+  variants:
+    - "财务上收支大致平衡，人情往来和聚会的花费可能略多，量力而行、记好账目即可，不必勉强撑场面。"
+    - "钱的方面没有大起大落，适合维持现有的储蓄节奏；朋友之间若有钱物往来，事先说清楚、事后记清楚。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-WEALTH-BIJIE-SHOU
+  slot: CH6-WEALTH
+  when: {all: [{f: item.stem_god, eq: 比劫}, {f: item.tier_group, eq: 守}]}
+  priority: 50
+  length: [40, 70]
+  polish_allowed: true
+  variants:
+    - "财务上额外开销的可能偏大，容易因人情、冲动或合伙而多花钱，宜控制支出，不为别人的财务承担责任。"
+    - "钱的方面宜守不宜攻，共同出钱的事情尽量推迟，借给别人的钱以不影响自己的生活为限，量力而行。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-WEALTH-YIN-HAO
+  slot: CH6-WEALTH
+  when: {all: [{f: item.stem_god, eq: 印}, {f: item.tier_group, eq: 好}]}
+  priority: 50
+  length: [40, 70]
+  polish_allowed: true
+  variants:
+    - "财务上收入较稳定，适合把钱花在学习、证书和提升自己上，这类支出回报慢，但更可靠、更长久。"
+    - "钱的方面可能得到家人或机构的支持，适合做长期的储蓄计划，不必追求短期收益，稳步积累最踏实。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-WEALTH-YIN-PING
+  slot: CH6-WEALTH
+  when: {all: [{f: item.stem_god, eq: 印}, {f: item.tier_group, eq: 平}]}
+  priority: 50
+  length: [40, 70]
+  polish_allowed: true
+  variants:
+    - "财务上平稳，没有特别的进账，也没有大的压力，适合检查日常开销，把一部分预算留给学习和健康。"
+    - "钱的方面以守为主，维持储蓄习惯，重大消费前多比较几家，不急于做决定，稳妥比速度更重要。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-WEALTH-YIN-SHOU
+  slot: CH6-WEALTH
+  when: {all: [{f: item.stem_god, eq: 印}, {f: item.tier_group, eq: 守}]}
+  priority: 50
+  length: [40, 70]
+  polish_allowed: true
+  variants:
+    - "财务上进账偏慢，容易因犹豫错过合适时机，也可能在学习或家人事务上花费较多，宜提前做好预算。"
+    - "钱的方面宜守，不轻信别人推荐的赚钱门路，凡事先看清楚、问明白再决定，宁可慢一点也别吃亏。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-WEALTH-SHISHANG-HAO
+  slot: CH6-WEALTH
+  when: {all: [{f: item.stem_god, eq: 食伤}, {f: item.tier_group, eq: 好}]}
+  priority: 50
+  length: [40, 70]
+  polish_allowed: true
+  variants:
+    - "财务上适合靠手艺、作品和专业服务增加收入，副业或兼职有机会带来额外进账，值得认真经营。"
+    - "钱的方面，才华变现的机会增多，可以给自己的作品和服务定一个合理的价格，不必过分压低身价。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-WEALTH-SHISHANG-PING
+  slot: CH6-WEALTH
+  when: {all: [{f: item.stem_god, eq: 食伤}, {f: item.tier_group, eq: 平}]}
+  priority: 50
+  length: [40, 70]
+  polish_allowed: true
+  variants:
+    - "财务上收入平稳，享受生活的开销可能增加，适合在品质和预算之间找个平衡点，花得开心也花得明白。"
+    - "钱的方面没有大的波动，适合把兴趣爱好上的花费理一理，留出固定的一部分作为储蓄，积少成多。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-WEALTH-SHISHANG-SHOU
+  slot: CH6-WEALTH
+  when: {all: [{f: item.stem_god, eq: 食伤}, {f: item.tier_group, eq: 守}]}
+  priority: 50
+  length: [40, 70]
+  polish_allowed: true
+  variants:
+    - "财务上花在享受和兴趣上的钱容易超标，新开的副业付出可能大于回报，宜精简开支、先算清成本。"
+    - "钱的方面宜收敛，消费前问问自己是需要还是想要，不为一时兴起买单，把预算留给真正重要的事。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-WEALTH-CAI-HAO
+  slot: CH6-WEALTH
+  when: {all: [{f: item.stem_god, eq: 财}, {f: item.tier_group, eq: 好}]}
+  priority: 50
+  length: [40, 70]
+  polish_allowed: true
+  variants:
+    - "财务上进账机会较多，付出容易换来实际回报，适合争取加薪、拓展收入渠道，同时养成固定储蓄的习惯。"
+    - "钱的方面整体顺手，适合制定清晰的储蓄目标，让收入的增长沉淀下来，而不是随着开销一起涨上去。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-WEALTH-CAI-PING
+  slot: CH6-WEALTH
+  when: {all: [{f: item.stem_god, eq: 财}, {f: item.tier_group, eq: 平}]}
+  priority: 50
+  length: [40, 70]
+  polish_allowed: true
+  variants:
+    - "财务上收支平衡，适合做一次全面的记账和预算，把不必要的订阅和开销清理掉，手头会宽松不少。"
+    - "钱的方面平稳，挣得踏实、花得有数，维持现状就是不错的结果，不必羡慕别人看似轻松的快进快出。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-WEALTH-CAI-SHOU
+  slot: CH6-WEALTH
+  when: {all: [{f: item.stem_god, eq: 财}, {f: item.tier_group, eq: 守}]}
+  priority: 50
+  length: [40, 70]
+  polish_allowed: true
+  variants:
+    - "财务上波动的可能性偏大，宜量入为出，大额支出和长期负担的决定尽量推迟，对来得太快的钱保持警惕。"
+    - "钱的方面宜守，诱惑和开销都可能变多，留足应急储备，不被高回报的说法打动，稳住比多赚更重要。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-WEALTH-GUANSHA-HAO
+  slot: CH6-WEALTH
+  when: {all: [{f: item.stem_god, eq: 官杀}, {f: item.tier_group, eq: 好}]}
+  priority: 50
+  length: [40, 70]
+  polish_allowed: true
+  variants:
+    - "财务上收入多与职位、责任挂钩，承担更多工作有望带来更好的待遇，按制度正常争取即可，不必走捷径。"
+    - "钱的方面整体稳定，规范、正式的收入来源更可靠，适合把账目和票据整理清楚，按时完成各类申报。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-WEALTH-GUANSHA-PING
+  slot: CH6-WEALTH
+  when: {all: [{f: item.stem_god, eq: 官杀}, {f: item.tier_group, eq: 平}]}
+  priority: 50
+  length: [40, 70]
+  polish_allowed: true
+  variants:
+    - "财务上平稳，可能有一些必要的公共开支或规定性支出，提前预留即可，不会对生活造成太大压力。"
+    - "钱的方面按部就班，适合按计划储蓄，留意各类缴费和手续的截止时间，避免产生不必要的额外费用。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-WEALTH-GUANSHA-SHOU
+  slot: CH6-WEALTH
+  when: {all: [{f: item.stem_god, eq: 官杀}, {f: item.tier_group, eq: 守}]}
+  priority: 50
+  length: [40, 70]
+  polish_allowed: true
+  variants:
+    - "财务上压力偏大，可能出现意料之外的必要支出，宜保留应急储备，签署涉及钱的文件前仔细核对条款。"
+    - "钱的方面宜稳，不冒进、不碰运气，按规矩办事最省心，对来路不明的赚钱机会一律多留个心眼。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-WEALTH-FALLBACK
+  slot: CH6-WEALTH
+  when: {}
+  priority: 0
+  fallback: true
+  length: [20, 70]
+  polish_allowed: false
+  variants:
+    - "财务方面，量入为出、留有储备，是这一年稳妥的做法。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "兜底：对任何 tier 都成立的中性建议。"

@@ -1,0 +1,374 @@
+# 第 6 章 槽位 CH6-HEAD「年度主题」第 2 部分（第 1 批 B1，草稿）
+# 本文件含 正财、七杀、正官、偏印、正印 共 25 条 + 本槽位兜底。写法约定见 ch06_head_1.yaml 文件头。
+# tier 代码：SHUN=顺势期、HAO=向好、PING=平稳、WEN=宜稳守、BAO=宜保守、打基础。
+
+# ---------- 正财 ----------
+- id: CH6-HEAD-ZHENGCAI-SHUN
+  slot: CH6-HEAD
+  when: {all: [{f: item.stem_ten_god, eq: 正财}, {f: item.tier, eq: 顺势期}]}
+  priority: 50
+  length: [80, 120]
+  polish_allowed: true
+  variants:
+    - "这一年天干是正财，评分“顺势期”。正财代表踏实的收入、明确的回报和对生活的规划，今年它与你的需要相合：付出和回报比较对得上，适合争取加薪、承接稳定的业务，或为家庭和长远做规划。"
+    - "正财之年，讲的是稳稳地收获。今年评分处在“顺势期”，脚踏实地的努力容易换来实在的结果。适合把收入结构理顺、建立储蓄习惯，也适合在工作上接手更重要的职责，让能力和回报同步提升。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-HEAD-ZHENGCAI-HAO
+  slot: CH6-HEAD
+  when: {all: [{f: item.stem_ten_god, eq: 正财}, {f: item.tier, eq: 向好}]}
+  priority: 50
+  length: [80, 120]
+  polish_allowed: true
+  variants:
+    - "这一年天干是正财，评分“向好”。收入与回报趋于稳定，做事有章法，计划容易落地。适合制定年度预算、提升专业以换取更好的待遇，在感情和家庭事务上也适合多一些投入和陪伴。"
+    - "正财主事、评分向好的一年，适合按计划做加法。勤勉会被看见，认真经营的事情会慢慢开花结果。把目标拆成每个季度的小步，执行起来更有成就感，年底的收获也更看得见。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-HEAD-ZHENGCAI-PING
+  slot: CH6-HEAD
+  when: {all: [{f: item.stem_ten_god, eq: 正财}, {f: item.tier, eq: 平稳}]}
+  priority: 50
+  length: [80, 120]
+  polish_allowed: true
+  variants:
+    - "这一年天干是正财，评分“平稳”。收支基本平衡，工作按部就班，没有特别大的变化。适合维持现有节奏，检查一下家庭开支和储蓄安排，把日常的小事做扎实，为后面的年份打好底子。"
+    - "正财之年评分平稳，像一段记账式的日子：收入稳定、花销可控。适合提升工作效率、减少无谓支出，也可以把精力分一些给家人和生活。稳定本身就是今年的收获，不必羡慕别人的快节奏。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-HEAD-ZHENGCAI-WEN
+  slot: CH6-HEAD
+  when: {all: [{f: item.stem_ten_god, eq: 正财}, {f: item.tier, eq: 宜稳守}]}
+  priority: 50
+  length: [80, 120]
+  polish_allowed: true
+  variants:
+    - "这一年天干是正财，评分“宜稳守”。正财虽代表稳定，今年却容易因为责任和开销增多而感到吃力。适合精打细算、优先保障必要支出，不轻易扩大承诺，工作上守住本分，稳中求进。"
+    - "正财之年评分“宜稳守”，提醒你量入为出。家庭、工作上的花费可能比预想多，收入增长却不一定跟得上。提前列出必要开支清单，避开冲动消费，就能平稳度过这一年。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-HEAD-ZHENGCAI-BAO
+  slot: CH6-HEAD
+  when: {all: [{f: item.stem_ten_god, eq: 正财}, {f: item.tier, eq: 宜保守、打基础}]}
+  priority: 50
+  length: [80, 120]
+  polish_allowed: true
+  variants:
+    - "这一年天干是正财，评分落在“宜保守、打基础”。收支压力相对明显，不宜做大额支出或背上长期负担的决定。适合压缩开支、积累应急储备，同时提升职业技能，为收入的下一次增长做准备。"
+    - "正财当头而评分偏低的一年，宜守而不宜扩。辛苦付出未必马上换来回报，这时更要稳住心态。今年适合整理收支、减少负担，把时间花在学习和积累上，等运势转好时再加码。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+# ---------- 七杀 ----------
+- id: CH6-HEAD-QISHA-SHUN
+  slot: CH6-HEAD
+  when: {all: [{f: item.stem_ten_god, eq: 七杀}, {f: item.tier, eq: 顺势期}]}
+  priority: 50
+  length: [80, 120]
+  polish_allowed: true
+  variants:
+    - "这一年天干是七杀，评分“顺势期”。七杀代表挑战、魄力和攻坚的力量，今年它站在你这一边：难啃的任务、竞争激烈的位置，反而是你出成绩的机会。适合接手重要项目、争取管理职责，关键时刻果断出手。"
+    - "七杀之年，节奏紧、挑战大。今年评分处在“顺势期”，压力正好化为动力，你的抗压能力和决断力容易被认可。适合攻坚、竞聘、转向更有挑战的岗位，关键时刻敢于担责，往往能换来一次跃升。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-HEAD-QISHA-HAO
+  slot: CH6-HEAD
+  when: {all: [{f: item.stem_ten_god, eq: 七杀}, {f: item.tier, eq: 向好}]}
+  priority: 50
+  length: [80, 120]
+  polish_allowed: true
+  variants:
+    - "这一年天干是七杀，评分“向好”。外部要求提高，但你有能力接住。适合在工作中主动承担难题、建立威信，也适合锻炼体能、培养自律。压力是有的，回报也看得见，越是迎难而上越能显出本事。"
+    - "七杀主事、评分向好的一年，适合迎难而上。有挑战的事情会找上门，处理得当就是一次升级。把大任务拆开、逐个击破，比一口气硬扛更有效，也更能让人看到你的担当。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-HEAD-QISHA-PING
+  slot: CH6-HEAD
+  when: {all: [{f: item.stem_ten_god, eq: 七杀}, {f: item.tier, eq: 平稳}]}
+  priority: 50
+  length: [80, 120]
+  polish_allowed: true
+  variants:
+    - "这一年天干是七杀，评分“平稳”。压力和挑战存在，但总体可控，不至于打乱生活。适合按部就班应对工作要求、提高时间管理能力，在关键节点上全力以赴，其他时候注意张弛有度、按时休息。"
+    - "七杀之年评分平稳，好比负重前行但步子稳。适合把应对压力的方法固定下来：规律运动、清晰的待办清单、该拒绝时拒绝。这样，即使任务多一些，也不至于手忙脚乱。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-HEAD-QISHA-WEN
+  slot: CH6-HEAD
+  when: {all: [{f: item.stem_ten_god, eq: 七杀}, {f: item.tier, eq: 宜稳守}]}
+  priority: 50
+  length: [80, 120]
+  polish_allowed: true
+  variants:
+    - "这一年天干是七杀，评分“宜稳守”。压力偏大，要求多、变数多，容易感到被推着走。适合稳住节奏，不主动揽下超出能力的任务，重要决定多听意见；注意劳逸结合，别透支身体。"
+    - "七杀之年评分“宜稳守”，提醒你先求稳、再求进。外部的压力和竞争可能来得集中，硬碰硬并不划算。按优先级处理事情、守住规则底线，就能把这一年平稳过去，积蓄下次发力的本钱。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-HEAD-QISHA-BAO
+  slot: CH6-HEAD
+  when: {all: [{f: item.stem_ten_god, eq: 七杀}, {f: item.tier, eq: 宜保守、打基础}]}
+  priority: 50
+  length: [80, 120]
+  polish_allowed: true
+  variants:
+    - "这一年天干是七杀，评分落在“宜保守、打基础”。压力和挑战相对集中，不宜冒险、不宜与人正面冲突，也不宜在情绪激动时做重大决定。适合降低目标、保持规律作息，把精力放在提升抗压能力和基本功上。"
+    - "七杀当头而评分偏低的一年，宜守与养。压力会让人想立刻改变现状，但今年更适合稳住阵脚：按时作息、遵守规则、把手头的事做完整。走过这一段，能力和心态都会更结实。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+# ---------- 正官 ----------
+- id: CH6-HEAD-ZHENGGUAN-SHUN
+  slot: CH6-HEAD
+  when: {all: [{f: item.stem_ten_god, eq: 正官}, {f: item.tier, eq: 顺势期}]}
+  priority: 50
+  length: [80, 120]
+  polish_allowed: true
+  variants:
+    - "这一年天干是正官，评分“顺势期”。正官代表规则、名誉和正式的认可，今年它与你相合：考核、晋升、资格评审都比较顺，努力容易得到制度上的肯定。适合争取职位、参加考试或建立更正式的身份。"
+    - "正官之年，讲的是被正式认可。今年评分处在“顺势期”，守规矩、讲信用的作风会带来好口碑，适合竞聘、考证、签订重要的长期合同，也适合在感情上把关系定下来。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-HEAD-ZHENGGUAN-HAO
+  slot: CH6-HEAD
+  when: {all: [{f: item.stem_ten_god, eq: 正官}, {f: item.tier, eq: 向好}]}
+  priority: 50
+  length: [80, 120]
+  polish_allowed: true
+  variants:
+    - "这一年天干是正官，评分“向好”。秩序感和责任感增强，上级或机构更容易认可你。适合按规范推进工作、争取正式的头衔或资质，生活上也适合建立更规律的习惯，让好状态保持得更久。"
+    - "正官主事、评分向好的一年，适合走正路、求稳进。按流程做事反而更快，按时交付会积累信用。可以把职业目标写清楚，主动和上级沟通发展方向，让努力被放在合适的位置上。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-HEAD-ZHENGGUAN-PING
+  slot: CH6-HEAD
+  when: {all: [{f: item.stem_ten_god, eq: 正官}, {f: item.tier, eq: 平稳}]}
+  priority: 50
+  length: [80, 120]
+  polish_allowed: true
+  variants:
+    - "这一年天干是正官，评分“平稳”。规则和责任都在，但不至于成为负担。适合遵循既定流程、完成分内工作，同时留意自己的口碑和信用，把该办的手续、证照按时办好，免得临时着急。"
+    - "正官之年评分平稳，生活和工作都在框架内运行。没有大的突破，也少有意外，适合打磨专业、整理职业规划，在稳定中为下一步积累资历。守时、守约这些小事，今年会悄悄为你加分。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-HEAD-ZHENGGUAN-WEN
+  slot: CH6-HEAD
+  when: {all: [{f: item.stem_ten_god, eq: 正官}, {f: item.tier, eq: 宜稳守}]}
+  priority: 50
+  length: [80, 120]
+  polish_allowed: true
+  variants:
+    - "这一年天干是正官，评分“宜稳守”。外部的规矩和考核变得更严，容易感到束手束脚。适合把流程和文件做规范，避免抄近路；与上级、机构打交道时多一份耐心，凡事以稳为先。"
+    - "正官之年评分“宜稳守”，提醒你按规矩来。今年对细节和合规的要求更高，小疏漏也可能被放大。把重要的事情留好记录、按程序办理，就能避开大部分麻烦，也让人更信任你。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-HEAD-ZHENGGUAN-BAO
+  slot: CH6-HEAD
+  when: {all: [{f: item.stem_ten_god, eq: 正官}, {f: item.tier, eq: 宜保守、打基础}]}
+  priority: 50
+  length: [80, 120]
+  polish_allowed: true
+  variants:
+    - "这一年天干是正官，评分落在“宜保守、打基础”。规则与责任的压力偏重，不宜挑战制度，也不宜在没有准备时争取职位。适合踏实做好本职，把资格、证书和专业基础补齐，耐心等待更好的时机。"
+    - "正官当头而评分偏低的一年，宜守本分、补短板。外部评价可能偏严，急于求名反而不顺。今年适合低调做事、按章办事，把能力和资历慢慢攒起来，等时机成熟再争取更大的舞台。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+# ---------- 偏印 ----------
+- id: CH6-HEAD-PIANYIN-SHUN
+  slot: CH6-HEAD
+  when: {all: [{f: item.stem_ten_god, eq: 偏印}, {f: item.tier, eq: 顺势期}]}
+  priority: 50
+  length: [80, 120]
+  polish_allowed: true
+  variants:
+    - "这一年天干是偏印，评分“顺势期”。偏印代表独特的思维、钻研精神和直觉，今年它正合你的需要：适合深入研究一个领域、学习冷门技能，或转向更需要专业深度的方向。独处时的思考，往往会带来关键的灵感。"
+    - "偏印之年，讲的是与众不同的学习。今年评分处在“顺势期”，你对新知识的吸收力强，适合进修、做研究、钻研技术，也适合探索心理、哲学等让人沉静下来的领域。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-HEAD-PIANYIN-HAO
+  slot: CH6-HEAD
+  when: {all: [{f: item.stem_ten_god, eq: 偏印}, {f: item.tier, eq: 向好}]}
+  priority: 50
+  length: [80, 120]
+  polish_allowed: true
+  variants:
+    - "这一年天干是偏印，评分“向好”。好奇心和洞察力增强，适合学习新领域、考取专业资格，或在工作中负责需要深度思考的部分。别人没注意到的细节，你可能先看到，这正是今年的优势。"
+    - "偏印主事、评分向好的一年，适合向内求。给自己安排固定的学习时间，读一些专业书或参加系统培训，收获会比四处社交更实在。你的独到见解也更容易在专业圈子里得到回应。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-HEAD-PIANYIN-PING
+  slot: CH6-HEAD
+  when: {all: [{f: item.stem_ten_god, eq: 偏印}, {f: item.tier, eq: 平稳}]}
+  priority: 50
+  length: [80, 120]
+  polish_allowed: true
+  variants:
+    - "这一年天干是偏印，评分“平稳”。思考多于行动，内心比较安静。适合整理知识、反思过去的经验，或者培养一项需要专注的爱好。社交可以少一些，但重要的联系要保持，别让自己太封闭。"
+    - "偏印之年评分平稳，适合把节奏放慢一点，读书、学习、整理思路。没有太大的外部推动，正好用来想清楚下一步往哪里走。把想法写成笔记或计划，等时机合适时就能直接拿出来。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-HEAD-PIANYIN-WEN
+  slot: CH6-HEAD
+  when: {all: [{f: item.stem_ten_god, eq: 偏印}, {f: item.tier, eq: 宜稳守}]}
+  priority: 50
+  length: [80, 120]
+  polish_allowed: true
+  variants:
+    - "这一年天干是偏印，评分“宜稳守”。想得多、做得少，情绪上也容易孤僻或多疑。适合给思考设一个期限，想清楚就动手；多和信任的人交流，避免一个人钻牛角尖，心态会轻松很多。"
+    - "偏印之年评分“宜稳守”，提醒你防犹豫和封闭。计划容易在反复推敲中错过时机，对人对事也可能过度防备。把决定拆成小步试着做，并保持规律的社交，会轻松很多。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-HEAD-PIANYIN-BAO
+  slot: CH6-HEAD
+  when: {all: [{f: item.stem_ten_god, eq: 偏印}, {f: item.tier, eq: 宜保守、打基础}]}
+  priority: 50
+  length: [80, 120]
+  polish_allowed: true
+  variants:
+    - "这一年天干是偏印，评分落在“宜保守、打基础”。思虑偏重，行动力不足，不宜仓促换方向，也不宜贸然进入不熟悉的领域。适合安心学习、调整作息，多做让自己放松的运动，把心态稳住。"
+    - "偏印当头而评分偏低的一年，宜静不宜躁。外部机会不多，内心也容易纠结。今年适合沉下来读书、修习一门手艺，把注意力从担忧转向具体的积累，一点一滴都算数。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+# ---------- 正印 ----------
+- id: CH6-HEAD-ZHENGYIN-SHUN
+  slot: CH6-HEAD
+  when: {all: [{f: item.stem_ten_god, eq: 正印}, {f: item.tier, eq: 顺势期}]}
+  priority: 50
+  length: [80, 120]
+  polish_allowed: true
+  variants:
+    - "这一年天干是正印，评分“顺势期”。正印代表支持、学习和庇护，今年它与你相合：容易得到长辈、上级或机构的帮助，考试、进修、申请资质都比较顺。适合系统学习、争取培训机会，也适合在安稳的环境里蓄力。"
+    - "正印之年，讲的是有人托底。今年评分处在“顺势期”，你更容易被信任和提携，适合考证、读书、进入重视培养的平台，也适合修养身心、改善家庭关系，给未来几年打下好底子。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-HEAD-ZHENGYIN-HAO
+  slot: CH6-HEAD
+  when: {all: [{f: item.stem_ten_god, eq: 正印}, {f: item.tier, eq: 向好}]}
+  priority: 50
+  length: [80, 120]
+  polish_allowed: true
+  variants:
+    - "这一年天干是正印，评分“向好”。学习能力和耐心提升，周围支持你的人也多。适合报名课程、请教前辈、整理专业知识，在工作中扮演更受信任的角色，慢慢把口碑和资历积累起来。"
+    - "正印主事、评分向好的一年，适合稳中求进。不必急着冲刺，把学习和积累做好，机会会顺着资历和口碑找来。家人和长辈的建议今年也值得多听，往往能帮你少走弯路。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-HEAD-ZHENGYIN-PING
+  slot: CH6-HEAD
+  when: {all: [{f: item.stem_ten_god, eq: 正印}, {f: item.tier, eq: 平稳}]}
+  priority: 50
+  length: [80, 120]
+  polish_allowed: true
+  variants:
+    - "这一年天干是正印，评分“平稳”。生活节奏比较安定，有时间学习和休整。适合按部就班地提升技能、照顾家庭和身体，不必追求大的变化。把这一年当作充电期，读完几本早就想读的书，就是不错的收获。"
+    - "正印之年评分平稳，好比在避风港里停靠：没有大浪，适合补给。可以调整作息、整理居所，或花些时间陪伴长辈，在安稳中恢复精力。外部变化不大，正好把注意力放回自己身上。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-HEAD-ZHENGYIN-WEN
+  slot: CH6-HEAD
+  when: {all: [{f: item.stem_ten_god, eq: 正印}, {f: item.tier, eq: 宜稳守}]}
+  priority: 50
+  length: [80, 120]
+  polish_allowed: true
+  variants:
+    - "这一年天干是正印，评分“宜稳守”。安全感变强，但容易依赖他人或拖延，总想等准备充分再行动。适合给计划设定截止时间，学到的东西及时付诸实践，避免在舒适区里停留太久。"
+    - "正印之年评分“宜稳守”，提醒你防懒散与依赖。被照顾的感觉很好，却可能让行动力变弱。今年宜保持适度的自律，把要做的事情排进日程，按时完成，别让好条件白白流走。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-HEAD-ZHENGYIN-BAO
+  slot: CH6-HEAD
+  when: {all: [{f: item.stem_ten_god, eq: 正印}, {f: item.tier, eq: 宜保守、打基础}]}
+  priority: 50
+  length: [80, 120]
+  polish_allowed: true
+  variants:
+    - "这一年天干是正印，评分落在“宜保守、打基础”。思虑多、行动慢，外部的支持也不如预期。不宜仓促做出重大改变，适合回到基本功，按计划学习、规律作息，把心态和身体都调整好。"
+    - "正印当头而评分偏低的一年，宜修养而非扩张。依赖外部帮助未必如愿，不如靠自己慢慢积累。今年适合读书、练习、照顾好作息，等运势回升时，扎实的底子就是最好的准备。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+# ---------- 兜底 ----------
+- id: CH6-HEAD-FALLBACK
+  slot: CH6-HEAD
+  when: {}
+  priority: 0
+  fallback: true
+  length: [20, 80]
+  polish_allowed: false
+  variants:
+    - "这一年流年天干的十神为{item.stem_ten_god}，整体评分为“{item.tier}”。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "兜底：只陈述卡片上的结构字段。"

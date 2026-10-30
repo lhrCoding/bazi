@@ -1,0 +1,183 @@
+# 第 1 章 槽位 CH1-DAYMASTER「日干底色」（第 1 批 B1，草稿）
+# 维度：day.stem（10）。每条 120–180 字，2 个变体；另 1 条兜底。
+# 规范见 rules/texts/README.md；关键词与 report-sections.md §6.1 一致。
+# 变更（B1 起草）：样板 CH1-DAYMASTER-YI / -WU 原带《滴天髓·天干论》引文，现移除——
+#   第 1 章“一章最多 1 句古籍”，本批把第 1 章引文统一放在 CH1-QUOTE 槽位（按旺衰选），
+#   避免 DAYMASTER 与 QUOTE 同时带引文时由引擎临时取舍。天干论原文留待第 2 批 CH3-BASE 使用。
+# 所有条目：正文只出现本日主的五行字，并用 asserts 锁定 day.element；不出现其他五行字。
+
+- id: CH1-DAYMASTER-JIA
+  slot: CH1-DAYMASTER
+  when: {all: [{f: day.stem, eq: 甲}]}
+  asserts: [{f: day.element, eq: 木}]
+  priority: 50
+  length: [120, 180]
+  polish_allowed: true
+  variants:
+    - "你的日主是甲木，意象是参天大树。树的本性是向上长、扎根深，所以这类日主做人做事多半直来直去，认准的方向就会一直往上走，也愿意为身边的人撑起一片荫凉。它的另一面是枝干硬、不易弯：碰到需要绕路的局面，容易觉得是在委屈自己。把“变通”看成换一条路到达同一个目标，而不是放弃原则，你会走得更顺。"
+    - "日主甲木，古人以栋梁之材作比。大树不怕长得慢，怕的是根基不稳，所以你往往看重长期积累，做事讲章法、肯担责任，在团队里容易成为别人依靠的那根主心骨。需要留意的是，直的东西不容易转弯：方案被否定、计划被打乱时，先别急着坚持到底，问一句“目标还在不在”，往往就能找到新的出口。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "关键词：正直、向上、有担当；可留意：不易变通。"
+
+- id: CH1-DAYMASTER-YI
+  slot: CH1-DAYMASTER
+  when: {all: [{f: day.stem, eq: 乙}]}
+  asserts: [{f: day.element, eq: 木}]
+  priority: 50
+  length: [120, 180]
+  polish_allowed: true
+  variants:
+    - "你的日主是乙木。如果说甲木是一棵大树，乙木就是花草和藤蔓：看上去柔，却很有韧性，总能顺着环境找到向上生长的路。落到性格上，常见的底色是适应力强、心思细、懂得借力；需要留意的是，想得周全的同时也容易顾虑偏多，重要的事情给自己定一个决定的期限，会更从容。"
+    - "日主乙木，意象是花草藤蔓。它的长处不在硬碰硬，而在柔中有韧：环境变了，它能调整姿态继续生长。这类日主往往外在温和、内里有主意，擅长在复杂的人际关系里找到合适的位置。相应地，你可能比别人更在意周围的反应，给自己留一些不必向任何人解释的空间，会轻松很多。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "样板并入 B1。修订：移除引文（见文件头），补 asserts。正文未改。关键词：柔韧、善适应、细腻；顾虑多。"
+
+- id: CH1-DAYMASTER-BING
+  slot: CH1-DAYMASTER
+  when: {all: [{f: day.stem, eq: 丙}]}
+  asserts: [{f: day.element, eq: 火}]
+  priority: 50
+  length: [120, 180]
+  polish_allowed: true
+  variants:
+    - "你的日主是丙火，意象是太阳。太阳的特点是光和热都往外放，照到哪里，哪里就亮起来。落到人身上，这类日主通常热情、开朗，说话做事有感染力，场子冷下来的时候，常常是你先开口。它的另一面是想被看见的愿望比较强，事情还没做完就急着展示。给自己多留一步检查的时间，让结果替你说话，你的光会更稳。"
+    - "日主丙火，古人把它比作天上的太阳：不挑地方，普照万物。你身上常见的底色是坦率、大方、乐于分享，愿意把好消息、好机会告诉别人，人缘往往不差。需要留意的是，太阳也有晒过头的时候，热情太满，会让慢热的人感到压力。看准对方的节奏再加温，你的感染力更容易被接住。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "关键词：热情、开朗、感染力强；可留意：急于表现。"
+
+- id: CH1-DAYMASTER-DING
+  slot: CH1-DAYMASTER
+  when: {all: [{f: day.stem, eq: 丁}]}
+  asserts: [{f: day.element, eq: 火}]
+  priority: 50
+  length: [120, 180]
+  polish_allowed: true
+  variants:
+    - "你的日主是丁火，意象是烛光与灯火。和太阳不同，烛火不照亮整片天空，却能把身边一小块地方照得清清楚楚。这类日主多半细致、温暖、专注，适合把一件事钻深做精，对亲近的人也照顾得周到。它的另一面是火苗容易随风摇动，情绪起伏比别人明显一些；给自己找一个固定的挡风处，比如规律的作息或一个能倾诉的人，会稳很多。"
+    - "日主丁火，古人以灯烛、星火作比。它的力量不在大，而在持久：一盏灯能在夜里亮很久。你可能不是最张扬的那个人，但做事专心、心思细，对细节和氛围都很敏感。需要留意的是，敏感也意味着容易被外界牵动，一句话就能让心情变样。遇到情绪波动时，先把要紧的决定放一放，等心里平静下来再拿主意。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "关键词：细致、温暖、专注；可留意：情绪起伏。"
+
+- id: CH1-DAYMASTER-WU
+  slot: CH1-DAYMASTER
+  when: {all: [{f: day.stem, eq: 戊}]}
+  asserts: [{f: day.element, eq: 土}]
+  priority: 50
+  length: [120, 180]
+  polish_allowed: true
+  variants:
+    - "你的日主是戊土，意象是高山与城墙。山的特点是厚重、稳定，不轻易被外力推动。这类日主给人的第一印象往往是可靠、有主见、说到做到，身边的人遇事也愿意来找你商量。它的另一面是，一旦拿定主意就不太愿意改；遇到需要快速转向的情况，先把别人的理由听完再决定，会让你的稳重更有分量。"
+    - "日主戊土，古人以高山、堤岸作比。山不追着风跑，所以这类日主做事讲究根基，愿意花时间把一件事做扎实，在团队里常常是那个让人放心的人。需要留意的是，稳重有时会被别人看成固执；在你不熟悉的领域，多给自己留一点试错的余地，反而能更快站稳。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "样板并入 B1。修订：移除引文（见文件头），补 asserts。正文未改。关键词：稳重、可靠、有主见；固执。"
+
+- id: CH1-DAYMASTER-JI
+  slot: CH1-DAYMASTER
+  when: {all: [{f: day.stem, eq: 己}]}
+  asserts: [{f: day.element, eq: 土}]
+  priority: 50
+  length: [120, 180]
+  polish_allowed: true
+  variants:
+    - "你的日主是己土，意象是田园与耕地。和高山不同，田地是低处的、能容纳的土，种什么都能接住，也能慢慢养出收成。这类日主通常包容、务实，善于照顾人，愿意在幕后把细碎的事情打理妥当。它的另一面是顾及的人和事太多，做选择时容易犹豫。重要的决定先写下最看重的一两条标准，再去比较，会少走很多回头路。"
+    - "日主己土，古人以田园、沃土作比。田地不声张，却是收成的来处，所以你身上常有一种踏实的耐心：不急着出结果，愿意一点点经营。周围的人常觉得你好相处、靠得住。需要留意的是，太想让每个人都满意，就容易在两难之间拖延。允许自己做一个够好而不是完美的选择，往往更省心，也更能把精力留给真正重要的事。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "关键词：包容、务实、会照顾人；可留意：犹豫。id 中 JI = 己（甲为 JIA）。"
+
+- id: CH1-DAYMASTER-GENG
+  slot: CH1-DAYMASTER
+  when: {all: [{f: day.stem, eq: 庚}]}
+  asserts: [{f: day.element, eq: 金}]
+  priority: 50
+  length: [120, 180]
+  polish_allowed: true
+  variants:
+    - "你的日主是庚金，意象是刀剑与未经打磨的矿石。它坚硬、锋利，遇事习惯快刀斩乱麻。这类日主多半果断、讲义气，答应的事会尽力办到，执行力在人群里比较突出。它的另一面是说话直、不太绕弯，有时道理对了，语气却让人难以接受。重要的谈话先说认同、再说分歧，你的锋利就会变成别人愿意依靠的决断力。"
+    - "日主庚金，古人以刀斧、顽铁作比：未经锤炼时粗粝，经过磨砺便成利器。你身上常见一股不服输的劲头，偏爱目标明确、节奏干脆的做事方式，对朋友也讲义气。需要留意的是，直来直去容易伤到人；换个说法表达同样的意思，并不会削弱你的立场，反而能让事情推进得更快、更少阻力。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "关键词：果断、讲义气、执行力强；可留意：说话直。避免“喜欢”等词靠近五行字（L6/R-CHECK 误报）。"
+
+- id: CH1-DAYMASTER-XIN
+  slot: CH1-DAYMASTER
+  when: {all: [{f: day.stem, eq: 辛}]}
+  asserts: [{f: day.element, eq: 金}]
+  priority: 50
+  length: [120, 180]
+  polish_allowed: true
+  variants:
+    - "你的日主是辛金，意象是珠玉首饰。和庚金的粗犷不同，辛金是已经打磨过的，讲究光泽和分寸。这类日主多半精致、敏锐，对品质有要求，一眼能看出别人忽略的瑕疵。它的另一面是很在意别人的评价，被否定时心里会反复琢磨。把评价分成有用的意见和只是看法两类，前者吸收、后者放下，你的敏锐才会成为长处。"
+    - "日主辛金，古人以珠玉、首饰作比：分量不大，却精致耐看。你对美感、细节和做事的质量往往有自己的标准，宁可慢一点也要做得漂亮。需要留意的是，标准高的人容易被一句随口的评价影响心情。提醒自己：珠玉的价值不由路人一句话决定，把精力留给真正懂行的人的反馈就好。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "关键词：精致、敏锐、重品质；可留意：在意评价。"
+
+- id: CH1-DAYMASTER-REN
+  slot: CH1-DAYMASTER
+  when: {all: [{f: day.stem, eq: 壬}]}
+  asserts: [{f: day.element, eq: 水}]
+  priority: 50
+  length: [120, 180]
+  polish_allowed: true
+  variants:
+    - "你的日主是壬水，意象是江河湖海。大江奔流，遇石绕行、遇谷汇聚，所以这类日主多半聪明、灵活，见识面广，对新事物接受得快。你可能同时对好几件事感兴趣，也擅长在不同的人和信息之间穿针引线。它的另一面是流动性太强，难以长时间定在一处。给自己划一条河道，也就是一个三到五年的主方向，灵活就不会变成分散。"
+    - "日主壬水，古人以江河作比：水势大、流得远，能把沿途的东西连成一片。你身上常有开阔的视野和不错的应变力，换了环境也能很快找到节奏。需要留意的是，选择多的时候容易这也想试、那也想试，最后难定下来。重要的方向一旦选定，给它一段不被打扰的时间，你的聪明会沉淀成真正的积累。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "关键词：聪明、灵活、视野开阔；可留意：难定下来。"
+
+- id: CH1-DAYMASTER-GUI
+  slot: CH1-DAYMASTER
+  when: {all: [{f: day.stem, eq: 癸}]}
+  asserts: [{f: day.element, eq: 水}]
+  priority: 50
+  length: [120, 180]
+  polish_allowed: true
+  variants:
+    - "你的日主是癸水，意象是雨露与细流。它不像江河那样声势浩大，却能渗进地里、润物无声。这类日主多半沉静，观察力强，想象力丰富，常常别人还没开口，你已经察觉到气氛的变化。它的另一面是想得多、说得少，心里的好主意不容易被别人知道。把想法先写下来，再挑一两个信任的人说一说，你的细腻才会被看见。"
+    - "日主癸水，古人以雨露、泉水作比：量不大，却最能滋养万物。你往往是安静的观察者，善于从细节里读出别人忽略的信息，也有不少别人想不到的点子。需要留意的是，不爱表达容易让人误会你没有想法。在需要争取的场合，提前准备两三句要说的话，会比临场斟酌轻松得多，也更能让人看到你的用心。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "关键词：沉静、有想象力、善观察；可留意：不爱表达。正文避免出现日主以外的五行字（原拟“渗进土里”已改为“渗进地里”）。"
+
+- id: CH1-DAYMASTER-FALLBACK
+  slot: CH1-DAYMASTER
+  when: {}
+  asserts: []
+  priority: 0
+  fallback: true
+  length: [50, 100]
+  polish_allowed: false
+  variants:
+    - "你的日主是{day.stem}{day.element}。日主是八字里代表你自己的那个字，后面的旺衰、喜用和大运流年，都是围绕它和其余各字的关系展开的。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "兜底：只陈述事实。命中即记 fallback_used；覆盖率测试命中即失败。"

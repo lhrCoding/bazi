@@ -1,0 +1,408 @@
+# 第 1 章 槽位 CH1-MONTH「月令得失」（第 1 批 B1，草稿）
+# 维度：day.element × month.main_god（5×5=25，全部可能出现）。每条 100–150 字，2 个变体；另 1 条兜底。
+# 依据：strength.md §3 de_ling = 月支本气为比劫或印 → 得令；《子平真诠·论用神》“八字用神，专求月令”。
+# 写法约定：
+#   - 月令当令的五行由 when 唯一确定（如 木日主 + 官杀 → 金），正文直接写出，并用 asserts 锁定 el.<组>。
+#   - 月令五行为木/火/金/水时季节也唯一确定（寅卯春、巳午夏、申酉秋、亥子冬），正文写季节时用 asserts 锁定 month.season；
+#     月令为土（辰戌丑未）时季节不定，正文不写季节。
+#   - 只讲“月令这一项”，不下旺衰结论；结论留给 BALANCE / CONCLUSION。三柱同样适用（不写“四柱”）。
+
+# ---------- 木日主 ----------
+- id: CH1-MONTH-MU-BIJIE
+  slot: CH1-MONTH
+  when: {all: [{f: day.element, eq: 木}, {f: month.main_god, eq: 比劫}]}
+  asserts: [{f: el.比劫, eq: 木}, {f: month.season, eq: 春}]
+  priority: 50
+  length: [100, 150]
+  polish_allowed: true
+  variants:
+    - "你是木日主，生在{month.branch}月，正是春天草木最旺的时候。月令本气{month.main_qi}与你同属木，这在古法里叫“得令”，好比在自家主场出发，底气足、恢复快。月令是判断旺衰的第一要素，所以起点上你是占优势的；不过主场优势不等于全局占优，还要看其余各柱的力量，下一段会算给你看。"
+    - "日主为木，生于{month.branch}月。春季木气当令，月令本气{month.main_qi}正是你的同类，古人称为“得令”。可以把月令理解成你出生时所处的大环境：环境与你同频，做事容易得到呼应，自我恢复的能力也强。不过月令只是一个起点，全局的强弱还要把其余天干地支一起算。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH1-MONTH-MU-YIN
+  slot: CH1-MONTH
+  when: {all: [{f: day.element, eq: 木}, {f: month.main_god, eq: 印}]}
+  asserts: [{f: el.印, eq: 水}, {f: month.season, eq: 冬}]
+  priority: 50
+  length: [100, 150]
+  polish_allowed: true
+  variants:
+    - "你是木日主，生在{month.branch}月，时值冬季，水气当令。水能生木，月令本气{month.main_qi}对你来说是印星，也算“得令”：好比冬天的树，表面安静，根下却有水在默默滋养。这种起点意味着你容易得到支持和庇护；只是冬天的木同样需要温度，命局里暖意够不够，也是后面要看的一项。"
+    - "日主为木，生于{month.branch}月。冬季水旺，月令本气{month.main_qi}属水，水生木，所以这个月令是来生扶你的，古法同样算作“得令”。落到现实中，常表现为成长路上不缺照应：有人教、有人带，或者有比较安稳的家庭与学习环境。得令只说明根基不差，最终强弱还要看其余各柱。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "只提“暖意够不够是后面要看的一项”，不承诺一定出现调候段（调候只在火 <10% 时触发）。"
+
+- id: CH1-MONTH-MU-SHISHANG
+  slot: CH1-MONTH
+  when: {all: [{f: day.element, eq: 木}, {f: month.main_god, eq: 食伤}]}
+  asserts: [{f: el.食伤, eq: 火}, {f: month.season, eq: 夏}]
+  priority: 50
+  length: [100, 150]
+  polish_allowed: true
+  variants:
+    - "你是木日主，生在{month.branch}月，正值夏季，火气当令。木生火，月令的力量是从你身上往外流的，十神里叫食伤，古法称为“失令”：好比盛夏的树，枝叶繁茂，耗费也快。这种起点让你的表达欲、创造力出来得早，但也更容易透支，需要其他各柱来补充能量，具体多少看下一段的计分。"
+    - "日主为木，生于{month.branch}月。夏天火旺，月令本气{month.main_qi}属火，是由你生出去的力量，所以不算得令。它带来的不是压力，而是消耗：才华和精力容易被调动起来，往外输出得多、回收得少。这类月令常见想法多、行动快的人，同时要留意给自己留出休整的空间。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH1-MONTH-MU-CAI
+  slot: CH1-MONTH
+  when: {all: [{f: day.element, eq: 木}, {f: month.main_god, eq: 财}]}
+  asserts: [{f: el.财, eq: 土}]
+  priority: 50
+  length: [100, 150]
+  polish_allowed: true
+  variants:
+    - "你是木日主，生在{month.branch}月，月令本气{month.main_qi}属土。木克土，土是你要去掌控和耕耘的对象，十神里叫财星，古法称为“失令”。好比树木扎根在厚土里，土多了，树要花很大力气才能把根扎稳。这种起点让你很早接触现实事务，务实、有经营意识，但单靠月令借不上力，需要看其余各柱的支援。"
+    - "日主为木，生于{month.branch}月。这是土当令的月份，月令本气{month.main_qi}属土，对你来说是财星。财星是你要去管理、经营的资源，它不来帮你，反而需要你出力去驾驭，所以不算得令。现实中常见的表现是：对结果和效率比较敏感，愿意为具体的回报付出努力；驾驭得住与否，要看下面的力量对比。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "辰月藏乙木中气，木日主仍有根，但本条只讲月令本气，不涉及根，不冲突。"
+
+- id: CH1-MONTH-MU-GUANSHA
+  slot: CH1-MONTH
+  when: {all: [{f: day.element, eq: 木}, {f: month.main_god, eq: 官杀}]}
+  asserts: [{f: el.官杀, eq: 金}, {f: month.season, eq: 秋}]
+  priority: 50
+  length: [100, 150]
+  polish_allowed: true
+  variants:
+    - "你是木日主，生在{month.branch}月，正值秋季，金气当令。金能克木，就像秋风让草木收敛，月令本气{month.main_qi}对你来说是官杀，古法称为“失令”。这意味着你可能比同龄人更早面对规矩、要求和比较，压力来得早，责任感也养得早。压力本身不是坏事，关键在于有没有力量把它接住，下一段会算给你看。"
+    - "日主为木，生于{month.branch}月。秋季金旺，月令本气{month.main_qi}属金，金克木，所以这个月令对你是约束的力量，不算得令。可以把它想成出生时的大环境偏严格：标准高、规则多。这类起点的人往往自律、懂分寸，也更早学会在压力下做事；全局是否担得住，要看其余各柱。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+# ---------- 火日主 ----------
+- id: CH1-MONTH-HUO-BIJIE
+  slot: CH1-MONTH
+  when: {all: [{f: day.element, eq: 火}, {f: month.main_god, eq: 比劫}]}
+  asserts: [{f: el.比劫, eq: 火}, {f: month.season, eq: 夏}]
+  priority: 50
+  length: [100, 150]
+  polish_allowed: true
+  variants:
+    - "你是火日主，生在{month.branch}月，正是夏天火最旺的时候。月令本气{month.main_qi}与你同属火，古法叫“得令”，好比太阳正当头，光和热都处在全年的高点。这种起点给你充沛的精力和外向的动力，做事有冲劲，恢复也快。不过月令只是开头，火势正旺不代表全局都旺，还要把其余天干地支一起算。"
+    - "日主为火，生于{month.branch}月。夏季火气当令，月令本气{month.main_qi}正是你的同类，古人称为“得令”。可以理解为你出生的大环境与你的性情同频：热度高、节奏快，你很容易被调动起来。得令说明根基不弱，至于整体是否偏旺，还要看下面的计分结果。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH1-MONTH-HUO-YIN
+  slot: CH1-MONTH
+  when: {all: [{f: day.element, eq: 火}, {f: month.main_god, eq: 印}]}
+  asserts: [{f: el.印, eq: 木}, {f: month.season, eq: 春}]
+  priority: 50
+  length: [100, 150]
+  polish_allowed: true
+  variants:
+    - "你是火日主，生在{month.branch}月，时值春季，木气当令。木能生火，月令本气{month.main_qi}对你是印星，古法同样算作“得令”：好比柴薪充足，火苗不愁接续。这种起点常见于成长中得到照顾较多、学习条件不错的人，遇到困难时也容易找到支持。不过柴多火未必旺，还要看其余各柱。"
+    - "日主为火，生于{month.branch}月。春天木旺，月令本气{month.main_qi}属木，木生火，这个月令是来生扶你的，所以算“得令”。落到性格上，常带一种被支持过的安全感，愿意学习、愿意相信人。印星的帮助偏向给养而不是并肩作战，全局强弱仍以下一段的计分为准。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH1-MONTH-HUO-SHISHANG
+  slot: CH1-MONTH
+  when: {all: [{f: day.element, eq: 火}, {f: month.main_god, eq: 食伤}]}
+  asserts: [{f: el.食伤, eq: 土}]
+  priority: 50
+  length: [100, 150]
+  polish_allowed: true
+  variants:
+    - "你是火日主，生在{month.branch}月，月令本气{month.main_qi}属土。火生土，月令的力量是从你身上流出去的，十神里叫食伤，古法称为“失令”：好比火在燃烧，热量却被厚土吸走。这种起点让你乐于输出、愿意付出，做事踏实、有成果，但也容易把自己耗得太多，需要看其余各柱能补回多少。"
+    - "日主为火，生于{month.branch}月。这是土当令的月份，土由火生，对你来说是食伤，代表表达、技能和付出，不属于帮扶，所以不算得令。现实中常见的表现是：手上总有事在做，乐于把想法落成具体的东西。精力往外走得多，要留意及时给自己补充；全局情况见下一段。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH1-MONTH-HUO-CAI
+  slot: CH1-MONTH
+  when: {all: [{f: day.element, eq: 火}, {f: month.main_god, eq: 财}]}
+  asserts: [{f: el.财, eq: 金}, {f: month.season, eq: 秋}]
+  priority: 50
+  length: [100, 150]
+  polish_allowed: true
+  variants:
+    - "你是火日主，生在{month.branch}月，正值秋季，金气当令。火克金，金是你要去熔炼、驾驭的对象，十神里叫财星，古法称为“失令”。好比秋天的炉火，面前摆着大块金属，要花不少力气才能炼成器。这种起点让你很早关注现实回报，懂得经营；驾驭得住与否，要看其余各柱给你多少支援。"
+    - "日主为火，生于{month.branch}月。秋季金旺，月令本气{month.main_qi}属金，是你要去管理的资源，对你而言是财星，不算得令。可以理解为出生的大环境里机会和资源不少，但需要你主动出力去争取、去打理。这类月令的人往往务实、讲效率；全局担不担得起，看下面的力量对比。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH1-MONTH-HUO-GUANSHA
+  slot: CH1-MONTH
+  when: {all: [{f: day.element, eq: 火}, {f: month.main_god, eq: 官杀}]}
+  asserts: [{f: el.官杀, eq: 水}, {f: month.season, eq: 冬}]
+  priority: 50
+  length: [100, 150]
+  polish_allowed: true
+  variants:
+    - "你是火日主，生在{month.branch}月，时值冬季，水气当令。水克火，就像寒冬里的一团火，周围冷风不断，月令本气{month.main_qi}对你是官杀，古法称为“失令”。这类起点的人常常早早懂得规矩和分寸，在压力下反而更专注。冬月的火最在意能不能保住温度，这也是后面判断旺衰时要重点看的地方。"
+    - "日主为火，生于{month.branch}月。冬季水旺，月令本气{month.main_qi}属水，水克火，所以这个月令对你是约束和压力，不算得令。可以想成出生的大环境偏冷、偏严：要求多、标准高。这样的起点往往磨出你的责任感和韧性；至于全局是否担得住，要把其余天干地支一起算。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+# ---------- 土日主 ----------
+- id: CH1-MONTH-TU-BIJIE
+  slot: CH1-MONTH
+  when: {all: [{f: day.element, eq: 土}, {f: month.main_god, eq: 比劫}]}
+  asserts: [{f: el.比劫, eq: 土}]
+  priority: 50
+  length: [100, 150]
+  polish_allowed: true
+  variants:
+    - "你是土日主，生在{month.branch}月，月令本气{month.main_qi}与你同属土，古法叫“得令”。辰、戌、丑、未四个月处在季节交替之际，是土气最厚的时候，好比大地正处在最结实的状态。这种起点给你稳定的底气和较强的承受力，做事不容易被一时的波动打乱。不过月令得力只是一个方面，全局强弱还要看下一段的计分。"
+    - "日主为土，生于{month.branch}月。这是土当令的月份，月令本气{month.main_qi}正是你的同类，所以算“得令”。可以把它理解成你出生时站在一块厚实的地基上：起点稳、根基深，遇到变化也有缓冲。古法把月令看作旺衰的第一要素，你在这一项上占了先手，其余各柱的情况见下文。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "正文出现单个地支字“辰、戌、丑、未”，不构成干支字面（L5 只查天干+地支连写）。"
+
+- id: CH1-MONTH-TU-YIN
+  slot: CH1-MONTH
+  when: {all: [{f: day.element, eq: 土}, {f: month.main_god, eq: 印}]}
+  asserts: [{f: el.印, eq: 火}, {f: month.season, eq: 夏}]
+  priority: 50
+  length: [100, 150]
+  polish_allowed: true
+  variants:
+    - "你是土日主，生在{month.branch}月，正值夏季，火气当令。火能生土，月令本气{month.main_qi}对你是印星，古法算作“得令”：好比烈日烘烤下的大地，被晒得厚实温热。这种起点意味着你在成长中容易得到滋养和支持，内心有底；只是夏天的土偏干燥，命局的寒暖燥湿也是后面会参考的一项。"
+    - "日主为土，生于{month.branch}月。夏季火旺，火生土，月令本气{month.main_qi}是来生扶你的印星，所以算“得令”。落到性格上，常表现为踏实、能沉住气，也比较信任长辈和体系的支持。印星给的是底气而不是冲劲，全局是否偏旺，还要看其余各柱的情况。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH1-MONTH-TU-SHISHANG
+  slot: CH1-MONTH
+  when: {all: [{f: day.element, eq: 土}, {f: month.main_god, eq: 食伤}]}
+  asserts: [{f: el.食伤, eq: 金}, {f: month.season, eq: 秋}]
+  priority: 50
+  length: [100, 150]
+  polish_allowed: true
+  variants:
+    - "你是土日主，生在{month.branch}月，正值秋季，金气当令。土生金，月令的力量是从你身上往外走的，十神里叫食伤，古法称为“失令”：好比矿藏丰富的山，宝贝不少，山体却被一点点掏空。这种起点让你有手艺、有想法，乐于拿出成果，但要留意别透支自己，全局还要看其余各柱的补给。"
+    - "日主为土，生于{month.branch}月。秋季金旺，月令本气{month.main_qi}属金，由土所生，对你来说是食伤，代表技能、表达与产出，不属于帮扶，因此不算得令。这类月令的人常常动手能力强、讲究做事的质量。付出多的同时，也要留意积蓄自己的能量；具体强弱见下一段。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH1-MONTH-TU-CAI
+  slot: CH1-MONTH
+  when: {all: [{f: day.element, eq: 土}, {f: month.main_god, eq: 财}]}
+  asserts: [{f: el.财, eq: 水}, {f: month.season, eq: 冬}]
+  priority: 50
+  length: [100, 150]
+  polish_allowed: true
+  variants:
+    - "你是土日主，生在{month.branch}月，时值冬季，水气当令。土克水，水是你要去堤防、驾驭的对象，十神里叫财星，古法称为“失令”。好比冬天的堤岸，面前是满满的水，要守得住，才能变成灌溉的资源。这种起点让你很早就要和现实事务打交道，懂得算账、懂得取舍；担不担得住，看下面的力量对比。"
+    - "日主为土，生于{month.branch}月。冬季水旺，月令本气{month.main_qi}属水，是你要去管理的财星，不算得令。可以理解为出生的大环境里资源流动多，但需要你花力气去守、去调度。这类月令的人往往务实，对得失看得清楚；冬月天寒，命局的冷暖也是后面会参考的一项。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH1-MONTH-TU-GUANSHA
+  slot: CH1-MONTH
+  when: {all: [{f: day.element, eq: 土}, {f: month.main_god, eq: 官杀}]}
+  asserts: [{f: el.官杀, eq: 木}, {f: month.season, eq: 春}]
+  priority: 50
+  length: [100, 150]
+  polish_allowed: true
+  variants:
+    - "你是土日主，生在{month.branch}月，时值春季，木气当令。木克土，好比春天草木破土而出，把地面撑得松动，月令本气{month.main_qi}对你是官杀，古法称为“失令”。这类起点的人常常早早面对规则和要求，责任心强，也习惯在压力下做事。压力能不能化成动力，要看其余各柱有没有接住它的力量。"
+    - "日主为土，生于{month.branch}月。春季木旺，月令本气{month.main_qi}属木，木克土，所以这个月令对你是约束的力量，不算得令。可以把它想成大环境对你要求多、管束多：要守规矩，也被推着成长。这样的起点往往让人稳重、守信；全局强弱以下一段的计分为准。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+# ---------- 金日主 ----------
+- id: CH1-MONTH-JIN-BIJIE
+  slot: CH1-MONTH
+  when: {all: [{f: day.element, eq: 金}, {f: month.main_god, eq: 比劫}]}
+  asserts: [{f: el.比劫, eq: 金}, {f: month.season, eq: 秋}]
+  priority: 50
+  length: [100, 150]
+  polish_allowed: true
+  variants:
+    - "你是金日主，生在{month.branch}月，正值秋季，金气当令。月令本气{month.main_qi}与你同属金，古法叫“得令”，好比刀剑出炉正逢秋高气爽，锋芒最盛。这种起点给你果断、利落的底色，遇事拿得定主意，做事干脆。不过锋利需要分寸，全局是否偏旺，要看其余各柱的计分。"
+    - "日主为金，生于{month.branch}月。秋天是金当令的季节，月令本气{month.main_qi}正是你的同类，所以算“得令”。可以理解为你出生时的大环境与你的性情相合：讲原则、讲效率，你在这样的氛围里容易发挥。得令说明根基稳，最终强弱还要看下一段的计算。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH1-MONTH-JIN-YIN
+  slot: CH1-MONTH
+  when: {all: [{f: day.element, eq: 金}, {f: month.main_god, eq: 印}]}
+  asserts: [{f: el.印, eq: 土}]
+  priority: 50
+  length: [100, 150]
+  polish_allowed: true
+  variants:
+    - "你是金日主，生在{month.branch}月，月令本气{month.main_qi}属土。土能生金，就像矿石藏在土里慢慢成形，这个月令对你是印星，古法算作“得令”。这种起点常见于根基扎实、受过较好照应的人，做事不急躁、有耐心。印星给的是滋养而不是并肩作战，全局强弱以下一段的计分为准。"
+    - "日主为金，生于{month.branch}月。这是土当令的月份，土生金，月令是来生扶你的印星，因此算“得令”。落到现实里，常表现为学习能力不错、做事有底气，也容易得到长辈或体系的认可。不过土太厚时金也会被埋住，生扶是否恰到好处，要看全局。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "“土厚金埋”为传统说法，只作提示，不下结论。"
+
+- id: CH1-MONTH-JIN-SHISHANG
+  slot: CH1-MONTH
+  when: {all: [{f: day.element, eq: 金}, {f: month.main_god, eq: 食伤}]}
+  asserts: [{f: el.食伤, eq: 水}, {f: month.season, eq: 冬}]
+  priority: 50
+  length: [100, 150]
+  polish_allowed: true
+  variants:
+    - "你是金日主，生在{month.branch}月，时值冬季，水气当令。金生水，月令的力量从你身上往外流，十神里叫食伤，古法称为“失令”：好比寒冬里的金属，冷而清亮，热量不断散出去。这种起点让你思路清晰、表达有锋芒，但也容易消耗过多；冬月天寒，命局的冷暖也是后面会参考的一项。"
+    - "日主为金，生于{month.branch}月。冬季水旺，月令本气{month.main_qi}属水，由金所生，对你来说是食伤，代表才智、表达和输出，不属于帮扶，所以不算得令。这类月令的人往往头脑灵、口才好、点子多；输出得多也要记得补充，全局强弱见下一段。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH1-MONTH-JIN-CAI
+  slot: CH1-MONTH
+  when: {all: [{f: day.element, eq: 金}, {f: month.main_god, eq: 财}]}
+  asserts: [{f: el.财, eq: 木}, {f: month.season, eq: 春}]
+  priority: 50
+  length: [100, 150]
+  polish_allowed: true
+  variants:
+    - "你是金日主，生在{month.branch}月，时值春季，木气当令。金克木，木是你要去砍伐、修整的对象，十神里叫财星，古法称为“失令”。好比春天满山的树木，等着刀斧去开辟成材。这种起点让你对机会和资源很敏感，愿意为结果下功夫；但驾驭财星要靠自身的力量，月令借不上，需要看其余各柱。"
+    - "日主为金，生于{month.branch}月。春季木旺，月令本气{month.main_qi}属木，是你要去经营的财星，不算得令。可以理解为出生的大环境里机会不少，但都需要你主动出手去争取和打理。这类月令的人通常务实、行动快，看重实际收获；担不担得住，见下面的力量对比。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH1-MONTH-JIN-GUANSHA
+  slot: CH1-MONTH
+  when: {all: [{f: day.element, eq: 金}, {f: month.main_god, eq: 官杀}]}
+  asserts: [{f: el.官杀, eq: 火}, {f: month.season, eq: 夏}]
+  priority: 50
+  length: [100, 150]
+  polish_allowed: true
+  variants:
+    - "你是金日主，生在{month.branch}月，正值夏季，火气当令。火克金，好比炉火正旺，金属被反复锻打，月令本气{month.main_qi}对你是官杀，古法称为“失令”。这类起点的人常常早早被要求、被考验，也因此练出较强的抗压能力和规矩意识。经得起锻打才能成器，关键看其余各柱有没有支撑。"
+    - "日主为金，生于{month.branch}月。夏季火旺，月令本气{month.main_qi}属火，火克金，所以这个月令对你是约束和压力，不算得令。可以想成出生时的大环境对你要求高、节奏紧。这样的起点常让人自律、重责任；夏月燥热，命局的寒暖也是后面会参考的一项。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+# ---------- 水日主 ----------
+- id: CH1-MONTH-SHUI-BIJIE
+  slot: CH1-MONTH
+  when: {all: [{f: day.element, eq: 水}, {f: month.main_god, eq: 比劫}]}
+  asserts: [{f: el.比劫, eq: 水}, {f: month.season, eq: 冬}]
+  priority: 50
+  length: [100, 150]
+  polish_allowed: true
+  variants:
+    - "你是水日主，生在{month.branch}月，时值冬季，水气当令。月令本气{month.main_qi}与你同属水，古法叫“得令”，好比冬天的江河水量充沛、流得深沉。这种起点给你沉着、有后劲的底色，思考问题能看得深。冬月天寒，命局里有没有暖意也会影响全局，下文会一并考虑。"
+    - "日主为水，生于{month.branch}月。冬季正是水当令的时候，月令本气{month.main_qi}是你的同类，所以算“得令”。可以理解为你出生的大环境与你的性情同频：安静、深沉、善于积蓄。得令说明根基充足，至于是否偏旺，还要把其余天干地支一起算。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH1-MONTH-SHUI-YIN
+  slot: CH1-MONTH
+  when: {all: [{f: day.element, eq: 水}, {f: month.main_god, eq: 印}]}
+  asserts: [{f: el.印, eq: 金}, {f: month.season, eq: 秋}]
+  priority: 50
+  length: [100, 150]
+  polish_allowed: true
+  variants:
+    - "你是水日主，生在{month.branch}月，正值秋季，金气当令。金能生水，好比山间岩石里渗出的泉水，源头不断，月令本气{month.main_qi}对你是印星，古法算作“得令”。这种起点常见于学习力强、容易得到指点的人，遇事有人可以商量。源头充足只是起点，全局强弱以下一段的计分为准。"
+    - "日主为水，生于{month.branch}月。秋季金旺，金生水，月令是来生扶你的印星，所以算“得令”。落到性格上，常表现为善于吸收、思考有条理，也比较看重知识和资历。印星给的是滋养，不等于自己冲在前面，全局是否偏旺，还要看其余各柱。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH1-MONTH-SHUI-SHISHANG
+  slot: CH1-MONTH
+  when: {all: [{f: day.element, eq: 水}, {f: month.main_god, eq: 食伤}]}
+  asserts: [{f: el.食伤, eq: 木}, {f: month.season, eq: 春}]
+  priority: 50
+  length: [100, 150]
+  polish_allowed: true
+  variants:
+    - "你是水日主，生在{month.branch}月，时值春季，木气当令。水生木，月令的力量是从你身上往外流的，十神里叫食伤，古法称为“失令”：好比春水浇灌万物，草木长得好，水却越流越少。这种起点让你有灵气、乐于分享和创造，但也容易付出过多，需要看其余各柱能补回多少。"
+    - "日主为水，生于{month.branch}月。春季木旺，月令本气{month.main_qi}属木，由水所生，对你来说是食伤，代表灵感、表达与创造，不属于帮扶，所以不算得令。这类月令的人往往点子多、表达生动；输出多的同时，要留意给自己留出补充的时间，全局情况见下一段。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH1-MONTH-SHUI-CAI
+  slot: CH1-MONTH
+  when: {all: [{f: day.element, eq: 水}, {f: month.main_god, eq: 财}]}
+  asserts: [{f: el.财, eq: 火}, {f: month.season, eq: 夏}]
+  priority: 50
+  length: [100, 150]
+  polish_allowed: true
+  variants:
+    - "你是水日主，生在{month.branch}月，正值夏季，火气当令。水克火，火是你要去驾驭的对象，十神里叫财星，古法称为“失令”。好比盛夏里一池水面对烈日，周围热闹、机会多，水汽却蒸发得快。这种起点让你对现实回报敏感，懂得把握机会；驾驭得住与否，要看下面的力量对比。"
+    - "日主为水，生于{month.branch}月。夏季火旺，月令本气{month.main_qi}属火，是你要去管理的财星，不算得令。可以理解为出生的大环境机会多、节奏快，但都要你亲自出力去打理。这类月令的人往往反应快、重实效；夏月燥热，命局的寒暖也是后面会参考的一项。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH1-MONTH-SHUI-GUANSHA
+  slot: CH1-MONTH
+  when: {all: [{f: day.element, eq: 水}, {f: month.main_god, eq: 官杀}]}
+  asserts: [{f: el.官杀, eq: 土}]
+  priority: 50
+  length: [100, 150]
+  polish_allowed: true
+  variants:
+    - "你是水日主，生在{month.branch}月，月令本气{month.main_qi}属土。土克水，好比堤坝拦住河流，月令对你是官杀，古法称为“失令”。这类起点的人常常早早面对规则和约束，懂得在框架里做事，也因此更有分寸和责任感。堤坝既能拦住河流，也能让它有方向，关键看其余各柱给你的支撑够不够。"
+    - "日主为水，生于{month.branch}月。这是土当令的月份，土克水，月令本气{month.main_qi}对你是约束的官杀，不算得令。可以想成出生时的大环境规矩多、要求明确。这样的起点往往让人稳重、守规则，在压力下也能找到办法；全局是否担得住，以下一段的计分为准。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH1-MONTH-FALLBACK
+  slot: CH1-MONTH
+  when: {}
+  asserts: []
+  priority: 0
+  fallback: true
+  length: [50, 100]
+  polish_allowed: false
+  variants:
+    - "你生在{month.branch}月，月令本气是{month.main_qi}，对你的日主来说属于{month.main_god|名}。月令是判断旺衰的第一要素，但最终强弱要把各柱的力量一起计算。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "兜底：只陈述事实。"

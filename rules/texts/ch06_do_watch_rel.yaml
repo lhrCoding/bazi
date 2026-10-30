@@ -1,0 +1,520 @@
+# 第 6 章 槽位 CH6-DO「适合做」、CH6-WATCH「留意」、CH6-REL「年度冲合」（第 1 批 B1，草稿）
+# CH6-DO / CH6-WATCH：维度 item.stem_god（5）× item.tier_group（3）= 15 / 槽位；每条 30–60 字，1–2 句，2 个变体；各 1 条兜底。
+#   润色 = 否。必须可执行（具体动作），不写“保持积极心态”之类空话；不写具体月份（无数据可追溯）。
+# CH6-REL：非必需，关系类型 4 种（冲日支 / 冲月支 / 合日支 / 冲时支），每条 40–60 字，无兜底。
+#   触发写法：{f: item.relations, contains: {type, a, b}}——item.relations 是对象列表，
+#   需要条件求值器支持“对象按字段全等匹配”的 contains（README §4.1 未写明，见 batches.yaml 待开发确认）。
+#   冲时支条目 requires_hour: true（三柱时不计算、不展示）。
+#   冲日支只写“变动较多，适合主动规划”，不写分手、婚变。
+
+# ======================= CH6-DO =======================
+- id: CH6-DO-BIJIE-HAO
+  slot: CH6-DO
+  when: {all: [{f: item.stem_god, eq: 比劫}, {f: item.tier_group, eq: 好}]}
+  priority: 50
+  length: [30, 60]
+  polish_allowed: false
+  variants:
+    - "适合与可靠的伙伴一起启动一个项目，事先写好分工；也适合加入行业社群，主动结识同行。"
+    - "适合独立牵头一件你想做很久的事，定下时间表，并邀请一两位合拍的人一起参与。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-DO-BIJIE-PING
+  slot: CH6-DO
+  when: {all: [{f: item.stem_god, eq: 比劫}, {f: item.tier_group, eq: 平}]}
+  priority: 50
+  length: [30, 60]
+  polish_allowed: false
+  variants:
+    - "适合整理自己的人脉清单，和几位重要的朋友或同行约一次深谈，听听他们的近况和建议。"
+    - "适合把团队或家庭里的分工重新梳理一遍，明确每个人负责什么，减少重复劳动。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-DO-BIJIE-SHOU
+  slot: CH6-DO
+  when: {all: [{f: item.stem_god, eq: 比劫}, {f: item.tier_group, eq: 守}]}
+  priority: 50
+  length: [30, 60]
+  polish_allowed: false
+  variants:
+    - "适合把已有的合作协议、共同账目检查一遍，有模糊的地方趁早说清楚、写下来。"
+    - "适合专注提升自己的核心技能，报一个短期课程，把时间花在自己能掌控的事情上。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-DO-YIN-HAO
+  slot: CH6-DO
+  when: {all: [{f: item.stem_god, eq: 印}, {f: item.tier_group, eq: 好}]}
+  priority: 50
+  length: [30, 60]
+  polish_allowed: false
+  variants:
+    - "适合报名一门系统课程或备考一项证书，把学习时间固定写进每周的日程里。"
+    - "适合主动向前辈或上级请教职业发展方向，争取一次培训或进修的机会。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-DO-YIN-PING
+  slot: CH6-DO
+  when: {all: [{f: item.stem_god, eq: 印}, {f: item.tier_group, eq: 平}]}
+  priority: 50
+  length: [30, 60]
+  polish_allowed: false
+  variants:
+    - "适合制定一份年度读书或学习清单，每月完成一项，年底回顾一次成果。"
+    - "适合整理过去几年的工作笔记和经验，写成一份属于自己的方法总结。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-DO-YIN-SHOU
+  slot: CH6-DO
+  when: {all: [{f: item.stem_god, eq: 印}, {f: item.tier_group, eq: 守}]}
+  priority: 50
+  length: [30, 60]
+  polish_allowed: false
+  variants:
+    - "适合给每个拖着的计划设定截止日期，并找一位朋友定期帮你督促进度。"
+    - "适合把学到的东西马上放到一件具体的事情上去实践，用结果检验学习效果。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-DO-SHISHANG-HAO
+  slot: CH6-DO
+  when: {all: [{f: item.stem_god, eq: 食伤}, {f: item.tier_group, eq: 好}]}
+  priority: 50
+  length: [30, 60]
+  polish_allowed: false
+  variants:
+    - "适合推出一件个人作品，比如文章、设计、课程或产品，并在合适的平台公开发布。"
+    - "适合把一项爱好或技能做成副业试一试，先定一个小目标，比如接到第一单。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-DO-SHISHANG-PING
+  slot: CH6-DO
+  when: {all: [{f: item.stem_god, eq: 食伤}, {f: item.tier_group, eq: 平}]}
+  priority: 50
+  length: [30, 60]
+  polish_allowed: false
+  variants:
+    - "适合每周固定留出几个小时做创作或练习，坚持记录，年底整理成一份作品集。"
+    - "适合在工作中提出一个小的改进方案，先在小范围试行，看到效果再推广。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-DO-SHISHANG-SHOU
+  slot: CH6-DO
+  when: {all: [{f: item.stem_god, eq: 食伤}, {f: item.tier_group, eq: 守}]}
+  priority: 50
+  length: [30, 60]
+  polish_allowed: false
+  variants:
+    - "适合列出手上所有的事情，只保留最重要的两三件，其余的暂停或交给别人。"
+    - "适合在发表重要意见前先写下来，隔一天再看一遍，再决定说不说、怎么说。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-DO-CAI-HAO
+  slot: CH6-DO
+  when: {all: [{f: item.stem_god, eq: 财}, {f: item.tier_group, eq: 好}]}
+  priority: 50
+  length: [30, 60]
+  polish_allowed: false
+  variants:
+    - "适合争取一次加薪或更好的合作条件，提前整理好自己这一年的业绩数据。"
+    - "适合拓展一个新的收入渠道，同时定下每月固定的储蓄比例，并坚持执行。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-DO-CAI-PING
+  slot: CH6-DO
+  when: {all: [{f: item.stem_god, eq: 财}, {f: item.tier_group, eq: 平}]}
+  priority: 50
+  length: [30, 60]
+  polish_allowed: false
+  variants:
+    - "适合做一次完整的个人或家庭记账，找出三项可以削减的开支并立刻执行。"
+    - "适合优化一项工作流程或工具，把节省下来的时间留给更重要的事情。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-DO-CAI-SHOU
+  slot: CH6-DO
+  when: {all: [{f: item.stem_god, eq: 财}, {f: item.tier_group, eq: 守}]}
+  priority: 50
+  length: [30, 60]
+  polish_allowed: false
+  variants:
+    - "适合为自己建立一笔应急储备，金额至少覆盖几个月的基本生活开销。"
+    - "适合把正在进行的事情按付出和回报排个序，砍掉回报最低的那一项。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-DO-GUANSHA-HAO
+  slot: CH6-DO
+  when: {all: [{f: item.stem_god, eq: 官杀}, {f: item.tier_group, eq: 好}]}
+  priority: 50
+  length: [30, 60]
+  polish_allowed: false
+  variants:
+    - "适合竞聘一个责任更大的岗位，或报名参加资格考试、评审，按时备好材料。"
+    - "适合主动承担一个有挑战的项目，并在开始前和上级对齐目标与验收标准。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-DO-GUANSHA-PING
+  slot: CH6-DO
+  when: {all: [{f: item.stem_god, eq: 官杀}, {f: item.tier_group, eq: 平}]}
+  priority: 50
+  length: [30, 60]
+  polish_allowed: false
+  variants:
+    - "适合把重要证件、合同和待办手续整理一遍，按截止时间排好顺序逐项办理。"
+    - "适合建立固定的周计划和周复盘习惯，把工作要求拆成可执行的小步骤。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-DO-GUANSHA-SHOU
+  slot: CH6-DO
+  when: {all: [{f: item.stem_god, eq: 官杀}, {f: item.tier_group, eq: 守}]}
+  priority: 50
+  length: [30, 60]
+  polish_allowed: false
+  variants:
+    - "适合把工作中的关键往来留好书面记录，重要事项按流程报备，不走捷径。"
+    - "适合给自己定好每天的下班时间和运动时间，用规律的作息对冲压力。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-DO-FALLBACK
+  slot: CH6-DO
+  when: {}
+  priority: 0
+  fallback: true
+  length: [20, 60]
+  polish_allowed: false
+  variants:
+    - "适合把这一年的目标写下来，按季度检查一次进度。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "兜底。"
+
+# ======================= CH6-WATCH =======================
+- id: CH6-WATCH-BIJIE-HAO
+  slot: CH6-WATCH
+  when: {all: [{f: item.stem_god, eq: 比劫}, {f: item.tier_group, eq: 好}]}
+  priority: 50
+  length: [30, 60]
+  polish_allowed: false
+  variants:
+    - "留意合作中的分工和收益分配，事先约定好，比事后协商省心得多。"
+    - "留意别因为人多热闹而承诺过多，答应别人之前先看看自己的时间表。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-WATCH-BIJIE-PING
+  slot: CH6-WATCH
+  when: {all: [{f: item.stem_god, eq: 比劫}, {f: item.tier_group, eq: 平}]}
+  priority: 50
+  length: [30, 60]
+  polish_allowed: false
+  variants:
+    - "留意人情往来的开销，聚会和送礼量力而行，不必为了面子超出预算。"
+    - "留意和同事、朋友之间的暗中比较，把注意力放回自己的目标上。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-WATCH-BIJIE-SHOU
+  slot: CH6-WATCH
+  when: {all: [{f: item.stem_god, eq: 比劫}, {f: item.tier_group, eq: 守}]}
+  priority: 50
+  length: [30, 60]
+  polish_allowed: false
+  variants:
+    - "留意合伙、共同出钱和为别人承担财务责任的事情，能推迟就尽量推迟。"
+    - "留意因好胜引起的争执，意见不同时先暂停，等双方冷静后再谈。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-WATCH-YIN-HAO
+  slot: CH6-WATCH
+  when: {all: [{f: item.stem_god, eq: 印}, {f: item.tier_group, eq: 好}]}
+  priority: 50
+  length: [30, 60]
+  polish_allowed: false
+  variants:
+    - "留意学习计划贪多，选一两项坚持完成，比同时开很多个头更有收获。"
+    - "留意别把所有决定都交给长辈或上级，重要的事情自己也要有判断。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-WATCH-YIN-PING
+  slot: CH6-WATCH
+  when: {all: [{f: item.stem_god, eq: 印}, {f: item.tier_group, eq: 平}]}
+  priority: 50
+  length: [30, 60]
+  polish_allowed: false
+  variants:
+    - "留意久坐和作息不规律，学习或工作一小时就起来活动几分钟。"
+    - "留意“等准备好了再说”的想法，有些事情完全可以边做边完善。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-WATCH-YIN-SHOU
+  slot: CH6-WATCH
+  when: {all: [{f: item.stem_god, eq: 印}, {f: item.tier_group, eq: 守}]}
+  priority: 50
+  length: [30, 60]
+  polish_allowed: false
+  variants:
+    - "留意过度思虑和拖延，任何计划超过两周没有动静，就先做最小的一步。"
+    - "留意别人推荐的“稳赚”门路和来历不明的信息，先核实清楚再行动。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-WATCH-SHISHANG-HAO
+  slot: CH6-WATCH
+  when: {all: [{f: item.stem_god, eq: 食伤}, {f: item.tier_group, eq: 好}]}
+  priority: 50
+  length: [30, 60]
+  polish_allowed: false
+  variants:
+    - "留意在顺利、高兴时说话过满或许下太多承诺，答应之前先确认自己做得到。"
+    - "留意作品发布前的细节检查，署名、授权和合同条款等问题提前弄清楚。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-WATCH-SHISHANG-PING
+  slot: CH6-WATCH
+  when: {all: [{f: item.stem_god, eq: 食伤}, {f: item.tier_group, eq: 平}]}
+  priority: 50
+  length: [30, 60]
+  polish_allowed: false
+  variants:
+    - "留意娱乐和消遣占用的时间，给每天留出一段不被打扰的专注时间。"
+    - "留意饮食和作息的规律，别让夜宵、晚睡成为常态，周末也尽量按时起床。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-WATCH-SHISHANG-SHOU
+  slot: CH6-WATCH
+  when: {all: [{f: item.stem_god, eq: 食伤}, {f: item.tier_group, eq: 守}]}
+  priority: 50
+  length: [30, 60]
+  polish_allowed: false
+  variants:
+    - "留意言语上的冲突，尤其是对上级和规则的不满，不在公开场合发泄。"
+    - "留意同时开太多新项目，没完成的事情先收尾，再考虑开始新的。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-WATCH-CAI-HAO
+  slot: CH6-WATCH
+  when: {all: [{f: item.stem_god, eq: 财}, {f: item.tier_group, eq: 好}]}
+  priority: 50
+  length: [30, 60]
+  polish_allowed: false
+  variants:
+    - "留意收入增加后开销也跟着变大，进账时先存下一部分，再安排消费。"
+    - "留意机会多时的取舍，不合适的邀约礼貌推掉，把精力留给重点。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-WATCH-CAI-PING
+  slot: CH6-WATCH
+  when: {all: [{f: item.stem_god, eq: 财}, {f: item.tier_group, eq: 平}]}
+  priority: 50
+  length: [30, 60]
+  polish_allowed: false
+  variants:
+    - "留意自动续费、会员和各种小额支出，它们累积起来往往比想象中多。"
+    - "留意工作和生活的平衡，忙于事务时也要给家人留出时间，每周至少一次完整的陪伴。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-WATCH-CAI-SHOU
+  slot: CH6-WATCH
+  when: {all: [{f: item.stem_god, eq: 财}, {f: item.tier_group, eq: 守}]}
+  priority: 50
+  length: [30, 60]
+  polish_allowed: false
+  variants:
+    - "留意高回报、低门槛的赚钱说法，不熟悉的领域不碰，大额支出多等几天再决定。"
+    - "留意为别人承担财务责任和冲动消费，签字、付款前多问一句、多看一遍。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-WATCH-GUANSHA-HAO
+  slot: CH6-WATCH
+  when: {all: [{f: item.stem_god, eq: 官杀}, {f: item.tier_group, eq: 好}]}
+  priority: 50
+  length: [30, 60]
+  polish_allowed: false
+  variants:
+    - "留意责任增加后的身体负担，再忙也要保证睡眠和基本的运动量。"
+    - "留意在新职位或新任务上的分寸，先熟悉规则和人际关系，再着手推动改变。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-WATCH-GUANSHA-PING
+  slot: CH6-WATCH
+  when: {all: [{f: item.stem_god, eq: 官杀}, {f: item.tier_group, eq: 平}]}
+  priority: 50
+  length: [30, 60]
+  polish_allowed: false
+  variants:
+    - "留意各类截止日期和手续流程，提前一周处理，避免临时赶工出错。"
+    - "留意把工作压力带回家，下班后给自己留一段完全放松的时间，散步或运动都好。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-WATCH-GUANSHA-SHOU
+  slot: CH6-WATCH
+  when: {all: [{f: item.stem_god, eq: 官杀}, {f: item.tier_group, eq: 守}]}
+  priority: 50
+  length: [30, 60]
+  polish_allowed: false
+  variants:
+    - "留意与上级、机构的正面冲突，有分歧时按程序反映，并保留书面记录。"
+    - "留意过度劳累和高风险活动，出行、运动都把安全放在第一位。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-WATCH-FALLBACK
+  slot: CH6-WATCH
+  when: {}
+  priority: 0
+  fallback: true
+  length: [20, 60]
+  polish_allowed: false
+  variants:
+    - "留意作息规律，重要决定给自己留出思考的时间。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "兜底。"
+
+# ======================= CH6-REL（非必需，无兜底） =======================
+- id: CH6-REL-CHONG-RIZHI
+  slot: CH6-REL
+  when: {all: [{f: item.relations, contains: {type: 冲, a: 流年支, b: 日支}}]}
+  priority: 50
+  length: [40, 60]
+  polish_allowed: true
+  variants:
+    - "这一年流年地支与你的日支相冲，生活或关系上变动较多，适合主动规划，和身边的人多沟通。"
+    - "流年冲日支，家庭和亲密关系的节奏可能被打乱，提前安排、主动商量，能把变化变成调整的机会。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "措辞按 report-sections.md §3 第 6 章：只写“变动较多，适合主动规划”。"
+
+- id: CH6-REL-CHONG-YUEZHI
+  slot: CH6-REL
+  when: {all: [{f: item.relations, contains: {type: 冲, a: 流年支, b: 月支}}]}
+  priority: 50
+  length: [40, 60]
+  polish_allowed: true
+  variants:
+    - "这一年流年地支冲你的月支，工作环境、居住地或社会角色上容易出现变化，提前做好准备即可。"
+    - "流年冲月支，外部环境变动较多，比如部门调整、换城市等，宜保持弹性，提前准备备选方案。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-REL-HE-RIZHI
+  slot: CH6-REL
+  when: {all: [{f: item.relations, contains: {type: 合, a: 流年支, b: 日支}}]}
+  priority: 50
+  length: [40, 60]
+  polish_allowed: true
+  variants:
+    - "这一年流年地支与日支相合，人际与感情关系容易推进，适合谈合作、确定关系或多陪伴家人。"
+    - "流年合日支，身边的人更愿意配合你，适合推进需要对方点头的事情，比如签约或共同规划。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-REL-CHONG-SHIZHI
+  slot: CH6-REL
+  when: {all: [{f: item.relations, contains: {type: 冲, a: 流年支, b: 时支}}]}
+  requires_hour: true
+  priority: 50
+  length: [40, 60]
+  polish_allowed: true
+  variants:
+    - "这一年流年地支与你的时支相冲，日常安排和长期计划上调整较多，适合定期复盘、留出机动时间。"
+    - "流年冲时支，晚辈、下属或个人计划方面的事务变动较多，宜提前安排，给计划保留一些弹性。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "正文含“时支”，按 L7 标 requires_hour: true；三柱时本就不计算冲时支。"

@@ -1,0 +1,191 @@
+# rules/texts/batches.yaml —— 素材批次清单（格式按 docs/ARCHITECTURE.md 4.3.8 建议稿，另加 coverage / self_check / open_issues）
+# 只记录批次信息，不含正文。条目正文见各 chXX_*.yaml。
+
+- batch: B1
+  scope: [CH1, CH2, CH6]
+  status: drafting
+  status_note: "草稿完成，待 lint 工具就绪后跑自动检查，再交用户抽检"
+  drafted: 2026-10-29
+  submitted: null
+  author: mingli-expert
+  files:
+    - ch01_daymaster.yaml        # CH1-DAYMASTER 11
+    - ch01_month.yaml            # CH1-MONTH 26
+    - ch01_strength.yaml         # CH1-BALANCE 15（原样板文件，现只放 BALANCE）
+    - ch01_conclusion.yaml       # CH1-CONCLUSION 19 + CH1-QUOTE 5
+    - ch02_yongshen.yaml         # CH2-METHOD 16（原样板文件，现只放 METHOD）
+    - ch02_adjust.yaml           # CH2-SWAP 1 + CH2-TIAOHOU 6 + CH2-TONGGUAN 5 + CH2-NOHOUR-CONG 1
+    - ch02_role.yaml             # CH2-ROLE-YONG / XI / JI 各 6
+    - ch06_head_1.yaml           # CH6-HEAD 25（比肩 劫财 食神 伤官 偏财）
+    - ch06_head_2.yaml           # CH6-HEAD 26（正财 七杀 正官 偏印 正印 + 兜底）
+    - ch06_career_wealth.yaml    # CH6-CAREER 16 + CH6-WEALTH 16
+    - ch06_love_health.yaml      # CH6-LOVE 16 + CH6-HEALTH 16
+    - ch06_do_watch_rel.yaml     # CH6-DO 16 + CH6-WATCH 16 + CH6-REL 4
+  totals:
+    entries: 274           # CH1 76、CH2 47、CH6 151（2026-10-30 补 CH2-NOHOUR-CONG-GENERIC）
+    fallback_entries: 15   # CH1 4、CH2 4、CH6 7（每个必需槽位恰好 1 条）
+    variants: 533          # 非兜底 259 条 × 2 + 兜底 15 条 × 1
+    samples_merged: 10     # 原 10 条样板全部并入，修订见各条 notes
+  rounds: []               # 抽检轮次（texts:batch sample B1 生成后填写）
+
+  # ---------------- 条目清单（按槽位） ----------------
+  entries:
+    CH1-DAYMASTER: [CH1-DAYMASTER-JIA, CH1-DAYMASTER-YI, CH1-DAYMASTER-BING, CH1-DAYMASTER-DING, CH1-DAYMASTER-WU,
+                    CH1-DAYMASTER-JI, CH1-DAYMASTER-GENG, CH1-DAYMASTER-XIN, CH1-DAYMASTER-REN, CH1-DAYMASTER-GUI,
+                    CH1-DAYMASTER-FALLBACK]
+    CH1-MONTH: [CH1-MONTH-MU-BIJIE, CH1-MONTH-MU-YIN, CH1-MONTH-MU-SHISHANG, CH1-MONTH-MU-CAI, CH1-MONTH-MU-GUANSHA,
+                CH1-MONTH-HUO-BIJIE, CH1-MONTH-HUO-YIN, CH1-MONTH-HUO-SHISHANG, CH1-MONTH-HUO-CAI, CH1-MONTH-HUO-GUANSHA,
+                CH1-MONTH-TU-BIJIE, CH1-MONTH-TU-YIN, CH1-MONTH-TU-SHISHANG, CH1-MONTH-TU-CAI, CH1-MONTH-TU-GUANSHA,
+                CH1-MONTH-JIN-BIJIE, CH1-MONTH-JIN-YIN, CH1-MONTH-JIN-SHISHANG, CH1-MONTH-JIN-CAI, CH1-MONTH-JIN-GUANSHA,
+                CH1-MONTH-SHUI-BIJIE, CH1-MONTH-SHUI-YIN, CH1-MONTH-SHUI-SHISHANG, CH1-MONTH-SHUI-CAI, CH1-MONTH-SHUI-GUANSHA,
+                CH1-MONTH-FALLBACK]
+    CH1-BALANCE: [CH1-BALANCE-W-GUANSHA, CH1-BALANCE-W-SHISHANG, CH1-BALANCE-W-CAI,
+                  CH1-BALANCE-S-GUANSHA, CH1-BALANCE-S-SHISHANG, CH1-BALANCE-S-CAI,
+                  CH1-BALANCE-PARADOX-WEAK, CH1-BALANCE-PARADOX-STRONG,
+                  CH1-BALANCE-CONG-CAI, CH1-BALANCE-CONG-SHA, CH1-BALANCE-CONG-ER, CH1-BALANCE-CONG-SHI,
+                  CH1-BALANCE-ZHUANWANG, CH1-BALANCE-CONGQIANG, CH1-BALANCE-FALLBACK]
+    CH1-CONCLUSION: [CH1-CONCLUSION-SHENRUO, CH1-CONCLUSION-ZHONGHE-RUO, CH1-CONCLUSION-ZHONGHE-WANG, CH1-CONCLUSION-SHENWANG,
+                     CH1-CONCLUSION-CONGRUO, CH1-CONCLUSION-CONGQIANG,
+                     CH1-CONCLUSION-BL-SHENRUO, CH1-CONCLUSION-BL-ZHONGHE-RUO, CH1-CONCLUSION-BL-ZHONGHE-WANG,
+                     CH1-CONCLUSION-BL-SHENWANG, CH1-CONCLUSION-BL-CONGRUO, CH1-CONCLUSION-BL-CONGQIANG,
+                     CH1-CONCLUSION-NOHOUR-RUO-GAO, CH1-CONCLUSION-NOHOUR-RUO-ZHONG, CH1-CONCLUSION-NOHOUR-RUO-DI,
+                     CH1-CONCLUSION-NOHOUR-WANG-GAO, CH1-CONCLUSION-NOHOUR-WANG-ZHONG, CH1-CONCLUSION-NOHOUR-WANG-DI,
+                     CH1-CONCLUSION-FALLBACK]
+    CH1-QUOTE: [CH1-QUOTE-PIANRUO, CH1-QUOTE-PIANWANG, CH1-QUOTE-ZHONGHE, CH1-QUOTE-CONG, CH1-QUOTE-ZHUANWANG]
+    CH2-METHOD: [CH2-METHOD-W-SHA, CH2-METHOD-W-SHI, CH2-METHOD-W-CAI, CH2-METHOD-S-YIN, CH2-METHOD-S-BI-GUAN, CH2-METHOD-S-BI-SHI,
+                 CH2-METHOD-CONG-CAI, CH2-METHOD-CONG-SHA, CH2-METHOD-CONG-ER, CH2-METHOD-CONG-SHI,
+                 CH2-METHOD-ZHUANWANG, CH2-METHOD-CONGQIANG,
+                 CH2-METHOD-LOW-W-YIN, CH2-METHOD-LOW-W-CAI, CH2-METHOD-LOW-S, CH2-METHOD-FALLBACK]
+    CH2-SWAP: [CH2-SWAP-GENERIC]
+    CH2-TIAOHOU: [CH2-TIAOHOU-AGREE-WINTER, CH2-TIAOHOU-AGREE-SUMMER, CH2-TIAOHOU-ADDXI-WINTER, CH2-TIAOHOU-ADDXI-SUMMER,
+                  CH2-TIAOHOU-OVERRIDE-WINTER, CH2-TIAOHOU-OVERRIDE-SUMMER]
+    CH2-TONGGUAN: [CH2-TONGGUAN-MU, CH2-TONGGUAN-HUO, CH2-TONGGUAN-TU, CH2-TONGGUAN-JIN, CH2-TONGGUAN-SHUI]
+    CH2-NOHOUR-CONG: [CH2-NOHOUR-CONG-GENERIC]
+    CH2-ROLE-YONG: [CH2-ROLE-YONG-BIJIE, CH2-ROLE-YONG-YIN, CH2-ROLE-YONG-SHISHANG, CH2-ROLE-YONG-CAI, CH2-ROLE-YONG-GUANSHA, CH2-ROLE-YONG-FALLBACK]
+    CH2-ROLE-XI: [CH2-ROLE-XI-BIJIE, CH2-ROLE-XI-YIN, CH2-ROLE-XI-SHISHANG, CH2-ROLE-XI-CAI, CH2-ROLE-XI-GUANSHA, CH2-ROLE-XI-FALLBACK]
+    CH2-ROLE-JI: [CH2-ROLE-JI-BIJIE, CH2-ROLE-JI-YIN, CH2-ROLE-JI-SHISHANG, CH2-ROLE-JI-CAI, CH2-ROLE-JI-GUANSHA, CH2-ROLE-JI-FALLBACK]
+    CH6-HEAD: "CH6-HEAD-{BIJIAN,JIECAI,SHISHEN,SHANGGUAN,PIANCAI,ZHENGCAI,QISHA,ZHENGGUAN,PIANYIN,ZHENGYIN}-{SHUN,HAO,PING,WEN,BAO}（50 条）+ CH6-HEAD-FALLBACK"
+    CH6-CAREER: "CH6-CAREER-{BIJIE,YIN,SHISHANG,CAI,GUANSHA}-{HAO,PING,SHOU}（15 条）+ CH6-CAREER-FALLBACK"
+    CH6-WEALTH: "CH6-WEALTH-{BIJIE,YIN,SHISHANG,CAI,GUANSHA}-{HAO,PING,SHOU}（15 条）+ CH6-WEALTH-FALLBACK"
+    CH6-LOVE: "CH6-LOVE-{BIJIE,YIN,SHISHANG,CAI,GUANSHA}-{HAO,PING,SHOU}（15 条）+ CH6-LOVE-FALLBACK"
+    CH6-HEALTH: "CH6-HEALTH-{BIJIE,YIN,SHISHANG,CAI,GUANSHA}-{HAO,PING,SHOU}（15 条）+ CH6-HEALTH-FALLBACK"
+    CH6-DO: "CH6-DO-{BIJIE,YIN,SHISHANG,CAI,GUANSHA}-{HAO,PING,SHOU}（15 条）+ CH6-DO-FALLBACK"
+    CH6-WATCH: "CH6-WATCH-{BIJIE,YIN,SHISHANG,CAI,GUANSHA}-{HAO,PING,SHOU}（15 条）+ CH6-WATCH-FALLBACK"
+    CH6-REL: [CH6-REL-CHONG-RIZHI, CH6-REL-CHONG-YUEZHI, CH6-REL-HE-RIZHI, CH6-REL-CHONG-SHIZHI]
+  # 注：CH6 用展开式写法以免清单过长；T26 实现批次脚本时请按花括号展开，或由脚本从文件中扫描 id 回填为显式列表。
+
+  # ---------------- 覆盖表（人工自查；覆盖率工具 T34/T35 就绪后以工具结果为准） ----------------
+  coverage:
+    # 必需槽位：维度全部组合 → 命中的非兜底条目；修饰字段取默认值（borderline=false、time_known=true、confidence=高）
+    CH1-DAYMASTER: {dims: "day.stem(10)", combos: 10, covered: 10, gaps: [], fallback: CH1-DAYMASTER-FALLBACK}
+    CH1-MONTH: {dims: "day.element(5) × month.main_god(5)", combos: 25, covered: 25, gaps: [], fallback: CH1-MONTH-FALLBACK,
+                note: "25 种组合全部可能出现（每个五行都有对应月支），无“不可能组合”声明"}
+    CH1-BALANCE:
+      dims: "strength.direction(2) × gods.top_yidang(3)；另 special(6)、paradox(2)"
+      combos: 6
+      covered: 6
+      special_covered: "从财/从杀/从儿/从势/专旺/从强 6/6"
+      paradox_covered: "得令却身弱/失令却身旺 2/2"
+      gaps: []
+      fallback: CH1-BALANCE-FALLBACK
+      note: "special 与 paradox 不会同时成立（见 ch01_strength.yaml 文件头），priority 同为 80 不冲突"
+    CH1-CONCLUSION:
+      dims: "strength.level(6)；修饰 borderline / time_known / confidence"
+      combos: 6
+      covered: 6
+      modifier_entries: "borderline=true 6/6；time_known=false × confidence(高/中/低) × 等级(4 种普通等级，按方向分两组) 6 条覆盖 12 种组合"
+      gaps: []
+      fallback: CH1-CONCLUSION-FALLBACK
+      note: "三柱不判从格，故无“从弱/从强 × time_known=false”组合（建议在 T34 注册为不可能组合，理由：strength.md §5.1）"
+    CH2-METHOD:
+      dims: "fy_rule 扶抑 6 + special 6 = 12；修饰 confidence"
+      combos: 12
+      covered: 12
+      modifier_entries: "confidence=低 × 扶抑 6 种：LOW-W-YIN(2 种) + LOW-W-CAI(1) + LOW-S(3) = 6/6；三柱无特殊格局"
+      gaps: []
+      fallback: CH2-METHOD-FALLBACK
+    CH2-ROLE-YONG: {dims: "yong_god(5)", combos: 5, covered: 5, gaps: [], fallback: CH2-ROLE-YONG-FALLBACK}
+    CH2-ROLE-XI: {dims: "xi1_god(5)", combos: 5, covered: 5, gaps: [], fallback: CH2-ROLE-XI-FALLBACK}
+    CH2-ROLE-JI: {dims: "ji1_god(5)", combos: 5, covered: 5, gaps: [], fallback: CH2-ROLE-JI-FALLBACK}
+    CH6-HEAD: {dims: "item.stem_ten_god(10) × item.tier(5)", combos: 50, covered: 50, gaps: [], fallback: CH6-HEAD-FALLBACK}
+    CH6-CAREER: {dims: "item.stem_god(5) × item.tier_group(3)", combos: 15, covered: 15, gaps: [], fallback: CH6-CAREER-FALLBACK}
+    CH6-WEALTH: {dims: "同上", combos: 15, covered: 15, gaps: [], fallback: CH6-WEALTH-FALLBACK}
+    CH6-LOVE: {dims: "同上", combos: 15, covered: 15, gaps: [], fallback: CH6-LOVE-FALLBACK}
+    CH6-HEALTH: {dims: "同上", combos: 15, covered: 15, gaps: [], fallback: CH6-HEALTH-FALLBACK}
+    CH6-DO: {dims: "同上", combos: 15, covered: 15, gaps: [], fallback: CH6-DO-FALLBACK}
+    CH6-WATCH: {dims: "同上", combos: 15, covered: 15, gaps: [], fallback: CH6-WATCH-FALLBACK}
+    # 非必需槽位
+    CH1-QUOTE: {covered: "偏弱(身弱)、偏旺(身旺)、中和(2 级)、从弱(4 子类)、专旺/从强", note: "无兜底（非必需）"}
+    CH2-SWAP: {covered: "swap=true 通用 1 条"}
+    CH2-TIAOHOU: {dims: "th(3) × season(冬/夏)", combos: 6, covered: 6}
+    CH2-TONGGUAN: {dims: "tg=true × tg_element(5)", combos: 5, covered: 5}
+    CH6-REL: {dims: "冲日支/冲月支/合日支/冲时支", combos: 4, covered: 4}
+    CH2-NOHOUR-CONG: {covered: "time_known=false 且 nohour_cong_possible=true，通用 1 条", note: "2026-10-30 新增字段后补写（open_issues #2 已解决）"}
+
+  # ---------------- 人工自检记录（按 README §7 L1–L12 逐条；工具就绪前的人工结果） ----------------
+  self_check:
+    method: "逐条人工通读；字数为人工估算（占位符按 README §3.3 典型长度），误差约 ±5 字，L8/L10 以工具结果为准"
+    L1_schema: "必填字段齐全；id 均符合 ^CH\\d-[A-Z0-9-]+$ 且唯一；slot 均在 report-sections.md §3。CH6 条目省略了选填的 asserts。"
+    L2_when_fields: "必需槽位的 when 只引用维度 + 修饰字段。CH1-QUOTE（非必需）额外引用了 strength.level 区分中和。CH6-REL 使用对象 contains（见 open_issues #4）。"
+    L3_placeholders: "只引用 §3 字段；用到 |名 过滤器的都是十神组字段。"
+    L4_wordlists: "人工对照 report-sections.md §7 禁用词表：零命中（特别排查了 灾、化解、转运、命中无、一定、凶、贵人）。疾病名零命中；未出现任何投资品种词。词表文件（K01）尚未建，待工具复查。"
+    L5_year_ganzhi: "无 4 位数字年份；无“天干+地支”连写字面。单独地支字仅出现在 CH1-MONTH-TU-BIJIE（辰、戌、丑、未），不构成干支。"
+    L6_wuxing_window: "正文直接写出的五行字都已锁定：DAYMASTER 锁 day.element；MONTH 锁 el.<组> 与 season；TIAOHOU 锁 th_element 与 favorable/yong；TONGGUAN 锁 favorable 与两方 power_pct。主动避开含五行字的日常词（资金、金钱、薪水、水平、温水、泥土、水渠等），并把样板中的“水满了就开渠”改为“池子满了就开渠”。注意：MONTH 正文中的日主五行字由 when（day.element）锁定而未在 asserts 重复，若 L6 只认 asserts，需要补上或让 lint 把 when 中的 eq 视同锁定（见 open_issues #5）。"
+    L7_hour_terms: "只有 CH6-REL-CHONG-SHIZHI 含“时支”，已标 requires_hour。无时辰条目一律只用“时辰”，不用“出生时辰”。"
+    L8_length_variants: "非兜底条目均 2 个变体，兜底 1 个。BALANCE 有 16 处变体自估低于 150 字，已补写到区间内；其余按估算在区间内。兜底条目的 length 比槽位区间短（与样板 BALANCE 兜底一致）。"
+    L9_basis_brackets: "正文无“依据：”；全库不使用全角括号。"
+    L10_similarity: "同槽位条目刻意避免共用句架（如 TONGGUAN 5 条各用不同意象，NOHOUR 偏弱/偏旺两组改写句式）。风险点：CH1-CONCLUSION 的 BL-* 与 NOHOUR-* 内部句式相近，CH6 四领域短句共用“事业上 / 财务上”开头，需工具实测。"
+    L11_approved: "全部为 draft；全部引文 verified=false、edition 为空（draft 允许）。"
+    L12_absolute_person: "无 一定 / 必然 / 注定 / 肯定会；全部用“你”，无“您 / 命主 / 大师”。"
+    other_review_points:
+      - "METHOD 一律用“按扶抑这一步 / 按格局”口径，五行用 {el.*}；最终结论只留给 SUMMARY。"
+      - "身弱 / 偏弱条目没有劝“少接触帮扶自己的五行”；守档条目不乐观、好档条目不消极。"
+      - "三柱可能命中的条目不写“四柱”：已修订样板 PARADOX-WEAK、SWAP-GENERIC 中的“四柱”。"
+      - "感情段性别中立；健康段无病名，CH6-HEALTH 设为不送润色。"
+      - "古籍：第 1 章只在 CH1-QUOTE 挂引文，第 2 章只在 6 条扶抑 METHOD 上挂同一句《滴天髓·体用》，第 6 章不引，保证一章最多 1 句。共用 4 句：《滴天髓》衰旺、中和、从象、体用，均未核对底本。"
+
+  # ---------------- 待决 / 待开发确认事项 ----------------
+  open_issues:
+    - id: 1
+      topic: "第 1 章古籍放在哪里"
+      detail: "样板把《天干论》引文挂在 DAYMASTER 上，但 CH1-QUOTE 槽位也要出引文，一章最多 1 句时会冲突。本批改为只在 CH1-QUOTE 出引文（按旺衰选），天干论留给第 3 章 CH3-BASE。"
+      recommendation: "采纳本批做法"
+      status: "已解决：用户 2026-10-30 同意，保持现状"
+    - id: 2
+      topic: "CH2-NOHOUR-CONG 缺字段"
+      detail: "report-sections.md 规定“三柱且扫描有从格时辰”才出现，但 README §3 字段字典没有对应字段（strength notes 不是 ctx 字段），无法写 when。"
+      recommendation: "在 report-sections.md §0 / README §3 增加 strength.nohour_cong_possible（布尔）与 strength.nohour_cong_hours（列表，地支），之后补写 1 条素材"
+      status: "已解决（2026-10-30）：strength.md v2.1 §5 第 4 条写明计算方法；report-sections.md §0 与 §3、README §3.1 已加字段；补写 CH2-NOHOUR-CONG-GENERIC（2 个变体）"
+    - id: 3
+      topic: "Y-TH-NEUTRAL-OVERRIDE 的歧义"
+      detail: "yongshen.md §4 写“原用神降为第一喜神；从喜神中删去克调候五行（冬删水、夏删土）”。若原用神本身就是水（冬）或土（夏），例如冬季中和偏弱的木日主（扶抑取水为用），是先降级后又被删掉（水变闲神），还是保留？两种读法结论不同。本批 TIAOHOU 正文已回避，不写原用神去向。"
+      recommendation: "保留：删除只作用于原喜神列表，被降级的原用神不删（扶抑主干不应被调候整个抹掉）；需改 yongshen.md 并补 1 个案例"
+      status: "已解决（2026-10-30）：yongshen.md v1.1 §4 改写并写明执行顺序；cases.json 新增 C20（1981-12-22 20:00 男，辛酉 庚子 甲戌 甲戌，用火、喜水木、忌金土；人工推算，起运字段待 T21 代码复核）。C16 结果不变"
+    - id: 4
+      topic: "CH6-REL 的触发写法"
+      detail: "item.relations 是对象列表，本批写成 {f: item.relations, contains: {type: 冲, a: 流年支, b: 日支}}。README §4.1 的 contains 只写了“列表包含某值”，需要求值器支持对象按字段全等匹配；或在 ctx 中另给扁平字段（如 item.rel_tags: [冲日支, 合日支]）。"
+      recommendation: "开发 T23 时支持对象全等 contains；若改扁平字段，本批 4 条只需改 when"
+    - id: 5
+      topic: "L6 是否把 when 中的锁定视同 asserts"
+      detail: "CH1-MONTH 正文写“你是木日主”，木由 when（day.element eq 木）锁定，asserts 只锁了月令五行。"
+      recommendation: "lint 把 when 中的 eq 叶子视同锁定（语义上 when 成立即保证该事实）；否则本批需给 25 条 MONTH 补一行 asserts"
+    - id: 6
+      topic: "变体顺延与哈希公式不一致"
+      detail: "README §5.2 说同一条目第二次命中“自动换到下一个变体”，但公式 idx = SHA256(...|occurrence) mod n 只是重新取模，2 个变体时有 50% 概率仍是同一个。CH6 四领域、DO、WATCH 在 5 年里同组十神通常出现两次，会直接受影响。"
+      recommendation: "改为 idx = (h0 + occurrence) mod n（h0 为 occurrence=0 时的哈希）"
+      status: "用户决定不改（2026-10-30）：保留 SHA256(...|occurrence) mod n；README §5.2 与 report-sections.md 第 6 章说明已改为“重新哈希、可能与上次相同”。后续可给 CH6 四领域 / DO / WATCH 等高频条目追加第 3 个变体降低重复概率"
+    - id: 7
+      topic: "CH2-ROLE-XI / -JI 只能写第一项"
+      detail: "report-sections.md 写“喜 1–2、忌 1–2”，但字段只有 xi1_god / ji1_god。本批每槽位选 1 条，完整列表用 {yongshen.xi} / {yongshen.ji} 带出。"
+      recommendation: "若要写第二条，需新增 xi2_god / ji2_god 字段与第二个循环 item；MVP 可不做"
+      status: "暂按本批做法（只写第一项），待用户复核"
+    - id: 8
+      topic: "CH6-HEALTH 是否允许润色"
+      detail: "report-sections.md §3 第 6 章表格写四领域润色“可”，§9 写健康段一律不送。本批取更严的 §9，设为 false。"
+      recommendation: "在 §3 表格把 CH6-HEALTH 改为“否”"
+      status: "暂按本批做法（CH6-HEALTH 不送润色），待用户复核；复核通过后再改 report-sections.md §3 表格"
+
+  remaining:
+    - "C20 起运、交节时刻等字段待 T21 代码复核补全；T21 同时确认其他案例在 yongshen.md v1.1 下结论不变"
+    - "古籍 4 句逐字对照底本（K15）"
+    - "lint（T24/T25）与覆盖率（T34/T35）就绪后跑自动检查；按结果修改后改为 reviewed，再生成抽检单交用户（K08 / U09）"

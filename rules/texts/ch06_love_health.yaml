@@ -1,0 +1,460 @@
+# 第 6 章 槽位 CH6-LOVE「感情」与 CH6-HEALTH「健康」（第 1 批 B1，草稿）
+# 维度：item.stem_god（5）× item.tier_group（3）= 15 / 槽位。每条 40–70 字，2 个变体；各 1 条兜底。
+# 写法约定：
+#   - 感情：本槽位维度不含性别，正文一律性别中立（不写“妻 / 夫 / 男友 / 女友”），伴侣星的男女差异留给第 7 章；
+#     不出现 分手、离婚、婚变、克夫、克妻 等；“守”的年份只写“多沟通 / 留空间”。
+#   - 健康：不出现任何疾病名、器官“出问题”的说法，只写作息、饮食、运动、休息、体检、出行安全；
+#     report-sections.md §9 规定健康段不送润色，故本槽位 polish_allowed=false（§3 表中写“可”，取更严的一方，见 batches.yaml）。
+#   - 避免含五行字的日常词（金钱、温水、上火 等）。
+
+# ======================= CH6-LOVE =======================
+- id: CH6-LOVE-BIJIE-HAO
+  slot: CH6-LOVE
+  when: {all: [{f: item.stem_god, eq: 比劫}, {f: item.tier_group, eq: 好}]}
+  priority: 50
+  length: [40, 70]
+  polish_allowed: true
+  variants:
+    - "感情上社交活跃，有机会通过朋友结识新的人；已有伴侣的，适合一起参加活动，增进默契和共同话题。"
+    - "感情中你更自信、更敢表达，单身者可以多走进朋友圈子，有伴侣的适合共同规划一件事，比如一次旅行。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-LOVE-BIJIE-PING
+  slot: CH6-LOVE
+  when: {all: [{f: item.stem_god, eq: 比劫}, {f: item.tier_group, eq: 平}]}
+  priority: 50
+  length: [40, 70]
+  polish_allowed: true
+  variants:
+    - "感情平稳，朋友在你生活里的比重较大，记得给伴侣或心仪的人留出专属的时间，别让对方觉得被冷落。"
+    - "感情上没有大的波动，适合维持现有的相处节奏，彼此保留一点个人空间，也保留一点共同的仪式感。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-LOVE-BIJIE-SHOU
+  slot: CH6-LOVE
+  when: {all: [{f: item.stem_god, eq: 比劫}, {f: item.tier_group, eq: 守}]}
+  priority: 50
+  length: [40, 70]
+  polish_allowed: true
+  variants:
+    - "感情上容易因为固执或旁人的意见产生分歧，宜多听对方的想法，少在朋友面前争对错，有话私下好好谈。"
+    - "感情中自我意识较强，宜放下输赢心，涉及共同开销的事情先沟通清楚，别让小事慢慢积成心结。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-LOVE-YIN-HAO
+  slot: CH6-LOVE
+  when: {all: [{f: item.stem_god, eq: 印}, {f: item.tier_group, eq: 好}]}
+  priority: 50
+  length: [40, 70]
+  polish_allowed: true
+  variants:
+    - "感情上容易得到对方的照顾和家人的支持，适合见家长、商量长期安排，关系会更趋稳定和踏实。"
+    - "感情中温和、体贴的一面更明显，单身者容易在学习或工作场合遇到谈得来的人，不妨多留意身边。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-LOVE-YIN-PING
+  slot: CH6-LOVE
+  when: {all: [{f: item.stem_god, eq: 印}, {f: item.tier_group, eq: 平}]}
+  priority: 50
+  length: [40, 70]
+  polish_allowed: true
+  variants:
+    - "感情平稳，相处中多一些陪伴和倾听，比制造惊喜更能让关系升温，一起做饭、散步这样的小事就很好。"
+    - "感情上节奏较慢，适合用耐心慢慢经营；心里有想法就直接说出来，不让对方去猜，关系会更安心。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-LOVE-YIN-SHOU
+  slot: CH6-LOVE
+  when: {all: [{f: item.stem_god, eq: 印}, {f: item.tier_group, eq: 守}]}
+  priority: 50
+  length: [40, 70]
+  polish_allowed: true
+  variants:
+    - "感情上容易想得多、说得少，或者过于依赖对方，宜主动沟通，也给彼此一些独立的空间和时间。"
+    - "感情中家人的意见可能影响较大，宜在尊重长辈的同时，先和伴侣达成共识，两个人站在一起再去沟通。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-LOVE-SHISHANG-HAO
+  slot: CH6-LOVE
+  when: {all: [{f: item.stem_god, eq: 食伤}, {f: item.tier_group, eq: 好}]}
+  priority: 50
+  length: [40, 70]
+  polish_allowed: true
+  variants:
+    - "感情上魅力和表达力都在上升，适合主动示好、安排约会，或和对方一起尝试新的兴趣爱好，让相处更有新鲜感。"
+    - "感情中更懂得浪漫和情趣，单身者在兴趣活动中容易遇到合拍的人，有伴侣的关系会更轻松愉快。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-LOVE-SHISHANG-PING
+  slot: CH6-LOVE
+  when: {all: [{f: item.stem_god, eq: 食伤}, {f: item.tier_group, eq: 平}]}
+  priority: 50
+  length: [40, 70]
+  polish_allowed: true
+  variants:
+    - "感情平稳，相处轻松，适合一起培养共同爱好，偶尔制造一点小惊喜，让平凡的日常多一点亮色。"
+    - "感情上没有大起伏，说话时多一些温和、少一些挑剔，相处会更舒服，偶尔的小矛盾也容易翻篇。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-LOVE-SHISHANG-SHOU
+  slot: CH6-LOVE
+  when: {all: [{f: item.stem_god, eq: 食伤}, {f: item.tier_group, eq: 守}]}
+  priority: 50
+  length: [40, 70]
+  polish_allowed: true
+  variants:
+    - "感情上言语容易带刺，一句玩笑也可能被误解，宜说话前多想一步，有不满就事论事，不翻旧账。"
+    - "感情中对另一半的要求可能变高，宜少比较、多欣赏，争执时先冷静下来再沟通，别在气头上做决定。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-LOVE-CAI-HAO
+  slot: CH6-LOVE
+  when: {all: [{f: item.stem_god, eq: 财}, {f: item.tier_group, eq: 好}]}
+  priority: 50
+  length: [40, 70]
+  polish_allowed: true
+  variants:
+    - "感情上投入度高，关系容易往实际的方向推进，比如一起规划生活、安排共同的目标，彼此更有安全感。"
+    - "感情中踏实、体贴的一面更明显，单身者有机会在工作或日常往来中遇到合适的人，可以多参加聚会。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-LOVE-CAI-PING
+  slot: CH6-LOVE
+  when: {all: [{f: item.stem_god, eq: 财}, {f: item.tier_group, eq: 平}]}
+  priority: 50
+  length: [40, 70]
+  polish_allowed: true
+  variants:
+    - "感情平稳，相处中的实际事务较多，记得在忙碌里留出两个人的时间，别让柴米油盐挤掉所有交流。"
+    - "感情上按部就班，适合在生活细节上多照顾对方，比如分担家务、一起安排开销，在细节里体现在乎。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-LOVE-CAI-SHOU
+  slot: CH6-LOVE
+  when: {all: [{f: item.stem_god, eq: 财}, {f: item.tier_group, eq: 守}]}
+  priority: 50
+  length: [40, 70]
+  polish_allowed: true
+  variants:
+    - "感情上可能因为现实压力或消费观念不同而产生摩擦，宜把花钱的规则提前说开，少翻旧账、多商量。"
+    - "感情中精力容易被工作和琐事占满，宜主动关心对方，避免因忽略而生出误会，每周留一点专属时间。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-LOVE-GUANSHA-HAO
+  slot: CH6-LOVE
+  when: {all: [{f: item.stem_god, eq: 官杀}, {f: item.tier_group, eq: 好}]}
+  priority: 50
+  length: [40, 70]
+  polish_allowed: true
+  variants:
+    - "感情上关系容易走向正式和稳定，适合确认关系、商量长远安排，彼此的责任感和信任都会增强。"
+    - "感情中你更有担当、更值得信赖，单身者容易在正式场合或经人介绍认识合适的对象，可以多给机会。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-LOVE-GUANSHA-PING
+  slot: CH6-LOVE
+  when: {all: [{f: item.stem_god, eq: 官杀}, {f: item.tier_group, eq: 平}]}
+  priority: 50
+  length: [40, 70]
+  polish_allowed: true
+  variants:
+    - "感情平稳，相处中规矩和责任感都比较强，适度放松一点，多安排些轻松的约会和闲聊，少谈要求。"
+    - "感情上没有大的波动，尊重彼此的节奏与边界，比提出过多的要求更能维系关系，也更长久。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-LOVE-GUANSHA-SHOU
+  slot: CH6-LOVE
+  when: {all: [{f: item.stem_god, eq: 官杀}, {f: item.tier_group, eq: 守}]}
+  priority: 50
+  length: [40, 70]
+  polish_allowed: true
+  variants:
+    - "感情上外部压力容易带进关系里，宜分清工作情绪和感情，别把对方当成宣泄情绪的对象，多说谢谢。"
+    - "感情中可能感到约束较多，宜坦诚表达自己的需要，用商量代替要求，给关系留出一些弹性和余地。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-LOVE-FALLBACK
+  slot: CH6-LOVE
+  when: {}
+  priority: 0
+  fallback: true
+  length: [20, 70]
+  polish_allowed: false
+  variants:
+    - "感情方面，多沟通、多陪伴，是这一年经营关系最稳妥的方式。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "兜底。"
+
+# ======================= CH6-HEALTH =======================
+- id: CH6-HEALTH-BIJIE-HAO
+  slot: CH6-HEALTH
+  when: {all: [{f: item.stem_god, eq: 比劫}, {f: item.tier_group, eq: 好}]}
+  priority: 50
+  length: [40, 70]
+  polish_allowed: false
+  variants:
+    - "健康上精力充沛，适合坚持一项团体运动，比如球类或跑步小组，在运动中顺便社交，一举两得。"
+    - "身体状态整体不错，适合趁势建立规律的运动习惯，和朋友结伴更容易坚持下来，效果也更好。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-HEALTH-BIJIE-PING
+  slot: CH6-HEALTH
+  when: {all: [{f: item.stem_god, eq: 比劫}, {f: item.tier_group, eq: 平}]}
+  priority: 50
+  length: [40, 70]
+  polish_allowed: false
+  variants:
+    - "健康平稳，注意聚会和应酬之后及时恢复作息，饮食别太随意，运动保持每周固定几次即可。"
+    - "身体状态平稳，保持现有的运动和作息即可，偶尔的熬夜要及时补回来，别让它慢慢变成习惯。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-HEALTH-BIJIE-SHOU
+  slot: CH6-HEALTH
+  when: {all: [{f: item.stem_god, eq: 比劫}, {f: item.tier_group, eq: 守}]}
+  priority: 50
+  length: [40, 70]
+  polish_allowed: false
+  variants:
+    - "健康上容易因为好胜而运动过量或硬撑，宜量力而行，运动前热身、运动后拉伸，累了就停下来。"
+    - "身体上宜注意劳逸结合，运动和工作都不和别人比强度，累了就休息，按时作息比拼劲更重要。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-HEALTH-YIN-HAO
+  slot: CH6-HEALTH
+  when: {all: [{f: item.stem_god, eq: 印}, {f: item.tier_group, eq: 好}]}
+  priority: 50
+  length: [40, 70]
+  polish_allowed: false
+  variants:
+    - "健康上适合调养和恢复，可以尝试太极、瑜伽、散步等舒缓的运动，作息规律时效果更明显。"
+    - "身体状态比较安稳，适合做一次全面体检，把作息和饮食调整到更健康的节奏，为后面打好底子。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-HEALTH-YIN-PING
+  slot: CH6-HEALTH
+  when: {all: [{f: item.stem_god, eq: 印}, {f: item.tier_group, eq: 平}]}
+  priority: 50
+  length: [40, 70]
+  polish_allowed: false
+  variants:
+    - "健康平稳，久坐学习或工作的时间偏长，记得每隔一小时起来活动几分钟，并保证充足的睡眠。"
+    - "身体上没有大的变化，适合保持规律作息，饮食清淡一些，周末多到户外走走、晒晒太阳，心情也会跟着变好。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-HEALTH-YIN-SHOU
+  slot: CH6-HEALTH
+  when: {all: [{f: item.stem_god, eq: 印}, {f: item.tier_group, eq: 守}]}
+  priority: 50
+  length: [40, 70]
+  polish_allowed: false
+  variants:
+    - "健康上思虑偏重，容易影响睡眠和精神状态，宜减少睡前看手机，用散步或运动给大脑放个假。"
+    - "身体上宜防久坐少动，安排固定的运动时间，情绪低落时多和信任的人聊聊，不要一个人闷着。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-HEALTH-SHISHANG-HAO
+  slot: CH6-HEALTH
+  when: {all: [{f: item.stem_god, eq: 食伤}, {f: item.tier_group, eq: 好}]}
+  priority: 50
+  length: [40, 70]
+  polish_allowed: false
+  variants:
+    - "健康上心情舒畅、胃口好，适合尝试新的运动或学做健康餐，享受生活的同时保持适度的节制。"
+    - "身体状态轻松，适合培养一项既有趣又能活动身体的爱好，比如舞蹈、徒步或骑行，坚持就有收获。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-HEALTH-SHISHANG-PING
+  slot: CH6-HEALTH
+  when: {all: [{f: item.stem_god, eq: 食伤}, {f: item.tier_group, eq: 平}]}
+  priority: 50
+  length: [40, 70]
+  polish_allowed: false
+  variants:
+    - "健康平稳，注意饮食规律和分量，别因为心情好就吃得太多太晚，晚饭尽量清淡，配合适量运动。"
+    - "身体上没有大起伏，保持适量运动，作息尽量固定，别让追剧、游戏挤占睡眠时间，精神会更好。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-HEALTH-SHISHANG-SHOU
+  slot: CH6-HEALTH
+  when: {all: [{f: item.stem_god, eq: 食伤}, {f: item.tier_group, eq: 守}]}
+  priority: 50
+  length: [40, 70]
+  polish_allowed: false
+  variants:
+    - "健康上容易因为忙于表达和输出而透支精力，宜控制熬夜，说话多的工作注意适时休息、润润嗓子。"
+    - "身体上宜防饮食不规律和过度消耗，给自己安排固定的休息日，那天什么都不做也没关系，恢复同样重要。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-HEALTH-CAI-HAO
+  slot: CH6-HEALTH
+  when: {all: [{f: item.stem_god, eq: 财}, {f: item.tier_group, eq: 好}]}
+  priority: 50
+  length: [40, 70]
+  polish_allowed: false
+  variants:
+    - "健康上精神头足，但忙起来容易忘记休息，适合把运动写进日程，像对待工作一样认真执行。"
+    - "身体状态良好，适合在忙碌中保持规律作息，定期做一次体检，对自己的身体状况做到心中有数。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-HEALTH-CAI-PING
+  slot: CH6-HEALTH
+  when: {all: [{f: item.stem_god, eq: 财}, {f: item.tier_group, eq: 平}]}
+  priority: 50
+  length: [40, 70]
+  polish_allowed: false
+  variants:
+    - "健康平稳，工作和事务较多时，注意三餐按时，别总用外卖应付，每周留出固定的运动时间。"
+    - "身体上没有大变化，保持现有的运动习惯，忙碌时也要守住基本的睡眠时长，身体是做事的本钱。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-HEALTH-CAI-SHOU
+  slot: CH6-HEALTH
+  when: {all: [{f: item.stem_god, eq: 财}, {f: item.tier_group, eq: 守}]}
+  priority: 50
+  length: [40, 70]
+  polish_allowed: false
+  variants:
+    - "健康上容易因为忙碌和奔波而劳累，宜控制工作时长，出行注意安全，累了及时休整，不要硬撑。"
+    - "身体上宜防操劳过度，饮食作息尽量规律，别为了多做一点事牺牲休息，量力安排每天的任务。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-HEALTH-GUANSHA-HAO
+  slot: CH6-HEALTH
+  when: {all: [{f: item.stem_god, eq: 官杀}, {f: item.tier_group, eq: 好}]}
+  priority: 50
+  length: [40, 70]
+  polish_allowed: false
+  variants:
+    - "健康上状态不错，压力能转化为动力，适合进行有一定强度的锻炼，循序渐进地提升体能和抗压能力。"
+    - "身体上适合建立更自律的作息和运动计划，坚持一段时间后会明显感到精力提升，做事也更有劲。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-HEALTH-GUANSHA-PING
+  slot: CH6-HEALTH
+  when: {all: [{f: item.stem_god, eq: 官杀}, {f: item.tier_group, eq: 平}]}
+  priority: 50
+  length: [40, 70]
+  polish_allowed: false
+  variants:
+    - "健康平稳，压力存在但可控，适合用规律运动和充足睡眠来释放紧张感，周末给自己真正的休息。"
+    - "身体上没有大的变化，注意工作间隙的放松，肩颈和眼睛也需要定时休息，久坐后起身走动走动。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-HEALTH-GUANSHA-SHOU
+  slot: CH6-HEALTH
+  when: {all: [{f: item.stem_god, eq: 官杀}, {f: item.tier_group, eq: 守}]}
+  priority: 50
+  length: [40, 70]
+  polish_allowed: false
+  variants:
+    - "健康上压力偏大，容易紧张、疲惫，宜保证睡眠，不熬夜赶工，身体不适时及时就医，不要硬扛。"
+    - "身体上宜留意过度劳累，高强度运动和冒险活动适当减少，出行注意安全，规律作息最要紧。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+
+- id: CH6-HEALTH-FALLBACK
+  slot: CH6-HEALTH
+  when: {}
+  priority: 0
+  fallback: true
+  length: [20, 70]
+  polish_allowed: false
+  variants:
+    - "健康方面，保持规律作息和适量运动，身体不适时及时就医。"
+  status: draft
+  author: mingli-expert
+  reviewer: null
+  updated: 2026-10-29
+  notes: "兜底。"

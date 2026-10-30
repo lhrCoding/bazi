@@ -25,7 +25,8 @@
                "year_branch": "七杀", "month_branch": "偏财", "day_branch": "偏财", "hour_branch": "比肩",
                "persona": ["比肩", "偏财"]},
   "strength": {"level": "中和偏弱", "direction": "偏弱", "special": null, "borderline": false,
-               "S_pct": 42, "yidang_pct": 58, "de_ling": false, "de_di": true, "de_shi": 2, "paradox": null},
+               "S_pct": 42, "yidang_pct": 58, "de_ling": false, "de_di": true, "de_shi": 2, "paradox": null,
+                "nohour_cong_possible": false, "nohour_cong_hours": []},
   "gods":  {"比劫_pct": 24, "印_pct": 19, "食伤_pct": 5, "财_pct": 41, "官杀_pct": 12,
             "top_yidang": "财", "top_tongdang": "比劫"},
   "power_pct": {"木": 24, "火": 5, "土": 41, "金": 12, "水": 19},
@@ -123,7 +124,7 @@
 | CH2-TONGGUAN 通关 | N | yongshen.tg=true × 通关五行（5） | 0–1 | 80–130 | 规则 Y-TG | 可 | 照常 |
 | CH2-SUMMARY 结论 | Y | **代码模板，不走素材**：“综合以上，你的用神是{yong}，喜神是{xi}，需要节制的是{ji}，{xian}为闲神。” | 1 | 固定 | — | 否 | 置信“低”加“仅供参考” |
 | CH2-ROLE-YONG / -XI / -JI 各五行的作用 | Y | 角色 × 该五行对应的十神组（3×5=15） | 用 1、喜 1–2、忌 1–2 | 80–130 | {五行}是你的{十神组}，占 {x}% | 可 | 照常 |
-| CH2-NOHOUR-CONG 可能从格提示 | N | profile.time_known=false 且扫描有从格时辰 | 0–1 | 60–100 | strength notes | 否 | 仅三柱 |
+| CH2-NOHOUR-CONG 可能从格提示 | N | profile.time_known=false 且 strength.nohour_cong_possible=true（时支列表 strength.nohour_cong_hours，strength.md §5 第 4 条） | 0–1 | 60–100 | 若生于{nohour_cong_hours}时可能符合从格条件 | 否 | 仅三柱 |
 
 拼装顺序：METHOD → SWAP → TIAOHOU → TONGGUAN → SUMMARY → ROLE-YONG → ROLE-XI → ROLE-JI → NOHOUR-CONG。
 **一致性约束**：METHOD 只讲“扶抑（或格局）这一步”的结论，素材必须用“按扶抑这一步……”的口径，并用 `{el.印}` 这类占位符指代五行；**最终结论只由 SUMMARY 给出**。这样触发 Y-SWAP 或 Y-TH-NEUTRAL-OVERRIDE 时，前后段落不会互相矛盾（例：C16 扶抑取木，调候改为火，METHOD 讲木、TIAOHOU 讲改火、SUMMARY 给火）。
@@ -172,7 +173,7 @@
 
 - `do` / `watch` 素材必须可执行（“适合在上半年完成证书考试”），不得是“保持积极心态”。
 - 流年冲日支只写“生活或关系上变动较多，适合主动规划”，不写“婚变”“分手”。
-- 5 个连续流年的天干两两不同，但十神组会重复（如甲、乙同为一组）：同一条素材在一份报告中第二次被选中时，变体序号顺延（texts/README.md §5）。
+- 5 个连续流年的天干两两不同，但十神组会重复（如甲、乙同为一组）：同一条素材在一份报告中第二次被选中时，按 occurrence 重新哈希选变体（texts/README.md §5.2），可能与上次相同（用户 2026-10-30 决定保留该公式）。
 
 ### 第 7 章 分领域
 | 槽位 | 必需 | 维度 | 选几条 | 每条字数 | 依据模板 | 润色 | 无时辰 |
