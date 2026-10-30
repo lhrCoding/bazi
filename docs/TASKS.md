@@ -138,7 +138,7 @@
 
 - [ ] **T21 cases.json 全量代码复核 → mingli-expert 裁定** 【rules】【需 mingli-expert】
   依赖：T07, T09, T15–T20
-  内容：用代码跑 cases.json 全部字段，重点复核 v2 中**人工手算、未经代码核对**的数值：C05 的旺衰 / 喜用、C18 / C19 新增晚子时扫描结果、全部 20 个案例的 `shensha_ji`、C20 全部数值（含起运日期与前三步大运起始年，原值为 null，需由代码补出交 mingli-expert 确认）。输出差异清单（案例、字段、期望值、代码值、触发规则、计算过程）到 `reports/cases-diff.md`（不进 docs/）。**不得直接改期望值，也不得为了通过测试改代码**；清单交 mingli-expert 逐条裁定：期望值错 → 由 mingli-expert 改 cases.json 并在 verified 字段注明「代码复核」；代码错 → 回到对应任务修复。
+  内容：用代码跑 cases.json 全部字段，重点复核 v2 中**人工手算、未经代码核对**的数值：C05 的旺衰 / 喜用、C18 / C19 新增晚子时扫描结果、全部 20 个案例的 `shensha_ji`、C20 全部数值（含起运日期与前三步大运起始年，原值为 null，需由代码补出交 mingli-expert 确认）。另：逆排案例（C01、C02、C05、C07、C08、C09、C11、C13、C14、C15）的 `qiyun_offset` 期望值比代码多 2 小时，系手算工具截秒所致；已决定沿用 tyme4ts Sect2 按秒口径，由 mingli-expert 按代码值更新（T09 已算出 C20：起运 1987-01-28，前三步大运起始年 1987 / 1997 / 2007）。输出差异清单（案例、字段、期望值、代码值、触发规则、计算过程）到 `reports/cases-diff.md`（不进 docs/）。**不得直接改期望值，也不得为了通过测试改代码**；清单交 mingli-expert 逐条裁定：期望值错 → 由 mingli-expert 改 cases.json 并在 verified 字段注明「代码复核」；代码错 → 回到对应任务修复。
   验收：四柱 100% 一致；旺衰 / 喜用一致率 ≥ 90%（P0-3），不一致逐条有结论；mingli-expert 裁定完成后 cases.json 全部测试通过、无跳过项。
 
 ## D 素材库工具链（`packages/core/src/texts` + `scripts/`，可与 B、C 并行）
