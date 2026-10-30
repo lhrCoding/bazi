@@ -37,7 +37,7 @@
   内容：npm workspaces：`packages/core`（纯 TS，独立 tsconfig strict）+ `apps/web`（Next.js App Router、TypeScript strict、`output: 'standalone'`、Tailwind）；ESLint / Prettier；core 的 `no-restricted-imports`（禁止 next、react、node:*、数据库、支付）；目录按 ARCHITECTURE 第 4 节建空模块；`.env.example`（只列变量名）；确认 `.gitignore` 含 `.env`。
   验收：`npm run dev` 能打开空首页；`npm run build` 通过；在 core 里故意 import `node:fs` 时 lint 报错；仓库无密钥。
 
-- [ ] **T02 测试与 CI 基础**
+- [x] **T02 测试与 CI 基础**
   依赖：T01
   内容：两个 workspace 的 Vitest 配置、根目录 `npm test`；GitHub Actions 跑 lint + typecheck + test；`packages/core/test/fixtures/` 约定。
   验收：示例测试本地与 CI 都通过；CI 失败时显示红叉。

@@ -67,5 +67,16 @@ export default tseslint.config(
     files: ['eslint.config.mjs'],
     rules: { 'no-restricted-imports': 'off' },
   },
+  {
+    // 测试与 Vitest 配置运行在 Node 中，可用 Node 内置模块读取 fixture（约定见 test/fixtures/README.md）。
+    // Next / React / 数据库 / 支付 / 日志 的禁令在测试中照样生效；src/ 不受此放宽影响。
+    files: ['test/**', 'vitest.config.ts'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        { patterns: restrictedPatterns.filter((p) => !p.message.includes('Node 内置模块')) },
+      ],
+    },
+  },
   prettier,
 );
