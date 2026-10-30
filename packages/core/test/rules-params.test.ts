@@ -8,7 +8,19 @@
  */
 import { createHash } from 'node:crypto';
 import { describe, expect, it } from 'vitest';
-import { HIDDEN_STEMS, POSITION_WEIGHTS, RULES_FILES, RULES_VERSION } from '../src/rules';
+import {
+  BORDERLINE_DELTA,
+  CONG_DOMINANT_SHARE,
+  CONG_MAX_S,
+  HIDDEN_STEMS,
+  LEVEL_THRESHOLDS,
+  POSITION_WEIGHTS,
+  RULES_FILES,
+  RULES_VERSION,
+  ZHUANWANG_MAX_CAI_SHARE,
+  ZHUANWANG_MAX_GUANSHA_SHARE,
+  ZHUANWANG_MIN_S,
+} from '../src/rules';
 import { readRulesFile } from './helpers/fixtures';
 import { extractJsonBlocks, listRulesMarkdown, type JsonBlock } from './helpers/rules-md';
 
@@ -104,6 +116,43 @@ describe('strength.md 正文中的权重合计与参数块一致', () => {
       10,
     );
     expect(POSITION_WEIGHTS.stem.day).toBe(0);
+  });
+});
+
+describe('strength.md §4 旺衰等级阈值与代码常量一致（T16）', () => {
+  const md = readRulesFile('strength.md');
+  const num = (re: RegExp): number => {
+    const m = re.exec(md);
+    expect(m, String(re)).not.toBeNull();
+    return Number(m?.[1]);
+  };
+
+  it('判定顺序 ①–⑤ 的 S 阈值', () => {
+    expect(num(/① 若有时柱 且 S < ([\d.]+) 且 满足【从弱条件】/)).toBe(CONG_MAX_S);
+    expect(num(/② 若有时柱 且 S ≥ ([\d.]+) 且 满足【专旺\/从强条件】/)).toBe(ZHUANWANG_MIN_S);
+    expect(num(/③ S ≥ ([\d.]+)\s/)).toBe(LEVEL_THRESHOLDS.strong);
+    const m4 = /④ ([\d.]+) ≤ S < ([\d.]+)\s/.exec(md);
+    expect([Number(m4?.[1]), Number(m4?.[2])]).toEqual([
+      LEVEL_THRESHOLDS.neutralStrong,
+      LEVEL_THRESHOLDS.strong,
+    ]);
+    const m5 = /⑤ ([\d.]+) ≤ S < ([\d.]+)\s/.exec(md);
+    expect([Number(m5?.[1]), Number(m5?.[2])]).toEqual([
+      LEVEL_THRESHOLDS.neutralWeak,
+      LEVEL_THRESHOLDS.neutralStrong,
+    ]);
+  });
+
+  it('§4.1 / §4.2 条件中的阈值与 §4 判定顺序一致', () => {
+    expect(num(/### 4\.1[\s\S]*?1\. S < ([\d.]+)；/)).toBe(CONG_MAX_S);
+    expect(num(/X ≥ 异党总和的 (\d+)%/) / 100).toBe(CONG_DOMINANT_SHARE);
+    expect(num(/### 4\.2[\s\S]*?1\. S ≥ ([\d.]+)；/)).toBe(ZHUANWANG_MIN_S);
+    expect(num(/官杀力量 < total × (\d+)%/) / 100).toBe(ZHUANWANG_MAX_GUANSHA_SHARE);
+    expect(num(/财力量 < total × (\d+)%/) / 100).toBe(ZHUANWANG_MAX_CAI_SHARE);
+  });
+
+  it('§4.3 borderline 距离', () => {
+    expect(num(/若 S 与任一阈值相差 < ([\d.]+)/)).toBe(BORDERLINE_DELTA);
   });
 });
 

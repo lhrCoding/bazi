@@ -333,9 +333,6 @@ export const FIELD_CHECKS: readonly FieldCheck[] = [
  * 某任务完成后，从这里删掉对应字段，并在 cases.test.ts 的 computeActual 中输出该字段。
  */
 export const PENDING_FIELDS: Readonly<Record<string, string>> = {
-  'strength.level': 'T16',
-  'strength.special': 'T16',
-  'strength.borderline': 'T16',
   yongshen: 'T17',
   rules_hit: 'T15–T17',
   shensha_ji: 'T19',

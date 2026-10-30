@@ -16,6 +16,7 @@ import { computeChart } from '../bazi/chart';
 import { CAL_RULE_IDS } from '../bazi/schema';
 import { HIDDEN_STEMS } from '../bazi/ten-gods';
 import type { RuleId } from './rule-ids';
+import { checkCong, checkZhuanwang, computeStrengthLevel } from './strength-level';
 import { computeStrengthPower } from './strength-power';
 
 /** docs/TASKS.md 的任务编号。 */
@@ -59,13 +60,23 @@ export const RULE_IMPLEMENTATIONS: Readonly<Partial<Record<RuleId, RuleImplement
     module: 'rules/strength-power.ts（computeStrengthPower；合局表 COMBOS）',
     impl: computeStrengthPower,
   },
+  // strength.md §4（T16）：旺衰等级（按顺序命中即停）、从弱只认真从、专旺 / 从强；三柱不判特殊格局。
+  'S-LEVEL': {
+    module: 'rules/strength-level.ts（computeStrengthLevel；阈值 LEVEL_THRESHOLDS）',
+    impl: computeStrengthLevel,
+  },
+  'S-CONG': {
+    module: 'rules/strength-level.ts（checkCong / congSpecialOf）',
+    impl: checkCong,
+  },
+  'S-ZHUANWANG': {
+    module: 'rules/strength-level.ts（checkZhuanwang / zhuanwangSpecialOf）',
+    impl: checkZhuanwang,
+  },
 };
 
 export const PENDING_RULES: Readonly<Partial<Record<RuleId, PendingRule>>> = {
   // strength.md
-  'S-LEVEL': { task: 'T16', note: '旺衰等级（按顺序命中即停）' },
-  'S-CONG': { task: 'T16', note: '从弱只认真从（5 条全满足）及子类型' },
-  'S-ZHUANWANG': { task: 'T16', note: '专旺 / 从强' },
   'S-NOHOUR': { task: 'T18', note: '三柱 13 时柱扫描与置信度' },
   // yongshen.md
   'Y-CONG': { task: 'T17', note: '从弱格喜忌' },

@@ -111,7 +111,7 @@
   内容：天干（无根 × 0.6）、地支藏干、三会 / 三合加成；十神分组力量；S；得令 / 得地 / 得势；`power_display_pct`（加日干 1.0 后归一）。
   验收：cases.json 全部案例 power、gods ±0.01，S ±0.001，de_* 一致。
 
-- [ ] **T16 旺衰等级与特殊格局（S-LEVEL / S-CONG / S-ZHUANWANG）**
+- [x] **T16 旺衰等级与特殊格局（S-LEVEL / S-CONG / S-ZHUANWANG）**
   依赖：T15
   内容：按顺序判定；从弱只认真从（5 条全满足）、子类型与并列优先级；专旺 / 从强；三柱不判特殊格局；borderline（距阈值 < 0.01）。
   验收：cases.json level、special、borderline 一致；**C03、C07（极弱但不满足真从）不判从格**；C14 从财；阈值两侧各一个构造用例。

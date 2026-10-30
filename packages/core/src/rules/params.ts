@@ -56,3 +56,31 @@ export const COMBOS: readonly ComboDef[] = [
 
 /** strength.md §6：展示用数据 = power + 日干五行加 1.0，再归一到 100%。 */
 export const DISPLAY_DAY_MASTER_BONUS = 1.0;
+
+/**
+ * strength.md §4（S-LEVEL）普通等级阈值：S ≥ 0.50 身旺；0.45 ≤ S < 0.50 中和偏旺；0.40 ≤ S < 0.45 中和偏弱；否则身弱。
+ * test/rules-params.test.ts 解析 §4 判定顺序代码块比对。
+ */
+export const LEVEL_THRESHOLDS = {
+  strong: 0.5,
+  neutralStrong: 0.45,
+  neutralWeak: 0.4,
+} as const;
+
+/** strength.md §4 ① / §4.1 条件 1（S-CONG）：S < 0.20 才可能从弱。 */
+export const CONG_MAX_S = 0.2;
+
+/** strength.md §4.1 子类型：异党中最大一方 ≥ 异党总和的 50% → 从财 / 从杀 / 从儿，否则从势。 */
+export const CONG_DOMINANT_SHARE = 0.5;
+
+/** strength.md §4 ② / §4.2 条件 1（S-ZHUANWANG）：S ≥ 0.80 才可能专旺 / 从强。 */
+export const ZHUANWANG_MIN_S = 0.8;
+
+/** strength.md §4.2 条件 3：官杀力量 < total × 5%。 */
+export const ZHUANWANG_MAX_GUANSHA_SHARE = 0.05;
+
+/** strength.md §4.2 条件 4：财力量 < total × 10%。 */
+export const ZHUANWANG_MAX_CAI_SHARE = 0.1;
+
+/** strength.md §4.3：S 与阈值相差 < 0.01 → borderline。 */
+export const BORDERLINE_DELTA = 0.01;

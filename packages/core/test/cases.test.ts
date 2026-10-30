@@ -16,7 +16,7 @@ import {
 } from './helpers/case-compare';
 import { loadCases, type LoadedCase } from './helpers/cases';
 import { computeChart } from '../src/index';
-import { computeStrengthPower } from '../src/rules';
+import { computeStrength } from '../src/rules';
 
 const { cases } = loadCases();
 
@@ -26,13 +26,13 @@ const REF_DATE_MS = Date.parse('2026-10-30T00:00:00+08:00');
 /**
  * 引擎实际输出 → 按字段键扁平化。
  * T13 起统一走公开 API computeChart（BirthInput 由 loader 从案例 input 映射：农历含闰月、出生地 → placeCode、
- * 无时辰 → time = null），不再逐个调用内部模块。T15 起旺衰计分字段取自规则引擎 computeStrengthPower(chart.pillars)；
+ * 无时辰 → time = null），不再逐个调用内部模块。T15 / T16 起旺衰字段取自规则引擎 computeStrength(chart.pillars)；
  * analyze(chart) 公开入口在喜用神全链（T17）完成后汇总，届时这里改走 analyze。
  */
 function computeActual(c: LoadedCase): CaseActual {
   const chart = computeChart(c.input, REF_DATE_MS);
   const first3 = chart.dayun.steps.slice(0, 3);
-  const sp = computeStrengthPower(chart.pillars);
+  const sp = computeStrength(chart.pillars);
   return {
     'pillars.year': chart.pillars.year,
     'pillars.month': chart.pillars.month,
@@ -49,6 +49,9 @@ function computeActual(c: LoadedCase): CaseActual {
     'strength.de_ling': sp.de_ling,
     'strength.de_di': sp.de_di,
     'strength.de_shi': sp.de_shi,
+    'strength.level': sp.level,
+    'strength.special': sp.special,
+    'strength.borderline': sp.borderline,
   };
 }
 
