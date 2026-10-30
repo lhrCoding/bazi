@@ -15,7 +15,7 @@ import {
   type CaseActual,
 } from './helpers/case-compare';
 import { loadCases, type LoadedCase } from './helpers/cases';
-import { clockToUtcMsForTest } from './helpers/clock';
+import { clockToUtc } from '../src/bazi/clock';
 import { computeYearMonth } from '../src/bazi/year-month';
 
 const { cases } = loadCases();
@@ -24,12 +24,13 @@ const { cases } = loadCases();
  * 引擎实际输出 → 按字段键扁平化。
  * T13 起统一改为 computeChart / analyze；在此之前逐个接入已实现的模块：
  * - T04 年柱、月柱：computeYearMonth(出生绝对时刻)。
- *   绝对时刻暂由测试工具按 IANA 时区换算（正式 CAL-TZ 见 T05）；农历案例暂用案例给出的公历时间（农历换算见 T08）；
+ * - T05 绝对时刻：clockToUtc（CAL-TZ，IANA 时区）。农历案例暂用案例给出的公历时间（农历换算见 T08）；
  *   无时辰按 cases.json 约定的 12:00 本地钟表时间（CAL-NOHOUR，正式实现见 T11）。
  */
 function computeActual(c: LoadedCase): CaseActual {
-  const clock = c.solarDateTime ?? `${c.solarDate} 12:00`;
-  const ym = computeYearMonth(clockToUtcMsForTest(clock, c.raw.input.timezone));
+  const time = c.solarDateTime?.slice(11) ?? '12:00';
+  const { utcMs } = clockToUtc(c.solarDate, time, c.raw.input.timezone);
+  const ym = computeYearMonth(utcMs);
   return { 'pillars.year': ym.year, 'pillars.month': ym.month };
 }
 

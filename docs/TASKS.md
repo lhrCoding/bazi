@@ -54,7 +54,7 @@
   内容：安装 tyme4ts（锁精确版本）；`calendar-adapter.ts` 是唯一 import tyme4ts 的文件，模块加载时显式设置 `LunarHour.provider = new LunarSect2EightCharProvider()`、`ChildLimit.provider = new LunarSect2ChildLimitProvider()`；用北京标准时间（绝对时刻）与节气比较得到年柱、月柱，输出 `jieqi_prev / jieqi_next`（名称 + 时刻）。
   验收：C01 / C02（立春前后）、C03（春节后立春前）、C16（公历 1 月）年月柱正确；测试断言 provider 已设置为 Sect2；`grep` 确认其他文件不 import tyme4ts。
 
-- [ ] **T05 时区与夏令时（CAL-TZ）** 【rules】
+- [x] **T05 时区与夏令时（CAL-TZ）** 【rules】
   依赖：T04
   内容：Luxon 把本地钟表时间 → UTC（默认 Asia/Shanghai，支持海外时区）；1986–1991 夏令时；夏令时结束日重复时刻取较晚一次并返回提示标记；开始日不存在的时刻返回错误码 `E_DST_GAP`；输出 `clock_to_utc`。错误信息不含输入值。
   验收：每年夏令时起止前后用例通过（含 1988 年以 tzdata 为准）；重复 / 不存在时刻各有用例；一个海外时区用例。

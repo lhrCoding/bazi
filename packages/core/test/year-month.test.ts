@@ -8,7 +8,7 @@ import { BaziError } from '../src/bazi/errors';
 import { isGanZhi } from '../src/bazi/ganzhi';
 import { fromBeijingParts, toBeijingParts } from '../src/bazi/time';
 import { computeYearMonth, SUPPORTED_RANGE_UTC_MS } from '../src/bazi/year-month';
-import { clockToUtcMsForTest } from './helpers/clock';
+import { clockToUtc } from '../src/bazi/clock';
 
 /** 北京标准时间 'YYYY-MM-DD HH:MM[:SS]' → Unix 毫秒 */
 function bj(s: string): number {
@@ -61,7 +61,7 @@ describe('验收案例（cases.json）', () => {
   });
 
   it('C10 夏令时钟表 1988-07-15 11:30 = 北京标准时间 10:30，年月柱戊辰、己未', () => {
-    const utc = clockToUtcMsForTest('1988-07-15 11:30', 'Asia/Shanghai');
+    const utc = clockToUtc('1988-07-15', '11:30', 'Asia/Shanghai').utcMs;
     expect(utc).toBe(bj('1988-07-15 10:30'));
     const r = computeYearMonth(utc);
     expect([r.year, r.month]).toEqual(['戊辰', '己未']);

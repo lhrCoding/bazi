@@ -3,7 +3,13 @@
  */
 export type BaziErrorCode =
   /** 出生时刻超出支持范围（1900–2100 年） */
-  'E_DATE_OUT_OF_RANGE';
+  | 'E_DATE_OUT_OF_RANGE'
+  /** 公历日期 / 钟表时间格式错误或不存在（如 2 月 30 日、25:00） */
+  | 'E_INVALID_DATETIME'
+  /** IANA 时区名无效 */
+  | 'E_INVALID_TIMEZONE'
+  /** 夏令时开始日被跳过的钟表时刻（该时刻不存在，CAL-TZ） */
+  | 'E_DST_GAP';
 
 export class BaziError extends Error {
   readonly code: BaziErrorCode;

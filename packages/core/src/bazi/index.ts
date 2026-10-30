@@ -5,3 +5,4 @@ export * from './ganzhi';
 export type * from './types';
 export * from './errors';
 export { computeYearMonth, SUPPORTED_RANGE_UTC_MS, type YearMonthResult } from './year-month';
+export { clockToUtc, DEFAULT_TIMEZONE, type ClockToUtcResult } from './clock';
