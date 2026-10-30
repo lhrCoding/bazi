@@ -9,7 +9,9 @@ export type BaziErrorCode =
   /** IANA 时区名无效 */
   | 'E_INVALID_TIMEZONE'
   /** 夏令时开始日被跳过的钟表时刻（该时刻不存在，CAL-TZ） */
-  | 'E_DST_GAP';
+  | 'E_DST_GAP'
+  /** 出生地经度无效（非有限数或超出 −180～180，CAL-TST） */
+  | 'E_INVALID_LONGITUDE';
 
 export class BaziError extends Error {
   readonly code: BaziErrorCode;

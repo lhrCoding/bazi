@@ -105,6 +105,8 @@ export interface Chart {
   clock_to_utc: ClockToUtc;
   true_solar_time: TrueSolarTime | null;
   tst_status: TstStatus;
+  /** 未校正且出生时刻离时辰边界（奇数整点）不足 30 分钟：结果页加提示句（CAL-TST，仅提示不改排盘）。已校正恒为 false */
+  near_shichen_boundary: boolean;
   jieqi_prev: JieqiMoment;
   jieqi_next: JieqiMoment;
   alt: {
