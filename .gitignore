@@ -3,5 +3,13 @@ node_modules/
 .env.*
 !.env.example
 .next/
+out/
 dist/
+coverage/
+*.tsbuildinfo
+next-env.d.ts
+*.db
+*.db-wal
+*.db-shm
 .DS_Store
+.history/

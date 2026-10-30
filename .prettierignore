@@ -1,0 +1,13 @@
+node_modules
+.next
+dist
+coverage
+package-lock.json
+next-env.d.ts
+# 由其他角色维护，代码不改动其格式
+rules
+docs
+design
+.claude
+.history
+*.md

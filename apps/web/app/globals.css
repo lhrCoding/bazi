@@ -1,0 +1,3 @@
+@import 'tailwindcss';
+
+/* 设计令牌在 UI 相关任务中按 docs/UI.md §2 写入 @theme；系统字体，不加载网络字体 */
