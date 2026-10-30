@@ -47,7 +47,7 @@
 - [x] **T03 cases.json loader + 对照测试骨架** 【rules】
   依赖：T02
   内容：定义 `BirthInput` / `Chart` 初版类型；读取 rules/cases.json v2，映射 `input` → `BirthInput`；按 `_meta.test_guidance` 写参数化断言工具（容差、rules_hit 前缀比对、shensha_ji 全等）；尚未实现的字段用显式「待实现」清单跳过，并在输出中列出，不能静默通过。
-  验收：loader 单元测试通过；19 个案例全部解析成功；跳过清单在测试输出中可见。
+  验收：loader 单元测试通过；20 个案例全部解析成功；跳过清单在测试输出中可见。
 
 - [ ] **T04 历法适配层 + 年柱 / 月柱** 【rules】
   依赖：T03
@@ -138,7 +138,7 @@
 
 - [ ] **T21 cases.json 全量代码复核 → mingli-expert 裁定** 【rules】【需 mingli-expert】
   依赖：T07, T09, T15–T20
-  内容：用代码跑 cases.json 全部字段，重点复核 v2 中**人工手算、未经代码核对**的数值：C05 的旺衰 / 喜用、C18 / C19 新增晚子时扫描结果、全部 19 个案例的 `shensha_ji`。输出差异清单（案例、字段、期望值、代码值、触发规则、计算过程）到 `reports/cases-diff.md`（不进 docs/）。**不得直接改期望值，也不得为了通过测试改代码**；清单交 mingli-expert 逐条裁定：期望值错 → 由 mingli-expert 改 cases.json 并在 verified 字段注明「代码复核」；代码错 → 回到对应任务修复。
+  内容：用代码跑 cases.json 全部字段，重点复核 v2 中**人工手算、未经代码核对**的数值：C05 的旺衰 / 喜用、C18 / C19 新增晚子时扫描结果、全部 20 个案例的 `shensha_ji`、C20 全部数值（含起运日期与前三步大运起始年，原值为 null，需由代码补出交 mingli-expert 确认）。输出差异清单（案例、字段、期望值、代码值、触发规则、计算过程）到 `reports/cases-diff.md`（不进 docs/）。**不得直接改期望值，也不得为了通过测试改代码**；清单交 mingli-expert 逐条裁定：期望值错 → 由 mingli-expert 改 cases.json 并在 verified 字段注明「代码复核」；代码错 → 回到对应任务修复。
   验收：四柱 100% 一致；旺衰 / 喜用一致率 ≥ 90%（P0-3），不一致逐条有结论；mingli-expert 裁定完成后 cases.json 全部测试通过、无跳过项。
 
 ## D 素材库工具链（`packages/core/src/texts` + `scripts/`，可与 B、C 并行）
