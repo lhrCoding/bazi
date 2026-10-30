@@ -44,7 +44,7 @@
 
 ## B 排盘引擎（`packages/core/src/bazi`，纯函数）
 
-- [ ] **T03 cases.json loader + 对照测试骨架** 【rules】
+- [x] **T03 cases.json loader + 对照测试骨架** 【rules】
   依赖：T02
   内容：定义 `BirthInput` / `Chart` 初版类型；读取 rules/cases.json v2，映射 `input` → `BirthInput`；按 `_meta.test_guidance` 写参数化断言工具（容差、rules_hit 前缀比对、shensha_ji 全等）；尚未实现的字段用显式「待实现」清单跳过，并在输出中列出，不能静默通过。
   验收：loader 单元测试通过；19 个案例全部解析成功；跳过清单在测试输出中可见。
