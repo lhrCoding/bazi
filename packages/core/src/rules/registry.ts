@@ -16,6 +16,7 @@ import { computeChart } from '../bazi/chart';
 import { CAL_RULE_IDS } from '../bazi/schema';
 import { HIDDEN_STEMS } from '../bazi/ten-gods';
 import type { RuleId } from './rule-ids';
+import { computeStrengthPower } from './strength-power';
 
 /** docs/TASKS.md 的任务编号。 */
 export type TaskId = `T${number}`;
@@ -48,13 +49,20 @@ export const RULE_IMPLEMENTATIONS: Readonly<Partial<Record<RuleId, RuleImplement
   ),
   // strength.md §1.2：藏干比例表，排盘（藏干、十神）与计分共用；与 md JSON 参数块的比对见 rules-params.test.ts。
   'S-HIDE': { module: 'bazi/ten-gods.ts（HIDDEN_STEMS）', impl: HIDDEN_STEMS },
+  // strength.md §2–§3、§6（T15）：五行力量、十神分组、S、得令 / 得地 / 得势、power_display_pct。
+  'S-POWER': { module: 'rules/strength-power.ts（computeStrengthPower）', impl: computeStrengthPower },
+  'S-ROOT': {
+    module: 'rules/strength-power.ts（computeStrengthPower；系数 ROOTLESS_STEM_FACTOR）',
+    impl: computeStrengthPower,
+  },
+  'S-COMBO': {
+    module: 'rules/strength-power.ts（computeStrengthPower；合局表 COMBOS）',
+    impl: computeStrengthPower,
+  },
 };
 
 export const PENDING_RULES: Readonly<Partial<Record<RuleId, PendingRule>>> = {
   // strength.md
-  'S-POWER': { task: 'T15', note: '五行力量计分（位置权重常量已在 rules/params.ts 定义并比对）' },
-  'S-ROOT': { task: 'T15', note: '天干无根 × 0.6' },
-  'S-COMBO': { task: 'T15', note: '三会 +2.0 / 三合 +1.5' },
   'S-LEVEL': { task: 'T16', note: '旺衰等级（按顺序命中即停）' },
   'S-CONG': { task: 'T16', note: '从弱只认真从（5 条全满足）及子类型' },
   'S-ZHUANWANG': { task: 'T16', note: '专旺 / 从强' },

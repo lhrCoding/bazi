@@ -17,5 +17,25 @@ export {
   type RuleStatus,
   type TaskId,
 } from './registry';
-export { POSITION_WEIGHTS, HIDDEN_STEMS, type PillarPosition } from './params';
+export {
+  POSITION_WEIGHTS,
+  HIDDEN_STEMS,
+  ROOTLESS_STEM_FACTOR,
+  ROOT_MIN_RATIO,
+  COMBOS,
+  DISPLAY_DAY_MASTER_BONUS,
+  type PillarPosition,
+  type ComboDef,
+  type ComboKind,
+} from './params';
+export {
+  computeStrengthPower,
+  godGroupOf,
+  elementOfGroup,
+  WUXING_ORDER,
+  GOD_GROUP_ORDER,
+  type StrengthPower,
+  type StemScore,
+  type ComboHit,
+} from './strength-power';
 export { RULES_FILES, RULES_VERSION } from './version';

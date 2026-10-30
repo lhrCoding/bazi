@@ -106,7 +106,7 @@
   内容：`RuleHit { ruleId, text, evidence }`；规则注册表；测试扫描 rules/*.md 中 `CAL- / S- / Y- / SS- / R-` 编号，断言每个编号已实现或在「仅文档编号」白名单；解析 strength.md 中的 JSON 参数块（S-HIDE、位置权重）与代码常量比对；`rulesVersion`。
   验收：故意删掉一个实现或改一个藏干比例时测试变红。
 
-- [ ] **T15 五行力量与十神分组（S-POWER / S-ROOT / S-COMBO）**
+- [x] **T15 五行力量与十神分组（S-POWER / S-ROOT / S-COMBO）**
   依赖：T14
   内容：天干（无根 × 0.6）、地支藏干、三会 / 三合加成；十神分组力量；S；得令 / 得地 / 得势；`power_display_pct`（加日干 1.0 后归一）。
   验收：cases.json 全部案例 power、gods ±0.01，S ±0.001，de_* 一致。
