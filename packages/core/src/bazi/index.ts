@@ -15,3 +15,11 @@ export {
   NEAR_BOUNDARY_MINUTES,
   type TrueSolarTimeResult,
 } from './true-solar-time';
+export {
+  computeDayHour,
+  dayPillarIndex,
+  dayPillarOf,
+  shichenIndex,
+  DAY_PILLAR_EPOCH,
+  type DayHourResult,
+} from './day-hour';

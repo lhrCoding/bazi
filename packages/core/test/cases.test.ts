@@ -17,6 +17,8 @@ import {
 import { loadCases, type LoadedCase } from './helpers/cases';
 import { clockToUtc } from '../src/bazi/clock';
 import { computeYearMonth } from '../src/bazi/year-month';
+import { computeTrueSolarTime } from '../src/bazi/true-solar-time';
+import { computeDayHour, dayPillarOf } from '../src/bazi/day-hour';
 
 const { cases } = loadCases();
 
@@ -26,12 +28,27 @@ const { cases } = loadCases();
  * - T04 年柱、月柱：computeYearMonth(出生绝对时刻)。
  * - T05 绝对时刻：clockToUtc（CAL-TZ，IANA 时区）。农历案例暂用案例给出的公历时间（农历换算见 T08）；
  *   无时辰按 cases.json 约定的 12:00 本地钟表时间（CAL-NOHOUR，正式实现见 T11）。
+ * - T07 日柱、时柱：CAL-TST 当地时间（有出生地 = 真太阳时，经度取案例 birthplace）→ computeDayHour。
+ *   无时辰：日柱按用户填的日期、时柱为 null（calendar.md §7，正式实现见 T11）。
  */
 function computeActual(c: LoadedCase): CaseActual {
   const time = c.solarDateTime?.slice(11) ?? '12:00';
   const { utcMs } = clockToUtc(c.solarDate, time, c.raw.input.timezone);
   const ym = computeYearMonth(utcMs);
-  return { 'pillars.year': ym.year, 'pillars.month': ym.month };
+  const base: CaseActual = { 'pillars.year': ym.year, 'pillars.month': ym.month };
+  if (c.solarDateTime === null) {
+    const [y, m, d] = c.solarDate.split('-').map(Number) as [number, number, number];
+    const day = dayPillarOf(y, m, d);
+    return { ...base, 'pillars.day': day, 'pillars.hour': null, 'alt.zi_huanri_day_pillar': day };
+  }
+  const tst = computeTrueSolarTime(utcMs, c.birthplace?.longitude ?? null);
+  const dh = computeDayHour(tst.local);
+  return {
+    ...base,
+    'pillars.day': dh.day,
+    'pillars.hour': dh.hour,
+    'alt.zi_huanri_day_pillar': dh.zi_huanri_day_pillar,
+  };
 }
 
 const actuals = new Map(cases.map((c) => [c.id, computeActual(c)]));
