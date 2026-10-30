@@ -56,3 +56,4 @@ export {
   liunianStartYear,
   LIUNIAN_YEAR_COUNT,
 } from './liunian';
+export { computeNoHour, NO_HOUR_DEFAULT_TIME, type NoHourResult } from './no-hour';

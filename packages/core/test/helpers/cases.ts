@@ -8,6 +8,7 @@
 import type { BirthInput, Gender } from '../../src/bazi/types';
 import { isGanZhi } from '../../src/bazi/ganzhi';
 import { resolveSolarDate } from '../../src/bazi/lunar-input';
+import { NO_HOUR_DEFAULT_TIME } from '../../src/bazi/no-hour';
 import { readRulesFile } from './fixtures';
 
 // ---------- cases.json 原始结构（只声明会被读取的字段） ----------
@@ -458,8 +459,9 @@ export function loadCases(): LoadedCases {
 
 /**
  * 引擎实际使用的本地钟表时间 'YYYY-MM-DD HH:MM'：日期经 CAL-INPUT（农历走正式换算，T08），
- * 时间取 BirthInput.time；无时辰按 cases.json 约定的 12:00（CAL-NOHOUR，正式实现见 T11）。
+ * 时间取 BirthInput.time；无时辰按三柱模式默认的 12:00（NO_HOUR_DEFAULT_TIME；交节日的 before / after 选择
+ * 见 computeNoHour，T11）。
  */
 export function engineClockOf(c: LoadedCase): string {
-  return `${resolveSolarDate(c.input).solarDate} ${c.input.time ?? '12:00'}`;
+  return `${resolveSolarDate(c.input).solarDate} ${c.input.time ?? NO_HOUR_DEFAULT_TIME}`;
 }

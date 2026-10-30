@@ -19,8 +19,9 @@ import { clockToUtc } from '../src/bazi/clock';
 import { resolveSolarDate } from '../src/bazi/lunar-input';
 import { computeYearMonth } from '../src/bazi/year-month';
 import { computeTrueSolarTime } from '../src/bazi/true-solar-time';
-import { computeDayHour, dayPillarOf } from '../src/bazi/day-hour';
+import { computeDayHour } from '../src/bazi/day-hour';
 import { computeDayun } from '../src/bazi/dayun';
+import { computeNoHour } from '../src/bazi/no-hour';
 
 const { cases } = loadCases();
 
@@ -29,36 +30,43 @@ const { cases } = loadCases();
  * T13 起统一改为 computeChart / analyze；在此之前逐个接入已实现的模块：
  * - T04 年柱、月柱：computeYearMonth(出生绝对时刻)。
  * - T08 日期：resolveSolarDate（CAL-INPUT，农历含闰月 → 公历），不再使用案例给出的公历换算结果。
- * - T05 绝对时刻：clockToUtc（CAL-TZ，IANA 时区）。无时辰按 cases.json 约定的 12:00 本地钟表时间
- *   （CAL-NOHOUR，正式实现见 T11）。
+ * - T05 绝对时刻：clockToUtc（CAL-TZ，IANA 时区）。
  * - T07 日柱、时柱：CAL-TST 当地时间（有出生地 = 真太阳时，经度取案例 birthplace）→ computeDayHour。
- *   无时辰：日柱按用户填的日期、时柱为 null（calendar.md §7，正式实现见 T11）。
- * - T09 大运：computeDayun(出生绝对时刻, 性别, 年月柱)。三柱案例在 cases.json 中没有 dayun 期望（T11 负责）。
+ * - T09 大运：computeDayun(出生绝对时刻, 性别, 年月柱)。
+ * - T11 无时辰：走正式三柱模式 computeNoHour（CAL-NOHOUR：12:00 计算年月柱与起运、日柱按所填日期、时柱 null，
+ *   jieqiChoice 取案例输入）。
  */
 function computeActual(c: LoadedCase): CaseActual {
   const { solarDate } = resolveSolarDate(c.input);
+  if (c.input.time === null) {
+    const nh = computeNoHour(solarDate, c.raw.input.timezone, c.input.gender, c.input.jieqiChoice);
+    const first3 = nh.dayun.dayun.steps.slice(0, 3);
+    return {
+      'pillars.year': nh.ym.year,
+      'pillars.month': nh.ym.month,
+      'pillars.day': nh.day,
+      'pillars.hour': nh.hour,
+      'alt.zi_huanri_day_pillar': nh.day,
+      'dayun.direction': nh.dayun.dayun.direction,
+      'dayun.first3.ganzhi': first3.map((s) => s.ganzhi),
+      'dayun.first3.start_year': first3.map((s) => s.startYear),
+      'dayun.qiyun_date': nh.dayun.dayun.qiyunDate,
+    };
+  }
   const clock = engineClockOf(c);
   const { utcMs } = clockToUtc(solarDate, clock.slice(11), c.raw.input.timezone);
   const ym = computeYearMonth(utcMs);
   const { dayun } = computeDayun(utcMs, c.input.gender, ym);
   const first3 = dayun.steps.slice(0, 3);
-  const base: CaseActual = {
+  const tst = computeTrueSolarTime(utcMs, c.birthplace?.longitude ?? null);
+  const dh = computeDayHour(tst.local);
+  return {
     'pillars.year': ym.year,
     'pillars.month': ym.month,
     'dayun.direction': dayun.direction,
     'dayun.first3.ganzhi': first3.map((s) => s.ganzhi),
     'dayun.first3.start_year': first3.map((s) => s.startYear),
     'dayun.qiyun_date': dayun.qiyunDate,
-  };
-  if (c.input.time === null) {
-    const [y, m, d] = solarDate.split('-').map(Number) as [number, number, number];
-    const day = dayPillarOf(y, m, d);
-    return { ...base, 'pillars.day': day, 'pillars.hour': null, 'alt.zi_huanri_day_pillar': day };
-  }
-  const tst = computeTrueSolarTime(utcMs, c.birthplace?.longitude ?? null);
-  const dh = computeDayHour(tst.local);
-  return {
-    ...base,
     'pillars.day': dh.day,
     'pillars.hour': dh.hour,
     'alt.zi_huanri_day_pillar': dh.zi_huanri_day_pillar,

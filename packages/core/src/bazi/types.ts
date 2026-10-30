@@ -111,6 +111,8 @@ export interface Chart {
   engineVersion: string;
   /** 原样回显输入 */
   input_echo: BirthInput;
+  /** 是否知道时辰；false = 三柱模式（CAL-NOHOUR），时柱相关字段全部为 null */
+  hourKnown: boolean;
   pillars: Pillars;
   /** 各柱藏干（三柱模式 hour 为 null） */
   hidden_stems: Record<PillarPos, Gan[] | null>;
