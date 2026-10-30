@@ -89,7 +89,7 @@
   内容：`time = null` 时只排三柱、时柱相关字段为 null、`hourKnown = false`；默认按 12:00 算年月柱和起运（「约 X 岁起运」标记）；出生日当天有节交接时输出 `uncertain.month_pillar` 与交节时刻；支持 `jieqiChoice = before / after / unsure`。
   验收：C18、C19 及至少 3 个「有时辰案例去掉时辰」用例：前三柱一致、时柱为空；C19 输出两组年月柱和交节时刻；before / after 分别得到对应年月柱。
 
-- [ ] **T12 节气边界、权威节气抽查、lunar-javascript 差分**
+- [x] **T12 节气边界、权威节气抽查、lunar-javascript 差分**
   依赖：T07
   内容：① 1950–2050 年每个「节」前 / 后 1 分钟自动用例，断言月柱（立春含年柱）切换；② 香港天文台 / 紫金山天文台若干年份节气时刻固定数据（文件头注明来源 URL），误差 ≤ 1 分钟；③ lunar-javascript（devDependency，显式 `setSect(2)`）随机 ≥ 1,000 个时刻四柱比对，其中至少 100 个在 23:00–23:59。
   验收：三类测试全部通过；不一致样例为 0（若有，列出后停下交 mingli-expert / 用户）。

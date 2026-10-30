@@ -48,9 +48,15 @@ const restrictedPatterns = [
     message:
       '只有 src/bazi/calendar-adapter.ts 可以 import tyme4ts（provider 是全局状态，必须集中设置）；其他文件请调用适配层。',
   },
+  {
+    group: ['lunar-javascript', 'lunar-javascript/*'],
+    message:
+      'lunar-javascript 是 devDependency，只能在 test/ 中做差分对照（ARCHITECTURE §3），src/ 不得 import。',
+  },
 ];
 
 const isTymeRule = (p) => p.group.includes('tyme4ts');
+const isLunarJsRule = (p) => p.group.includes('lunar-javascript');
 
 export default tseslint.config(
   { ignores: ['node_modules/**', 'dist/**', 'coverage/**'] },
@@ -86,12 +92,17 @@ export default tseslint.config(
   },
   {
     // 测试与 Vitest 配置运行在 Node 中，可用 Node 内置模块读取 fixture（约定见 test/fixtures/README.md）。
+    // lunar-javascript（devDependency）只允许测试 import，用于差分对照（T12）。
     // Next / React / 数据库 / 支付 / 日志 的禁令在测试中照样生效；src/ 不受此放宽影响。
     files: ['test/**', 'vitest.config.ts'],
     rules: {
       'no-restricted-imports': [
         'error',
-        { patterns: restrictedPatterns.filter((p) => !p.message.includes('Node 内置模块')) },
+        {
+          patterns: restrictedPatterns.filter(
+            (p) => !p.message.includes('Node 内置模块') && !isLunarJsRule(p),
+          ),
+        },
       ],
     },
   },

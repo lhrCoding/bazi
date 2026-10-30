@@ -22,6 +22,7 @@
     "@types/node": "22.20.5",
     "eslint": "9.39.5",
     "eslint-config-prettier": "10.1.8",
+    "lunar-javascript": "1.7.7",
     "typescript": "5.9.3",
     "typescript-eslint": "8.72.1",
     "vite": "6.4.5",

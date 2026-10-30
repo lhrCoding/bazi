@@ -1,6 +1,7 @@
 /**
  * T04：CAL-YM 年柱、月柱（rules/calendar.md §1、§2）。
- * cases.json 全量对照在 cases.test.ts；这里是指名验收案例、交节边界与 tyme4ts 交叉校验。
+ * cases.json 全量对照在 cases.test.ts；这里是指名验收案例、交节边界与 tyme4ts 随机交叉校验。
+ * 1950–2050 年逐个「节」边界、香港天文台抽查、lunar-javascript 差分在 jieqi.test.ts（T12）。
  */
 import { describe, expect, it } from 'vitest';
 import { solarTermMoment, tymePillarsAt } from '../src/bazi/calendar-adapter';
@@ -79,25 +80,7 @@ describe('交节边界（绝对时刻，左闭右开）', () => {
     expect(computeYearMonth(t)).toMatchObject({ year: '甲辰', month: '丙寅' });
   });
 
-  it('1950–2050 年每个「节」前后 1 分钟：月柱切换、月支连续、jieqi_prev / next 正确', () => {
-    const ZHI = '子丑寅卯辰巳午未申酉戌亥';
-    for (let y = 1950; y <= 2050; y++) {
-      for (let i = 1; i <= 23; i += 2) {
-        const jie = solarTermMoment(y, i);
-        const before = computeYearMonth(jie.utcMs - 60_000);
-        const after = computeYearMonth(jie.utcMs + 60_000);
-        const where = `${y} ${jie.name}`;
-        expect(after.jieqi_prev.name, where).toBe(jie.name);
-        expect(before.jieqi_next.name, where).toBe(jie.name);
-        expect(after.jieqi_prev.time, where).toBe(before.jieqi_next.time);
-        const zb = ZHI.indexOf(before.month[1] as string);
-        const za = ZHI.indexOf(after.month[1] as string);
-        expect((zb + 1) % 12, where).toBe(za);
-        if (jie.name === '立春') expect(after.year, where).not.toBe(before.year);
-        else expect(after.year, where).toBe(before.year);
-      }
-    }
-  });
+  // 1950–2050 年每个「节」前 / 后 1 分钟的切换测试见 jieqi.test.ts（T12）。
 
   it('中气不换月：2024 年雨水前后同为丙寅月', () => {
     const yushui = bj('2024-02-19 12:00');
@@ -135,23 +118,7 @@ describe('与 tyme4ts（Sect2）年月柱交叉校验', () => {
     }
     expect(bad).toEqual([]);
   });
-
-  it('1950–2050 每个「节」前后 1 分钟与 tyme4ts 一致', () => {
-    const bad: string[] = [];
-    for (let y = 1950; y <= 2050; y++) {
-      for (let i = 1; i <= 23; i += 2) {
-        const t0 = solarTermMoment(y, i).utcMs;
-        for (const t of [t0 - 60_000, t0 + 60_000]) {
-          const ours = computeYearMonth(t);
-          const theirs = tymePillarsAt(toBeijingParts(t));
-          if (ours.year !== theirs.year || ours.month !== theirs.month) {
-            bad.push(`${y}#${i} ${t - t0}`);
-          }
-        }
-      }
-    }
-    expect(bad).toEqual([]);
-  });
+  // 交节点前后 1 分钟与 tyme4ts / lunar-javascript 的比对见 jieqi.test.ts（T12）。
 });
 
 describe('输入范围与输出格式', () => {
