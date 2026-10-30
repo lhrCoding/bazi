@@ -26,6 +26,10 @@ export interface YearMonthResult {
   jieqi_prev: JieqiMoment;
   /** 出生后第一个「节」 */
   jieqi_next: JieqiMoment;
+  /** jieqi_prev 的绝对时刻（Unix 毫秒，精确到秒），供 CAL-YUN 起运计算 */
+  jieqiPrevUtcMs: number;
+  /** jieqi_next 的绝对时刻（Unix 毫秒，精确到秒） */
+  jieqiNextUtcMs: number;
   rules_hit: string[];
 }
 
@@ -88,6 +92,8 @@ export function computeYearMonth(utcMs: number): YearMonthResult {
     month,
     jieqi_prev: toMoment(prev),
     jieqi_next: toMoment(next),
+    jieqiPrevUtcMs: prev.utcMs,
+    jieqiNextUtcMs: next.utcMs,
     rules_hit: ['CAL-YM-1', 'CAL-YM-2'],
   };
 }

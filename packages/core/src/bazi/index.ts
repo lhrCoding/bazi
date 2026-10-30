@@ -36,3 +36,15 @@ export {
   type LunarMonthOption,
   type ResolvedSolarDate,
 } from './lunar-input';
+export {
+  addQiyunOffset,
+  computeDayun,
+  dayunDirection,
+  isYangGan,
+  qiyunOffsetOf,
+  zhousuiAt,
+  DAYUN_STEP_COUNT,
+  DAYUN_STEP_YEARS,
+  type DayunOptions,
+  type DayunResult,
+} from './dayun';

@@ -20,6 +20,7 @@ import { resolveSolarDate } from '../src/bazi/lunar-input';
 import { computeYearMonth } from '../src/bazi/year-month';
 import { computeTrueSolarTime } from '../src/bazi/true-solar-time';
 import { computeDayHour, dayPillarOf } from '../src/bazi/day-hour';
+import { computeDayun } from '../src/bazi/dayun';
 
 const { cases } = loadCases();
 
@@ -32,13 +33,23 @@ const { cases } = loadCases();
  *   （CAL-NOHOUR，正式实现见 T11）。
  * - T07 日柱、时柱：CAL-TST 当地时间（有出生地 = 真太阳时，经度取案例 birthplace）→ computeDayHour。
  *   无时辰：日柱按用户填的日期、时柱为 null（calendar.md §7，正式实现见 T11）。
+ * - T09 大运：computeDayun(出生绝对时刻, 性别, 年月柱)。三柱案例在 cases.json 中没有 dayun 期望（T11 负责）。
  */
 function computeActual(c: LoadedCase): CaseActual {
   const { solarDate } = resolveSolarDate(c.input);
   const clock = engineClockOf(c);
   const { utcMs } = clockToUtc(solarDate, clock.slice(11), c.raw.input.timezone);
   const ym = computeYearMonth(utcMs);
-  const base: CaseActual = { 'pillars.year': ym.year, 'pillars.month': ym.month };
+  const { dayun } = computeDayun(utcMs, c.input.gender, ym);
+  const first3 = dayun.steps.slice(0, 3);
+  const base: CaseActual = {
+    'pillars.year': ym.year,
+    'pillars.month': ym.month,
+    'dayun.direction': dayun.direction,
+    'dayun.first3.ganzhi': first3.map((s) => s.ganzhi),
+    'dayun.first3.start_year': first3.map((s) => s.startYear),
+    'dayun.qiyun_date': dayun.qiyunDate,
+  };
   if (c.input.time === null) {
     const [y, m, d] = solarDate.split('-').map(Number) as [number, number, number];
     const day = dayPillarOf(y, m, d);

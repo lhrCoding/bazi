@@ -57,3 +57,13 @@ export function ganZhiOf(ganIndex: number, zhiIndex: number): GanZhi {
   if (g % 2 !== z % 2) throw new Error('天干地支阴阳不一致，不是合法的 60 甲子');
   return `${TIAN_GAN[g] as Gan}${DI_ZHI[z] as Zhi}`;
 }
+
+/** 干支 → 60 甲子序号（0 = 甲子 … 59 = 癸亥）；不是合法干支时抛错。 */
+export function ganZhiIndex(gz: string): number {
+  if (!isGanZhi(gz)) throw new Error('不是合法的 60 甲子干支');
+  const [g, z] = Array.from(gz) as [Gan, Zhi];
+  const gi = TIAN_GAN.indexOf(g);
+  const zi = DI_ZHI.indexOf(z);
+  // 序号 n 满足 n ≡ gi (mod 10)、n ≡ zi (mod 12)；由中国剩余定理 n ≡ 6·gi − 5·zi (mod 60)。
+  return (((6 * gi - 5 * zi) % 60) + 60) % 60;
+}

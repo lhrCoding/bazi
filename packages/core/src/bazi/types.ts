@@ -75,10 +75,24 @@ export interface DayunStep {
   startAgeXusui: number;
 }
 
+/** 出生到相邻「节」的时间按 3 天 = 1 年折算后的起运间隔（CAL-YUN，按分钟折算，精确到 2 小时）。 */
+export interface QiyunOffset {
+  years: number;
+  months: number;
+  days: number;
+  hours: number;
+}
+
 export interface Dayun {
   direction: '顺' | '逆';
+  /** 起运间隔（出生 → 起运） */
+  qiyunOffset: QiyunOffset;
+  /** 起运时刻（北京标准时间 'YYYY-MM-DD HH:MM'） */
+  qiyunTime: string;
   /** 起运日期 'YYYY-MM-DD' */
   qiyunDate: string;
+  /** 起运时周岁（对外展示） */
+  qiyunAge: number;
   /** 三柱模式按 12:00 计算，标记「约 X 岁起运」 */
   approximate: boolean;
   steps: DayunStep[];

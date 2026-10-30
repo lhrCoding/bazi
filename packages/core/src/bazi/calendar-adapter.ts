@@ -13,6 +13,7 @@
  */
 import {
   ChildLimit,
+  Gender as TymeGender,
   LunarDay,
   LunarHour,
   LunarMonth,
@@ -23,6 +24,7 @@ import {
   LunarYear,
 } from 'tyme4ts';
 import type { GanZhi } from './ganzhi';
+import type { Gender } from './types';
 import { isGanZhi } from './ganzhi';
 import { fromBeijingParts, type DateTimeParts } from './time';
 
@@ -137,6 +139,77 @@ export function tymePillarsAt(beijing: DateTimeParts): TymePillars {
     month: toGanZhi(ec.getMonth().getName()),
     day: toGanZhi(ec.getDay().getName()),
     hour: toGanZhi(ec.getHour().getName()),
+  };
+}
+
+// ---------- 交叉校验用：tyme4ts 的起运与大运（CAL-YUN） ----------
+
+export interface TymeDecade {
+  ganzhi: GanZhi;
+  /** 该步大运开始的公历年 */
+  startYear: number;
+  /** 开始虚岁（tyme4ts 口径：开始年 − 出生公历年 + 1） */
+  startAgeXusui: number;
+}
+
+export interface TymeChildLimit {
+  /** 是否顺排 */
+  forward: boolean;
+  years: number;
+  months: number;
+  days: number;
+  hours: number;
+  /** 起运时刻（北京标准时间） */
+  end: DateTimeParts;
+  /** 前 n 步大运 */
+  decades: TymeDecade[];
+}
+
+/**
+ * tyme4ts（Sect2 起运：按分钟折算）按北京标准时间某一时刻得到的起运与大运。
+ * 仅用于交叉校验（dayun.ts 用 year-month.ts 的节气时刻自行计算）。
+ */
+export function tymeChildLimitAt(
+  beijing: DateTimeParts,
+  gender: Gender,
+  decadeCount = 8,
+): TymeChildLimit {
+  assertSect2();
+  const st = SolarTime.fromYmdHms(
+    beijing.year,
+    beijing.month,
+    beijing.day,
+    beijing.hour,
+    beijing.minute,
+    beijing.second,
+  );
+  const cl = ChildLimit.fromSolarTime(st, gender === '男' ? TymeGender.MAN : TymeGender.WOMAN);
+  const e = cl.getEndTime();
+  const decades: TymeDecade[] = [];
+  let d = cl.getStartDecadeFortune();
+  for (let i = 0; i < decadeCount; i++) {
+    decades.push({
+      ganzhi: toGanZhi(d.getName()),
+      startYear: d.getStartSixtyCycleYear().getYear(),
+      startAgeXusui: d.getStartAge(),
+    });
+    d = d.next(1);
+  }
+  return {
+    forward: cl.isForward(),
+    years: cl.getYearCount(),
+    months: cl.getMonthCount(),
+    days: cl.getDayCount(),
+    hours: cl.getHourCount(),
+    end: {
+      year: e.getYear(),
+      month: e.getMonth(),
+      day: e.getDay(),
+      hour: e.getHour(),
+      minute: e.getMinute(),
+      second: e.getSecond(),
+    },
+    decades,
   };
 }
 

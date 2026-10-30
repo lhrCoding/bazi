@@ -333,10 +333,6 @@ export const FIELD_CHECKS: readonly FieldCheck[] = [
  * 某任务完成后，从这里删掉对应字段，并在 cases.test.ts 的 computeActual 中输出该字段。
  */
 export const PENDING_FIELDS: Readonly<Record<string, string>> = {
-  'dayun.direction': 'T09',
-  'dayun.first3.ganzhi': 'T09',
-  'dayun.first3.start_year': 'T09',
-  'dayun.qiyun_date': 'T09',
   'strength.S': 'T15',
   'strength.power': 'T15',
   'strength.gods': 'T15',
