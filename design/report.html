@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>命书 · 知命（暂名）原型</title>
+<style>
+:root{
+  --paper:#F4EEE2; --paper-2:#FBF8F2; --paper-3:#ECE4D4;
+  --ink:#2A2521; --ink-2:#5C534A; --ink-3:#8F857A; --line:#DCD2C1; --line-2:#E9E1D3;
+  --zhu:#A93226; --zhu-d:#8E2A20; --zhu-bg:#F6E6E0;
+  --mu:#5F7F5B; --huo:#B95A3C; --tu:#9C7A4A; --jin:#7E8686; --shui:#3F5D78;
+  --t1:#A93226; --t2:#C9806F; --t3:#B8AD9E; --t4:#7F93A3; --t5:#4F6578;
+  --serif:"Songti SC","STSong","Noto Serif SC","Noto Serif CJK SC","Source Han Serif SC","SimSun",serif;
+  --kai:"Kaiti SC","STKaiti","KaiTi","BiauKai","Songti SC","Noto Serif SC",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.7;
+  background:var(--paper) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .42 0 0 0 0 .35 0 0 0 0 .25 0 0 0 .07 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+a{color:var(--ink-2)}
+.seal{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;background:var(--zhu);color:#FBF3EC;font-family:var(--serif);font-size:12px;line-height:1.05;border-radius:3px;writing-mode:vertical-rl;letter-spacing:1px;font-weight:600;box-shadow:inset 0 0 0 2px var(--zhu),inset 0 0 0 3px rgba(251,243,236,.55)}
+.btn{display:inline-flex;align-items:center;justify-content:center;height:40px;padding:0 14px;border:1px solid var(--ink-2);border-radius:4px;background:var(--paper-2);font:inherit;font-size:14px;color:var(--ink);cursor:pointer;text-decoration:none;gap:6px}
+.btn.pri{background:var(--zhu);border-color:var(--zhu);color:#FBF3EC}
+.proto{position:fixed;top:8px;right:8px;z-index:999;font:12px/1.6 ui-monospace,Menlo,monospace;background:#fffdf8;border:1px dashed #9a8f84;border-radius:4px;padding:4px 8px;color:#5c534a;max-width:250px}
+.proto summary{cursor:pointer}
+.proto a{display:block;color:#5c534a}
+.proto label{display:block;cursor:pointer}
+.e-mu{color:var(--mu)} .e-huo{color:var(--huo)} .e-tu{color:var(--tu)} .e-jin{color:var(--jin)} .e-shui{color:var(--shui)}
+
+/* ===== 版心 ===== */
+.page{max-width:680px;margin:0 auto;padding:max(10px,env(safe-area-inset-top)) 18px 96px}
+/* 保存提示 */
+.notice{border:1px solid var(--zhu);background:var(--zhu-bg);border-radius:6px;padding:12px 14px;margin:8px 0 18px;font-size:14px}
+.notice .t{font-weight:600;color:var(--zhu-d)}
+.notice .acts{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.notice .s{font-size:12.5px;color:var(--ink-2);margin-top:8px}
+.notice.first{padding:16px}
+.notice.first ol{margin:8px 0 0 18px;font-size:13.5px;color:var(--ink-2)}
+.notice .compact{display:none}
+/* 封面 */
+.cover{position:relative;text-align:center;padding:36px 12px 28px;margin-bottom:8px;border:1px solid var(--ink);border-radius:2px;background:var(--paper-2)}
+.cover::before{content:"";position:absolute;inset:5px;border:1px solid var(--line);pointer-events:none}
+.cover .ttl{font-family:var(--serif);font-size:40px;font-weight:600;letter-spacing:18px;padding-left:18px;line-height:1.2}
+.cover .sub{font-family:var(--serif);font-size:16px;color:var(--ink-2);margin-top:8px;letter-spacing:3px}
+.cover .gz{display:flex;justify-content:center;gap:18px;margin:22px 0 18px}
+.cover .gz div{font-family:var(--serif);font-size:28px;line-height:1.25;font-weight:600;writing-mode:vertical-rl;letter-spacing:6px}
+.cover .gz div.day{color:var(--zhu)}
+.cover .gz small{display:block;writing-mode:horizontal-tb;font-family:var(--sans);font-size:11px;font-weight:normal;color:var(--ink-3);letter-spacing:0;margin-top:4px}
+.cover .meta{font-size:12.5px;color:var(--ink-3);line-height:1.8}
+.cover .seal{position:absolute;right:20px;bottom:20px;width:40px;height:40px;font-size:15px;transform:rotate(-4deg)}
+/* 目录 */
+.toc{margin:22px 0 10px;padding:16px 4px;border-top:1px solid var(--ink);border-bottom:1px solid var(--line)}
+.toc h3{font-family:var(--serif);font-size:15px;letter-spacing:8px;text-align:center;color:var(--ink-2);margin-bottom:8px;font-weight:normal}
+.toc ol{list-style:none}
+.toc a{display:flex;align-items:baseline;gap:10px;padding:6px 6px;text-decoration:none;color:var(--ink);font-size:15px}
+.toc a b{font-family:var(--serif);color:var(--zhu);font-weight:normal;width:44px;flex:none;font-size:13px}
+.toc a::after{content:"";flex:1;border-bottom:1px dotted var(--line);margin:0 4px;order:2}
+.toc a i{order:3;font-style:normal;font-size:12px;color:var(--ink-3)}
+.toc a span{order:1}
+/* 章节 */
+.ch{padding-top:30px;scroll-margin-top:10px}
+.chh{text-align:center;margin-bottom:18px}
+.chh .no{font-family:var(--serif);font-size:13px;letter-spacing:6px;color:var(--zhu)}
+.chh h2{font-family:var(--serif);font-size:24px;font-weight:600;letter-spacing:3px;line-height:1.4;margin-top:2px}
+.chh::after{content:"";display:block;width:56px;height:5px;margin:10px auto 0;border-top:2px solid var(--ink);border-bottom:1px solid var(--ink)}
+.prose p{font-family:var(--serif);font-size:16.5px;line-height:1.95;text-align:justify;margin:0 0 6px;color:#2E2824}
+.prose p .gl{font-family:var(--sans);font-size:.78em;color:var(--ink-3)}
+.prose h4{font-family:var(--serif);font-size:17px;font-weight:600;margin:20px 0 6px;display:flex;align-items:center;gap:8px}
+.prose h4::before{content:"";width:6px;height:6px;background:var(--zhu);transform:rotate(45deg)}
+.basis{display:flex;gap:6px;align-items:flex-start;font-size:12.5px;color:var(--ink-3);line-height:1.6;margin:0 0 18px}
+.basis::before{content:"据";flex:none;font-family:var(--serif);font-size:10px;line-height:15px;width:15px;height:15px;text-align:center;border:1px solid var(--zhu);color:var(--zhu);border-radius:2px;margin-top:2px}
+.quote{font-family:var(--kai);font-size:18px;line-height:1.7;margin:2px 0 20px;padding:8px 0 8px 16px;border-left:2px solid var(--zhu);color:var(--ink)}
+.quote cite{display:block;font-family:var(--sans);font-style:normal;font-size:12px;color:var(--ink-3);margin-top:2px}
+.persona{font-family:var(--kai);font-size:21px;line-height:1.6;text-align:center;padding:18px 10px;margin:4px 0 6px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.summary{font-family:var(--serif);font-size:17px;line-height:1.9;background:var(--paper-2);border:1px solid var(--line);border-left:3px solid var(--zhu);padding:12px 14px;margin:6px 0 18px}
+.gray{font-size:12.5px;color:var(--ink-3);line-height:1.65;padding-left:10px;border-left:2px solid var(--line);margin:10px 0 16px}
+/* 原型：文字来源标记 */
+.src{display:inline-block;font:11px/1.4 ui-monospace,Menlo,monospace;color:#7a6f64;border:1px dashed #b8ad9e;border-radius:3px;padding:0 4px;margin-left:4px;vertical-align:2px;white-space:nowrap}
+body.clean .src{display:none}
+/* 表格 */
+.tbl{width:100%;border-collapse:collapse;font-size:14px;background:var(--paper-2)}
+.tbl th,.tbl td{border:1px solid var(--line);padding:6px 6px;text-align:center;vertical-align:middle}
+.tbl th{font-weight:normal;color:var(--ink-3);font-size:12.5px;background:rgba(236,228,212,.5)}
+.tbl .gz{font-family:var(--serif);font-size:28px;font-weight:600;line-height:1.2}
+.tbl .day{background:rgba(169,50,38,.05)}
+.tbl .hd span{display:block;font-size:12px;line-height:1.6;color:var(--ink-2)}
+.tbl.left td{text-align:left}
+.tbl.js td:first-child{font-family:var(--serif);white-space:nowrap;text-align:center}
+.tbl.adv td:first-child,.tbl.adv th:first-child{width:22%;color:var(--ink-3);font-size:13px}
+.tbl.adv td{line-height:1.6}
+.ver{font-size:11.5px;color:var(--ink-3);margin-top:10px;font-family:ui-monospace,Menlo,monospace}
+/* 图 */
+figure{margin:10px 0 20px;padding:14px 12px 12px;background:var(--paper-2);border:1px solid var(--line);border-radius:4px}
+figcaption{font-family:var(--serif);font-size:14px;color:var(--ink-2);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+figcaption b{font-weight:normal;color:var(--zhu);letter-spacing:2px}
+figure .note{font-size:12px;color:var(--ink-3);margin-top:8px;line-height:1.6}
+.bars{display:flex;flex-direction:column;gap:10px}
+.bar{display:grid;grid-template-columns:72px 1fr 40px 30px;align-items:center;gap:8px;font-size:13px}
+.bar .k{font-family:var(--serif);font-size:16px;white-space:nowrap}
+.bar .k small{font-family:var(--sans);font-size:11px;color:var(--ink-3);margin-left:3px}
+.bar .t{height:14px;background:var(--paper-3);border-radius:2px;overflow:hidden}
+.bar .t i{display:block;height:100%}
+.bar .v{text-align:right;font-variant-numeric:tabular-nums;color:var(--ink-2)}
+.role{font-size:11px;text-align:center;border-radius:2px;line-height:18px}
+.r-yong{background:var(--zhu);color:#fff}.r-xi{border:1px solid var(--zhu);color:var(--zhu)}.r-ji{border:1px solid var(--ink-3);color:var(--ink-3)}.r-xian{color:var(--ink-3)}
+svg text{font-family:var(--sans)}
+.legend{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:11.5px;color:var(--ink-2);margin-top:6px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px;vertical-align:-1px}
+/* 大运列表 */
+.yun{list-style:none;border-top:1px solid var(--line-2);margin:0 0 18px}
+.yun li{display:grid;grid-template-columns:66px 52px 1fr auto;gap:8px;align-items:center;padding:8px 2px;border-bottom:1px solid var(--line-2);font-size:13.5px}
+.yun li.past{color:var(--ink-3)}
+.yun li.cur{background:var(--zhu-bg);margin:0 -6px;padding:8px 8px}
+.yun .gz{font-family:var(--serif);font-size:18px;font-weight:600}
+.yun .age{font-size:12px;color:var(--ink-3);line-height:1.35}
+.tier{display:inline-block;font-size:12px;padding:0 6px;border-radius:2px;line-height:20px;white-space:nowrap}
+.t-1{background:var(--t1);color:#fff}.t-2{background:var(--t2);color:#fff}.t-3{background:var(--t3);color:#fff}.t-4{background:var(--t4);color:#fff}.t-5{background:var(--t5);color:#fff}
+/* 逐年卡片 */
+.yc{background:var(--paper-2);border:1px solid var(--line);border-radius:6px;margin:0 0 16px;overflow:hidden;break-inside:avoid}
+.yc header{display:flex;align-items:center;justify-content:space-between;padding:12px 14px 10px;border-bottom:1px solid var(--line-2)}
+.yc .yr{font-family:var(--serif);font-size:26px;font-weight:600;line-height:1.1}
+.yc .yr small{font-size:17px;margin-left:6px;letter-spacing:2px}
+.yc .side{text-align:right}
+.yc .tg{font-size:12.5px;color:var(--ink-2);margin-right:6px}
+.dots{display:inline-flex;gap:3px;margin-top:4px}
+.dots i{width:7px;height:7px;border-radius:50%;background:var(--paper-3)}
+.dots i.on{background:var(--ink-2)}
+.yc .lc{font-size:12px;color:var(--ink-3);padding:6px 14px 0}
+.yc .body{padding:6px 14px 14px}
+.yc .head{font-family:var(--serif);font-size:16px;line-height:1.85;margin-bottom:10px}
+.dom{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line-2);border:1px solid var(--line-2);border-radius:4px;overflow:hidden;margin-bottom:10px}
+.dom div{background:var(--paper-2);padding:8px 10px;font-size:13.5px;line-height:1.65}
+.dom b{display:block;font-family:var(--serif);font-size:13px;color:var(--zhu);font-weight:normal;letter-spacing:2px}
+.dw{display:grid;grid-template-columns:1fr;gap:8px}
+.dw div{font-size:13.5px;line-height:1.65;padding:8px 10px;border-radius:4px}
+.dw .do{background:rgba(169,50,38,.06)}
+.dw .wt{background:var(--paper-3)}
+.dw b{font-family:var(--serif);font-weight:600;margin-right:6px}
+.rel{margin-top:8px;font-size:13px;color:var(--ink-2);border:1px dashed var(--line);border-radius:4px;padding:7px 10px}
+.rel b{font-weight:normal;color:var(--zhu);margin-right:4px}
+.yc .basis{margin:10px 0 0}
+/* 结尾 */
+.end{margin-top:36px;padding-top:18px;border-top:1px solid var(--ink);text-align:center;font-size:12px;color:var(--ink-3);line-height:1.8}
+.end .seal{width:34px;height:34px;margin-bottom:6px}
+/* 底部操作条 */
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:30;background:rgba(251,248,242,.97);border-top:1px solid var(--line);padding:8px 12px max(8px,env(safe-area-inset-bottom))}
+.dock .in{max-width:680px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr 1.3fr;gap:8px}
+.dock .btn{width:100%}
+/* 长图浮层 */
+.ov{position:fixed;inset:0;background:rgba(30,26,23,.86);z-index:80;display:none;flex-direction:column;align-items:center;padding:20px 16px;overflow:auto;color:#F4EEE2}
+.ov.show{display:flex}
+.ov h3{font-family:var(--serif);font-size:18px;font-weight:normal;letter-spacing:2px;margin:8px 0 4px}
+.ov p{font-size:13px;opacity:.85;text-align:center}
+.ov .imgs{display:flex;gap:10px;margin:16px 0;overflow-x:auto;max-width:100%}
+.ov .img{flex:none;width:150px;height:300px;background:var(--paper-2);border-radius:2px;color:var(--ink);font-family:var(--serif);font-size:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;border:1px solid #fff}
+.ov .img b{font-size:22px;letter-spacing:4px}
+.ov .close{margin-top:8px;background:none;border:1px solid rgba(244,238,226,.5);color:#F4EEE2}
+
+/* ===== 长图版式（body.li）：固定 600 宽，去掉交互元素，加页眉页脚 ===== */
+.li-only{display:none}
+body.li{background:#cfc7b9}
+body.li .page{width:600px;max-width:none;padding:0 28px 28px;background:var(--paper);margin:20px auto;box-shadow:0 0 0 1px #bdb3a3}
+body.li .noli{display:none!important}
+body.li .li-only{display:block}
+.li-head{display:flex!important;justify-content:space-between;align-items:center;padding:14px 0 10px;border-bottom:1px solid var(--line);font-size:12px;color:var(--ink-3);font-family:var(--serif)}
+body:not(.li) .li-head{display:none!important}
+.li-foot{font-size:11.5px;color:var(--ink-3);text-align:center;padding:14px 0 6px;border-top:1px solid var(--line);margin-top:20px;line-height:1.7}
+.cut{margin:24px -28px;border-top:2px dashed var(--zhu);position:relative;height:0}
+.cut span{position:absolute;left:50%;top:-11px;transform:translateX(-50%);background:#cfc7b9;color:var(--zhu);font-size:12px;padding:0 8px;font-family:ui-monospace,Menlo,monospace}
+@media (min-width:768px){
+  .page{padding-top:26px}
+  .dw{grid-template-columns:1fr 1fr}
+}
+@media print{.noli,.proto,.dock{display:none!important}}
+</style>
+</head>
+<body>
+
+<details class="proto noli" open><summary>原型 · 报告页</summary>
+  <label><input type="checkbox" id="firstOpen" checked> 首次打开（强提示）</label>
+  <label><input type="checkbox" id="liMode"> 长图版式预览</label>
+  <label><input type="checkbox" id="clean"> 隐藏「文字来源」标记</label>
+  <a href="index.html">← 原型目录</a>
+  <span style="color:#8f857a">示例：C11 · 生成参考日 2026-10-29</span>
+</details>
+
+<main class="page">
+
+  <!-- 长图页眉（仅长图） -->
+  <div class="li-head li-only"><span>命书 · 戊土日主 · 男命</span><span>第 1 / 3 张</span></div>
+
+  <!-- 保存提示（PRD P0-8：页面顶部醒目提示） -->
+  <div class="notice first noli" id="notice">
+    <div class="t">请先保存这份报告</div>
+    <div class="full">
+      <ol>
+        <li>我们<b>不保存</b>你的出生信息和报告，<b>链接丢失将无法找回</b>。</li>
+        <li>微信里点右上角「···」→「收藏」，或复制链接存到备忘录。</li>
+        <li>也可以保存为长图，放进相册。</li>
+      </ol>
+    </div>
+    <div class="acts"><button class="btn pri" onclick="copyLink()">复制报告链接</button><button class="btn" onclick="openLI()">保存为长图</button></div>
+    <div class="s">链接里含有你的出生信息（仅编码、未加密），请勿公开分享。</div>
+  </div>
+
+  <!-- 封面 -->
+  <section class="cover">
+    <div class="ttl">命书</div>
+    <div class="sub">戊土日主 · 男命</div>
+    <div class="gz">
+      <div>辛酉<small>年</small></div><div>戊戌<small>月</small></div><div class="day">戊寅<small>日</small></div><div>戊午<small>时</small></div>
+    </div>
+    <div class="meta">公历 1981年10月27日 11:28 · 北京时间，未校正真太阳时<br>依 2026年10月29日排定 · 流年自 2026 丙午年起</div>
+    <span class="seal">知命</span>
+  </section>
+
+  <!-- 目录 -->
+  <nav class="toc" id="toc">
+    <h3>目录</h3>
+    <ol>
+      <li><a href="#c0"><b>〇</b><span>命盘总览</span><i>表</i></a></li>
+      <li><a href="#c1"><b>第一章</b><span>你的日主与旺衰</span><i>图一</i></a></li>
+      <li><a href="#c2"><b>第二章</b><span>喜用神详解</span><i></i></a></li>
+      <li><a href="#c3"><b>第三章</b><span>性格与天赋</span><i></i></a></li>
+      <li><a href="#c4"><b>第四章</b><span>行业、颜色、方位、数字</span><i>表</i></a></li>
+      <li><a href="#c5"><b>第五章</b><span>十年大运</span><i>图二</i></a></li>
+      <li><a href="#c6"><b>第六章</b><span>未来五年逐年</span><i>图三 · 卡片</i></a></li>
+      <li><a href="#c7"><b>第七章</b><span>事业、财运、感情、健康</span><i></i></a></li>
+      <li><a href="#c8"><b>第八章</b><span>方法说明与免责声明</span><i></i></a></li>
+    </ol>
+  </nav>
+
+  <!-- 〇 命盘总览 -->
+  <section class="ch" id="c0">
+    <div class="chh"><div class="no">〇</div><h2>命盘总览</h2></div>
+    <table class="tbl">
+      <tr><th></th><th>年柱</th><th>月柱</th><th class="day">日柱</th><th>时柱</th></tr>
+      <tr><th>十神</th><td>伤官</td><td>比肩</td><td class="day" style="color:var(--zhu)">日主</td><td>比肩</td></tr>
+      <tr><th>天干</th><td class="gz e-jin">辛</td><td class="gz e-tu">戊</td><td class="gz e-tu day">戊</td><td class="gz e-tu">戊</td></tr>
+      <tr><th>地支</th><td class="gz e-jin">酉</td><td class="gz e-tu">戌</td><td class="gz e-mu day">寅</td><td class="gz e-huo">午</td></tr>
+      <tr><th>藏干</th><td class="hd"><span>辛 伤官</span></td><td class="hd"><span>戊 比肩</span><span>辛 伤官</span><span>丁 正印</span></td><td class="hd day"><span>甲 七杀</span><span>丙 偏印</span><span>戊 比肩</span></td><td class="hd"><span>丁 正印</span><span>己 劫财</span></td></tr>
+    </table>
+    <div class="prose" style="margin-top:12px">
+      <p style="font-size:15px">四柱由出生的年、月、日、时各取一组天干地支组成，共八个字。日柱的天干「戊」代表你自己，其余七个字与它的关系，就是表中的「十神」。</p>
+    </div>
+    <div class="gray">时辰按北京时间排定，未做真太阳时校正。如出生地离东经 120° 较远，时柱可能不同，可补充出生地重新排盘。你的出生时间接近时辰交界，补充出生地后时柱可能变化。</div>
+
+    <table class="tbl left js" style="margin-top:14px">
+      <tr><th style="width:24%">吉神</th><th style="width:32%">位置</th><th>传统释义</th></tr>
+      <tr><td>天乙贵人</td><td>日支、时支（年干查得）</td><td>传统上被视为最重要的吉神，象征容易得到他人帮助与提携。</td></tr>
+      <tr><td>太极贵人</td><td>月支（日干查得）、日支（年干查得）</td><td>传统上象征悟性好，对哲理、玄学、研究类事物有兴趣。</td></tr>
+    </table>
+    <div class="gray">吉神为传统文化中的象征性说法，以日干、年干查得，多数命盘都有一个或几个；本报告的旺衰与喜用判断不使用它。</div>
+    <div class="ver">规则 r-3f9a2c1e · 素材库 v1 · 引擎 0.1.0（示意）</div>
+  </section>
+
+  <!-- 一 日主与旺衰 -->
+  <section class="ch" id="c1">
+    <div class="chh"><div class="no">第一章</div><h2>你的日主与旺衰</h2></div>
+    <div class="prose">
+      <p>你的日主<span class="gl">（你出生那天的天干，代表你自己）</span>是戊土，意象是高山与城墙。山的特点是厚重、稳定，不轻易被外力推动。这类日主给人的第一印象往往是可靠、有主见、说到做到，身边的人遇事也愿意来找你商量。它的另一面是，一旦拿定主意就不太愿意改；遇到需要快速转向的情况，先把别人的理由听完再决定，会让你的稳重更有分量。<span class="src">样板 CH1-DAYMASTER-WU</span></p>
+      <div class="basis">日主戊土</div>
+      <div class="quote">戊土固重，既中且正。<cite>——《滴天髓·天干论》 <span class="src">原文待底本核对</span></cite></div>
+
+      <p>你生在戌月，也就是寒露到立冬之间的深秋。戌月的本气是戊土，和你的日主完全同类，属于比劫<span class="gl">（和你同类、能帮你的力量）</span>当令，传统上叫「得令」：一年里最能给你撑腰的那个月份，正站在你这一边。再加上月干也透出戊土，你的根基从一开始就扎得很稳。<span class="src">示例文字</span></p>
+      <div class="basis">生于戌月，月令本气戊为比劫</div>
+    </div>
+
+    <figure>
+      <figcaption><b>图一</b>五行力量</figcaption>
+      <div class="bars">
+        <div class="bar"><span class="k e-mu">木<small>官杀</small></span><span class="t"><i style="width:8%;background:var(--mu)"></i></span><span class="v">8%</span><span class="role r-xian">闲</span></div>
+        <div class="bar"><span class="k e-huo">火<small>印星</small></span><span class="t"><i style="width:25%;background:var(--huo)"></i></span><span class="v">25%</span><span class="role r-ji">忌</span></div>
+        <div class="bar"><span class="k e-tu">土<small>比劫</small></span><span class="t" style="outline:1px solid var(--zhu);outline-offset:1px"><i style="width:45%;background:var(--tu)"></i></span><span class="v">45%</span><span class="role r-ji">忌</span></div>
+        <div class="bar"><span class="k e-jin">金<small>食伤</small></span><span class="t"><i style="width:22%;background:var(--jin)"></i></span><span class="v">22%</span><span class="role r-yong">用</span></div>
+        <div class="bar"><span class="k e-shui">水<small>财星</small></span><span class="t"></span><span class="v">0%</span><span class="role r-xi">喜</span></div>
+      </div>
+      <div class="note">红框为日主所在五行。图中占比包含日主本身；正文中的百分比不含日主，所以比劫在正文中为 40%。同党（帮扶你的力量）占 68%，异党（消耗你的力量）占 32%。</div>
+    </figure>
+
+    <div class="prose">
+      <p>把四柱的力量全部计入：帮扶你的一方占 68%，其中比劫 40%、印星<span class="gl">（生扶你、给你支持的力量）</span>28%；寅、午、戌三支会成火局，火又生土，帮扶的力量再加一层。消耗你的一方合计 32%，最强的是食伤<span class="gl">（你向外输出的才华与表达）</span>，占 24%，来自年柱辛酉。打个比方：你手里的资源和底气都很足，真正需要考虑的，是这些力量往哪里用。<span class="src">示例文字</span></p>
+      <div class="basis">同党 68%（比劫 40%、印星 28%）；异党最强 食伤 24%；寅午戌三合火局</div>
+      <p>综合来看，你的日主属于「身旺」。身旺不等于运气好，它描述的是一种结构：能量充足、自我驱动力强，更适合主动出击、把力量转化成成果；反过来，如果长期没有出口，就容易固执，或者憋着一股劲。下一章会讲，哪几种五行能帮你把这股力量用出去。<span class="src">示例文字</span></p>
+      <div class="basis">规则 S-LEVEL：身旺</div>
+    </div>
+  </section>
+
+  <!-- 二 喜用神 -->
+  <section class="ch" id="c2">
+    <div class="chh"><div class="no">第二章</div><h2>喜用神详解</h2></div>
+    <div class="prose">
+      <p>先看扶抑。你的命局偏旺，帮扶力量占 68%，其中又以比劫为主，占 40%——和你同类的力量很多。按古法，比劫过重本该由官杀<span class="gl">（外部的规则、要求与压力，也是推动力）</span>来约束，但你命中官杀只占 8%，担不起这个角色；于是改用食伤，把多余的能量「泄」出去，古人称为「泄秀」。落到生活里，就是把精力转化成作品、技能和表达。按扶抑这一步，金为用，水为喜，土与火需要节制。<span class="src">样板 CH2-METHOD-S-BI-SHI</span></p>
+      <div class="basis">规则 Y-FY-S-BI-SHI</div>
+    </div>
+    <div class="summary">综合以上，你的用神<span style="font-size:.78em;color:var(--ink-3)">（对你最有帮助的五行）</span>是<b class="e-jin">金</b>，喜神是<b class="e-shui">水</b>，需要节制的是土、火，木为闲神。</div>
+    <div class="prose">
+      <h4>金 · 用神</h4>
+      <p>金在你的命局里是食伤，占 24%，主要来自年柱辛酉。它代表把想法变成作品、把能力变成可以交付的东西。对身旺的你来说，这是最顺的出口：输出越充分，整体越平衡。<span class="src">示例文字</span></p>
+      <div class="basis">金是你的食伤，占 24%</div>
+      <h4>水 · 喜神</h4>
+      <p>水是你的财星<span class="gl">（你能掌握和运用的资源）</span>，原局里没有。食伤生财，金的输出最终要落到水这里，才变成实际的收获。原局缺水，意味着这一环要靠后天的环境和大运、流年来补；遇到水旺的阶段，往往是付出开始兑现的时候。<span class="src">示例文字</span></p>
+      <div class="basis">水是你的财星，占 0%</div>
+      <h4>土、火 · 需要节制</h4>
+      <p>土是你的比劫，占 40%；火是你的印星，占 28%。它们本来都是帮你的力量，但在你的命局里已经足够多。再加强它们，就像给已经装满的水缸继续注水——不是坏事，只是用不上，还可能让你更固执、更闷。所以不必回避，只是不必刻意追求。<span class="src">示例文字</span></p>
+      <div class="basis">土是你的比劫，占 40%；火是你的印星，占 28%</div>
+    </div>
+  </section>
+
+  <div class="cut li-only"><span>长图 1/3 到此 · 下一张从第三章开始</span></div>
+  <div class="li-head li-only"><span>命书 · 戊土日主 · 男命</span><span>第 2 / 3 张</span></div>
+
+  <!-- 三 性格与天赋 -->
+  <section class="ch" id="c3">
+    <div class="chh"><div class="no">第三章</div><h2>性格与天赋</h2></div>
+    <div class="persona">高山之象：独立自主、敢说敢创，<br>自我驱动力强。</div>
+    <div class="basis" style="justify-content:center">日干戊；比肩、伤官 <span class="src">代码模板，示例取值</span></div>
+    <div class="prose">
+      <p>戊土为人，重在「稳」与「信」。你答应的事会尽量做到，不太喜欢临时变卦，也不喜欢别人临时变卦。在群体里，你常常是那个托底的人：事情乱的时候，大家会下意识看你怎么说。相应地，你对节奏有自己的坚持，被催促、被打乱时容易不耐烦；提前说明自己的节奏，比事后闷着不高兴更有效。<span class="src">示例文字</span></p>
+      <div class="basis">日主戊</div>
+      <p>月干比肩透出，你身上有很强的「自己来」的劲：重朋友、讲平等，不喜欢被安排。比劫在你的命局里偏多，这股劲用在独立负责一块业务时是优势；用在合作分工上，则要注意给别人留出位置，把边界和分配提前说清楚。<span class="src">示例文字</span></p>
+      <div class="basis">月干比肩，比劫占 40%</div>
+      <p>年干伤官透出，而且正是你的用神方向。伤官的人才华外露、敢说敢创，看到不合理的地方忍不住要提出来。对你来说，这是最值得经营的一项天赋：写作、讲解、设计方案、做产品，都是它的出口。表达时先肯定再建议，能让你的意见更容易被采纳。<span class="src">示例文字</span></p>
+      <div class="basis">年干伤官，食伤占 24%</div>
+      <p>做事上，你倾向于先定方向再动手，一旦决定就有很强的推进力，不太依赖别人的认可，适合承担需要拍板和担责的角色。需要留意的是节奏差：别人还在讨论时你已经想好了，多花一分钟解释你的思路，团队会跟得更顺。<span class="src">示例文字</span></p>
+      <div class="basis">同党 68%</div>
+      <p>你最强的力量是比劫，占 40%。它给你的是自主、扛事、能带动同伴；可以留意的是，容易什么都想自己做。把一部分事交出去，再用食伤的方式——写清楚、讲明白——去带人，是把这份力量放大的办法。<span class="src">示例文字</span></p>
+      <div class="basis">最强十神组 比劫 40%</div>
+      <p>命书里常提到的天乙贵人，在你的命盘中也能查到。古人认为它象征容易得到他人的帮助与提携。放到今天，可以理解为：当你愿意主动开口、真诚待人时，身边的人也更愿意搭把手。<span class="src">示例文字</span></p>
+      <div class="basis">吉神 天乙贵人（日支、时支）</div>
+    </div>
+  </section>
+
+  <!-- 四 行业颜色方位数字 -->
+  <section class="ch" id="c4">
+    <div class="chh"><div class="no">第四章</div><h2>行业、颜色、方位、数字</h2></div>
+    <table class="tbl adv left">
+      <tr><th></th><th style="text-align:center"><span class="e-jin" style="font-family:var(--serif);font-size:18px">金</span> 用神</th><th style="text-align:center"><span class="e-shui" style="font-family:var(--serif);font-size:18px">水</span> 喜神</th></tr>
+      <tr><td>颜色</td><td>白、金、银</td><td>黑、蓝、灰</td></tr>
+      <tr><td>方位</td><td>西</td><td>北</td></tr>
+      <tr><td>数字</td><td>4、9</td><td>1、6</td></tr>
+      <tr><td>季节</td><td>秋</td><td>冬</td></tr>
+      <tr><td>行业方向</td><td>金融、法律、机械 / 制造、IT 硬件、精密技术</td><td>贸易、运输 / 航运、旅游、咨询策划、水产 / 饮品</td></tr>
+    </table>
+    <div class="gray">需要节制的土、火不必刻意回避，只是不必再加强。行业方向为传统五行的现代引申，流派差异较大，可以优先考虑，不是「只能做」。</div>
+    <div class="prose">
+      <p>之所以是金和水：你的命局土旺、火也旺，力量充足却缺出口。金由土所生，承接你多出来的能量，变成技能和作品；水由金所生，把作品转成实际的收获，同时润泽偏燥的土。两者一前一后，正好构成「输出 → 收获」的链条。<span class="src">示例文字</span></p>
+      <div class="basis">用神 金、喜神 水</div>
+      <p>生活里的金，对应秋季、西方、白色与金属质感，可以理解为「收敛与精确」：给自己留出整块的专注时间，做事讲标准、重收尾。<span class="src">示例文字</span></p>
+      <p>生活里的水，对应冬季、北方、黑蓝灰，可以理解为「流动与交换」：多走动、多交流信息，出差、短住另一座城市，都容易带来新的视角。<span class="src">示例文字</span></p>
+      <p style="font-size:14.5px;color:var(--ink-2)">以上是传统五行的对应关系，适合在你本来就要做选择时多一个参考角度。本报告不推荐任何投资品种，也不建议为此购买任何物品。</p>
+    </div>
+  </section>
+
+  <!-- 五 十年大运 -->
+  <section class="ch" id="c5">
+    <div class="chh"><div class="no">第五章</div><h2>十年大运</h2></div>
+    <div class="prose">
+      <p>大运<span class="gl">（每十年一段的整体运势背景）</span>决定的是一段时间的「底色」。你在 1988 年 1 月起运，那年约 6 岁；按阴年男命逆排，大运从月柱戊戌往前推，每十年换一步。下图画出了全部 8 步。<span class="src">示例文字</span></p>
+      <div class="basis">起运 1988年1月29日（约 6 岁），逆排</div>
+    </div>
+
+    <figure>
+      <figcaption><b>图二</b>大运时间轴</figcaption>
+      <svg viewBox="0 0 340 206" width="100%" role="img" aria-label="8 步大运评分柱状图，当前为甲午运，评为宜稳守">
+        <rect x="130" y="24" width="40" height="178" fill="#F6E6E0"/>
+        <text x="150" y="36" text-anchor="middle" font-size="9.5" fill="#A93226">当前</text>
+        <line x1="8" y1="100" x2="332" y2="100" stroke="#2A2521" stroke-width="1"/>
+        <line x1="8" y1="80" x2="332" y2="80" stroke="#DCD2C1" stroke-dasharray="3 3"/>
+        <line x1="8" y1="120" x2="332" y2="120" stroke="#DCD2C1" stroke-dasharray="3 3"/>
+        <line x1="8" y1="40" x2="332" y2="40" stroke="#E9E1D3" stroke-dasharray="2 4"/>
+        <line x1="8" y1="160" x2="332" y2="160" stroke="#E9E1D3" stroke-dasharray="2 4"/>
+        <g font-family="Songti SC, STSong, Noto Serif SC, serif" font-size="14" font-weight="600" text-anchor="middle" fill="#2A2521">
+          <text x="30" y="18" opacity=".45">丁酉</text><text x="70" y="18" opacity=".45">丙申</text><text x="110" y="18" opacity=".45">乙未</text><text x="150" y="18" fill="#A93226">甲午</text>
+          <text x="190" y="18">癸巳</text><text x="230" y="18">壬辰</text><text x="270" y="18">辛卯</text><text x="310" y="18">庚寅</text>
+        </g>
+        <g>
+          <rect x="19" y="60" width="22" height="40" fill="#C9806F" opacity=".45"/>
+          <rect x="59" y="81" width="22" height="19" fill="#B8AD9E" opacity=".45"/>
+          <rect x="99" y="100" width="22" height="45" fill="#7F93A3" opacity=".45"/>
+          <rect x="139" y="100" width="22" height="39" fill="#7F93A3" stroke="#A93226" stroke-width="1.5"/>
+          <rect x="179" y="86" width="22" height="14" fill="#B8AD9E"/>
+          <rect x="219" y="100" width="22" height="13" fill="#B8AD9E"/>
+          <rect x="259" y="60" width="22" height="40" fill="#C9806F"/>
+          <rect x="299" y="75" width="22" height="25" fill="#C9806F"/>
+        </g>
+        <g font-size="9.5" text-anchor="middle" fill="#5C534A">
+          <text x="30" y="56">向好</text><text x="70" y="77">平稳</text><text x="110" y="156">宜稳守</text><text x="150" y="150" fill="#A93226">宜稳守</text>
+          <text x="190" y="82">平稳</text><text x="230" y="124">平稳</text><text x="270" y="56">向好</text><text x="310" y="71">向好</text>
+        </g>
+        <g font-size="10" text-anchor="middle" fill="#8F857A">
+          <text x="30" y="180">6岁</text><text x="70" y="180">16</text><text x="110" y="180">26</text><text x="150" y="180" fill="#A93226">36</text><text x="190" y="180">46</text><text x="230" y="180">56</text><text x="270" y="180">66</text><text x="310" y="180">76</text>
+          <text x="30" y="196">1988</text><text x="70" y="196">1998</text><text x="110" y="196">2008</text><text x="150" y="196" fill="#A93226">2018</text><text x="190" y="196">2028</text><text x="230" y="196">2038</text><text x="270" y="196">2048</text><text x="310" y="196">2058</text>
+        </g>
+      </svg>
+      <div class="legend"><span><i style="background:var(--t1)"></i>顺势期</span><span><i style="background:var(--t2)"></i>向好</span><span><i style="background:var(--t3)"></i>平稳</span><span><i style="background:var(--t4)"></i>宜稳守</span><span><i style="background:var(--t5)"></i>宜保守、打基础</span></div>
+      <div class="note">柱子向上表示这十年的五行对你较有利，向下表示更需要稳守；颜色与文字标签一一对应。淡色为已经走过的大运。</div>
+    </figure>
+
+    <ol class="yun">
+      <li class="past"><span class="age">6–15 岁<br>1988–1997</span><span class="gz">丁酉</span><span>正印</span><span class="tier t-2">向好</span></li>
+      <li class="past"><span class="age">16–25 岁<br>1998–2007</span><span class="gz">丙申</span><span>偏印</span><span class="tier t-3">平稳</span></li>
+      <li class="past"><span class="age">26–35 岁<br>2008–2017</span><span class="gz">乙未</span><span>正官</span><span class="tier t-4">宜稳守</span></li>
+      <li class="cur"><span class="age" style="color:var(--zhu)">36–45 岁<br>2018–2027</span><span class="gz" style="color:var(--zhu)">甲午</span><span>七杀 · 当前</span><span class="tier t-4">宜稳守</span></li>
+      <li><span class="age">46–55 岁<br>2028–2037</span><span class="gz">癸巳</span><span>正财 · 下一步</span><span class="tier t-3">平稳</span></li>
+      <li><span class="age">56–65 岁<br>2038–2047</span><span class="gz">壬辰</span><span>偏财</span><span class="tier t-3">平稳</span></li>
+      <li><span class="age">66–75 岁<br>2048–2057</span><span class="gz">辛卯</span><span>伤官</span><span class="tier t-2">向好</span></li>
+      <li><span class="age">76–85 岁<br>2058–2067</span><span class="gz">庚寅</span><span>食神</span><span class="tier t-2">向好</span></li>
+    </ol>
+
+    <div class="prose">
+      <p>已经走过的三步是丁酉（向好）、丙申（平稳）、乙未（宜稳守）。回头看，6–25 岁这段，学习与技能上的积累相对顺手；26–35 岁的乙未运，规矩和压力更多，也更考验耐心。可以拿自己的经历对照一下。<span class="src">示例文字</span></p>
+      <div class="basis">丁酉 向好、丙申 平稳、乙未 宜稳守</div>
+      <h4>当前 · 甲午运（2018–2027）</h4>
+      <p>天干甲木是七杀<span class="gl">（力度较强的压力与挑战，也逼你成长）</span>，这十年外部的要求和考核是主线：责任变大、标准变高。地支午火又加强了你本已偏旺的火土，所以整体评为「宜稳守」。这不是坏运，而是「压担子」的十年：适合在一个平台里把位置坐稳、把专业做深，不适合频繁换赛道。<span class="src">示例文字</span></p>
+      <div class="basis">甲午（2018–2027）天干七杀，宜稳守</div>
+      <h4>下一步 · 癸巳运（2028–2037）</h4>
+      <p>天干癸水是正财，正是你命局里缺的水。财星透出，「输出 → 收获」的链条开始接上；地支巳火仍偏旺，所以整体为平稳。这十年适合把前面积累的专业和资源，变成更稳定的回报。<span class="src">示例文字</span></p>
+      <div class="basis">癸巳（2028–2037）天干正财，平稳</div>
+      <p>2027 到 2029 年是两步大运的交接期。过渡阶段不必急着做大决定：可以用 2027 年做盘点，2028 年起再逐步调整方向。<span class="src">示例文字</span></p>
+      <div class="basis">换运年 2028</div>
+      <p>再往后的三步是壬辰（平稳）、辛卯（向好）、庚寅（向好）。金水渐多，整体比当前更顺。<span class="src">示例文字</span></p>
+      <div class="basis">壬辰 平稳、辛卯 向好、庚寅 向好</div>
+    </div>
+  </section>
+
+  <div class="cut li-only"><span>长图 2/3 到此 · 下一张从第六章开始</span></div>
+  <div class="li-head li-only"><span>命书 · 戊土日主 · 男命</span><span>第 3 / 3 张</span></div>
+
+  <!-- 六 未来五年 -->
+  <section class="ch" id="c6">
+    <div class="chh"><div class="no">第六章</div><h2>未来五年逐年</h2></div>
+    <figure>
+      <figcaption><b>图三</b>流年趋势（2026–2030）</figcaption>
+      <svg viewBox="0 0 340 206" width="100%" role="img" aria-label="2026 至 2030 年流年趋势：前两年宜稳守，2028 年起转为平稳">
+        <rect x="36" y="35" width="296" height="40" fill="#C9806F" opacity=".12"/>
+        <rect x="36" y="75" width="296" height="40" fill="#B8AD9E" opacity=".16"/>
+        <rect x="36" y="115" width="296" height="40" fill="#7F93A3" opacity=".16"/>
+        <g font-size="9" fill="#8F857A"><text x="2" y="58">向好</text><text x="2" y="98">平稳</text><text x="2" y="132">宜</text><text x="2" y="143">稳守</text><text x="2" y="30">顺势</text><text x="2" y="168">宜保守</text></g>
+        <line x1="150" y1="28" x2="150" y2="166" stroke="#A93226" stroke-dasharray="3 3"/>
+        <text x="153" y="34" font-size="9" fill="#A93226">2028 起 癸巳运</text>
+        <polyline points="60,136 120,139 180,106.5 240,81 300,81.5" fill="none" stroke="#2A2521" stroke-width="1.6"/>
+        <g fill="#FBF8F2" stroke="#2A2521" stroke-width="1.6">
+          <circle cx="60" cy="136" r="4.5" fill="#2A2521"/><circle cx="120" cy="139" r="4"/><circle cx="180" cy="106.5" r="4"/><circle cx="240" cy="81" r="4"/><circle cx="300" cy="81.5" r="4"/>
+        </g>
+        <g font-size="10" fill="#2A2521" text-anchor="middle">
+          <text x="60" y="186">2026</text><text x="120" y="186">2027</text><text x="180" y="186">2028</text><text x="240" y="186">2029</text><text x="300" y="186">2030</text>
+        </g>
+        <g font-size="12" fill="#5C534A" text-anchor="middle" font-family="Songti SC, STSong, Noto Serif SC, serif">
+          <text x="60" y="201">丙午</text><text x="120" y="201">丁未</text><text x="180" y="201">戊申</text><text x="240" y="201">己酉</text><text x="300" y="201">庚戌</text>
+        </g>
+        <text x="60" y="124" font-size="9" fill="#A93226" text-anchor="middle">今年</text>
+      </svg>
+      <div class="note">每年以立春为界。底色区间对应卡片上的标签：向好、平稳、宜稳守等。</div>
+    </figure>
+
+    <!-- 卡片 2026 -->
+    <article class="yc">
+      <header><div class="yr">2026<small>丙午年</small></div><div class="side"><span class="tg">偏印</span><span class="tier t-4">宜稳守</span><br><span class="dots" aria-label="五档中的第二档"><i></i><i class="on"></i><i></i><i></i><i></i></span></div></header>
+      <div class="lc">2026年2月4日 04:02 立春起 · 所在大运 甲午</div>
+      <div class="body">
+        <p class="head">偏印主事的一年，适合学习、沉淀和梳理方向，不适合同时铺开太多新摊子。火土本就偏旺，今年再添火，容易想得多、动得少，给自己定几个能量化的小目标会更踏实。<span class="src">示例文字</span></p>
+        <div class="dom">
+          <div><b>事业</b>适合补技能、考证或做内部优化；大的岗位变动可以放到后两年再评估。</div>
+          <div><b>财运</b>以守为主，开支做预算，大额支出多比较几家。</div>
+          <div><b>感情</b>沟通容易各说各话，有事当天说清，少用沉默代替表达。</div>
+          <div><b>健康</b>火旺之年，留意作息规律，把晚睡的习惯慢慢调回来。</div>
+        </div>
+        <div class="dw">
+          <div class="do"><b>适合做</b>上半年完成一项证书或系统课程；把手头项目整理出一份可展示的成果。</div>
+          <div class="wt"><b>留意</b>情绪上头时先不做重大决定；重要合同多留一天再签。</div>
+        </div>
+        <div class="basis">流年天干丙为偏印，属需要节制的火；评分 −0.82，落在「宜稳守」区间</div>
+      </div>
+    </article>
+
+    <!-- 卡片 2027 -->
+    <article class="yc">
+      <header><div class="yr">2027<small>丁未年</small></div><div class="side"><span class="tg">正印</span><span class="tier t-4">宜稳守</span><br><span class="dots"><i></i><i class="on"></i><i></i><i></i><i></i></span></div></header>
+      <div class="lc">2027年2月4日 09:46 立春起 · 所在大运 甲午（最后一年）</div>
+      <div class="body">
+        <p class="head">正印之年，来自长辈、平台和体系的支持较多，但火土继续偏重，节奏宜慢不宜快。这也是当前大运的最后一年，适合为下一个十年做准备：盘点技能、整理人脉、想清楚接下来往哪里走。<span class="src">示例文字</span></p>
+        <div class="dom">
+          <div><b>事业</b>借助现有平台的资源做一次复盘，把经验沉淀成方法。</div>
+          <div><b>财运</b>延续稳健节奏，给明年的调整预留一笔缓冲。</div>
+          <div><b>感情</b>家里的事多商量，长辈的意见可以听，但决定由你们自己做。</div>
+          <div><b>健康</b>脾胃与饮食规律值得多花点心思，少吃过于油腻的东西。</div>
+        </div>
+        <div class="dw">
+          <div class="do"><b>适合做</b>年中做一次职业盘点，写下未来三年想做成的两三件事。</div>
+          <div class="wt"><b>留意</b>不要因为对现状不满就仓促离开，换环境的决定放到明年更合适。</div>
+        </div>
+        <div class="basis">流年天干丁为正印，属需要节制的火；评分 −0.88，落在「宜稳守」区间</div>
+      </div>
+    </article>
+
+    <!-- 卡片 2028 -->
+    <article class="yc">
+      <header><div class="yr">2028<small>戊申年</small></div><div class="side"><span class="tg">比肩</span><span class="tier t-3">平稳</span><br><span class="dots"><i></i><i></i><i class="on"></i><i></i><i></i></span></div></header>
+      <div class="lc">2028年2月4日 15:31 立春起 · 所在大运 癸巳（新一步第一年）</div>
+      <div class="body">
+        <p class="head">交入新大运的第一年。天干比肩，同辈之间合作与竞争并存；地支申金正是你的用神方向，做事的出口变多，年度整体转为平稳。<span class="src">示例文字</span></p>
+        <div class="dom">
+          <div><b>事业</b>适合启动酝酿已久的计划，技术、内容类的项目更容易推进。</div>
+          <div><b>财运</b>和朋友合作时，分工和分配写在前面。</div>
+          <div><b>感情</b>生活节奏变化大，重要安排提前商量，避免各自做决定。</div>
+          <div><b>健康</b>变动多的年份，保持固定的运动习惯，给自己一个稳定的锚。</div>
+        </div>
+        <div class="dw">
+          <div class="do"><b>适合做</b>上半年确定新方向的第一步，例如申请转岗、开一个副业项目。</div>
+          <div class="wt"><b>留意</b>搬家、换工作等变动集中时，一次只推进一件。</div>
+        </div>
+        <div class="rel"><b>与日支相冲</b>流年申与日支寅相冲：生活或关系上变动较多，适合主动规划。</div>
+        <div class="basis">流年天干戊为比肩；申冲寅（日支）；评分 −0.23，落在「平稳」区间</div>
+      </div>
+    </article>
+
+    <!-- 卡片 2029 -->
+    <article class="yc">
+      <header><div class="yr">2029<small>己酉年</small></div><div class="side"><span class="tg">劫财</span><span class="tier t-3">平稳</span><br><span class="dots"><i></i><i></i><i class="on"></i><i></i><i></i></span></div></header>
+      <div class="lc">2029年2月3日 21:20 立春起 · 所在大运 癸巳</div>
+      <div class="body">
+        <p class="head">地支酉金为用，表达和技术上的投入开始见到回报；天干劫财，合作机会多，分账和权责要事先讲清。<span class="src">示例文字</span></p>
+        <div class="dom">
+          <div><b>事业</b>适合对外展示成果：发表、演讲、作品集、行业交流。</div>
+          <div><b>财运</b>收入渠道可以多一条，但支出也容易被人情带动。</div>
+          <div><b>感情</b>朋友圈活跃，留出固定的两人时间。</div>
+          <div><b>健康</b>秋季注意呼吸道与皮肤的保养，换季及时添衣。</div>
+        </div>
+        <div class="dw">
+          <div class="do"><b>适合做</b>把过去两年的积累整理成一个可以对外的作品或课程。</div>
+          <div class="wt"><b>留意</b>借款、担保类的事情量力而行，写清条件。</div>
+        </div>
+        <div class="basis">流年天干己为劫财，地支酉金为用神；评分 0.28，落在「平稳」区间</div>
+      </div>
+    </article>
+
+    <!-- 卡片 2030 -->
+    <article class="yc">
+      <header><div class="yr">2030<small>庚戌年</small></div><div class="side"><span class="tg">食神</span><span class="tier t-3">平稳</span><br><span class="dots"><i></i><i></i><i class="on"></i><i></i><i></i></span></div></header>
+      <div class="lc">2030年2月4日 03:08 立春起 · 所在大运 癸巳</div>
+      <div class="body">
+        <p class="head">食神透出，适合把积累的技能变成作品或服务，节奏从容；地支戌土偏重，别让琐事占满时间。<span class="src">示例文字</span></p>
+        <div class="dom">
+          <div><b>事业</b>适合做教学、带新人、打磨产品细节这类「慢功夫」。</div>
+          <div><b>财运</b>按成果取酬的收入更顺，可以尝试按项目报价。</div>
+          <div><b>感情</b>相处轻松的一年，一起培养一个共同爱好。</div>
+          <div><b>健康</b>久坐的工作记得定时起身活动。</div>
+        </div>
+        <div class="dw">
+          <div class="do"><b>适合做</b>选一个最擅长的方向，做成可以复用的方法或产品。</div>
+          <div class="wt"><b>留意</b>事务性工作容易堆积，年初就把不重要的事减下去。</div>
+        </div>
+        <div class="basis">流年天干庚为食神，属用神金；评分 0.27，落在「平稳」区间</div>
+      </div>
+    </article>
+  </section>
+
+  <!-- 七 分领域 -->
+  <section class="ch" id="c7">
+    <div class="chh"><div class="no">第七章</div><h2>事业、财运、感情、健康</h2></div>
+    <div class="prose">
+      <h4>事业</h4>
+      <p>你的有利方向是食伤，也就是靠技术、内容和个人能力吃饭的路子：做专业、做产品、做方案、讲课写作，都比纯粹的协调管理更能发挥你。偏旺的结构让你适合独立负责一块完整的事情，有自己的作品和署名。<span class="src">示例文字</span></p>
+      <div class="basis">食伤为用神，占 24%；当前大运天干七杀</div>
+      <p>眼下的甲午运七杀主事，组织对你的要求偏多。与其和规则较劲，不如把专业做成别人离不开的部分，用作品换取话语权。<span class="src">示例文字</span></p>
+      <div class="basis">当前大运 甲午</div>
+      <h4>财运</h4>
+      <p>财星在你的命局里是喜神，但原局没有：赚钱的能力不缺，缺的是把能力稳定地变成收入的通道。你更倾向于靠专业服务、按成果取酬获得收入，而不是靠碰运气的机会。2028 年起的癸巳运财星透出，比较适合积累；2026、2027 年以守为主。<span class="src">示例文字</span></p>
+      <div class="basis">财 0%，为喜神</div>
+      <h4>感情</h4>
+      <p>你的伴侣星是水，属于喜神，但原局中没有。这通常意味着你看重感情，却容易把精力放在事业上，忘了表达。日支坐七杀，伴侣多半个性鲜明、有自己的主见，相处时多一些商量、少一些拍板，关系会更舒服。<span class="src">示例文字</span></p>
+      <div class="basis">伴侣星 0%，为喜神；日支七杀</div>
+      <p>2028 年流年与日支相冲，关系上需要多沟通：重要的安排提前商量，避免在忙乱中各自做决定。<span class="src">示例文字</span></p>
+      <div class="basis">2028 戊申：申冲寅（日支）</div>
+      <h4>健康</h4>
+      <p>从五行看，你的水在原局中没有，土、火偏旺。传统上水对应肾与泌尿系统，可以多留意作息、饮水与保暖，避免长期熬夜和久坐。<span class="src">示例文字</span></p>
+      <div class="basis">水占 0%</div>
+      <p style="font-size:14.5px;color:var(--ink-2)">以上只是传统文化角度的生活提示，身体不适请及时就医。</p>
+    </div>
+  </section>
+
+  <!-- 八 方法说明 -->
+  <section class="ch" id="c8">
+    <div class="chh"><div class="no">第八章</div><h2>方法说明与免责声明</h2></div>
+    <div class="prose">
+      <p style="font-size:15px">这份报告怎么来的：四柱、节气、大运、流年由代码精确计算；旺衰、喜用神由公开的规则计分得出；文字来自人工审核过的素材库，按你的命盘结论选取。运行时没有使用 AI 生成，同样的四柱与性别，报告文字完全一致。</p>
+    </div>
+    <table class="tbl adv left" style="margin-top:6px">
+      <tr><td>版本</td><td>规则 r-3f9a2c1e · 素材库 v1 · 引擎 0.1.0（示意）</td></tr>
+      <tr><td>子时口径</td><td>早晚子时派：23:00–24:00 出生，日柱仍算当天</td></tr>
+      <tr><td>真太阳时</td><td>本份未校正（未选择出生地），按北京时间排盘</td></tr>
+      <tr><td>格局</td><td>只认「真从格」，其余按扶抑取用</td></tr>
+      <tr><td>已知局限</td><td>不计合化、刑冲对力量的影响；季节对天干的影响只间接体现；吉神、纳音、空亡不参与任何判断</td></tr>
+      <tr><td>吉神</td><td>仅作传统文化点缀，多数命盘都有，不影响旺衰与喜用</td></tr>
+    </table>
+    <div class="gray" style="margin-top:14px">本报告是传统文化参考与娱乐内容，不构成医疗、投资、法律或任何专业建议；文中「倾向」「适合」「可以留意」均为参考性表述，不是对未来的断言。</div>
+  </section>
+
+  <div class="end">
+    <span class="seal">知命</span><br>
+    传统文化参考 · 不构成专业建议<br>
+    <span class="noli"><a href="legal.html#privacy">隐私说明</a> · <a href="legal.html#disclaimer">免责声明</a> · <a href="legal.html#contact">联系我们 / 退款</a></span>
+  </div>
+
+  <div class="li-foot li-only">长图由你的手机本地生成，服务器不保存 · 生成于 2026-10-29<br>图中含出生信息，请勿公开发布 · 传统文化参考，不构成专业建议</div>
+</main>
+
+<!-- 底部操作条 -->
+<div class="dock noli"><div class="in">
+  <a class="btn" href="#toc">目录</a>
+  <button class="btn" onclick="copyLink()">复制链接</button>
+  <button class="btn pri" onclick="openLI()">保存长图</button>
+</div></div>
+
+<!-- 长图生成浮层（示意） -->
+<div class="ov noli" id="ov">
+  <h3 id="ovT">正在生成长图……</h3>
+  <p id="ovP">在你的手机上生成，不经过服务器，约需几秒。</p>
+  <div class="imgs" id="imgs" style="visibility:hidden">
+    <div class="img"><b>命书</b>1 / 3<span style="font-size:11px;color:#8f857a">总览 · 第一、二章</span></div>
+    <div class="img"><b>命书</b>2 / 3<span style="font-size:11px;color:#8f857a">第三至五章</span></div>
+    <div class="img"><b>命书</b>3 / 3<span style="font-size:11px;color:#8f857a">第六至八章</span></div>
+  </div>
+  <p style="font-size:12px">图中含出生信息，请勿公开发布。电脑上可直接下载图片，或用浏览器「打印 → 存为 PDF」。</p>
+  <button class="btn close" onclick="closeLI()">完成</button>
+</div>
+
+<script>
+// —— 原型演示脚本 ——
+function $(s){return document.querySelector(s)}
+$('#firstOpen').onchange=function(){var n=$('#notice');
+  if(this.checked){n.classList.add('first');n.querySelector('.t').textContent='请先保存这份报告';n.querySelector('.full').style.display='block'}
+  else{n.classList.remove('first');n.querySelector('.t').textContent='链接丢失无法找回，请收藏本页或保存为长图';n.querySelector('.full').style.display='none'}};
+$('#liMode').onchange=function(){document.body.classList.toggle('li',this.checked);window.scrollTo(0,0)};
+$('#clean').onchange=function(){document.body.classList.toggle('clean',this.checked)};
+function copyLink(){alert('已复制报告链接。\n\n建议：发到微信「文件传输助手」或存进备忘录。\n链接含出生信息，请勿公开分享。')}
+function openLI(){$('#ov').classList.add('show');$('#imgs').style.visibility='hidden';$('#ovT').textContent='正在生成长图……';$('#ovP').textContent='在你的手机上生成，不经过服务器，约需几秒。';
+  setTimeout(function(){$('#imgs').style.visibility='visible';$('#ovT').textContent='长按图片，保存到相册';$('#ovP').textContent='共 3 张，按章节分段，左右滑动查看。'},900)}
+function closeLI(){$('#ov').classList.remove('show')}
+</script>
+</body>
+</html>

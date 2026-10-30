@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>付费与支付状态 · 知命（暂名）原型</title>
+<style>
+:root{
+  --paper:#F4EEE2; --paper-2:#FBF8F2; --paper-3:#ECE4D4;
+  --ink:#2A2521; --ink-2:#5C534A; --ink-3:#8F857A; --line:#DCD2C1; --line-2:#E9E1D3;
+  --zhu:#A93226; --zhu-d:#8E2A20; --zhu-bg:#F6E6E0;
+  --mu:#5F7F5B; --huo:#B95A3C; --tu:#9C7A4A; --jin:#7E8686; --shui:#3F5D78;
+  --serif:"Songti SC","STSong","Noto Serif SC","Noto Serif CJK SC","Source Han Serif SC","SimSun",serif;
+  --kai:"Kaiti SC","STKaiti","KaiTi","BiauKai","Songti SC","Noto Serif SC",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.7;background:#E7E1D6}
+a{color:var(--ink-2)}
+.seal{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;background:var(--zhu);color:#FBF3EC;font-family:var(--serif);font-size:12px;line-height:1.05;border-radius:3px;writing-mode:vertical-rl;letter-spacing:1px;font-weight:600;box-shadow:inset 0 0 0 2px var(--zhu),inset 0 0 0 3px rgba(251,243,236,.55)}
+.btn{display:flex;align-items:center;justify-content:center;width:100%;height:50px;border:0;border-radius:4px;font-family:var(--serif);font-size:17px;letter-spacing:2px;cursor:pointer;text-decoration:none}
+.btn-primary{background:var(--zhu);color:#FBF3EC}
+.btn-line{background:transparent;border:1px solid var(--ink-2);color:var(--ink)}
+.btn-text{background:none;color:var(--ink-2);font-family:var(--sans);font-size:14px;letter-spacing:0;height:40px}
+.hint{font-size:12.5px;color:var(--ink-3);line-height:1.6}
+
+/* ===== 画板 ===== */
+.board-head{max-width:1240px;margin:0 auto;padding:24px 20px 4px}
+.board-head h1{font-family:var(--serif);font-size:22px;letter-spacing:2px}
+.board-head p{font-size:13.5px;color:var(--ink-2);margin-top:4px;max-width:820px}
+.board-head a{font-size:13px}
+.board{max-width:1240px;margin:0 auto;padding:16px 20px 40px;display:flex;flex-wrap:wrap;gap:28px}
+figure{width:375px;max-width:100%}
+figcaption{font-size:13px;color:var(--ink-2);margin-bottom:8px;line-height:1.5}
+figcaption b{font-family:var(--serif);font-size:15px;color:var(--ink);display:block}
+.phone{position:relative;width:375px;max-width:100%;height:720px;overflow:hidden;border:1px solid #CFC5B4;border-radius:22px;box-shadow:0 2px 18px rgba(60,40,20,.08);
+  background:var(--paper) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .42 0 0 0 0 .35 0 0 0 0 .25 0 0 0 .07 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+.phone.wide{width:760px;height:520px;border-radius:8px}
+figure.wide{width:760px}
+.bar-wx{height:44px;display:flex;align-items:center;justify-content:center;font-size:15px;background:#EDEDED;color:#111;border-bottom:1px solid #ddd;position:relative}
+.bar-wx::after{content:"···";position:absolute;right:14px;letter-spacing:1px}
+.bar-br{height:44px;display:flex;align-items:center;padding:0 14px;font-size:12px;color:#666;background:#F2F2F2;border-bottom:1px solid #ddd}
+.bar-br span{flex:1;background:#fff;border-radius:6px;padding:4px 10px}
+.pg{padding:16px}
+/* 页面底层（被遮罩的结果页） */
+.under{padding:16px;opacity:.9}
+.under .mock{height:120px;background:var(--paper-2);border:1px solid var(--line);border-radius:6px;margin-bottom:10px}
+.dim{position:absolute;inset:0;background:rgba(42,37,33,.42)}
+.sheet{position:absolute;left:0;right:0;bottom:0;background:var(--paper-2);border-radius:12px 12px 0 0;padding:16px 18px 22px}
+.sheet h3{font-family:var(--serif);font-size:18px;font-weight:600;display:flex;justify-content:space-between;align-items:center}
+.sheet h3 span{font-family:var(--sans);font-size:13px;color:var(--ink-3);font-weight:normal}
+.price{display:flex;align-items:baseline;gap:8px;margin:8px 0 4px}
+.price b{font-family:var(--serif);font-size:30px;color:var(--zhu)}
+.price span{font-size:13px;color:var(--ink-2)}
+.inc{list-style:none;font-size:13.5px;color:var(--ink-2);border-top:1px solid var(--line-2);border-bottom:1px solid var(--line-2);padding:8px 0;margin:8px 0 12px;columns:2;column-gap:12px}
+.inc li{padding:2px 0 2px 12px;position:relative;break-inside:avoid}
+.inc li::before{content:"";position:absolute;left:0;top:11px;width:4px;height:4px;background:var(--zhu)}
+.nh{font-size:12.5px;color:var(--ink-2);background:var(--paper-3);border-radius:4px;padding:8px 10px;margin-bottom:12px;line-height:1.6}
+.or{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink-3);margin:12px 0 8px}
+.or::before,.or::after{content:"";flex:1;border-top:1px solid var(--line-2)}
+.ali{background:#1677FF;color:#fff;font-family:var(--sans);letter-spacing:1px}
+.wxp{background:#07C160;color:#fff;font-family:var(--sans);letter-spacing:1px}
+/* 微信系统支付面板（示意） */
+.wxsheet{position:absolute;left:0;right:0;bottom:0;background:#F7F7F7;border-radius:12px 12px 0 0;padding:18px;font-family:var(--sans);text-align:center;color:#111}
+.wxsheet .amt{font-size:34px;font-weight:600;margin:6px 0 2px}
+.wxsheet .tag{font-size:11px;color:#999;border:1px dashed #bbb;display:inline-block;padding:0 6px;border-radius:3px;margin-bottom:10px}
+.wxsheet .row{display:flex;justify-content:space-between;font-size:14px;color:#555;padding:10px 0;border-top:1px solid #e5e5e5;text-align:left}
+/* 状态页通用 */
+.state{display:flex;flex-direction:column;align-items:center;text-align:center;padding:70px 24px 24px}
+.state h2{font-family:var(--serif);font-size:21px;font-weight:600;margin:18px 0 8px;letter-spacing:1px}
+.state p{font-size:14px;color:var(--ink-2);max-width:300px}
+.state .acts{width:100%;margin-top:26px;display:flex;flex-direction:column;gap:10px}
+.ring{width:44px;height:44px;border-radius:50%;border:2px solid var(--line);border-top-color:var(--zhu);animation:sp 1s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.mark{width:52px;height:52px;border:1.5px solid var(--zhu);border-radius:4px;display:flex;align-items:center;justify-content:center;font-family:var(--serif);color:var(--zhu);font-size:24px}
+.mark.gray{border-color:var(--ink-3);color:var(--ink-3)}
+.kv{width:100%;font-size:13px;color:var(--ink-2);background:var(--paper-2);border:1px solid var(--line-2);border-radius:4px;padding:10px 12px;margin-top:18px;text-align:left}
+.kv div{display:flex;justify-content:space-between}
+.kv code{font-family:ui-monospace,Menlo,monospace;font-size:12px}
+/* 电脑扫码 */
+.pc{display:grid;grid-template-columns:1fr 1fr;height:100%}
+.pc .l{padding:36px 32px;border-right:1px solid var(--line-2)}
+.pc .r{padding:30px 32px;display:flex;flex-direction:column;align-items:center}
+.tabs{display:flex;border:1px solid var(--line);border-radius:4px;overflow:hidden;margin-bottom:16px}
+.tabs span{padding:4px 18px;font-size:14px;color:var(--ink-2)}
+.tabs span.on{background:var(--ink);color:var(--paper-2)}
+.qr{width:190px;height:190px;background:#fff;border:1px solid var(--line);padding:10px}
+</style>
+</head>
+<body>
+
+<div class="board-head">
+  <a href="index.html">← 原型目录</a>
+  <h1>付费与支付流程（画板）</h1>
+  <p>结果页的「¥9.9 查看完整报告」按钮在<b>所有手机环境都先弹出同一个确认面板</b>（内容、价格、一次付清、无时辰缺失说明、链接需自行保存）。面板只有支付按钮不同：<b>微信内</b>是「微信支付 ¥9.9」，确认后调起微信支付；<b>其他手机浏览器</b>是「支付宝支付 ¥9.9」+「复制链接，到微信中打开」。<b>电脑</b>弹出扫码面板，内容相同。（用户 2026-10-29 确认：微信内也加确认页。）下面按顺序展示每个状态，示例数据为 C11（有时辰）；无时辰时在面板内显示缺失说明（见 B）。</p>
+</div>
+
+<div class="board">
+
+  <!-- A 手机浏览器确认面板 -->
+  <figure>
+    <figcaption><b>A · 手机浏览器（非微信）：确认面板</b>Safari、安卓浏览器。支付宝为主按钮；微信支付需回到微信内打开。</figcaption>
+    <div class="phone">
+      <div class="bar-br"><span>zhiming.example/result#…</span></div>
+      <div class="under"><div class="mock"></div><div class="mock"></div><div class="mock"></div></div>
+      <div class="dim"></div>
+      <div class="sheet">
+        <h3>完整命理报告 <span>关闭</span></h3>
+        <div class="price"><b>¥9.9</b><span>一次付清，没有会员、续费和追加</span></div>
+        <ul class="inc">
+          <li>命盘总览与吉神</li><li>日主旺衰详解</li><li>喜用神详解</li><li>性格与天赋</li>
+          <li>行业 / 颜色 / 方位 / 数字</li><li>十年大运时间轴</li><li>未来 5 年逐年卡片</li><li>事业 / 财运 / 感情 / 健康</li>
+        </ul>
+        <a class="btn ali" href="#d">支付宝支付 ¥9.9</a>
+        <div class="or">想用微信支付</div>
+        <a class="btn btn-line" href="#">复制链接，到微信中打开</a>
+        <p class="hint" style="margin-top:8px">复制后发到微信「文件传输助手」或任意聊天中打开即可，填写的内容会保留。<br>我们不保存出生信息。付款后请收藏报告链接或保存长图，链接丢失无法找回。</p>
+      </div>
+    </div>
+  </figure>
+
+  <!-- B 无时辰版本 -->
+  <figure>
+    <figcaption><b>B · 同上，无时辰用户</b>按钮上方必须先看到缺失说明（PRD P0-5），价格不变。</figcaption>
+    <div class="phone">
+      <div class="bar-br"><span>zhiming.example/result#…</span></div>
+      <div class="under"><div class="mock"></div><div class="mock"></div><div class="mock"></div></div>
+      <div class="dim"></div>
+      <div class="sheet">
+        <h3>完整命理报告 <span>关闭</span></h3>
+        <div class="price"><b>¥9.9</b><span>一次付清，没有会员、续费和追加</span></div>
+        <div class="nh"><b>未提供出生时辰：</b>报告按三柱分析。缺少：① 时柱相关内容（时柱十神、流年与时柱的冲合）；② 旺衰与喜用神的可信度为「中」；③ 起运年龄为估算（误差约 ±4 个月）。</div>
+        <a class="btn ali" href="#d">支付宝支付 ¥9.9</a>
+        <div class="or">想用微信支付</div>
+        <a class="btn btn-line" href="#">复制链接，到微信中打开</a>
+        <p class="hint" style="margin-top:8px">我们不保存出生信息。付款后请收藏报告链接或保存长图，链接丢失无法找回。</p>
+      </div>
+    </div>
+  </figure>
+
+  <!-- C 微信内确认面板 -->
+  <figure>
+    <figcaption><b>C · 微信内置浏览器：确认面板</b>与 A 同一组件，只是支付按钮换成「微信支付 ¥9.9」，没有「到微信中打开」。无时辰时同 B，显示缺失说明。</figcaption>
+    <div class="phone">
+      <div class="bar-wx">八字结果</div>
+      <div class="under"><div class="mock"></div><div class="mock"></div><div class="mock"></div></div>
+      <div class="dim"></div>
+      <div class="sheet">
+        <h3>完整命理报告 <span>关闭</span></h3>
+        <div class="price"><b>¥9.9</b><span>一次付清，没有会员、续费和追加</span></div>
+        <ul class="inc">
+          <li>命盘总览与吉神</li><li>日主旺衰详解</li><li>喜用神详解</li><li>性格与天赋</li>
+          <li>行业 / 颜色 / 方位 / 数字</li><li>十年大运时间轴</li><li>未来 5 年逐年卡片</li><li>事业 / 财运 / 感情 / 健康</li>
+        </ul>
+        <a class="btn wxp" href="#c2">微信支付 ¥9.9</a>
+        <p class="hint" style="margin-top:10px">我们不保存出生信息。付款后请收藏报告链接或保存长图，链接丢失无法找回。</p>
+      </div>
+    </div>
+  </figure>
+
+  <!-- C2 微信系统支付面板 -->
+  <figure id="c2">
+    <figcaption><b>C2 · 微信内：调起微信支付</b>在 C 点「微信支付 ¥9.9」后出现。首次会先做一次无感的静默授权跳转。灰色面板由微信提供，这里只是示意。</figcaption>
+    <div class="phone">
+      <div class="bar-wx">八字结果</div>
+      <div class="under"><div class="mock"></div><div class="mock"></div><div class="mock"></div></div>
+      <div class="dim"></div>
+      <div class="wxsheet">
+        <div style="font-size:14px;color:#555">八字命盘报告</div>
+        <div class="amt">¥9.90</div>
+        <span class="tag">微信系统界面 · 示意</span>
+        <div class="row"><span>收款方</span><span>（个体工商户名称）</span></div>
+        <div class="row"><span>付款方式</span><span>零钱 ›</span></div>
+        <a class="btn wxp" style="margin-top:10px" href="#d">确认付款</a>
+      </div>
+    </div>
+  </figure>
+
+  <!-- D 支付确认中 -->
+  <figure id="d">
+    <figcaption><b>D · 支付确认中</b>微信支付回到页面、或从支付宝返回 /pay/done 时出现。轮询订单状态，成功后自动进入报告。</figcaption>
+    <div class="phone">
+      <div class="bar-wx">支付结果</div>
+      <div class="state">
+        <div class="ring"></div>
+        <h2>正在确认支付结果</h2>
+        <p>一般几秒钟。请不要关闭页面，也不要重复付款。</p>
+        <div class="acts"><button class="btn btn-text">已付款但一直没跳转？点这里刷新</button></div>
+      </div>
+    </div>
+  </figure>
+
+  <!-- E 成功 -->
+  <figure>
+    <figcaption><b>E · 支付成功</b>1 秒内自动跳到报告页；报告页顶部有「先保存链接」的首次提示（见报告原型）。不另加中间页。</figcaption>
+    <div class="phone">
+      <div class="bar-wx">支付结果</div>
+      <div class="state">
+        <div class="mark">成</div>
+        <h2>支付成功</h2>
+        <p>正在打开你的报告……</p>
+        <div class="acts"><a class="btn btn-primary" href="report.html">立即打开报告</a></div>
+        <p class="hint" style="margin-top:14px">报告链接只保存在你的手机上。打开后请先收藏链接或保存长图。</p>
+      </div>
+    </div>
+  </figure>
+
+  <!-- F 未完成 -->
+  <figure>
+    <figcaption><b>F · 支付未完成（取消或失败）</b>没有扣款，可直接重试；价格不变。</figcaption>
+    <div class="phone">
+      <div class="bar-wx">支付结果</div>
+      <div class="state">
+        <div class="mark gray">未</div>
+        <h2>支付没有完成</h2>
+        <p>这次没有扣款。你可以重新支付，价格仍是 ¥9.9。</p>
+        <div class="acts"><a class="btn btn-primary" href="#">重新支付 ¥9.9</a><a class="btn btn-text" href="result.html">返回结果页</a></div>
+      </div>
+    </div>
+  </figure>
+
+  <!-- G 超时未确认 -->
+  <figure>
+    <figcaption><b>G · 暂未收到支付结果</b>轮询超过约 30 秒仍未确认。重点是防止重复付款，并告诉用户售后要提供什么。</figcaption>
+    <div class="phone">
+      <div class="bar-wx">支付结果</div>
+      <div class="state">
+        <div class="mark gray">候</div>
+        <h2>暂时没有收到支付结果</h2>
+        <p>如果你已经扣款，<b>请不要重复支付</b>。稍等片刻后点「刷新」；仍无结果，请联系我们，我们会人工核对。</p>
+        <div class="kv"><div><span>订单号</span><code>7Hq2…kP9x</code></div><div><span>金额</span><span>¥9.9</span></div></div>
+        <div class="acts"><a class="btn btn-primary" href="#">刷新支付状态</a><a class="btn btn-text" href="legal.html#contact">联系我们（附订单号）</a></div>
+      </div>
+    </div>
+  </figure>
+
+  <!-- H 订单已关闭 -->
+  <figure>
+    <figcaption><b>H · 订单已超时关闭</b>下单 30 分钟未支付，订单自动关闭。</figcaption>
+    <div class="phone">
+      <div class="bar-br"><span>zhiming.example/pay/done?o=…</span></div>
+      <div class="state">
+        <div class="mark gray">闭</div>
+        <h2>订单已超时关闭</h2>
+        <p>这笔订单 30 分钟内没有完成支付，已自动关闭，没有扣款。</p>
+        <div class="acts"><a class="btn btn-primary" href="result.html">返回结果页重新下单</a></div>
+      </div>
+    </div>
+  </figure>
+
+  <!-- I 电脑扫码 -->
+  <figure class="wide">
+    <figcaption><b>I · 电脑浏览器：扫码支付</b>结果页上弹出居中面板。左侧写清楚买的是什么，右侧二维码；默认微信，可切换支付宝（支付宝电脑网站支付会跳转到支付宝收银台）。</figcaption>
+    <div class="phone wide">
+      <div class="pc">
+        <div class="l">
+          <div style="display:flex;align-items:center;gap:10px"><span class="seal">知命</span><b style="font-family:var(--serif);font-size:18px">完整命理报告</b></div>
+          <div class="price" style="margin-top:14px"><b>¥9.9</b><span>一次付清</span></div>
+          <ul class="inc" style="columns:1">
+            <li>命盘总览、旺衰与喜用神详解</li><li>性格与天赋；行业 / 颜色 / 方位 / 数字</li><li>十年大运时间轴 + 未来 5 年逐年卡片</li><li>事业 / 财运 / 感情 / 健康分领域</li>
+          </ul>
+          <p class="hint">没有会员、续费和追加付费。付款后报告链接只保存在你的浏览器里，请及时收藏或保存长图。</p>
+        </div>
+        <div class="r">
+          <div class="tabs"><span class="on">微信扫码</span><span>支付宝</span></div>
+          <div class="qr">
+            <svg viewBox="0 0 29 29" width="100%" height="100%" shape-rendering="crispEdges"><rect width="29" height="29" fill="#fff"/><g fill="#2A2521">
+            <path d="M0 0h7v7H0zM1 1v5h5V1zM2 2h3v3H2zM22 0h7v7h-7zm1 1v5h5V1zm1 1h3v3h-3zM0 22h7v7H0zm1 1v5h5v-5zm1 1h3v3H2z"/>
+            <path d="M9 0h1v2H9zM11 1h2v1h-2zM14 0h1v3h-1zM16 2h2v1h-2zM19 0h1v1h-1zM9 4h3v1H9zM13 5h2v2h-2zM17 4h1v3h-1zM10 7h1v2h-1zM0 9h2v1H0zM3 8h3v1H3zM8 9h4v1H8zM14 8h2v2h-2zM18 9h3v1h-3zM23 8h2v2h-2zM27 9h2v1h-2zM1 11h1v3H1zM4 11h2v1H4zM7 12h3v1H7zM12 11h1v3h-1zM15 12h4v1h-4zM20 11h2v2h-2zM24 12h1v2h-1zM26 11h3v1h-3zM2 15h3v1H2zM6 14h1v2H6zM9 15h2v2H9zM13 16h3v1h-3zM17 14h1v2h-1zM19 16h3v1h-3zM23 15h3v1h-3zM27 14h1v3h-1zM0 18h2v1H0zM4 17h1v3H4zM7 18h3v1H7zM11 19h1v2h-1zM14 18h2v2h-2zM18 19h2v1h-2zM21 18h1v3h-1zM24 18h3v1h-3zM9 22h2v1H9zM12 23h3v1h-3zM16 22h1v3h-1zM18 23h2v2h-2zM22 22h3v1h-3zM26 23h1v2h-1zM8 26h1v3H8zM10 25h3v1h-3zM14 27h3v1h-3zM19 26h2v1h-2zM23 25h1v3h-1zM25 27h4v1h-4zM27 25h2v1h-2z"/></g></svg>
+          </div>
+          <p style="font-size:14px;margin-top:12px">用微信扫一扫，支付 ¥9.9</p>
+          <p class="hint">支付完成后本页自动打开报告</p>
+        </div>
+      </div>
+    </div>
+  </figure>
+
+</div>
+</body>
+</html>

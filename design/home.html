@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>首页 · 知命（暂名）原型</title>
+<style>
+/* ===== 设计令牌（与 docs/UI.md §2 一致，各原型文件内联同一份） ===== */
+:root{
+  --paper:#F4EEE2; --paper-2:#FBF8F2; --paper-3:#ECE4D4;
+  --ink:#2A2521; --ink-2:#5C534A; --ink-3:#8F857A; --line:#DCD2C1; --line-2:#E9E1D3;
+  --zhu:#A93226; --zhu-d:#8E2A20; --zhu-bg:#F6E6E0;
+  --mu:#5F7F5B; --huo:#B95A3C; --tu:#9C7A4A; --jin:#7E8686; --shui:#3F5D78;
+  --serif:"Songti SC","STSong","Noto Serif SC","Noto Serif CJK SC","Source Han Serif SC","SimSun",serif;
+  --kai:"Kaiti SC","STKaiti","KaiTi","BiauKai","Songti SC","Noto Serif SC",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.7;
+  background:var(--paper) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .42 0 0 0 0 .35 0 0 0 0 .25 0 0 0 .07 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  min-height:100vh;min-height:100dvh;
+}
+a{color:var(--ink-2)}
+.seal{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;background:var(--zhu);color:#FBF3EC;
+  font-family:var(--serif);font-size:12px;line-height:1.05;border-radius:3px;writing-mode:vertical-rl;letter-spacing:1px;font-weight:600;
+  box-shadow:inset 0 0 0 2px var(--zhu),inset 0 0 0 3px rgba(251,243,236,.55)}
+.btn{display:flex;align-items:center;justify-content:center;width:100%;height:52px;border:0;border-radius:4px;
+  font-family:var(--serif);font-size:18px;letter-spacing:2px;cursor:pointer;text-decoration:none}
+.btn-primary{background:var(--zhu);color:#FBF3EC}
+.btn-primary:active{background:var(--zhu-d)}
+.hint{font-size:12.5px;color:var(--ink-3);line-height:1.6}
+.proto{position:fixed;top:8px;right:8px;z-index:999;font:12px/1.5 ui-monospace,Menlo,monospace;background:#fffdf8;border:1px dashed #9a8f84;border-radius:4px;padding:4px 8px;color:#5c534a;max-width:260px}
+.proto summary{cursor:pointer}
+.proto a{display:block;color:#5c534a}
+
+/* ===== 首页 ===== */
+.wrap{max-width:440px;margin:0 auto;padding:max(16px,env(safe-area-inset-top)) 20px max(16px,env(safe-area-inset-bottom));
+  min-height:100vh;min-height:100dvh;display:flex;flex-direction:column}
+header{display:flex;align-items:center;gap:10px;height:40px}
+header .name{font-family:var(--serif);font-size:17px;letter-spacing:3px}
+.intro{margin:14px 0 14px}
+.intro h1{font-family:var(--serif);font-weight:600;font-size:23px;letter-spacing:1px;line-height:1.4}
+.intro p{font-size:13.5px;color:var(--ink-2);margin-top:4px}
+form{flex:1;display:flex;flex-direction:column}
+.row{padding:9px 0;border-bottom:1px solid var(--line-2)}
+.row:last-of-type{border-bottom:0}
+.lab{display:flex;justify-content:space-between;align-items:baseline;font-size:13px;color:var(--ink-2);margin-bottom:6px}
+.lab em{font-style:normal;color:var(--ink-3);font-size:12px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:4px;overflow:hidden;background:var(--paper-2)}
+.seg button{border:0;background:transparent;font:inherit;font-size:14px;color:var(--ink-2);padding:0 14px;height:32px;cursor:pointer}
+.seg button+button{border-left:1px solid var(--line)}
+.seg button[aria-pressed=true]{background:var(--ink);color:var(--paper-2)}
+.selects{display:flex;gap:8px}
+.sel{position:relative;flex:1}
+.sel select{appearance:none;-webkit-appearance:none;width:100%;height:44px;border:1px solid var(--line);border-radius:4px;background:var(--paper-2);
+  font:inherit;font-size:16px;color:var(--ink);padding:0 26px 0 12px}
+.sel::after{content:"";position:absolute;right:11px;top:19px;width:6px;height:6px;border-right:1.5px solid var(--ink-3);border-bottom:1.5px solid var(--ink-3);transform:rotate(45deg);pointer-events:none}
+.sel select:disabled{color:var(--ink-3);background:var(--paper-3)}
+.inline{display:flex;align-items:center;gap:8px}
+.chip{display:inline-flex;align-items:center;gap:6px;height:44px;padding:0 12px;border:1px solid var(--line);border-radius:4px;background:var(--paper-2);font-size:14px;color:var(--ink-2);white-space:nowrap;cursor:pointer}
+.chip input{accent-color:var(--zhu);width:16px;height:16px}
+.place{display:flex;align-items:center;justify-content:space-between;width:100%;height:44px;border:1px dashed var(--line);border-radius:4px;background:transparent;font:inherit;font-size:15px;color:var(--ink-3);padding:0 12px;cursor:pointer;text-align:left}
+.place.on{border-style:solid;color:var(--ink);background:var(--paper-2)}
+.place .x{color:var(--ink-3);font-size:13px}
+.sub{font-size:12px;color:var(--ink-3);margin-top:5px;line-height:1.55}
+.sub.warn{color:var(--zhu)}
+.err{display:none;font-size:12.5px;color:var(--zhu);margin-top:6px}
+.err.show{display:block}
+.go{margin-top:auto;padding-top:14px}
+.trust{display:flex;justify-content:center;gap:14px;margin-top:10px;font-size:12px;color:var(--ink-3)}
+.trust span::before{content:"·";margin-right:6px;color:var(--zhu)}
+.trust span:first-child::before{content:"";margin:0}
+footer{margin-top:10px;text-align:center;font-size:11.5px;color:var(--ink-3)}
+footer a{color:var(--ink-3)}
+
+/* 出生地选择面板 */
+.mask{position:fixed;inset:0;background:rgba(42,37,33,.38);display:none;z-index:50}
+.mask.show{display:block}
+.sheet{position:fixed;left:0;right:0;bottom:0;max-width:440px;margin:0 auto;background:var(--paper-2);border-radius:10px 10px 0 0;
+  padding:14px 18px max(18px,env(safe-area-inset-bottom));transform:translateY(105%);transition:transform .22s ease;z-index:60;max-height:78vh;display:flex;flex-direction:column}
+.sheet.show{transform:none}
+.sheet h3{font-family:var(--serif);font-size:17px;font-weight:600;display:flex;justify-content:space-between}
+.sheet h3 button{border:0;background:none;font-size:14px;color:var(--ink-3);cursor:pointer}
+.sheet input[type=search]{margin:10px 0;height:40px;border:1px solid var(--line);border-radius:4px;padding:0 12px;font:inherit;font-size:16px;background:#fff}
+.crumb{font-size:13px;color:var(--ink-3);margin-bottom:6px}
+.crumb b{color:var(--zhu);font-weight:normal}
+.list{overflow:auto;border-top:1px solid var(--line-2)}
+.list button{display:block;width:100%;text-align:left;border:0;border-bottom:1px solid var(--line-2);background:none;font:inherit;font-size:15px;padding:11px 2px;cursor:pointer;color:var(--ink)}
+.list button small{color:var(--ink-3);margin-left:6px}
+@media (min-width:768px){
+  .wrap{padding-top:8vh;min-height:auto}
+  .go{margin-top:18px}
+  body::before{content:"知命";position:fixed;left:6vw;top:14vh;writing-mode:vertical-rl;font-family:var(--serif);font-size:64px;color:rgba(169,50,38,.07);letter-spacing:18px}
+}
+@media (max-height:620px){ .intro{margin:8px 0} .intro h1{font-size:20px} .row{padding:6px 0} }
+</style>
+</head>
+<body>
+
+<details class="proto"><summary>原型 · 首页</summary>
+  <a href="index.html">← 原型目录</a>
+  <a href="#" onclick="demoErr();return false">演示：非法日期提示</a>
+  <a href="#" onclick="setYear(1988,7);return false">演示：1988 夏令时提示</a>
+</details>
+
+<div class="wrap">
+  <header><span class="seal">知命</span><span class="name">知命</span></header>
+
+  <div class="intro">
+    <h1>输入生辰，看你的八字</h1>
+    <p>免费排出四柱与五行喜忌。代码按节气精确排盘，同一生日结果永远一致。</p>
+  </div>
+
+  <form id="f" action="result.html" onsubmit="return submitForm()">
+    <div class="row">
+      <div class="lab"><span>出生日期</span>
+        <div class="seg" role="group" aria-label="历法">
+          <button type="button" aria-pressed="true" data-cal="solar">公历</button>
+          <button type="button" aria-pressed="false" data-cal="lunar">农历</button>
+        </div>
+      </div>
+      <div class="selects">
+        <div class="sel" style="flex:1.25"><select id="y" aria-label="年"></select></div>
+        <div class="sel"><select id="m" aria-label="月"></select></div>
+        <div class="sel"><select id="d" aria-label="日"></select></div>
+      </div>
+      <div class="err" id="dateErr">该日期不存在，请核对（2 月没有 30 日）。</div>
+      <div class="sub" id="dateSub" hidden></div>
+    </div>
+
+    <div class="row">
+      <div class="lab"><span>出生时间</span><em>按出生证上的钟表时间</em></div>
+      <div class="inline">
+        <div class="sel"><select id="hh" aria-label="时"></select></div>
+        <div class="sel"><select id="mm" aria-label="分"></select></div>
+        <label class="chip"><input type="checkbox" id="nohour">不知道</label>
+      </div>
+      <div class="sub" id="timeSub" hidden></div>
+    </div>
+
+    <div class="row">
+      <div class="lab"><span>性别</span><em>用于排大运顺逆</em></div>
+      <div class="seg" role="group" aria-label="性别" id="gender">
+        <button type="button" aria-pressed="false" data-g="m" style="padding:0 26px">男</button>
+        <button type="button" aria-pressed="false" data-g="f" style="padding:0 26px">女</button>
+      </div>
+      <div class="err" id="gErr">请选择性别</div>
+    </div>
+
+    <div class="row">
+      <div class="lab"><span>出生地</span><em>可选</em></div>
+      <button type="button" class="place" id="placeBtn" onclick="openSheet()"><span id="placeTxt">选择出生地（校正真太阳时）</span><span class="x" id="placeX">›</span></button>
+      <div class="sub" id="placeSub">不选则按北京时间排盘，结果会注明「未校正真太阳时」。</div>
+    </div>
+
+    <div class="go">
+      <button class="btn btn-primary" type="submit">免费排盘</button>
+      <div class="trust"><span>不用登录</span><span>不存出生日期</span><span>传统文化参考</span></div>
+    </div>
+  </form>
+
+  <footer>内容为传统文化参考与娱乐，不构成医疗、投资、法律建议 · <a href="legal.html#privacy">隐私说明</a> · <a href="legal.html#disclaimer">免责声明</a></footer>
+</div>
+
+<div class="mask" id="mask" onclick="closeSheet()"></div>
+<div class="sheet" id="sheet" role="dialog" aria-label="选择出生地">
+  <h3>选择出生地 <button type="button" onclick="closeSheet()">取消</button></h3>
+  <input type="search" placeholder="搜索城市或区县，如：黄浦、乌鲁木齐">
+  <div class="crumb" id="crumb">中国 › <b>选择省份</b></div>
+  <div class="list" id="plist"></div>
+  <div class="sub" style="margin-top:8px">只用经度校正时辰，不需要精确地址。新疆等地请仍填北京时间。</div>
+</div>
+
+<script>
+// —— 原型演示脚本：仅用于演示交互，不是生产实现 ——
+var cal='solar', place=null;
+var LEAP={2023:2,2020:4,2017:6,2014:9,2012:4,2009:5,2006:7,2004:2,2001:4,1998:5,1995:8,1993:3,1990:5,1987:6,1984:10};
+var LM=['正月','二月','三月','四月','五月','六月','七月','八月','九月','十月','冬月','腊月'];
+var LD='初一 初二 初三 初四 初五 初六 初七 初八 初九 初十 十一 十二 十三 十四 十五 十六 十七 十八 十九 二十 廿一 廿二 廿三 廿四 廿五 廿六 廿七 廿八 廿九 三十'.split(' ');
+var ZHI=['子','丑','丑','寅','寅','卯','卯','辰','辰','巳','巳','午','午','未','未','申','申','酉','酉','戌','戌','亥','亥','子'];
+function $(id){return document.getElementById(id)}
+function opt(sel,list,ph){sel.innerHTML='<option value="">'+ph+'</option>'+list.map(function(o){return '<option value="'+o[0]+'">'+o[1]+'</option>'}).join('')}
+function fillY(){var a=[];for(var y=2026;y>=1930;y--)a.push([y,y+'年']);opt($('y'),a,'年')}
+function fillM(){var y=+$('y').value,a=[];
+  if(cal==='solar'){for(var i=1;i<=12;i++)a.push([i,i+'月'])}
+  else{for(var j=1;j<=12;j++){a.push([j,LM[j-1]]);if(LEAP[y]===j)a.push(['L'+j,'闰'+LM[j-1]])}}
+  opt($('m'),a,'月')}
+function fillD(){var a=[];for(var i=1;i<=(cal==='solar'?31:30);i++)a.push([i,cal==='solar'?i+'日':LD[i-1]]);opt($('d'),a,'日')}
+function fillT(){var a=[];for(var h=0;h<24;h++)a.push([h,(h<10?'0':'')+h+' 时 · '+ZHI[h]+(h===23?'（晚子）':h===0?'（早子）':'')]);opt($('hh'),a,'时');
+  var b=[];for(var m=0;m<60;m++)b.push([m,(m<10?'0':'')+m+' 分']);opt($('mm'),b,'分')}
+fillY();fillM();fillD();fillT();
+document.querySelectorAll('[data-cal]').forEach(function(b){b.onclick=function(){cal=b.dataset.cal;
+  document.querySelectorAll('[data-cal]').forEach(function(x){x.setAttribute('aria-pressed',x===b)});fillM();fillD();checkSub()}});
+document.querySelectorAll('[data-g]').forEach(function(b){b.onclick=function(){
+  document.querySelectorAll('[data-g]').forEach(function(x){x.setAttribute('aria-pressed',x===b)});$('gErr').classList.remove('show')}});
+$('y').onchange=function(){var m=$('m').value;fillM();$('m').value=m;checkSub()};
+$('m').onchange=checkSub;$('d').onchange=checkSub;
+$('nohour').onchange=function(){var on=this.checked;$('hh').disabled=on;$('mm').disabled=on;checkSub()};
+$('hh').onchange=checkSub;
+function checkSub(){
+  var y=+$('y').value,m=$('m').value,h=$('hh').value,ds=$('dateSub'),ts=$('timeSub');
+  ds.hidden=true;ts.hidden=true;$('dateErr').classList.remove('show');
+  if(cal==='solar'&&y>=1986&&y<=1991&&+m>=4&&+m<=9){ds.hidden=false;ds.textContent='这段时间中国实行夏令时。请照出生证上的钟表时间填写，我们会自动换算。'}
+  if(cal==='lunar'&&LEAP[y]){ds.hidden=false;ds.textContent='农历'+y+'年有闰'+LM[LEAP[y]-1]+'，如出生在闰月请选「闰'+LM[LEAP[y]-1]+'」。'}
+  if($('nohour').checked){ts.hidden=false;ts.textContent='不知道时辰也能排：只排年、月、日三柱，部分结论会标注可信度。'}
+  else if(h==='23'){ts.hidden=false;ts.textContent='23:00–23:59 为晚子时：日柱仍算当天（本站采用早晚子时派）。'}
+  else if(h==='0'){ts.hidden=false;ts.textContent='00:00–00:59 为早子时：日柱算当天（即已过午夜的这一天）。'}
+}
+function setYear(y,m){$('y').value=y;fillM();$('m').value=m;checkSub()}
+function demoErr(){$('y').value=1995;fillM();$('m').value=2;$('d').value=30;$('dateErr').classList.add('show')}
+function submitForm(){
+  var ok=true;
+  if(!document.querySelector('[data-g][aria-pressed=true]')){$('gErr').classList.add('show');ok=false}
+  if(cal==='solar'&&$('m').value==='2'&&+$('d').value>29){$('dateErr').classList.add('show');ok=false}
+  if(!ok)return false;
+  location.href='result.html';return false;
+}
+// 出生地面板（示意数据）
+var P={'北京市':['东城区','西城区','朝阳区','海淀区'],'上海市':['黄浦区','徐汇区','浦东新区'],'广东省':['广州市','深圳市','佛山市'],'四川省':['成都市','绵阳市'],'新疆维吾尔自治区':['乌鲁木齐市','喀什地区'],'海外 / 港澳台':['香港','台北','新加坡','纽约','伦敦']};
+function renderProv(){ $('crumb').innerHTML='中国 › <b>选择省份</b>';
+  $('plist').innerHTML=Object.keys(P).map(function(k){return '<button type="button" onclick="renderCity(\''+k+'\')">'+k+'</button>'}).join('')}
+function renderCity(p){ $('crumb').innerHTML='<a href="#" onclick="renderProv();return false">中国</a> › '+p+' › <b>选择区县</b>';
+  $('plist').innerHTML=P[p].map(function(c){return '<button type="button" onclick="pick(\''+p+'\',\''+c+'\')">'+c+(p.indexOf('新疆')===0?'<small>请填北京时间</small>':'')+'</button>'}).join('')}
+function pick(p,c){place=p+' '+c;$('placeTxt').textContent=place;$('placeBtn').classList.add('on');$('placeX').textContent='清除';
+  $('placeX').onclick=function(e){e.stopPropagation();clearPlace()};
+  $('placeSub').textContent='将按该地经度校正真太阳时，结果页会显示校正前后的时间。';closeSheet()}
+function clearPlace(){place=null;$('placeTxt').textContent='选择出生地（校正真太阳时）';$('placeBtn').classList.remove('on');$('placeX').textContent='›';
+  $('placeSub').textContent='不选则按北京时间排盘，结果会注明「未校正真太阳时」。'}
+function openSheet(){renderProv();$('mask').classList.add('show');$('sheet').classList.add('show')}
+function closeSheet(){$('mask').classList.remove('show');$('sheet').classList.remove('show')}
+</script>
+</body>
+</html>

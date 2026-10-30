@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>免费结果 · 知命（暂名）原型</title>
+<style>
+:root{
+  --paper:#F4EEE2; --paper-2:#FBF8F2; --paper-3:#ECE4D4;
+  --ink:#2A2521; --ink-2:#5C534A; --ink-3:#8F857A; --line:#DCD2C1; --line-2:#E9E1D3;
+  --zhu:#A93226; --zhu-d:#8E2A20; --zhu-bg:#F6E6E0;
+  --mu:#5F7F5B; --huo:#B95A3C; --tu:#9C7A4A; --jin:#7E8686; --shui:#3F5D78;
+  --serif:"Songti SC","STSong","Noto Serif SC","Noto Serif CJK SC","Source Han Serif SC","SimSun",serif;
+  --kai:"Kaiti SC","STKaiti","KaiTi","BiauKai","Songti SC","Noto Serif SC",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.7;
+  background:var(--paper) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .42 0 0 0 0 .35 0 0 0 0 .25 0 0 0 .07 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+a{color:var(--ink-2)}
+.seal{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;background:var(--zhu);color:#FBF3EC;font-family:var(--serif);font-size:12px;line-height:1.05;border-radius:3px;writing-mode:vertical-rl;letter-spacing:1px;font-weight:600;box-shadow:inset 0 0 0 2px var(--zhu),inset 0 0 0 3px rgba(251,243,236,.55)}
+.btn{display:flex;align-items:center;justify-content:center;width:100%;height:52px;border:0;border-radius:4px;font-family:var(--serif);font-size:18px;letter-spacing:2px;cursor:pointer;text-decoration:none}
+.btn-primary{background:var(--zhu);color:#FBF3EC}
+.btn-primary:active{background:var(--zhu-d)}
+.proto{position:fixed;top:8px;right:8px;z-index:999;font:12px/1.6 ui-monospace,Menlo,monospace;background:#fffdf8;border:1px dashed #9a8f84;border-radius:4px;padding:4px 8px;color:#5c534a;max-width:270px}
+.proto summary{cursor:pointer}
+.proto a{display:block;color:#5c534a}
+.proto label{display:block;cursor:pointer}
+.e-mu{color:var(--mu)} .e-huo{color:var(--huo)} .e-tu{color:var(--tu)} .e-jin{color:var(--jin)} .e-shui{color:var(--shui)}
+
+/* ===== 结果页 ===== */
+.wrap{max-width:560px;margin:0 auto;padding:max(12px,env(safe-area-inset-top)) 16px max(24px,env(safe-area-inset-bottom))}
+.top{display:flex;align-items:center;justify-content:space-between;height:44px}
+.top .l{display:flex;align-items:center;gap:10px;font-family:var(--serif);letter-spacing:3px}
+.top a{font-size:14px;text-decoration:none}
+.echo{font-size:13px;color:var(--ink-2);padding:8px 12px;border:1px solid var(--line-2);border-radius:4px;background:rgba(251,248,242,.6);display:flex;justify-content:space-between;gap:8px;margin:6px 0 14px}
+.echo a{white-space:nowrap}
+.mod{background:var(--paper-2);border:1px solid var(--line);border-radius:6px;padding:16px 16px 18px;margin-bottom:12px}
+.mod h2{font-family:var(--serif);font-weight:600;font-size:18px;letter-spacing:1px;display:flex;align-items:baseline;gap:10px;margin-bottom:12px}
+.mod h2 .no{color:var(--zhu);font-size:15px}
+.mod h2 small{font-family:var(--sans);font-weight:normal;font-size:12px;color:var(--ink-3);margin-left:auto}
+.gray{font-size:12.5px;color:var(--ink-3);line-height:1.65;margin-top:10px;padding-left:10px;border-left:2px solid var(--line)}
+.gray b{font-weight:normal;color:var(--ink-2)}
+/* 四柱 */
+.pillars{display:grid;grid-template-columns:auto repeat(4,1fr);text-align:center;border-top:1px solid var(--line-2)}
+.pillars>div{padding:6px 2px;border-bottom:1px solid var(--line-2)}
+.pillars .rh{font-size:12px;color:var(--ink-3);text-align:left;padding-right:6px;display:flex;align-items:center}
+.pillars .ch{font-size:12.5px;color:var(--ink-2)}
+.pillars .ch.day{color:var(--zhu)}
+.pillars .tg{font-size:12.5px;color:var(--ink-2)}
+.pillars .gz{font-family:var(--serif);font-size:30px;line-height:1.2;font-weight:600}
+.pillars .hide{font-size:11.5px;color:var(--ink-2);line-height:1.5}
+.pillars .hide span{display:block;white-space:nowrap}
+.pillars .daycol{background:rgba(169,50,38,.045)}
+.pillars .unknown{color:var(--ink-3);font-family:var(--sans);font-size:14px;font-weight:normal}
+.jq{display:none;margin-top:12px;border:1px solid var(--zhu);background:var(--zhu-bg);border-radius:4px;padding:12px}
+.jq p{font-size:14px}
+.jq .opts{display:flex;gap:8px;margin-top:10px}
+.jq .opts button{flex:1;height:40px;border:1px solid var(--line);background:var(--paper-2);border-radius:4px;font:inherit;font-size:14px;cursor:pointer}
+.jq .opts button small{display:block;font-size:11px;color:var(--ink-3);line-height:1.2}
+.tst{display:none;font-size:13px;color:var(--ink-2);margin-top:10px}
+/* 五行图 */
+.bars{display:flex;flex-direction:column;gap:9px}
+.bar{display:grid;grid-template-columns:44px 1fr 44px;align-items:center;gap:8px;font-size:14px}
+.bar .k{font-family:var(--serif);font-size:16px}
+.bar .k small{font-family:var(--sans);font-size:10.5px;color:var(--zhu);display:block;line-height:1;margin-top:1px}
+.bar .t{height:14px;background:var(--paper-3);border-radius:2px;overflow:hidden}
+.bar .t i{display:block;height:100%;border-radius:2px}
+.bar .v{text-align:right;font-variant-numeric:tabular-nums;color:var(--ink-2)}
+.cap{font-size:14px;margin-top:12px}
+.cap .hl{color:var(--zhu)}
+/* 旺衰 */
+.ws{display:flex;gap:14px;align-items:center}
+.ws .big{flex:none;width:70px;height:70px;border:1.5px solid var(--zhu);border-radius:4px;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:24px;color:var(--zhu);font-weight:600;letter-spacing:2px}
+.ws p{font-size:15px}
+.scale{margin-top:14px;position:relative}
+.scale .track{display:grid;grid-template-columns:repeat(4,1fr);font-size:11.5px;color:var(--ink-3);text-align:center}
+.scale .track span{border-top:3px solid var(--paper-3);padding-top:4px}
+.scale .track span.on{border-color:var(--zhu);color:var(--zhu)}
+.de{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.de span{font-size:12.5px;border:1px solid var(--line);border-radius:3px;padding:1px 8px;color:var(--ink-2)}
+.de span.y::before{content:"●";color:var(--zhu);font-size:8px;vertical-align:2px;margin-right:4px}
+.de span.n::before{content:"○";font-size:8px;vertical-align:2px;margin-right:4px}
+/* 喜忌 */
+.yj{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.yj .box{border:1px solid var(--line-2);border-radius:4px;padding:10px 12px}
+.yj .box .t{font-size:12.5px;color:var(--ink-3)}
+.yj .els{display:flex;gap:8px;margin-top:6px;align-items:flex-end}
+.el{font-family:var(--serif);font-size:26px;line-height:1;font-weight:600;position:relative}
+.el sup{font-family:var(--sans);font-size:10px;font-weight:normal;color:var(--zhu);border:1px solid var(--zhu);border-radius:2px;padding:0 2px;margin-left:2px;vertical-align:12px}
+.yj .box.good{border-color:rgba(169,50,38,.35);background:rgba(246,230,224,.35)}
+.sentence{font-size:15px;margin-top:12px}
+/* 付费引导 */
+.pay{background:var(--paper-2);border:1px solid var(--ink);border-radius:6px;padding:20px 16px 18px;margin:18px 0 12px;position:relative}
+.pay::before{content:"";position:absolute;inset:4px;border:1px solid var(--line);border-radius:4px;pointer-events:none}
+.pay h2{font-family:var(--serif);font-size:20px;font-weight:600;text-align:center;letter-spacing:4px}
+.pay .lead{text-align:center;font-size:13.5px;color:var(--ink-2);margin:6px 0 14px}
+.toc{list-style:none;counter-reset:c;border-top:1px solid var(--line-2)}
+.toc li{display:grid;grid-template-columns:28px 1fr;gap:4px;padding:8px 0;border-bottom:1px solid var(--line-2);font-size:14px}
+.toc li b{font-family:var(--serif);color:var(--zhu);font-weight:normal}
+.toc li span{color:var(--ink)}
+.toc li small{display:block;color:var(--ink-3);font-size:12px;line-height:1.5}
+.facts{display:flex;justify-content:space-around;text-align:center;margin:14px 0 12px}
+.facts div{font-size:12px;color:var(--ink-3)}
+.facts b{display:block;font-family:var(--serif);font-size:18px;color:var(--ink);font-weight:600}
+.promise{font-size:12.5px;color:var(--ink-2);text-align:center;margin:10px 0 0}
+.nohour-note{display:none;font-size:12.5px;color:var(--ink-2);background:var(--paper-3);border-radius:4px;padding:8px 10px;margin-bottom:10px;line-height:1.6}
+.savefirst{font-size:12px;color:var(--ink-3);text-align:center;margin-top:8px}
+footer{font-size:11.5px;color:var(--ink-3);text-align:center;line-height:1.7;margin-top:18px}
+/* 底部常驻购买条（滚动过付费区后出现） */
+.stick{position:fixed;left:0;right:0;bottom:0;background:rgba(251,248,242,.97);border-top:1px solid var(--line);padding:8px 16px max(8px,env(safe-area-inset-bottom));display:none;z-index:20}
+.stick .in{max-width:560px;margin:0 auto;display:flex;align-items:center;gap:12px}
+.stick .in div{font-size:12px;color:var(--ink-3);line-height:1.4;flex:none}
+.stick .btn{height:44px;font-size:16px}
+body.nohour .daycol~.h4{}
+@media (min-width:768px){.wrap{padding-top:28px}}
+</style>
+</head>
+<body>
+
+<details class="proto" open><summary>原型 · 结果页状态</summary>
+  <label><input type="radio" name="st" value="normal" checked> 有时辰 · 未选出生地</label>
+  <label><input type="radio" name="st" value="tst"> 有时辰 · 已选出生地</label>
+  <label><input type="radio" name="st" value="nohour"> 无时辰 · 置信「中」</label>
+  <label><input type="radio" name="st" value="jq"> 交节日 · 无时辰 · 待选择</label>
+  <a href="index.html">← 原型目录</a>
+  <span style="color:#8f857a">示例数据：cases.json C11</span>
+</details>
+
+<div class="wrap">
+  <div class="top">
+    <div class="l"><span class="seal">知命</span>八字结果</div>
+    <a href="home.html">重新输入</a>
+  </div>
+
+  <div class="echo"><span id="echo">公历 1981年10月27日 11:28 · 男 · 未选出生地</span><a href="home.html">修改</a></div>
+
+  <!-- 模块一：四柱八字 -->
+  <section class="mod">
+    <h2><span class="no">一</span>四柱八字<small>日柱天干「戊」代表你</small></h2>
+    <div class="pillars" id="pillars">
+      <div class="rh"></div><div class="ch">年柱</div><div class="ch">月柱</div><div class="ch day daycol">日柱</div><div class="ch h4">时柱</div>
+      <div class="rh">十神</div><div class="tg">伤官</div><div class="tg">比肩</div><div class="tg daycol" style="color:var(--zhu)">日主</div><div class="tg h4">比肩</div>
+      <div class="rh">天干</div><div class="gz e-jin">辛</div><div class="gz e-tu">戊</div><div class="gz e-tu daycol">戊</div><div class="gz e-tu h4">戊</div>
+      <div class="rh">地支</div><div class="gz e-jin">酉</div><div class="gz e-tu">戌</div><div class="gz e-mu daycol">寅</div><div class="gz e-huo h4">午</div>
+      <div class="rh">藏干</div>
+      <div class="hide"><span>辛 伤官</span></div>
+      <div class="hide"><span>戊 比肩</span><span>辛 伤官</span><span>丁 正印</span></div>
+      <div class="hide daycol"><span>甲 七杀</span><span>丙 偏印</span><span>戊 比肩</span></div>
+      <div class="hide h4"><span>丁 正印</span><span>己 劫财</span></div>
+    </div>
+
+    <div class="jq" id="jq">
+      <p><b>你出生当天 16:26 交「立春」，年柱、月柱会因此不同。</b>若记得大致出生在这个时刻之前还是之后，请选择：</p>
+      <div class="opts">
+        <button type="button">之前<small>癸卯年 乙丑月</small></button>
+        <button type="button">之后<small>甲辰年 丙寅月</small></button>
+        <button type="button">不确定<small>结论标注可信度</small></button>
+      </div>
+      <p style="font-size:12px;color:var(--ink-3);margin-top:8px">当前按当天 12:00 计算。选择后会重新排盘，结果不保存在服务器。</p>
+    </div>
+
+    <div class="tst" id="tst">北京时间 11:28 → 真太阳时 <b>11:50</b>（上海市黄浦区：经度修正 +6 分，均时差 +16 分）。时辰仍为午时。</div>
+    <div class="gray" id="tstGray">时辰按北京时间排定，未做真太阳时校正。如出生地离东经 120° 较远，时柱可能不同，可<a href="home.html">补充出生地重新排盘</a>。<br>你的出生时间接近时辰交界，补充出生地后时柱可能变化。</div>
+  </section>
+
+  <!-- 模块二：五行强弱 -->
+  <section class="mod">
+    <h2><span class="no">二</span>五行强弱<small>含日主本身</small></h2>
+    <div class="bars">
+      <div class="bar"><span class="k e-mu">木</span><span class="t"><i style="width:8%;background:var(--mu)"></i></span><span class="v">8%</span></div>
+      <div class="bar"><span class="k e-huo">火</span><span class="t"><i style="width:25%;background:var(--huo)"></i></span><span class="v">25%</span></div>
+      <div class="bar"><span class="k e-tu">土<small>日主</small></span><span class="t" style="outline:1px solid var(--zhu);outline-offset:1px"><i style="width:45%;background:var(--tu)"></i></span><span class="v" style="color:var(--ink)">45%</span></div>
+      <div class="bar"><span class="k e-jin">金</span><span class="t"><i style="width:22%;background:var(--jin)"></i></span><span class="v">22%</span></div>
+      <div class="bar"><span class="k e-shui">水</span><span class="t"></span><span class="v">0%</span></div>
+    </div>
+    <p class="cap">帮扶你的力量（同党）占 <span class="hl">68%</span>，消耗你的力量（异党）占 32%。</p>
+  </section>
+
+  <!-- 模块三：日主旺衰 -->
+  <section class="mod">
+    <h2><span class="no">三</span>日主旺衰</h2>
+    <div class="ws">
+      <div class="big">身旺</div>
+      <p>戊土生于戌月，得令，帮扶力量占 68%，属身旺。</p>
+    </div>
+    <div class="scale"><div class="track"><span>身弱</span><span>中和偏弱</span><span>中和偏旺</span><span class="on">身旺</span></div></div>
+    <div class="de"><span class="y">得令</span><span class="y">得地</span><span class="y">得势 · 天干有 2 个帮手</span></div>
+    <div class="gray conf" hidden>时辰未知，此结论大概率成立。</div>
+  </section>
+
+  <!-- 模块四：喜用神 / 忌神 -->
+  <section class="mod">
+    <h2><span class="no">四</span>喜用神与忌神</h2>
+    <div class="yj">
+      <div class="box good"><div class="t">对你有利</div><div class="els"><span class="el e-jin">金<sup>用</sup></span><span class="el e-shui">水<sup>喜</sup></span></div></div>
+      <div class="box"><div class="t">需要节制</div><div class="els"><span class="el e-tu">土</span><span class="el e-huo">火</span></div></div>
+    </div>
+    <p class="sentence">对你有利的五行：金（主）、水；需要节制的五行：土、火。</p>
+    <div class="gray conf" hidden>时辰未知，此结论大概率成立。</div>
+  </section>
+
+  <!-- 付费引导（固定文案，不随命盘变化） -->
+  <section class="pay" id="pay">
+    <h2>完整命理报告</h2>
+    <p class="lead">上面告诉你「是什么」；完整报告讲清「为什么」，<br>以及接下来几年可以怎么安排。</p>
+    <ol class="toc">
+      <li><b>〇</b><span>命盘总览<small>四柱、十神、藏干与吉神一览</small></span></li>
+      <li><b>一</b><span>你的日主与旺衰<small>为什么得出这个旺衰结论，力量从哪里来</small></span></li>
+      <li><b>二</b><span>喜用神详解<small>取用的思路与每个五行对你的作用</small></span></li>
+      <li><b>三</b><span>性格与天赋<small>一句话画像、做事风格、天赋方向</small></span></li>
+      <li><b>四</b><span>适合的行业、颜色、方位、数字<small>按喜用神给出的生活化参考</small></span></li>
+      <li><b>五</b><span>十年大运<small>8 步大运时间轴，当前与下一步重点解读</small></span></li>
+      <li><b>六</b><span>未来 5 年逐年运势<small>每年一张卡片：主题、四个领域、适合做、留意</small></span></li>
+      <li><b>七</b><span>事业、财运、感情、健康<small>分领域的倾向与具体到年份的提示</small></span></li>
+      <li><b>八</b><span>方法说明<small>本报告用了哪些规则、有哪些局限</small></span></li>
+    </ol>
+    <div class="facts">
+      <div><b>约 6,000 字</b>结构化正文</div>
+      <div><b>3 张图</b>五行·大运·流年</div>
+      <div><b>每条结论</b>标注依据</div>
+    </div>
+    <div class="nohour-note" id="nohourNote">未提供出生时辰：报告按三柱分析。缺少：① 时柱相关内容（时柱十神、流年与时柱的冲合）；② 旺衰与喜用神的可信度为「中」；③ 起运年龄为估算（误差约 ±4 个月）。价格不变。</div>
+    <a class="btn btn-primary" href="pay.html">¥9.9 查看完整报告</a>
+    <p class="promise">一次付清 · 没有会员和续费 · 报告内没有追加付费</p>
+    <p class="savefirst">我们不保存出生信息。付款后请收藏报告链接或保存长图，链接丢失无法找回。</p>
+  </section>
+
+  <footer>
+    本页内容由代码按固定规则计算，仅作传统文化参考与娱乐，<br>不构成医疗、投资、法律等任何专业建议。<br>
+    <a href="legal.html#privacy">隐私说明</a> · <a href="legal.html#disclaimer">免责声明</a> · 你的出生信息不会被保存
+  </footer>
+</div>
+
+<div class="stick" id="stick"><div class="in"><div>完整报告<br>一次付清</div><a class="btn btn-primary" href="pay.html">¥9.9 查看完整报告</a></div></div>
+
+<script>
+// —— 原型演示脚本 ——
+function $(s){return document.querySelector(s)}
+function $$(s){return document.querySelectorAll(s)}
+function setState(v){
+  var noh=(v==='nohour'||v==='jq');
+  $$('.h4').forEach(function(el,i){
+    if(!el.dataset.o)el.dataset.o=el.innerHTML;
+    el.innerHTML=noh?(el.classList.contains('gz')?'<span class="unknown">'+(i===2?'未知':'')+'</span>':(el.classList.contains('ch')?'时柱':'')):el.dataset.o;
+  });
+  $$('.conf').forEach(function(e){e.hidden=!noh});
+  $('#nohourNote').style.display=noh?'block':'none';
+  $('#jq').style.display=v==='jq'?'block':'none';
+  $('#tst').style.display=v==='tst'?'block':'none';
+  $('#tstGray').style.display=v==='tst'?'none':'block';
+  $('#tstGray').innerHTML=noh?'时辰未知，只排年、月、日三柱；未做真太阳时校正。':'时辰按北京时间排定，未做真太阳时校正。如出生地离东经 120° 较远，时柱可能不同，可<a href="home.html">补充出生地重新排盘</a>。<br>你的出生时间接近时辰交界，补充出生地后时柱可能变化。';
+  $('#echo').textContent=v==='tst'?'公历 1981年10月27日 11:28 · 男 · 上海市 黄浦区':noh?'公历 1981年10月27日 · 时辰不知道 · 男 · 未选出生地':'公历 1981年10月27日 11:28 · 男 · 未选出生地';
+}
+$$('input[name=st]').forEach(function(r){r.onchange=function(){setState(r.value)}});
+// 付费区离开视口（滚过去之后）才显示底部购买条
+var io=new IntersectionObserver(function(es){var e=es[0];$('#stick').style.display=(!e.isIntersecting&&e.boundingClientRect.top<0)?'block':'none'});
+io.observe($('#pay'));
+</script>
+</body>
+</html>
