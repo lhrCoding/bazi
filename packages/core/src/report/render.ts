@@ -7,7 +7,7 @@
  * - 术语加注（Annotator）：整份报告共用一个实例；按 glossary 最长优先匹配；每个术语只在**首次可加注的出现处**
  *   追加「（释义）」；引号（“”「」『』"）与括号（（）()）内不加注；表格、卡片标题、古籍原文由调用方不送入（annotatable = false）。
  * - 依据（basisFor）：report-sections.md §3「依据模板」的简写占位符（{S_pct}、{五行}、{x}…）不是字段路径，
- *   这里按槽位逐个用代码生成，措辞照模板，数值全部取自 ctx / item。第 5 章依据需要起运年龄与顺逆，ctx 尚无，T32 补；
+ *   这里按槽位逐个用代码生成，措辞照模板，数值全部取自 ctx / item（第 5 章起运取 ctx.qiyun，T32）。
  *   第 6 章表格无依据列；模板为「—」的槽位返回 null。
  */
 import type { EvalContext } from '../texts/condition';
@@ -207,6 +207,33 @@ export function basisFor(
     }
     case 'CH4-WHY':
       return `用神 ${ys.yong}、喜神 ${ys.xi1}`;
+    case 'CH5-INTRO': {
+      const q = (
+        c as unknown as { qiyun?: { age: number; direction: string; approximate: boolean } }
+      ).qiyun;
+      return q ? `起运${q.approximate ? '约 ' : ' '}${q.age} 岁，${q.direction}排` : null;
+    }
+    case 'CH5-PAST':
+    case 'CH5-FAR': {
+      const phase = slot === 'CH5-PAST' ? 'past' : 'far';
+      const steps = ((c as unknown as { dayun?: Record<string, unknown>[] }).dayun ?? []).filter(
+        (d) => d.phase === phase,
+      );
+      return steps.length ? steps.map((d) => `${d.ganzhi}（${d.tier}）`).join('、') : null;
+    }
+    case 'CH5-STEP': {
+      if (!item) throw new RenderError('CH5-STEP 依据需要 item（大运）');
+      return `${item.ganzhi}（${item.start_year}–${item.end_year}）天干${item.stem_ten_god}，${item.tier}`;
+    }
+    case 'CH5-REL': {
+      if (!item) throw new RenderError('CH5-REL 依据需要 item（大运）');
+      const rels = (item.relations as { type: string; b: string }[] | undefined) ?? [];
+      return `${item.ganzhi}${rels.map((r) => `${r.type}${r.b}`).join('、')}`;
+    }
+    case 'CH5-TRANSITION': {
+      if (!item) throw new RenderError('CH5-TRANSITION 依据需要 item（换运年）');
+      return `换运年 ${item.year}`;
+    }
     case 'CH7-CAREER': {
       const mode = (c.career ?? {}).mode;
       const roleOfMode = ys.yong === el[String(mode)] ? '用神' : '喜神';

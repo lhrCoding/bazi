@@ -302,6 +302,11 @@ exports[`快照（C16 四柱、C01 未起运、C19 三柱交节） > C01 1`] = `
     "tst_status": "未校正",
     "uncertain_year_month": false,
   },
+  "qiyun": {
+    "age": 9,
+    "approximate": false,
+    "direction": "逆",
+  },
   "relations": [
     {
       "a": "日支",
@@ -690,6 +695,11 @@ exports[`快照（C16 四柱、C01 未起运、C19 三柱交节） > C16 1`] = `
     "tst_status": "未校正",
     "uncertain_year_month": false,
   },
+  "qiyun": {
+    "age": 8,
+    "approximate": false,
+    "direction": "顺",
+  },
   "relations": [
     {
       "a": "日支",
@@ -1068,6 +1078,11 @@ exports[`快照（C16 四柱、C01 未起运、C19 三柱交节） > C19 1`] = `
     "time_known": false,
     "tst_status": "未校正",
     "uncertain_year_month": true,
+  },
+  "qiyun": {
+    "age": 9,
+    "approximate": true,
+    "direction": "逆",
   },
   "relations": [
     {

@@ -27,6 +27,8 @@ export interface ParaBlock {
   slot: string;
   /** 素材条目 id；代码模板段为 null */
   entry: string | null;
+  /** 选中的变体序号（从 0 开始）；代码模板段为 null */
+  variant: number | null;
   text: string;
   /** 「依据：」之后的文字；null = 不追加 */
   basis: string | null;
@@ -34,7 +36,16 @@ export interface ParaBlock {
 }
 export interface NoticeBlock {
   type: 'notice';
-  kind: 'tst' | 'nohour' | 'rules_version' | 'shensha_note' | 'alt_possibility' | 'advice_premise';
+  kind:
+    | 'tst'
+    | 'nohour'
+    | 'rules_version'
+    | 'shensha_note'
+    | 'alt_possibility'
+    | 'advice_premise'
+    | 'method'
+    | 'limitation'
+    | 'disclaimer';
   text: string;
 }
 export interface TableBlock {
@@ -45,10 +56,11 @@ export interface TableBlock {
 }
 export interface ChartBlock {
   type: 'chart';
-  kind: 'power';
-  data: { element: WuXing; pct: number }[];
+  /** power：图1 五行力量；dayun：图2 大运时间轴；liunian：图3 流年趋势线 */
+  kind: 'power' | 'dayun' | 'liunian';
+  data: Record<string, unknown>[];
 }
-export type Block = ParaBlock | NoticeBlock | TableBlock | ChartBlock;
+export type Block = ParaBlock | NoticeBlock | TableBlock | ChartBlock | YearCard;
 
 export interface Chapter {
   id: number;
@@ -230,6 +242,7 @@ export class ReportBuilder {
       type: 'para',
       slot: slotId,
       entry: e.id,
+      variant: chosen.variantIndex,
       text,
       basis: basisFor(slotId, this.evalCtx, basisItem),
     };
@@ -251,6 +264,7 @@ export class ReportBuilder {
       type: 'para',
       slot: slotId,
       entry: null,
+      variant: null,
       text: this.annotator.annotate(text, annotate),
       basis: basisFor(slotId, this.evalCtx),
     };
@@ -502,4 +516,223 @@ export function assembleChapters0to4(input: AssembleInput): {
   const b = new ReportBuilder(input);
   const chapters = [chapter0(b), chapter1(b), chapter2(b), chapter3(b), chapter4(b)];
   return { chapters, builder: b };
+}
+
+// ---------------------------------------------------------------- 第 5–8 章（T32）
+
+export interface YearCard {
+  type: 'yearCard';
+  year: number;
+  ganzhi: string;
+  /** 当年立春时刻（北京标准时间） */
+  lichun: string;
+  ten_god: string;
+  tier: string;
+  score: number;
+  relations: { type: string; a: string; b: string }[];
+  head: ParaBlock[];
+  domains: { career: ParaBlock[]; wealth: ParaBlock[]; love: ParaBlock[]; health: ParaBlock[] };
+  do: ParaBlock[];
+  watch: ParaBlock[];
+  rel: ParaBlock[];
+}
+
+/** 换运年在参考年起 3 年内（含）才写过渡段 */
+export const TRANSITION_WINDOW_YEARS = 3;
+
+export function chapter5(b: ReportBuilder): Chapter {
+  b.startChapter();
+  const { ctx, chart } = b.input;
+  const refYear = new Date(chart.refDate + 8 * 3600 * 1000).getUTCFullYear();
+  const blocks: Block[] = [...b.slot('CH5-INTRO', 1)];
+  blocks.push({
+    type: 'chart',
+    kind: 'dayun',
+    data: ctx.dayun.map((d, i) => ({
+      ganzhi: d.ganzhi,
+      start_year: d.start_year,
+      end_year: d.end_year,
+      start_age: chart.dayun.steps[i]?.startAge ?? null,
+      score: d.score,
+      tier: d.tier,
+      phase: d.phase,
+    })),
+  });
+  blocks.push(...b.slot('CH5-PAST', 1));
+  const focus = ctx.dayun.filter((d) => d.phase === 'current' || d.phase === 'next');
+  for (const d of focus)
+    blocks.push(...b.slot('CH5-STEP', 1, d as unknown as Record<string, unknown>));
+  let rel = 0;
+  for (const d of focus) {
+    if (rel >= 2) break;
+    const keep = d.relations.filter((r) => r.b === '日支' || r.b === '月支');
+    if (keep.length === 0) continue;
+    const item = { ...d, relations: keep } as unknown as Record<string, unknown>;
+    const ps = b.slot('CH5-REL', 1, item);
+    rel += ps.length;
+    blocks.push(...ps);
+  }
+  const next = ctx.dayun.find((d) => d.phase === 'next');
+  if (next && next.start_year >= refYear && next.start_year <= refYear + TRANSITION_WINDOW_YEARS) {
+    blocks.push(...b.slot('CH5-TRANSITION', 1, { year: next.start_year, ganzhi: next.ganzhi }));
+  }
+  blocks.push(...b.slot('CH5-FAR', 1));
+  return { id: 5, title: CHAPTER_TITLES[5] as string, blocks };
+}
+
+export function chapter6(b: ReportBuilder): Chapter {
+  b.startChapter();
+  const { ctx, chart } = b.input;
+  const cards: YearCard[] = ctx.liunian.map((l, i) => {
+    const item = l as unknown as Record<string, unknown>;
+    return {
+      type: 'yearCard',
+      year: l.year,
+      ganzhi: l.ganzhi,
+      lichun: chart.liunian[i]?.lichun ?? '',
+      ten_god: l.stem_ten_god,
+      tier: l.tier,
+      score: l.score,
+      relations: l.relations,
+      head: b.slot('CH6-HEAD', 1, item),
+      domains: {
+        career: b.slot('CH6-CAREER', 1, item),
+        wealth: b.slot('CH6-WEALTH', 1, item),
+        love: b.slot('CH6-LOVE', 1, item),
+        health: b.slot('CH6-HEALTH', 1, item),
+      },
+      do: b.slot('CH6-DO', 1, item),
+      watch: b.slot('CH6-WATCH', 1, item),
+      rel: l.relations.length > 0 ? b.slot('CH6-REL', 2, item) : [],
+    };
+  });
+  const trend: ChartBlock = {
+    type: 'chart',
+    kind: 'liunian',
+    data: ctx.liunian.map((l) => ({
+      year: l.year,
+      ganzhi: l.ganzhi,
+      score: l.score,
+      tier: l.tier,
+    })),
+  };
+  return {
+    id: 6,
+    title: CHAPTER_TITLES[6] as string,
+    blocks: [trend, ...cards],
+  };
+}
+
+/** 占比 > 40% 或 < 5% 的五行（CH7-HEALTH 维度） */
+export function healthExtremes(ctx: Ctx): { element: WuXing; state: '过旺' | '过弱' }[] {
+  return (['木', '火', '土', '金', '水'] as const)
+    .filter((w) => ctx.power_pct[w] > 40 || ctx.power_pct[w] < 5)
+    .map((w) => ({ element: w, state: ctx.power_pct[w] > 40 ? '过旺' : '过弱' }));
+}
+
+export function chapter7(b: ReportBuilder): Chapter {
+  b.startChapter();
+  const { ctx } = b.input;
+  const cur = ctx.dayun.find((d) => d.phase === 'current');
+  const blocks: Block[] = [...b.slot('CH7-CAREER', 1)];
+  if (cur) blocks.push(...b.slot('CH7-CAREER-NOW', 1, cur as unknown as Record<string, unknown>));
+  blocks.push(...b.slot('CH7-WEALTH', 1), ...b.slot('CH7-LOVE', 1));
+  if (ctx.liunian.some((l) => l.relations.some((r) => r.b === '日支')))
+    blocks.push(...b.slot('CH7-LOVE-YEARS', 1));
+  const ex = healthExtremes(ctx);
+  blocks.push(...b.slot('CH7-HEALTH', Math.max(1, Math.min(2, ex.length)), undefined, ex[0]));
+  blocks.push(...b.slot('CH7-HEALTH-END', 1));
+  return { id: 7, title: CHAPTER_TITLES[7] as string, blocks };
+}
+
+/** 第 8 章免责声明（代码常量，待用户审定后可移入 ch08_fixed.yaml） */
+export const DISCLAIMER =
+  '本报告是传统命理文化的参考与娱乐内容，不构成医疗、投资、法律或其他任何专业建议；重要决定请以现实情况和专业意见为准。';
+
+export function chapter8(
+  b: ReportBuilder,
+  opts: { limitations: readonly string[]; textsVersion: string },
+): Chapter {
+  const { chart } = b.input;
+  const tst =
+    chart.tst_status === '已校正'
+      ? '本份报告已按你选择的出生地做了真太阳时校正。'
+      : chart.hourKnown
+        ? '本份报告未做真太阳时校正（未选择出生地），时辰按北京时间排定。'
+        : '未提供出生时辰，本份报告按三柱分析，不涉及真太阳时校正。';
+  const lines: NoticeBlock[] = [
+    {
+      type: 'notice',
+      kind: 'rules_version',
+      text: `规则版本 ${RULES_VERSION}；素材库版本 ${opts.textsVersion}。`,
+    },
+    {
+      type: 'notice',
+      kind: 'method',
+      text: '子时口径：采用早晚子时派，23:00–23:59 出生日柱仍按当天、时干按次日日干起。',
+    },
+    { type: 'notice', kind: 'method', text: tst },
+    { type: 'notice', kind: 'shensha_note', text: SHENSHA_FOOTNOTE },
+    ...opts.limitations.map((l): NoticeBlock => ({
+      type: 'notice',
+      kind: 'rules_version',
+      text: `已知局限：${l}`,
+    })),
+    { type: 'notice', kind: 'rules_version', text: DISCLAIMER },
+  ];
+  return { id: 8, title: CHAPTER_TITLES[8] as string, blocks: lines };
+}
+
+export interface Report {
+  meta: {
+    textsVersion: string;
+    rulesVersion: string;
+    engineVersion: string;
+    tstStatus: string;
+    refDate: number;
+  };
+  chapters: Chapter[];
+  events: ReportEvent[];
+}
+
+/**
+ * 公开 API：拼装完整报告（第 0–8 章）。
+ * @param limitations strength.md §8「已知局限」各条（调用方从 rules/ 读出后传入；core 不做 IO）
+ */
+export function assembleReport(
+  input: AssembleInput & { textsVersion: string; limitations: readonly string[] },
+): Report {
+  const b = new ReportBuilder(input);
+  const chapters = [
+    chapter0(b),
+    chapter1(b),
+    chapter2(b),
+    chapter3(b),
+    chapter4(b),
+    chapter5(b),
+    chapter6(b),
+    chapter7(b),
+    chapter8(b, input),
+  ];
+  return {
+    meta: {
+      textsVersion: input.textsVersion,
+      rulesVersion: RULES_VERSION,
+      engineVersion: input.chart.engineVersion,
+      tstStatus: input.chart.tst_status,
+      refDate: input.chart.refDate,
+    },
+    chapters,
+    events: b.events,
+  };
+}
+
+/** 从 strength.md §8 取「已知局限」各条（去掉编号；第 4 条是给维护者的说明，不写进报告） */
+export function limitationsFromStrengthMd(md: string): string[] {
+  const sec = md.slice(md.indexOf('## 8. 已知局限'));
+  const end = sec.indexOf('\n## ', 3);
+  return (end > 0 ? sec.slice(0, end) : sec)
+    .split('\n')
+    .map((l) => /^\d+a?\. (.+)$/.exec(l.trim())?.[1])
+    .filter((x): x is string => x !== undefined && !x.startsWith('以上参数可以改'));
 }

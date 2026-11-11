@@ -254,7 +254,7 @@ export function buildCtxBase(chart: Chart, analysis: Analysis): CtxBase {
 // ---------------------------------------------------------------- 校验（字段字典 texts/README.md §3）
 
 /** ctx 中不属于字段字典、但作为结构数据存在的顶层键 */
-export const CTX_STRUCTURAL_KEYS = ['chart_key', 'pillars', 'dayun', 'liunian'] as const;
+export const CTX_STRUCTURAL_KEYS = ['chart_key', 'pillars', 'dayun', 'liunian', 'qiyun'] as const;
 
 /**
  * 按字段字典校验 ctx：字段存在、类型与取值域、nullable；ctx 里出现字典外的字段也报错。
@@ -365,6 +365,8 @@ export interface Ctx extends Omit<CtxBase, 'ten_gods'> {
   shensha_first: JishenName | null;
   dayun: DayunItem[];
   liunian: LiunianItem[];
+  /** 起运（第 5 章 INTRO 依据）：周岁、顺逆、是否约数（三柱） */
+  qiyun: { age: number; direction: '顺' | '逆'; approximate: boolean };
 }
 
 const POS: readonly [BranchPos, keyof Chart['pillars']][] = [
@@ -562,5 +564,10 @@ export function buildCtx(chart: Chart, analysis: Analysis): Ctx {
     shensha_first: jishen[0] ?? null,
     dayun,
     liunian,
+    qiyun: {
+      age: chart.dayun.qiyunAge,
+      direction: chart.dayun.direction,
+      approximate: chart.dayun.approximate,
+    },
   };
 }

@@ -51,7 +51,11 @@ function build(id: string) {
 }
 /** 每章的块序列：段落写槽位，其余写 type:kind */
 const shape = (chs: Chapter[]) =>
-  chs.map((c) => c.blocks.map((b) => (b.type === 'para' ? b.slot : `${b.type}:${b.kind}`)));
+  chs.map((c) =>
+    c.blocks.map((b) =>
+      b.type === 'para' ? b.slot : b.type === 'yearCard' ? 'yearCard' : `${b.type}:${b.kind}`,
+    ),
+  );
 const paras = (c: Chapter) => c.blocks.filter((b): b is ParaBlock => b.type === 'para');
 
 describe('C01 / C12 / C14 / C04：第 0–4 章结构与顺序', () => {
