@@ -238,9 +238,17 @@ export const FIELD_CHECKS: readonly FieldCheck[] = [
   {
     key: 'dayun.qiyun_date',
     task: 'T09',
-    kind: { type: 'dateWithinDays', days: 1 },
+    // T21 起期望值已按代码复核（按秒口径），不再留 ±1 天容差
+    kind: { type: 'dateWithinDays', days: 0 },
     sources: ['dayun.qiyun_date'],
     extract: byPathReviewable('dayun.qiyun_date'),
+  },
+  {
+    key: 'dayun.qiyun_offset',
+    task: 'T21',
+    kind: exact,
+    sources: ['dayun.qiyun_offset'],
+    extract: byPathReviewable('dayun.qiyun_offset'),
   },
   {
     key: 'strength.S',
@@ -342,7 +350,6 @@ export const NOT_COMPARED: Readonly<Record<string, string>> = {
   'alt_zi_huanri_school.note': '说明文字',
   wrong_if_not_corrected:
     '说明性字段（未做时区 / 真太阳时校正时的错误结果），T05 / T06 专项用例使用',
-  'dayun.qiyun_offset': 'test_guidance 未要求；起运时刻由 dayun.qiyun_date（±1 天）覆盖',
   no_hour: '三柱时辰扫描与置信度，T18 专项测试比对',
   shensha_ji_alt_group: '交节日另一组年月柱的吉神，T19 专项测试比对',
   shensha_ji_display_if_uncertain: '交节日不确定时的吉神展示（jishen_display），T19 专项测试比对',

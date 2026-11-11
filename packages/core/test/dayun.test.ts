@@ -306,7 +306,7 @@ describe('cases.json 补充：前三步开始虚岁（cases.test.ts 已比对方
   }
 });
 
-describe('C20 代码计算值（cases.json 期望为 null，待 mingli-expert 确认；此处锁定防回归）', () => {
+describe('C20 起运（T21 由代码补全、用户 2026-11-11 裁定写入 cases.json；此处另锁节气与周岁防回归）', () => {
   it('1981-12-22 20:00 男：辛酉阴男逆排，数到上一个节大雪 1981-12-07 12:51:15', () => {
     const c = cases.find((x) => x.id === 'C20');
     if (!c) throw new Error('缺少 C20');

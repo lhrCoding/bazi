@@ -43,6 +43,7 @@ function computeActual(c: LoadedCase): CaseActual {
     'dayun.first3.ganzhi': first3.map((s) => s.ganzhi),
     'dayun.first3.start_year': first3.map((s) => s.startYear),
     'dayun.qiyun_date': chart.dayun.qiyunDate,
+    'dayun.qiyun_offset': `${chart.dayun.qiyunOffset.years}年${chart.dayun.qiyunOffset.months}月${chart.dayun.qiyunOffset.days}天${chart.dayun.qiyunOffset.hours}时`,
     'strength.S': sp.S,
     'strength.power': sp.power,
     'strength.gods': sp.gods,

@@ -44,13 +44,16 @@ describe('compareField：容差（test_guidance）', () => {
     expect(compareField(k, e, missing)).toMatch('键不一致');
   });
 
-  it('qiyun_date ±1 天（跨月、跨年也按日差计算）', () => {
+  it('qiyun_date 零容差（T21 起）；dateWithinDays 跨月、跨年也按日差计算', () => {
     const k = check('dayun.qiyun_date').kind;
+    expect(k).toEqual({ type: 'dateWithinDays', days: 0 });
     expect(compareField(k, '2033-12-01', '2033-12-01')).toBeNull();
-    expect(compareField(k, '2033-12-01', '2033-12-02')).toBeNull();
-    expect(compareField(k, '2033-12-01', '2033-11-30')).toBeNull();
-    expect(compareField(k, '2033-12-31', '2034-01-01')).toBeNull();
-    expect(compareField(k, '2033-12-01', '2033-12-03')).toMatch('差 2 天');
+    expect(compareField(k, '2033-12-01', '2033-12-02')).toMatch('差 1 天');
+    expect(compareField(k, '2033-12-31', '2034-01-01')).toMatch('差 1 天');
+    const one = { type: 'dateWithinDays', days: 1 } as const;
+    expect(compareField(one, '2033-12-01', '2033-11-30')).toBeNull();
+    expect(compareField(one, '2033-12-31', '2034-01-01')).toBeNull();
+    expect(compareField(one, '2033-12-01', '2033-12-03')).toMatch('差 2 天');
     expect(compareField(k, '2033-12-01', 'bad')).not.toBeNull();
   });
 });
@@ -131,17 +134,28 @@ describe('checkCaseField：待实现 / 待复核 / 不适用 / 未输出', () =>
     expect(r.outcome).toBe('fail');
   });
 
-  it('期望值为 null 表示待复核 → pendingReview（C20 起运）', () => {
-    expect(checkCaseField(check('dayun.qiyun_date'), byId('C20').expected, {}, {}).outcome).toBe(
+  it('期望值为 null 表示待复核 → pendingReview（以 T21 补全前的 C20 起运为例）', () => {
+    // T21 后 cases.json 已无 null 待复核字段；这里还原 C20 补全前的形状，验证机制本身
+    const real = byId('C20').expected;
+    const dayun = real.dayun as { first3: Record<string, unknown>[] } & Record<string, unknown>;
+    const before = {
+      ...real,
+      dayun: {
+        ...dayun,
+        qiyun_offset: null,
+        qiyun_date: null,
+        first3: dayun.first3.map((s) => ({ ...s, start_year: null, start_age_xusui: null })),
+      },
+    };
+    expect(checkCaseField(check('dayun.qiyun_date'), before, {}, {}).outcome).toBe('pendingReview');
+    expect(checkCaseField(check('dayun.qiyun_offset'), before, {}, {}).outcome).toBe(
       'pendingReview',
     );
-    expect(
-      checkCaseField(check('dayun.first3.start_year'), byId('C20').expected, {}, {}).outcome,
-    ).toBe('pendingReview');
-    // 同一案例的大运干支有值，照常比对
-    expect(checkCaseField(check('dayun.first3.ganzhi'), byId('C20').expected, {}, {}).outcome).toBe(
-      'fail',
+    expect(checkCaseField(check('dayun.first3.start_year'), before, {}, {}).outcome).toBe(
+      'pendingReview',
     );
+    // 同一案例的大运干支有值，照常比对
+    expect(checkCaseField(check('dayun.first3.ganzhi'), before, {}, {}).outcome).toBe('fail');
   });
 
   it('三柱案例没有大运期望 → absent', () => {
@@ -170,6 +184,7 @@ describe('checkCaseField：待实现 / 待复核 / 不适用 / 未输出', () =>
         'dayun.first3.ganzhi': first3?.map((s) => s.ganzhi),
         'dayun.first3.start_year': first3?.map((s) => s.start_year),
         'dayun.qiyun_date': get(e, 'dayun.qiyun_date'),
+        'dayun.qiyun_offset': get(e, 'dayun.qiyun_offset'),
         'strength.S': get(e, 'strength.S'),
         'strength.power': get(e, 'strength.power'),
         'strength.gods': get(e, 'strength.gods'),

@@ -1,7 +1,7 @@
 {
   "_meta": {
     "version": "v2",
-    "date": "2026-10-29",
+    "date": "2026-11-11",
     "author": "mingli-expert",
     "changelog": [
       "v2：子时改为早晚子时派（23:00–23:59 日柱算当日、时干按次日日干起；对应 lunar 库 setSect(2)）。受影响的只有 C05（四柱、旺衰、喜忌全部更新）；C19 交节说明文字更新。",
@@ -9,7 +9,8 @@
       "v2：时辰扫描由 12 个时柱改为 13 个（新增晚子时），C18、C19 的 no_hour 计数更新。",
       "v2：每个案例新增 expected.shensha_ji（只含 shensha.md 的 4 个吉神）。",
       "v2.1（2026-10-29）：按用户决定，天乙、文昌、太极改为日干、年干兼查；shensha_ji 格式由 positions 改为 hits[{pos, by}]，19 个案例全部重查（人工查表）。",
-      "v2.2（2026-10-30）：按用户决定明确 Y-TH-NEUTRAL-OVERRIDE（yongshen.md v1.1：原用神保留为第一喜神，“冬删水 / 夏删土”只作用于原喜神列表），新增 C20 锁定该情形（人工推算，起运等字段待代码复核）。C16 在新旧读法下结果相同，不变。三柱案例的 no_hour.cong_possible_hours 对应 ctx 字段 strength.nohour_cong_hours（strength.md v2.1）。"
+      "v2.2（2026-10-30）：按用户决定明确 Y-TH-NEUTRAL-OVERRIDE（yongshen.md v1.1：原用神保留为第一喜神，“冬删水 / 夏删土”只作用于原喜神列表），新增 C20 锁定该情形（人工推算，起运等字段待代码复核）。C16 在新旧读法下结果相同，不变。三柱案例的 no_hour.cong_possible_hours 对应 ctx 字段 strength.nohour_cong_hours（strength.md v2.1）。",
+      "v2.3（2026-11-11）：T21 代码全量复核（零容差，见 reports/cases-diff.md）后由用户裁定：10 个逆排案例 qiyun_offset 改为代码值（原手算截秒多 2 小时），C11 qiyun_date 随之改为 1988-01-28；C20 起运相关 null 字段由代码补全。其余字段（四柱、旺衰、喜用、吉神、三柱扫描）与代码完全一致，未改动。"
     ],
     "verification_note_v2": "v2 本轮无代码环境（v1 的 scratchpad 参考实现已清理）。v2 新增或改动的数值——C05 的旺衰/喜用、C18/C19 新增晚子时的扫描结果、全部 19 个案例的 shensha_ji（v2.1 日干、年干兼查后重新人工查表，逐案按 shensha.md §1 四张表核对一遍，未用代码复核）——均为 mingli-expert 人工查表/手算，已在各案例 verified 字段注明；其余字段沿用 v1 的代码核对结果。",
     "conventions": {
@@ -80,7 +81,7 @@
         },
         "dayun": {
           "direction": "逆",
-          "qiyun_offset": "9年9月26天18时",
+          "qiyun_offset": "9年9月26天16时",
           "qiyun_date": "2033-12-01",
           "first3": [
             {
@@ -142,7 +143,7 @@
         ]
       },
       "reasoning": "戊土生丑月，丑中己土为比劫，得令；日支戌土有根。但年月干癸、乙，时柱庚申，金（食伤 2.35）、水（财 2.0）、木（官杀 1.8）三方消耗，同党只占 32% → 身弱。“得令却身弱”正是计分法比口诀细的地方。异党中食伤最重 → 用印（火）制食伤、生日主；丑月寒冻，原局火不足全盘 2%（仅戌中丁火），调候同样要火，扶抑与调候一致。喜比劫土；忌金、水；木生火，列闲神。",
-      "verified": "四柱：lunar-python 1.4.8（EightChar.setSect(1)）与 sxtwl 2.0.7 两个库独立计算一致；立春时刻：PyEphem 4.x（VSOP87，视黄经）独立计算，与 lunar-python 结果相差 < 15 秒；大运：lunar-python getYun(gender, 2)（按分钟折算）；旺衰/喜用：按 rules/strength.md + yongshen.md v1 写的参考实现（scratchpad，非项目代码）计算，再由 mingli-expert 逐条人工复核，结论认可。"
+      "verified": "四柱：lunar-python 1.4.8（EightChar.setSect(1)）与 sxtwl 2.0.7 两个库独立计算一致；立春时刻：PyEphem 4.x（VSOP87，视黄经）独立计算，与 lunar-python 结果相差 < 15 秒；大运：lunar-python getYun(gender, 2)（按分钟折算）；旺衰/喜用：按 rules/strength.md + yongshen.md v1 写的参考实现（scratchpad，非项目代码）计算，再由 mingli-expert 逐条人工复核，结论认可。；2026-11-11 代码复核（T21，用户裁定）：qiyun_offset 9年9月26天18时 → 9年9月26天16时（原手算工具截秒，逆排多 2 小时；改按 tyme4ts Sect2 按秒口径）"
     },
     {
       "id": "C02",
@@ -190,7 +191,7 @@
         },
         "dayun": {
           "direction": "逆",
-          "qiyun_offset": "0年0月1天12时",
+          "qiyun_offset": "0年0月1天10时",
           "qiyun_date": "2024-02-06",
           "first3": [
             {
@@ -251,7 +252,7 @@
         ]
       },
       "reasoning": "戊土生寅月，寅中甲木为七杀当令，失令；甲木又透年干，官杀 2.84 为异党最强。月干丙火透出（印 2.05），日支戌、年支辰为比劫根，同党 42% → 中和偏弱。杀重用印化杀：用火，喜土；忌木、金；水闲。与 C01 只差 35 分钟，年、月柱和喜忌都变了，是交节精度的关键测试。",
-      "verified": "四柱：lunar-python 1.4.8（EightChar.setSect(1)）与 sxtwl 2.0.7 两个库独立计算一致；立春时刻：PyEphem 4.x（VSOP87，视黄经）独立计算，与 lunar-python 结果相差 < 15 秒；大运：lunar-python getYun(gender, 2)（按分钟折算）；旺衰/喜用：按 rules/strength.md + yongshen.md v1 写的参考实现（scratchpad，非项目代码）计算，再由 mingli-expert 逐条人工复核，结论认可。"
+      "verified": "四柱：lunar-python 1.4.8（EightChar.setSect(1)）与 sxtwl 2.0.7 两个库独立计算一致；立春时刻：PyEphem 4.x（VSOP87，视黄经）独立计算，与 lunar-python 结果相差 < 15 秒；大运：lunar-python getYun(gender, 2)（按分钟折算）；旺衰/喜用：按 rules/strength.md + yongshen.md v1 写的参考实现（scratchpad，非项目代码）计算，再由 mingli-expert 逐条人工复核，结论认可。；2026-11-11 代码复核（T21，用户裁定）：qiyun_offset 0年0月1天12时 → 0年0月1天10时（原手算工具截秒，逆排多 2 小时；改按 tyme4ts Sect2 按秒口径）"
     },
     {
       "id": "C03",
@@ -509,7 +510,7 @@
         },
         "dayun": {
           "direction": "逆",
-          "qiyun_offset": "3年2月11天4时",
+          "qiyun_offset": "3年2月11天2时",
           "qiyun_date": "1998-05-27",
           "first3": [
             {
@@ -570,7 +571,7 @@
         ]
       },
       "reasoning": "23:30 出生，按早晚子时派：日柱仍是当日乙巳，时柱子时、时干按次日丙午的“丙辛日戊子时”起 → 戊子（与 C04 同日 00:30 的丙子时对照，两者只差时干）。计分（手算）：天干 年乙 0.8（亥、卯有木根）、月己 1.0（巳中戊土余气为根）、时戊 1.0；地支 亥(0.8)=壬0.56+甲0.24，卯(3.0)=乙3.0，巳(1.5)=丙0.9+庚0.45+戊0.15，子(1.0)=癸1.0；无三会三合。木 4.04、火 0.9、土 2.15、金 0.45、水 1.56，总 9.10；同党（木+水）5.60 → S=0.615 → 身旺。得令（卯本气乙为比劫）、得地、得势 1（年干乙）。偏旺且比劫 4.04 ≥ 印 1.56，官杀（金）仅巳中庚 0.45 < 1.0 → Y-FY-S-BI-SHI：用食伤火、喜财土；忌比劫木、印水；金闲。火力量 0.9 > 0（巳中丙火），不触发用神缺位互换；卯月不做调候；最强两行木 44%、土 24%，土不足 25%，不触发通关。结论与 C04（同日早子时）相同，可作为“早子/晚子时干不同、结论可以相同”的对照。若按不再采用的 23:00 换日派，日柱为丙午，结论完全不同（见 alt_zi_huanri_school.note）。",
-      "verified": "四柱：v1 核对时 lunar-python 1.4.8 与 sxtwl 2.0.7 已同时算出早晚子时派结果（乙巳日、戊子时，当时存于 alt 字段），v2 直接沿用；本轮 scratchpad 核对环境已清理，未重新运行代码。大运：只依赖出生绝对时刻与年柱，与子时口径无关，沿用 v1 的 lunar-python getYun(gender, 2) 结果。旺衰/喜用：v2 由 mingli-expert 按 strength.md / yongshen.md 人工逐项手算（过程见 reasoning），并与 C04（年月日三柱相同、仅时柱不同）的代码结果交叉核对：除时干一项外各项分值吻合（C04 火 1.9 = 本例火 0.9 + 丙火透干 1.0；C04 土 1.15 = 本例土 2.15 − 戊土透干 1.0）。吉神：人工查 shensha.md 表，未用代码复核。开发实现后请以代码重跑确认。"
+      "verified": "四柱：v1 核对时 lunar-python 1.4.8 与 sxtwl 2.0.7 已同时算出早晚子时派结果（乙巳日、戊子时，当时存于 alt 字段），v2 直接沿用；本轮 scratchpad 核对环境已清理，未重新运行代码。大运：只依赖出生绝对时刻与年柱，与子时口径无关，沿用 v1 的 lunar-python getYun(gender, 2) 结果。旺衰/喜用：v2 由 mingli-expert 按 strength.md / yongshen.md 人工逐项手算（过程见 reasoning），并与 C04（年月日三柱相同、仅时柱不同）的代码结果交叉核对：除时干一项外各项分值吻合（C04 火 1.9 = 本例火 0.9 + 丙火透干 1.0；C04 土 1.15 = 本例土 2.15 − 戊土透干 1.0）。吉神：人工查 shensha.md 表，未用代码复核。开发实现后请以代码重跑确认。；2026-11-11 代码复核（T21，用户裁定）：qiyun_offset 3年2月11天4时 → 3年2月11天2时（原手算工具截秒，逆排多 2 小时；改按 tyme4ts Sect2 按秒口径）"
     },
     {
       "id": "C06",
@@ -740,7 +741,7 @@
         },
         "dayun": {
           "direction": "逆",
-          "qiyun_offset": "10年0月19天12时",
+          "qiyun_offset": "10年0月19天10时",
           "qiyun_date": "2033-04-24",
           "first3": [
             {
@@ -801,7 +802,7 @@
         ]
       },
       "reasoning": "癸水生卯月，失令；两卯一乙加辰中乙木，食伤 5.1 极重，同党 15%。但巳中庚金是印的中气根，不满足“真从”条件 → 按身弱。食伤最重 → 用印（金）制食伤、生日主，喜比劫水；忌木、火；土闲。与《穷通宝鉴》二月癸水“庚辛为用”一致。",
-      "verified": "四柱：lunar-python 1.4.8（EightChar.setSect(1)）与 sxtwl 2.0.7 两个库独立计算一致；清明时刻：PyEphem 4.x（VSOP87，视黄经）独立计算，与 lunar-python 结果相差 < 15 秒；大运：lunar-python getYun(gender, 2)（按分钟折算）；旺衰/喜用：按 rules/strength.md + yongshen.md v1 写的参考实现（scratchpad，非项目代码）计算，再由 mingli-expert 逐条人工复核，结论认可。"
+      "verified": "四柱：lunar-python 1.4.8（EightChar.setSect(1)）与 sxtwl 2.0.7 两个库独立计算一致；清明时刻：PyEphem 4.x（VSOP87，视黄经）独立计算，与 lunar-python 结果相差 < 15 秒；大运：lunar-python getYun(gender, 2)（按分钟折算）；旺衰/喜用：按 rules/strength.md + yongshen.md v1 写的参考实现（scratchpad，非项目代码）计算，再由 mingli-expert 逐条人工复核，结论认可。；2026-11-11 代码复核（T21，用户裁定）：qiyun_offset 10年0月19天12时 → 10年0月19天10时（原手算工具截秒，逆排多 2 小时；改按 tyme4ts Sect2 按秒口径）"
     },
     {
       "id": "C08",
@@ -855,7 +856,7 @@
         },
         "dayun": {
           "direction": "逆",
-          "qiyun_offset": "1年4月20天16时",
+          "qiyun_offset": "1年4月20天14时",
           "qiyun_date": "2002-07-30",
           "first3": [
             {
@@ -917,7 +918,7 @@
         ]
       },
       "reasoning": "北京时间 3 月 10 日 00:40，经度修正 −129.5 分、均时差约 −11 分 → 真太阳时 3 月 9 日 22:19，日柱回到前一天辛未，时柱己亥（不校正会排成壬申日庚子时）。年月柱按绝对时刻比节气，不受影响。辛金生卯月失令，亥卯未三合木局，财 4.95 最重；三辛透、巳中庚为比劫，己土、未土为印，同党 38% → 身弱。财多身弱用比劫：用金，喜土；忌木、火；水闲。",
-      "verified": "四柱：lunar-python 1.4.8（EightChar.setSect(1)）与 sxtwl 2.0.7 两个库独立计算一致；真太阳时：NOAA 均时差公式 -11.18 分，PyEphem 计算 -10.44 分，差 < 1 分钟，距时辰边界 > 30 分钟；大运：lunar-python getYun(gender, 2)（按分钟折算）；旺衰/喜用：按 rules/strength.md + yongshen.md v1 写的参考实现（scratchpad，非项目代码）计算，再由 mingli-expert 逐条人工复核，结论认可。"
+      "verified": "四柱：lunar-python 1.4.8（EightChar.setSect(1)）与 sxtwl 2.0.7 两个库独立计算一致；真太阳时：NOAA 均时差公式 -11.18 分，PyEphem 计算 -10.44 分，差 < 1 分钟，距时辰边界 > 30 分钟；大运：lunar-python getYun(gender, 2)（按分钟折算）；旺衰/喜用：按 rules/strength.md + yongshen.md v1 写的参考实现（scratchpad，非项目代码）计算，再由 mingli-expert 逐条人工复核，结论认可。；2026-11-11 代码复核（T21，用户裁定）：qiyun_offset 1年4月20天16时 → 1年4月20天14时（原手算工具截秒，逆排多 2 小时；改按 tyme4ts Sect2 按秒口径）"
     },
     {
       "id": "C09",
@@ -971,7 +972,7 @@
         },
         "dayun": {
           "direction": "逆",
-          "qiyun_offset": "8年5月18天2时",
+          "qiyun_offset": "8年5月18天0时",
           "qiyun_date": "1999-04-21",
           "first3": [
             {
@@ -1032,7 +1033,7 @@
         ]
       },
       "reasoning": "北京时间 06:50，经度修正 +26.5 分、11 月初均时差约 +16.4 分 → 真太阳时 07:33，从卯时变为辰时（时柱甲辰；不校正为癸卯）。壬水生戌月，戌中戊土七杀当令，辰戌土合计官杀 2.79；庚金透年、坐申长生，印 2.6；午戌半合火为财。同党 35% → 身弱。杀重用印：用金，喜水；忌土、火；木闲。",
-      "verified": "四柱：lunar-python 1.4.8（EightChar.setSect(1)）与 sxtwl 2.0.7 两个库独立计算一致；真太阳时：NOAA 均时差公式 16.37 分，PyEphem 计算 16.41 分，差 < 1 分钟，距时辰边界 > 30 分钟；大运：lunar-python getYun(gender, 2)（按分钟折算）；旺衰/喜用：按 rules/strength.md + yongshen.md v1 写的参考实现（scratchpad，非项目代码）计算，再由 mingli-expert 逐条人工复核，结论认可。"
+      "verified": "四柱：lunar-python 1.4.8（EightChar.setSect(1)）与 sxtwl 2.0.7 两个库独立计算一致；真太阳时：NOAA 均时差公式 16.37 分，PyEphem 计算 16.41 分，差 < 1 分钟，距时辰边界 > 30 分钟；大运：lunar-python getYun(gender, 2)（按分钟折算）；旺衰/喜用：按 rules/strength.md + yongshen.md v1 写的参考实现（scratchpad，非项目代码）计算，再由 mingli-expert 逐条人工复核，结论认可。；2026-11-11 代码复核（T21，用户裁定）：qiyun_offset 8年5月18天2时 → 8年5月18天0时（原手算工具截秒，逆排多 2 小时；改按 tyme4ts Sect2 按秒口径）"
     },
     {
       "id": "C10",
@@ -1181,8 +1182,8 @@
         },
         "dayun": {
           "direction": "逆",
-          "qiyun_offset": "6年3月1天14时",
-          "qiyun_date": "1988-01-29",
+          "qiyun_offset": "6年3月1天12时",
+          "qiyun_date": "1988-01-28",
           "first3": [
             {
               "ganzhi": "丁酉",
@@ -1243,7 +1244,7 @@
         ]
       },
       "reasoning": "戊土生戌月得令，年月时三戊透出，寅午戌三合火局生身，比劫 4.25、印 2.95，同党 68% → 身旺。比劫重于印；寅中甲木官杀只有 0.9 且已入火局，制不住比劫 → 用食伤金（辛酉年柱泄秀），喜水（财，润燥土，原局无水需运补）；忌土、火；木闲。",
-      "verified": "四柱：lunar-python 1.4.8（EightChar.setSect(1)）与 sxtwl 2.0.7 两个库独立计算一致；大运：lunar-python getYun(gender, 2)（按分钟折算）；旺衰/喜用：按 rules/strength.md + yongshen.md v1 写的参考实现（scratchpad，非项目代码）计算，再由 mingli-expert 逐条人工复核，结论认可。"
+      "verified": "四柱：lunar-python 1.4.8（EightChar.setSect(1)）与 sxtwl 2.0.7 两个库独立计算一致；大运：lunar-python getYun(gender, 2)（按分钟折算）；旺衰/喜用：按 rules/strength.md + yongshen.md v1 写的参考实现（scratchpad，非项目代码）计算，再由 mingli-expert 逐条人工复核，结论认可。；2026-11-11 代码复核（T21，用户裁定）：qiyun_offset 6年3月1天14时 → 6年3月1天12时（原手算工具截秒，逆排多 2 小时；改按 tyme4ts Sect2 按秒口径）；qiyun_date 1988-01-29 → 1988-01-28（代码起运时刻 1988-01-28 23:28，同一原因跨午夜）"
     },
     {
       "id": "C12",
@@ -1396,7 +1397,7 @@
         },
         "dayun": {
           "direction": "逆",
-          "qiyun_offset": "10年4月2天22时",
+          "qiyun_offset": "10年4月2天20时",
           "qiyun_date": "1977-11-10",
           "first3": [
             {
@@ -1458,7 +1459,7 @@
         ]
       },
       "reasoning": "壬水生午月，丁、丙透年月，午、未火土成势，财 4.14 最重，己土官杀 2.53；申、酉金为印 1.9，无比劫透出。同党 26% → 身弱。财多身弱用比劫：用水，喜金；忌火、土；木闲。夏月水只占约 5%，调候也要水，与扶抑一致；与《穷通宝鉴》五月壬水“取癸为用、庚辛为佐”一致。",
-      "verified": "四柱：lunar-python 1.4.8（EightChar.setSect(1)）与 sxtwl 2.0.7 两个库独立计算一致；小暑时刻：PyEphem 4.x（VSOP87，视黄经）独立计算，与 lunar-python 结果相差 < 15 秒；大运：lunar-python getYun(gender, 2)（按分钟折算）；旺衰/喜用：按 rules/strength.md + yongshen.md v1 写的参考实现（scratchpad，非项目代码）计算，再由 mingli-expert 逐条人工复核，结论认可。"
+      "verified": "四柱：lunar-python 1.4.8（EightChar.setSect(1)）与 sxtwl 2.0.7 两个库独立计算一致；小暑时刻：PyEphem 4.x（VSOP87，视黄经）独立计算，与 lunar-python 结果相差 < 15 秒；大运：lunar-python getYun(gender, 2)（按分钟折算）；旺衰/喜用：按 rules/strength.md + yongshen.md v1 写的参考实现（scratchpad，非项目代码）计算，再由 mingli-expert 逐条人工复核，结论认可。；2026-11-11 代码复核（T21，用户裁定）：qiyun_offset 10年4月2天22时 → 10年4月2天20时（原手算工具截秒，逆排多 2 小时；改按 tyme4ts Sect2 按秒口径）"
     },
     {
       "id": "C14",
@@ -1499,7 +1500,7 @@
         },
         "dayun": {
           "direction": "逆",
-          "qiyun_offset": "5年7月10天16时",
+          "qiyun_offset": "5年7月10天14时",
           "qiyun_date": "1974-05-05",
           "first3": [
             {
@@ -1561,7 +1562,7 @@
         ]
       },
       "reasoning": "丁火生酉月，申酉酉酉加辛金透月干，财 6.98；戊、己食伤透出生财。四个地支的藏干里完全没有火、木（连余气都没有），三干也无印比 → 同党 0%，满足“真从”全部条件 → 从财格。顺势：用金，喜土；忌比劫火、印木；水（官杀 0.24）闲。",
-      "verified": "四柱：lunar-python 1.4.8（EightChar.setSect(1)）与 sxtwl 2.0.7 两个库独立计算一致；大运：lunar-python getYun(gender, 2)（按分钟折算）；旺衰/喜用：按 rules/strength.md + yongshen.md v1 写的参考实现（scratchpad，非项目代码）计算，再由 mingli-expert 逐条人工复核，结论认可。"
+      "verified": "四柱：lunar-python 1.4.8（EightChar.setSect(1)）与 sxtwl 2.0.7 两个库独立计算一致；大运：lunar-python getYun(gender, 2)（按分钟折算）；旺衰/喜用：按 rules/strength.md + yongshen.md v1 写的参考实现（scratchpad，非项目代码）计算，再由 mingli-expert 逐条人工复核，结论认可。；2026-11-11 代码复核（T21，用户裁定）：qiyun_offset 5年7月10天16时 → 5年7月10天14时（原手算工具截秒，逆排多 2 小时；改按 tyme4ts Sect2 按秒口径）"
     },
     {
       "id": "C15",
@@ -1603,7 +1604,7 @@
         },
         "dayun": {
           "direction": "逆",
-          "qiyun_offset": "7年4月14天16时",
+          "qiyun_offset": "7年4月14天14时",
           "qiyun_date": "1990-08-12",
           "first3": [
             {
@@ -1665,7 +1666,7 @@
         ]
       },
       "reasoning": "乙木生卯月建禄，亥卯未三合木局，月日两乙透出，年时两癸生木，同党 92%；原局无金（官杀 0），财只有未中己土 0.6（<10%）→ 专旺（曲直格）。顺其旺势：用木，喜水（印）、火（食伤泄秀）；忌金、土。",
-      "verified": "四柱：lunar-python 1.4.8（EightChar.setSect(1)）与 sxtwl 2.0.7 两个库独立计算一致；大运：lunar-python getYun(gender, 2)（按分钟折算）；旺衰/喜用：按 rules/strength.md + yongshen.md v1 写的参考实现（scratchpad，非项目代码）计算，再由 mingli-expert 逐条人工复核，结论认可。"
+      "verified": "四柱：lunar-python 1.4.8（EightChar.setSect(1)）与 sxtwl 2.0.7 两个库独立计算一致；大运：lunar-python getYun(gender, 2)（按分钟折算）；旺衰/喜用：按 rules/strength.md + yongshen.md v1 写的参考实现（scratchpad，非项目代码）计算，再由 mingli-expert 逐条人工复核，结论认可。；2026-11-11 代码复核（T21，用户裁定）：qiyun_offset 7年4月14天16时 → 7年4月14天14时（原手算工具截秒，逆排多 2 小时；改按 tyme4ts Sect2 按秒口径）"
     },
     {
       "id": "C16",
@@ -2144,12 +2145,12 @@
         },
         "dayun": {
           "direction": "逆",
-          "qiyun_offset": null,
-          "qiyun_date": null,
+          "qiyun_offset": "5年1月5天16时",
+          "qiyun_date": "1987-01-28",
           "first3": [
-            {"ganzhi": "己亥", "start_year": null, "start_age_xusui": null},
-            {"ganzhi": "戊戌", "start_year": null, "start_age_xusui": null},
-            {"ganzhi": "丁酉", "start_year": null, "start_age_xusui": null}
+            {"ganzhi": "己亥", "start_year": 1987, "start_age_xusui": 7},
+            {"ganzhi": "戊戌", "start_year": 1997, "start_age_xusui": 17},
+            {"ganzhi": "丁酉", "start_year": 2007, "start_age_xusui": 27}
           ]
         },
         "strength": {
@@ -2193,7 +2194,7 @@
         ]
       },
       "reasoning": "甲木生子月，子水为印，得令；但年月辛、庚两金透出，酉金坐年支，两戌中辛金助之，官杀 3.35 为异党最强。时干甲木在四支藏干中无根（×0.6）。同党 = 水 3.0 + 木 0.6 = 3.6，总 8.7（时干无根打折，无三会三合）→ S 0.414，中和偏弱（距 0.40 为 0.014，不贴线），属“得令却身弱”。扶抑：杀重用印 → 用水、喜木、忌金与异党第二强土（1.5）、火闲；水 3.0 > 0 不互换。调候：子月需火，火仅 0.25（约 2.9%），火原为闲神不在用喜中，等级为中和 → Y-TH-NEUTRAL-OVERRIDE：火为用神；原用神水降为第一喜神并保留（yongshen.md v1.1：冬删水只作用于原喜神列表 [木]，木不受影响）；忌神中无火，不变。结果用火、喜水木、忌金土、闲神为空。若按旧读法删去水，则喜神只剩木、水变闲神——本案例专门锁定这一差别。通关：最强两行金 3.35、水 3.0 为相生，不触发。吉神：日干甲查天乙（丑未）、文昌（巳）均无；年干辛查天乙（寅午）无、文昌（子）见月支；太极以日干甲查（子午）见月支，以年干辛查（寅亥）无；月德（子月在壬）四干无壬。",
-      "verified": "v2.2 新增，全部为 mingli-expert 人工推算，未用代码或排盘库核对：日柱以 2000-01-01 戊午为基准按 60 甲子推算（同法复算 C16 1994-01-09 乙未一致）；年柱辛酉（未过 1982 年立春）、月柱按五虎遁辛年子月为庚子、时柱按五鼠遁甲日戌时为甲戌；力量、旺衰、喜用按 strength.md v2 / yongshen.md v1.1 手算；吉神人工查表。大运方向按阴年男命逆排、干支由月柱逆推；起运时刻、起运年龄与交节时刻未算（字段为 null），待 T21 代码复核补全。"
+      "verified": "v2.2 新增，全部为 mingli-expert 人工推算，未用代码或排盘库核对：日柱以 2000-01-01 戊午为基准按 60 甲子推算（同法复算 C16 1994-01-09 乙未一致）；年柱辛酉（未过 1982 年立春）、月柱按五虎遁辛年子月为庚子、时柱按五鼠遁甲日戌时为甲戌；力量、旺衰、喜用按 strength.md v2 / yongshen.md v1.1 手算；吉神人工查表。大运方向按阴年男命逆排、干支由月柱逆推；起运时刻、起运年龄与交节时刻未算（字段为 null），待 T21 代码复核补全。；2026-11-11 代码复核（T21，用户裁定）：起运字段由代码补全（qiyun_offset 5年1月5天16时、qiyun_date 1987-01-28、前三步大运起始年 1987 / 1997 / 2007、起运虚岁 7 / 17 / 27，tyme4ts 节气时刻）；四柱、旺衰、喜用、吉神经代码零容差复核与人工推算一致"
     }
   ]
 }

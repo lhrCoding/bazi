@@ -152,7 +152,7 @@ describe('strength.md §4 旺衰等级阈值与代码常量一致（T16）', () 
   });
 
   it('§4.3 borderline 距离', () => {
-    expect(num(/若 S 与任一阈值相差 < ([\d.]+)/)).toBe(BORDERLINE_DELTA);
+    expect(num(/若 S 与任一\*\*等级阈值[^*]*\*\*相差 < ([\d.]+)/)).toBe(BORDERLINE_DELTA);
   });
 });
 

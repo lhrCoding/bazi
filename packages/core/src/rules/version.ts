@@ -16,4 +16,4 @@ export const RULES_FILES = [
   'yongshen.md',
 ] as const;
 
-export const RULES_VERSION = 'bd813c69';
+export const RULES_VERSION = 'd183a925';
