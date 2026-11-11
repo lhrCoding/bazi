@@ -2,8 +2,8 @@
  * 拼装上下文 ctx（TASKS T27 基础字段；rules/report-sections.md §0 R-CTX、texts/README.md §3）。
  *
  * ctx 是拼装引擎的唯一输入：只含代码算好的数据，不含自由文本、不含出生日期（只给周岁 current_age）。
- * 本任务（T27）：chart_key、profile、pillars、day、month、el、ten_gods（细分十神，persona 见 T28）、strength、gods、
- * power_pct、yongshen。T28 追加：dayun / liunian item、relations、ten_gods.persona、career、partner、shensha。
+ * T27 buildCtxBase：chart_key、profile、pillars、day、month、el、ten_gods（细分十神）、strength、gods、power_pct、yongshen。
+ * T28 buildCtx：再加 dayun / liunian item、原局 relations、ten_gods.persona、career、partner、wealth、dayun_summary、shensha。
  *
  * 口径：
  * - 百分比 = round(x / total × 100)（total 为 strength.md 的 total，不含日干；四舍五入取整）。
@@ -18,7 +18,8 @@ import type { Gan, GanZhi, Zhi } from '../bazi/ganzhi';
 import { HIDDEN_STEMS, ganWuXing, tenGodOf, type TenGod } from '../bazi/ten-gods';
 import type { Chart } from '../bazi/types';
 import { elementOfGroup, godGroupOf } from '../rules/strength-power';
-import type { Analysis, GodGroup, StrengthLevel, WuXing } from '../rules/types';
+import { LIU_CHONG, LIU_HE, type Tier, type TierGroup } from '../rules/scoring';
+import type { Analysis, GodGroup, JishenName, StrengthLevel, WuXing } from '../rules/types';
 import { GLOBAL_FIELDS } from '../texts/fields';
 
 export interface CtxBase {
@@ -309,4 +310,257 @@ export function ctxProblems(
     } else problems.push(`${k}：不在字段字典`);
   }
   return problems;
+}
+
+// ---------------------------------------------------------------- T28：大运 / 流年 / 关系 / 性格 / 领域 / 吉神
+
+export type Role = '用' | '喜' | '忌' | '闲';
+export type BranchPos = '年支' | '月支' | '日支' | '时支';
+export interface Relation {
+  type: '冲' | '合';
+  a: string;
+  b: string;
+}
+
+export interface DayunItem {
+  idx: number;
+  ganzhi: GanZhi;
+  start_year: number;
+  end_year: number;
+  stem_ten_god: TenGod;
+  stem_god: GodGroup;
+  score: number;
+  tier: Tier;
+  tier_group: TierGroup;
+  stem_role: Role;
+  branch_role: Role;
+  relations: Relation[];
+  phase: 'past' | 'current' | 'next' | 'far';
+}
+
+export interface LiunianItem {
+  year: number;
+  ganzhi: GanZhi;
+  dayun: GanZhi | null;
+  stem_ten_god: TenGod;
+  stem_god: GodGroup;
+  score: number;
+  tier: Tier;
+  tier_group: TierGroup;
+  stem_role: Role;
+  branch_role: Role;
+  relations: Relation[];
+}
+
+export interface Ctx extends Omit<CtxBase, 'ten_gods'> {
+  ten_gods: CtxBase['ten_gods'] & { persona: TenGod[] };
+  relations: Relation[];
+  career: { mode: GodGroup };
+  partner: { role: Role; pct: number };
+  /** 财星的角色与力量档（CH7-WEALTH；docs/QUESTIONS.md Q5） */
+  wealth: { role: Role; level: '强' | '中' | '弱' };
+  /** 已过 / 更远大运中占多数的 tier_group（CH5-PAST / CH5-FAR；Q5）；没有对应大运为 null */
+  dayun_summary: { past_group: TierGroup | null; far_group: TierGroup | null };
+  shensha: JishenName[];
+  shensha_first: JishenName | null;
+  dayun: DayunItem[];
+  liunian: LiunianItem[];
+}
+
+const POS: readonly [BranchPos, keyof Chart['pillars']][] = [
+  ['年支', 'year'],
+  ['月支', 'month'],
+  ['日支', 'day'],
+  ['时支', 'hour'],
+];
+/** 并列多数时偏保守：守 > 平 > 好（Q5） */
+const GROUP_TIE: readonly TierGroup[] = ['守', '平', '好'];
+const TEN_GOD_GROUP: Readonly<Record<TenGod, GodGroup>> = {
+  比肩: '比劫',
+  劫财: '比劫',
+  食神: '食伤',
+  伤官: '食伤',
+  偏财: '财',
+  正财: '财',
+  七杀: '官杀',
+  正官: '官杀',
+  偏印: '印',
+  正印: '印',
+};
+/** 每组的两个十神：[与日干同阴阳（偏）, 异阴阳（正）] */
+const GROUP_GODS: Readonly<Record<GodGroup, readonly [TenGod, TenGod]>> = {
+  比劫: ['比肩', '劫财'],
+  食伤: ['食神', '伤官'],
+  财: ['偏财', '正财'],
+  官杀: ['七杀', '正官'],
+  印: ['偏印', '正印'],
+};
+
+export function roleOf(e: WuXing, ys: Pick<CtxBase['yongshen'], 'yong' | 'xi' | 'ji'>): Role {
+  if (e === ys.yong) return '用';
+  if (ys.xi.includes(e)) return '喜';
+  if (ys.ji.includes(e)) return '忌';
+  return '闲';
+}
+
+/** 两支之间的六冲 / 六合（无关系为 null） */
+function zhiRelation(x: Zhi, y: Zhi): '冲' | '合' | null {
+  if (LIU_CHONG[x] === y) return '冲';
+  if (LIU_HE[x] === y) return '合';
+  return null;
+}
+
+/** 原局支与支的冲合：a 为靠后的柱、b 为靠前的柱（与 §0 示例 {冲, 日支, 月支} 一致）；三柱不看时支 */
+export function natalRelations(pillars: Chart['pillars']): Relation[] {
+  const out: Relation[] = [];
+  const have = POS.filter(([, k]) => pillars[k] !== null);
+  for (let j = 1; j < have.length; j++) {
+    for (let i = 0; i < j; i++) {
+      const [pa, ka] = have[j] as [BranchPos, keyof Chart['pillars']];
+      const [pb, kb] = have[i] as [BranchPos, keyof Chart['pillars']];
+      const t = zhiRelation((pillars[ka] as GanZhi)[1] as Zhi, (pillars[kb] as GanZhi)[1] as Zhi);
+      if (t) out.push({ type: t, a: pa, b: pb });
+    }
+  }
+  return out;
+}
+
+/** 运支（大运支 / 流年支）与原局各支的冲合 */
+function incomingRelations(z: Zhi, label: string, pillars: Chart['pillars']): Relation[] {
+  const out: Relation[] = [];
+  for (const [pos, k] of POS) {
+    const gz = pillars[k];
+    if (gz === null) continue;
+    const t = zhiRelation(z, gz[1] as Zhi);
+    if (t) out.push({ type: t, a: label, b: pos });
+  }
+  return out;
+}
+
+/**
+ * R-PERSONA：①月干十神；②力量最大的十神组中优先取透干（年、月、时干，按月→年→时）的那个，
+ * 未透干则取地支本气出现的（月→日→年→时支），都没有取同阴阳（偏）的；③去重取前两个，
+ * 不足两个时按力量次序继续取下一组。三柱时不看时干、时支。
+ */
+export function personaOf(base: CtxBase, godValues: Record<GodGroup, number>): TenGod[] {
+  const tg = base.ten_gods;
+  const stems = [tg.month_stem, tg.year_stem, tg.hour_stem].filter((x): x is TenGod => x !== null);
+  const branches = [tg.month_branch, tg.day_branch, tg.year_branch, tg.hour_branch].filter(
+    (x): x is TenGod => x !== null,
+  );
+  const pick = (g: GodGroup): TenGod => {
+    const [pian, zheng] = GROUP_GODS[g];
+    return (
+      stems.find((s) => TEN_GOD_GROUP[s] === g) ??
+      branches.find((b) => TEN_GOD_GROUP[b] === g) ??
+      (stems.includes(zheng) ? zheng : pian)
+    );
+  };
+  const groups = [...GODS].sort(
+    (a, b) => godValues[b] - godValues[a] || TOP_PRIORITY.indexOf(a) - TOP_PRIORITY.indexOf(b),
+  );
+  const out: TenGod[] = [tg.month_stem];
+  for (const g of groups) {
+    if (out.length >= 2) break;
+    const p = pick(g);
+    if (!out.includes(p)) out.push(p);
+  }
+  return out.slice(0, 2);
+}
+
+function majority(groups: readonly TierGroup[]): TierGroup | null {
+  if (groups.length === 0) return null;
+  const n = (g: TierGroup): number => groups.filter((x) => x === g).length;
+  return [...GROUP_TIE].sort(
+    (a, b) => n(b) - n(a) || GROUP_TIE.indexOf(a) - GROUP_TIE.indexOf(b),
+  )[0] as TierGroup;
+}
+
+/** refDate 所在公历年（北京时间） */
+function refYearOf(refDateMs: number): number {
+  return new Date(refDateMs + 8 * 3600 * 1000).getUTCFullYear();
+}
+
+export function buildCtx(chart: Chart, analysis: Analysis): Ctx {
+  const base = buildCtxBase(chart, analysis);
+  if (analysis.scores === null) throw new Error('buildCtx 需要含大运 / 流年评分的 Analysis');
+  const st = analysis.strength;
+  const ys = base.yongshen;
+  const dayGan = base.day.stem;
+  const role = (e: WuXing): Role => roleOf(e, ys);
+  const stemInfo = (gz: GanZhi) => {
+    const tgod = tenGodOf(dayGan, gz[0] as Gan);
+    return {
+      stem_ten_god: tgod,
+      stem_god: TEN_GOD_GROUP[tgod],
+      stem_role: role(ganWuXing(gz[0] as Gan) as WuXing),
+      branch_role: role(ganWuXing(mainQi(gz[1] as Zhi)) as WuXing),
+    };
+  };
+
+  // 大运 phase：refDate 年份所在步 = current，其后一步 = next，再往后 = far，之前 = past；尚未起运时第一步为 next
+  const refYear = refYearOf(chart.refDate);
+  const steps = chart.dayun.steps;
+  let cur = steps.findIndex((s) => s.startYear <= refYear && refYear <= s.endYear);
+  const nextIdx = cur >= 0 ? cur + 1 : steps.findIndex((s) => s.startYear > refYear);
+  if (cur < 0 && nextIdx < 0) cur = steps.length - 1;
+  const dayun: DayunItem[] = steps.map((s, idx) => {
+    const sc = analysis.scores?.dayun[idx];
+    if (!sc) throw new Error(`缺少第 ${idx} 步大运评分`);
+    return {
+      idx,
+      ganzhi: s.ganzhi,
+      start_year: s.startYear,
+      end_year: s.endYear,
+      ...stemInfo(s.ganzhi),
+      score: sc.score,
+      tier: sc.tier,
+      tier_group: sc.tier_group,
+      relations: incomingRelations(s.ganzhi[1] as Zhi, '大运支', chart.pillars),
+      phase:
+        idx === cur
+          ? 'current'
+          : idx === nextIdx
+            ? 'next'
+            : idx < (cur >= 0 ? cur : nextIdx)
+              ? 'past'
+              : 'far',
+    };
+  });
+
+  const liunian: LiunianItem[] = analysis.scores.liunian.map((l) => ({
+    year: l.year,
+    ganzhi: l.ganzhi,
+    dayun: l.dayun,
+    ...stemInfo(l.ganzhi),
+    score: l.score,
+    tier: l.tier,
+    tier_group: l.tier_group,
+    relations: l.relations.map(({ type, a, b }) => ({ type, a, b })),
+  }));
+
+  const favorableGroups = GODS.filter((g) => ys.favorable.includes(base.el[g]));
+  const careerMode = [...favorableGroups].sort(
+    (a, b) => st.gods[b] - st.gods[a] || TOP_PRIORITY.indexOf(a) - TOP_PRIORITY.indexOf(b),
+  )[0] as GodGroup;
+  const partnerGroup: GodGroup = base.profile.gender === '男' ? '财' : '官杀';
+  const caiPct = base.gods['财_pct'];
+  const jishen = analysis.shensha.jishen_display.map((j) => j.name);
+
+  return {
+    ...base,
+    ten_gods: { ...base.ten_gods, persona: personaOf(base, st.gods) },
+    relations: natalRelations(chart.pillars),
+    career: { mode: careerMode },
+    partner: { role: role(base.el[partnerGroup]), pct: base.gods[`${partnerGroup}_pct`] },
+    wealth: { role: role(base.el['财']), level: caiPct >= 25 ? '强' : caiPct < 10 ? '弱' : '中' },
+    dayun_summary: {
+      past_group: majority(dayun.filter((d) => d.phase === 'past').map((d) => d.tier_group)),
+      far_group: majority(dayun.filter((d) => d.phase === 'far').map((d) => d.tier_group)),
+    },
+    shensha: jishen,
+    shensha_first: jishen[0] ?? null,
+    dayun,
+    liunian,
+  };
 }

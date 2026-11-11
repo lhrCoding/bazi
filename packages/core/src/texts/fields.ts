@@ -114,6 +114,11 @@ export const GLOBAL_FIELDS: Readonly<Record<string, FieldSpec>> = {
   'career.mode': e(GOD_GROUPS),
   'partner.role': e(ROLES),
   'partner.pct': PCT,
+  // Q5（2026-11-11）：CH7-WEALTH、CH5-PAST / CH5-FAR 的维度
+  'wealth.role': e(ROLES),
+  'wealth.level': e(['强', '中', '弱']),
+  'dayun_summary.past_group': e(TIER_GROUPS, true),
+  'dayun_summary.far_group': e(TIER_GROUPS, true),
   relations: { kind: 'objectList' },
   shensha: list(JISHEN_NAMES),
   shensha_first: e(JISHEN_NAMES, true),

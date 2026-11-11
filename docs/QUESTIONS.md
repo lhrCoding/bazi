@@ -42,6 +42,8 @@
 
 ## Q5（T22，2026-11-11）字段字典缺第 2 批必需槽位要用的字段（不阻塞，T28 前定）
 
+> **已处理（T28，2026-11-11，用户同意按建议补字段）**：新增 `wealth.role`、`wealth.level`、`dayun_summary.past_group`、`dayun_summary.far_group`（因 ctx.dayun 已是大运列表，原建议的 `dayun.*` 改名为 `dayun_summary.*`），并列取 守 > 平 > 好；已写入 texts/README.md §3.1、core/texts/fields.ts 与槽位注册表。contains 对象写法已由 T23 实现，README §4.1 待补一句。
+
 - report-sections.md §3 的三个**必需**槽位，维度在 texts/README.md §3 字段字典里没有对应字段：
   - CH5-PAST / CH5-FAR：「已过 / 剩余大运中占多数的 tier_group」；
   - CH7-WEALTH：「财的角色（用 / 喜 / 忌 / 闲）」×「财力量档（强 ≥25% / 中 / 弱 <10%）」。

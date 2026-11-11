@@ -117,6 +117,10 @@ rules/texts/
 | career.mode | 枚举 | 官杀、食伤、印、比劫、财 |
 | partner.role | 枚举 | 伴侣星（男财、女官杀）在喜忌中的角色：用、喜、忌、闲 |
 | partner.pct | 整数 | 伴侣星百分比 |
+| wealth.role | 枚举 | 财星五行在喜忌中的角色：用、喜、忌、闲（CH7-WEALTH） |
+| wealth.level | 枚举 | 财星力量档：强（gods.财_pct ≥ 25）、中、弱（< 10）（CH7-WEALTH） |
+| dayun_summary.past_group | 枚举 / null | 已过大运中占多数的 tier_group（好 / 平 / 守；并列取 守 > 平 > 好）；没有已过大运为 null（CH5-PAST） |
+| dayun_summary.far_group | 枚举 / null | 下一步之后各步大运中占多数的 tier_group（同上）；没有为 null（CH5-FAR） |
 | relations | 列表 | 原局冲合，元素 {type, a, b} |
 | shensha | 列表 | 吉神名称列表（shensha.md），只用于 CH0、CH3-SHENSHA |
 | shensha_first | 枚举 / null | 按固定顺序的第一个吉神 |

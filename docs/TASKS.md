@@ -175,7 +175,7 @@
   内容：`buildCtx` 的 profile、pillars、day、month、el、ten_gods（细分十神）、strength（direction、paradox、百分比取整）、gods（top_yidang / top_tongdang / top）、power_pct、yongshen（含 *_god、swap、th、tg）、`chart_key`。
   验收：C16 的 ctx 与 report-sections.md §0 示例结构一致（数值以代码为准）；ctx 通过 `fields.ts` 校验（字段与取值域）；ctx 中不含出生日期。
 
-- [ ] **T28 ctx 构造（二）：大运 / 流年 / 关系 / 性格 / 领域 / 吉神字段**
+- [x] **T28 ctx 构造（二）：大运 / 流年 / 关系 / 性格 / 领域 / 吉神字段**
   依赖：T27, T19, T20
   内容：dayun / liunian item（stem_ten_god、stem_god、tier、tier_group、stem_role、branch_role、relations、phase）；原局冲合 `relations`；`ten_gods.persona`（R-PERSONA 选取顺序，三柱不取时柱）；`career.mode`；`partner.role / pct`；`shensha` / `shensha_first`；三柱时 hour 字段为 null。
   验收：3 个案例 ctx 快照；三柱用例 hour 相关字段全为 null；persona 选取顺序有单元测试。
