@@ -3,4 +3,5 @@
  * T22：槽位注册表；其余由后续任务实现。
  */
 export * from './ctx';
+export * from './select';
 export * from './slots';

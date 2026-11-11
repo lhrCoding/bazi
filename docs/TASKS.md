@@ -180,10 +180,10 @@
   内容：dayun / liunian item（stem_ten_god、stem_god、tier、tier_group、stem_role、branch_role、relations、phase）；原局冲合 `relations`；`ten_gods.persona`（R-PERSONA 选取顺序，三柱不取时柱）；`career.mode`；`partner.role / pct`；`shensha` / `shensha_first`；三柱时 hour 字段为 null。
   验收：3 个案例 ctx 快照；三柱用例 hour 相关字段全为 null；persona 选取顺序有单元测试。
 
-- [ ] **T29 槽位选段与变体确定性选择**
+- [x] **T29 槽位选段与变体确定性选择**
   依赖：T23, T22
-  内容：texts/README.md §5.1 过滤与排序；fallback 与 `fallback_used` 事件；status 允许集合可配置；§5.2 变体选择（@noble/hashes SHA-256，前 8 字节大端 mod）与 occurrence 顺延；必需槽位缺兜底时抛启动期错误。
-  验收：排序规则（priority → 特异度 → id）用例；同输入多次选择结果相同；循环槽位同条目第二次命中换变体；用固定向量测试哈希取模结果。
+  内容：texts/README.md §5.1 过滤与排序；fallback 与 `fallback_used` 事件；status 允许集合可配置；§5.2 变体选择（@noble/hashes SHA-256，前 8 字节大端 mod）与 occurrence 重新取模；必需槽位缺兜底时抛启动期错误。
+  验收：排序规则（priority → 特异度 → id）用例；同输入多次选择结果相同；循环槽位同条目第二次命中按 occurrence 重新取模（用户 2026-10-30 决定不顺延，可能与上次相同，见 texts/README.md §5.2）；用固定向量测试哈希取模结果。
 
 - [ ] **T30 占位符替换、术语首次加注、依据模板**
   依赖：T29
