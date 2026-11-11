@@ -4,4 +4,5 @@
  */
 export * from './condition';
 export * from './fields';
+export * from './lint';
 export * from './schema';

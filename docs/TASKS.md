@@ -153,7 +153,7 @@
   内容：`all / any / not` 与 11 个叶子运算符；空值语义（null 时只有 `exists:false` 为真）；深度 ≤ 3；特异度计算；不 eval 字符串。
   验收：每个运算符真 / 假 / null 三种用例；深度超限报错；属性测试：`not(x)` 在非 null 时与 x 相反。
 
-- [ ] **T24 素材 lint（L1–L6）**
+- [x] **T24 素材 lint（L1–L6）**
   依赖：T22, T23
   内容：L1 schema / id 正则 / slot 存在；L2 when 字段范围与必需槽位维度限制；L3 占位符字段；L4 禁用词 / 疾病名 / 金融产品词（词表读 `rules/texts/wordlists/`，词表未就绪时先用 report-sections.md §7 的禁用词表）；L5 年份与干支字面；L6 五行与喜忌词 8 字窗口共现。`npm run texts:lint` 输出条目 id + 规则编号 + 原因。
   验收：每条规则一个违规样例 + 一个合规样例；样板 10 条的 lint 结果与预期一致（引文 `verified: false` 在 draft 状态下不报错）。
