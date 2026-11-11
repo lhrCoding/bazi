@@ -98,3 +98,33 @@ export function parseTextsFiles(files: readonly { file: string; source: string }
   if (problems.length > 0) throw new TextsYamlError('(全库)', problems);
   return all;
 }
+
+/** 术语加注表（README §8）：[{term, note}]，只收两字及以上的术语 */
+export interface GlossaryItem {
+  term: string;
+  note: string;
+}
+
+export function parseGlossaryYaml(file: string, source: string): GlossaryItem[] {
+  const problems = checkYamlSubset(source);
+  if (problems.length > 0) throw new TextsYamlError(file, problems);
+  const data: unknown = parseDocument(source, { version: '1.2', schema: 'core' }).toJS();
+  if (!Array.isArray(data)) throw new TextsYamlError(file, ['顶层必须是术语数组']);
+  const out: GlossaryItem[] = [];
+  data.forEach((x, i) => {
+    const o = x as Partial<GlossaryItem> | null;
+    if (!o || typeof o.term !== 'string' || typeof o.note !== 'string' || [...o.term].length < 2) {
+      problems.push(`第 ${i + 1} 条：需要 term（两字及以上）与 note`);
+    } else out.push({ term: o.term, note: o.note });
+  });
+  if (problems.length > 0) throw new TextsYamlError(file, problems);
+  return out;
+}
+
+/** 从 README §8 取示例术语表（glossary.yaml 未就绪时的回退） */
+export function glossaryFromReadme(readme: string): GlossaryItem[] {
+  const sec = readme.slice(readme.indexOf('## 8. 术语加注表'));
+  const m = /```yaml\n([\s\S]*?)```/.exec(sec);
+  if (!m) throw new Error('README §8 中找不到术语表示例');
+  return parseGlossaryYaml('README §8', m[1] as string);
+}

@@ -1,5 +1,5 @@
 /**
- * npm run texts:lint —— 素材 lint（rules/texts/README.md §7；TASKS T24 / T25）。
+ * npm run texts:lint —— 素材 lint L1–L12（rules/texts/README.md §7；TASKS T24 / T25）。
  *
  * 读取 rules/texts/*.yaml（batches.yaml 除外）→ YAML 子集 + schema（L1）→ lintEntries（L1–L6）→ 逐条输出「条目 id  规则  原因」。
  * 词表读 rules/texts/wordlists/{forbidden,disease,finance,whitelist}.txt（每行一个词，# 开头为注释）；
@@ -13,7 +13,12 @@ import {
   parseForbiddenWordsFromMd,
   type Wordlists,
 } from '../packages/core/src/texts/lint';
-import { parseTextsYaml, TextsYamlError } from '../packages/core/src/texts/yaml';
+import {
+  glossaryFromReadme,
+  parseGlossaryYaml,
+  parseTextsYaml,
+  TextsYamlError,
+} from '../packages/core/src/texts/yaml';
 import type { TextEntry } from '../packages/core/src/texts/schema';
 
 const ROOT = join(import.meta.dirname, '..');
@@ -40,6 +45,11 @@ const finance =
   readWordFile('finance') ?? (notes.push('wordlists/finance.txt 未就绪，跳过金融产品词检查'), []);
 const whitelist = readWordFile('whitelist') ?? [];
 const words: Wordlists = { forbidden, disease, finance, whitelist };
+const glossaryPath = join(TEXTS, 'glossary.yaml');
+const glossary = existsSync(glossaryPath)
+  ? parseGlossaryYaml('glossary.yaml', readFileSync(glossaryPath, 'utf8'))
+  : (notes.push('glossary.yaml 未就绪，L9 使用 README §8 示例术语表'),
+    glossaryFromReadme(readFileSync(join(TEXTS, 'README.md'), 'utf8')));
 
 const files = readdirSync(TEXTS)
   .filter((f) => f.endsWith('.yaml') && f !== 'batches.yaml')
@@ -60,7 +70,7 @@ for (const file of files) {
     for (const p of err.problems) lines.push(`(${file})\tL1\t${p}`);
   }
 }
-const issues = lintEntries(entries, words);
+const issues = lintEntries(entries, words, { glossary: glossary.map((g) => g.term) });
 for (const i of issues) lines.push(`${i.id}\t${i.rule}\t${i.message}`);
 
 for (const n of notes) console.log(`提示：${n}`);

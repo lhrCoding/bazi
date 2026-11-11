@@ -40,3 +40,6 @@ jobs:
 
       - name: Test
         run: npm test
+
+      - name: 素材 lint（L1–L12，rules/texts）
+        run: npm run texts:lint

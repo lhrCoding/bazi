@@ -158,7 +158,7 @@
   内容：L1 schema / id 正则 / slot 存在；L2 when 字段范围与必需槽位维度限制；L3 占位符字段；L4 禁用词 / 疾病名 / 金融产品词（词表读 `rules/texts/wordlists/`，词表未就绪时先用 report-sections.md §7 的禁用词表）；L5 年份与干支字面；L6 五行与喜忌词 8 字窗口共现。`npm run texts:lint` 输出条目 id + 规则编号 + 原因。
   验收：每条规则一个违规样例 + 一个合规样例；样板 10 条的 lint 结果与预期一致（引文 `verified: false` 在 draft 状态下不报错）。
 
-- [ ] **T25 素材 lint（L7–L12）**
+- [x] **T25 素材 lint（L7–L12）**
   依赖：T24
   内容：L7 时柱用语需 `requires_hour`；L8 字数（占位符按典型长度计）与变体数；L9 「依据：」与术语后全角括号；L10 4-gram Jaccard ≤ 0.6（同槽位条目间、同条目变体间）；L11 approved 的 reviewer / quote.verified / edition；L12 绝对化用语与人称（「您」「命主」「大师」）。
   验收：每条规则违规 / 合规样例；全部 L1–L12 在 CI 中对 rules/texts 运行。

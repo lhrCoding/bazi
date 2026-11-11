@@ -1,5 +1,5 @@
 /**
- * T24 素材 lint L1–L6（rules/texts/README.md §7）。
+ * T24 / T25 素材 lint L1–L12（rules/texts/README.md §7）。
  * 验收：每条规则一个违规样例 + 一个合规样例；rules/texts 实际素材 lint 结果与预期一致（当前 0 个问题，
  * 引文 verified: false 在 draft 状态下不报错）。
  */
@@ -7,14 +7,17 @@ import { readdirSync, readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 import {
+  jaccard4,
   lintEntries,
   parseForbiddenWordsFromMd,
+  placeholderLength,
+  variantLength,
   type LintIssue,
   type LintRule,
   type Wordlists,
 } from '../src/texts/lint';
 import type { TextEntry } from '../src/texts/schema';
-import { parseTextsFiles } from '../src/texts/yaml';
+import { glossaryFromReadme, parseTextsFiles } from '../src/texts/yaml';
 import { readRulesFile } from './helpers/fixtures';
 
 const FORBIDDEN = parseForbiddenWordsFromMd(readRulesFile('report-sections.md'));
@@ -35,7 +38,8 @@ function entry(over: Partial<TextEntry> = {}): TextEntry {
     priority: 50,
     fallback: false,
     requires_hour: false,
-    length: [120, 180],
+    // 区间放宽，使各 L1–L6 用例不受 L8 字数影响；L8 用例单独设置 length
+    length: [1, 300],
     variants: ['你的日主是{day.stem}{day.element}，像一棵向上生长的树。', '第二个变体，写法不同。'],
     status: 'draft',
     author: 'mingli-expert',
@@ -255,6 +259,154 @@ describe('L6 五行与喜忌词共现', () => {
   });
 });
 
+const GLOSSARY = glossaryFromReadme(readRulesFile('texts/README.md')).map((g) => g.term);
+const lint12 = (e: TextEntry | TextEntry[]): LintIssue[] =>
+  lintEntries(Array.isArray(e) ? e : [e], WORDS, { glossary: GLOSSARY });
+
+describe('L7 时柱用语', () => {
+  it('违规：出现时柱 / 时干 / 时支 / 出生时辰而未声明 requires_hour', () => {
+    for (const w of ['时柱', '时干', '时支', '出生时辰']) {
+      expect(
+        lint12(entry({ variants: [`你的${w}很有特点`, 'b'] })).map((i) => i.rule),
+        w,
+      ).toEqual(['L7']);
+    }
+  });
+  it('合规：requires_hour: true；「时辰」与「当时支持 / 同时干 / 及时支付」不算', () => {
+    expect(lint12(entry({ variants: ['你的时柱很有特点', 'b'], requires_hour: true }))).toEqual([]);
+    expect(
+      lint12(entry({ variants: ['不知道时辰也能看，当时支持你的人', '同时干两件事，及时支付'] })),
+    ).toEqual([]);
+    expect(lint12(entry({ variants: ['你的出生时辰', 'b'] })).map((i) => i.rule)).toEqual(['L7']);
+  });
+});
+
+describe('L8 字数与变体数', () => {
+  it('占位符典型长度：百分比 2（+手写 %）、年份 4、五行 / 天干 1、十神 2、|名 2、列表 4、干支文本 2', () => {
+    expect(placeholderLength('gods.财_pct')).toBe(2);
+    expect(placeholderLength('item.year')).toBe(4);
+    expect(placeholderLength('day.element')).toBe(1);
+    expect(placeholderLength('day.stem')).toBe(1);
+    expect(placeholderLength('item.stem_ten_god')).toBe(2);
+    expect(placeholderLength('gods.top', '名')).toBe(2);
+    expect(placeholderLength('yongshen.ji')).toBe(4);
+    expect(placeholderLength('item.ganzhi')).toBe(2);
+    expect(variantLength('占 {gods.财_pct}%，忌{yongshen.ji}。')).toBe(1 + 2 + 1 + 1 + 1 + 4 + 1);
+    expect(variantLength('a b\tc')).toBe(3);
+  });
+  it('违规：字数越界；变体 1 个或 4 个以上', () => {
+    const r = lint12(
+      entry({ length: [5, 10], variants: ['一二三四', '一二三四五六七八九十十一'] }),
+    );
+    expect(r.map((i) => i.message)).toEqual([
+      '变体 1：4 字，不在 [5, 10]',
+      '变体 2：12 字，不在 [5, 10]',
+    ]);
+    expect(lint12(entry({ variants: ['只有一个'] })).map((i) => i.message)).toEqual([
+      '变体 1 个，应为 2–3 个',
+    ]);
+  });
+  it('合规：兜底与固定文本可以 1 个变体；边界字数', () => {
+    expect(lint12(entry({ when: {}, fallback: true, priority: 0, variants: ['兜底'] }))).toEqual(
+      [],
+    );
+    expect(lint12(entry({ length: [4, 4], variants: ['一二三四', '五六七八'] }))).toEqual([]);
+  });
+  it('违规：槽位不允许润色时 polish_allowed: true', () => {
+    const e = entry({
+      id: 'CH1-CONCLUSION-X',
+      slot: 'CH1-CONCLUSION',
+      when: { f: 'strength.level', eq: '身弱' },
+    });
+    expect(lint12({ ...e, polish_allowed: true })[0]?.message).toContain('不允许润色');
+    expect(lint12({ ...e, polish_allowed: false })).toEqual([]);
+  });
+});
+
+describe('L9 依据与术语括号', () => {
+  it('违规：正文写「依据：」；术语后紧跟全角括号', () => {
+    expect(lint12(entry({ variants: ['依据：月令', 'b'] }))[0]?.rule).toBe('L9');
+    expect(lint12(entry({ variants: ['七杀（压力）很重', 'b'] }))[0]?.message).toContain(
+      '术语「七杀」',
+    );
+    expect(lint12(entry({ variants: ['印星（{el.印}）', 'b'] }))[0]?.rule).toBe('L9');
+  });
+  it('合规：「印星对应的五行是{el.印}」；术语后接半角或其他字', () => {
+    expect(lint12(entry({ variants: ['印星对应的五行是{el.印}', '用神(示例)'] }))).toEqual([]);
+  });
+  it('README §8 示例术语表可解析', () => {
+    expect(GLOSSARY).toContain('日主');
+    expect(GLOSSARY).toContain('流年');
+    expect(GLOSSARY.every((t) => [...t].length >= 2)).toBe(true);
+  });
+});
+
+describe('L10 4-gram 相似度', () => {
+  const A = '这一年适合主动学习新技能，把精力放在长期积累上，少做冒进的决定。';
+  it('jaccard4：相同 = 1、无共同片段 = 0；占位符视为一个符号', () => {
+    expect(jaccard4(A, A)).toBe(1);
+    expect(jaccard4('甲乙丙丁戊', '子丑寅卯辰')).toBe(0);
+    expect(jaccard4('你的{day.stem}日主很强', '你的{day.element}日主很强')).toBe(1);
+  });
+  it('违规：同条目两个变体几乎相同', () => {
+    const r = lint12(entry({ variants: [A, A.replace('少做', '别做')] }));
+    expect(r.map((i) => i.rule)).toEqual(['L10']);
+  });
+  it('违规：同槽位两条素材的变体几乎相同；不同槽位不比', () => {
+    const a = entry({ id: 'CH1-DAYMASTER-JIA', variants: [A, '另一段完全不同的文字内容'] });
+    const b = entry({
+      id: 'CH1-DAYMASTER-YI',
+      when: { f: 'day.stem', eq: '乙' },
+      variants: [A, '再一段截然不同的话'],
+    });
+    expect(lint12([a, b]).map((i) => [i.id, i.rule])).toEqual([['CH1-DAYMASTER-JIA', 'L10']]);
+    const c = { ...b, id: 'CH3-BASE-YI', slot: 'CH3-BASE' };
+    expect(lint12([a, c])).toEqual([]);
+  });
+});
+
+describe('L11 approved 条目', () => {
+  const quote = { text: '天干论', source: '《滴天髓·天干论》', verified: false, edition: '' };
+  it('违规：缺 reviewer；引文未核对 / 缺底本', () => {
+    expect(lint12(entry({ status: 'approved' }))[0]?.message).toContain('reviewer');
+    const r = lint12(entry({ status: 'approved', reviewer: '用户（B1、2026-11-20）', quote }));
+    expect(r.map((i) => i.message)).toEqual([
+      'approved 条目的 quote 必须 verified: true',
+      'approved 条目的 quote 必须写明核对底本 edition',
+    ]);
+  });
+  it('合规：approved 齐全；draft 不检查', () => {
+    expect(
+      lint12(
+        entry({
+          status: 'approved',
+          reviewer: '用户',
+          quote: { ...quote, verified: true, edition: '四库全书本' },
+        }),
+      ),
+    ).toEqual([]);
+    expect(lint12(entry({ quote }))).toEqual([]);
+  });
+});
+
+describe('L12 绝对化用语与人称', () => {
+  it('违规：一定 / 必然 / 注定 / 肯定会；您 / 命主 / 大师', () => {
+    for (const w of ['一定成功', '必然顺利', '肯定会好', '您的运势', '命主性格', '找大师看']) {
+      expect(
+        lint12(entry({ variants: [w, 'b'] })).some((i) => i.rule === 'L12'),
+        w,
+      ).toBe(true);
+    }
+  });
+  it('合规：白名单「不一定」「一定的」「一定强度」', () => {
+    const w = { ...WORDS, whitelist: ['不一定', '一定的', '一定强度'] };
+    const e = entry({ variants: ['不一定跟得上，有一定的约束', '做一定强度的锻炼'] });
+    expect(lintEntries([e], w, { glossary: GLOSSARY })).toEqual([]);
+    // 每个变体每个词报一次：变体 1「一定」、变体 2「一定」
+    expect(lint12(e).filter((i) => i.rule === 'L12')).toHaveLength(2);
+  });
+});
+
 describe('rules/texts 实际素材', () => {
   const dir = fileURLToPath(new URL('../../../rules/texts/', import.meta.url));
   const entries = parseTextsFiles(
@@ -262,16 +414,24 @@ describe('rules/texts 实际素材', () => {
       .filter((f) => f.endsWith('.yaml') && f !== 'batches.yaml')
       .map((file) => ({ file, source: readFileSync(dir + file, 'utf8') })),
   );
+  const whitelist = readFileSync(dir + 'wordlists/whitelist.txt', 'utf8')
+    .split('\n')
+    .map((l) => l.trim())
+    .filter((l) => l && !l.startsWith('#'));
 
-  it('L1–L6 全部通过（禁用词用 §7 词表；疾病 / 金融词表 K01 就绪前为空）', () => {
+  it('L1–L12 全部通过（与 npm run texts:lint 同口径；疾病 / 金融词表 K01 就绪前为空）', () => {
     expect(
-      lintEntries(entries, { forbidden: FORBIDDEN, disease: [], finance: [], whitelist: [] }),
+      lintEntries(
+        entries,
+        { forbidden: FORBIDDEN, disease: [], finance: [], whitelist },
+        { glossary: GLOSSARY },
+      ),
     ).toEqual([]);
   });
 
-  it('draft 条目带 verified:false 的引文不报错（L11 只管 approved，T25）', () => {
+  it('draft 条目带 verified:false 的引文不报错（L11 只管 approved）', () => {
     const withQuote = entries.filter((e) => e.quote && !e.quote.verified);
     expect(withQuote.length).toBeGreaterThan(0);
-    expect(lintEntries(withQuote, WORDS)).toEqual([]);
+    expect(lintEntries(withQuote, { ...WORDS, whitelist }, { glossary: GLOSSARY })).toEqual([]);
   });
 });
