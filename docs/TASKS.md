@@ -121,7 +121,7 @@
   内容：格局 → 扶抑（6 条）→ Y-SWAP → 调候（AGREE / NEUTRAL-OVERRIDE / ADD-XI）→ 通关（方向一致才采用）→ 闲神；`rules_hit` 与 `basis` 模板句。
   验收：yongshen.md §9 自检清单 6 条全部有测试；cases.json yong / xi / ji / xian 与 rules_hit_expected 一致（C12 互换、C16 调候覆盖、C01 调候一致）。
 
-- [ ] **T18 三柱时辰扫描与置信度（S-NOHOUR）**
+- [x] **T18 三柱时辰扫描与置信度（S-NOHOUR）**
   依赖：T17, T11
   内容：13 个时柱（早子按当日、丑…亥、晚子按次日日干）补全后按四柱规则计算（允许从格）；`direction_agree / yong_agree / scan_slots`；置信度比例阈值；交节日另一组年月柱结论不同则置信「低」；从格时辰 notes。
   验收：C18（高）、C19（低，含晚子甲子时结论）与 cases.json 一致；扫描个数恒为 13。

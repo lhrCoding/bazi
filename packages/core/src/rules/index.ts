@@ -85,5 +85,18 @@ export {
   type TiaohouKind,
   type TongguanCheck,
 } from './yongshen';
+export {
+  computeNoHourScan,
+  confidenceOf,
+  scanHourPillars,
+  NOHOUR_SCAN_SLOTS,
+  CONF_HIGH_DIRECTION_MIN,
+  CONF_HIGH_YONG_MIN,
+  CONF_MID_DIRECTION_MIN,
+  type Confidence,
+  type NoHourAlt,
+  type NoHourScan,
+  type NoHourSlot,
+} from './nohour';
 export { analyze } from './analyze';
 export { RULES_FILES, RULES_VERSION } from './version';

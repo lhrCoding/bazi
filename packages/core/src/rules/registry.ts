@@ -18,6 +18,7 @@ import { HIDDEN_STEMS } from '../bazi/ten-gods';
 import type { RuleId } from './rule-ids';
 import { checkCong, checkZhuanwang, computeStrengthLevel } from './strength-level';
 import { computeStrengthPower } from './strength-power';
+import { computeNoHourScan } from './nohour';
 import { computeYongshen, fuyi, SPECIAL_PICKS, TIAOHOU_NEED, tongguanPair } from './yongshen';
 
 /** docs/TASKS.md 的任务编号。 */
@@ -100,11 +101,14 @@ export const RULE_IMPLEMENTATIONS: Readonly<Partial<Record<RuleId, RuleImplement
   },
   'Y-TH-ADD-XI': { module: 'rules/yongshen.ts（computeYongshen ④）', impl: computeYongshen },
   'Y-TG': { module: 'rules/yongshen.ts（tongguanPair / computeYongshen ⑤）', impl: tongguanPair },
+  // strength.md §5（T18）
+  'S-NOHOUR': {
+    module: 'rules/nohour.ts（computeNoHourScan；13 时柱 scanHourPillars、置信度 confidenceOf）',
+    impl: computeNoHourScan,
+  },
 };
 
 export const PENDING_RULES: Readonly<Partial<Record<RuleId, PendingRule>>> = {
-  // strength.md
-  'S-NOHOUR': { task: 'T18', note: '三柱 13 时柱扫描与置信度' },
   // shensha.md
   'SS-SCOPE': {
     task: 'T19',

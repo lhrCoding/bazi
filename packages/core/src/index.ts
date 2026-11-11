@@ -35,6 +35,10 @@ export type {
 export { RULES_VERSION, RULE_IDS, formatRuleHit, analyze } from './rules';
 export type {
   Analysis,
+  Confidence,
+  NoHourAlt,
+  NoHourScan,
+  NoHourSlot,
   FyRule,
   GodGroup,
   RuleHit,

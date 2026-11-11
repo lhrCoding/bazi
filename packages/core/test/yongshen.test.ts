@@ -67,7 +67,13 @@ function mk(
   };
 }
 
-const pw = (木: number, 火: number, 土: number, 金: number, 水: number): Record<WuXing, number> => ({
+const pw = (
+  木: number,
+  火: number,
+  土: number,
+  金: number,
+  水: number,
+): Record<WuXing, number> => ({
   木,
   火,
   土,
@@ -104,7 +110,11 @@ describe('yongshen.md 表格与参数 ⇔ 代码常量', () => {
     expect(rows.map((r) => r[0]).sort()).toEqual(Object.keys(SPECIAL_PICKS).sort());
     for (const [special, yong, xi, ji] of rows as string[][]) {
       const p = SPECIAL_PICKS[special as SpecialPattern];
-      expect([p.yong, p.xi, p.ji], special).toEqual([yong, groups(xi as string), groups(ji as string)]);
+      expect([p.yong, p.xi, p.ji], special).toEqual([
+        yong,
+        groups(xi as string),
+        groups(ji as string),
+      ]);
     }
   });
 
@@ -268,7 +278,13 @@ describe('通关修正（§5 Y-TG）', () => {
     expect(sets(y)).toEqual({ yong: '土', xi: ['火', '金'], ji: ['水', '木'], xian: [] });
     expect([y.tg, y.tg_element]).toEqual([true, '金']);
     expect(yIds(y)).toEqual(['Y-FY-S-YIN', 'Y-TG']);
-    expect(y.tongguan).toMatchObject({ a: '土', b: '水', attacker: '土', target: '水', adopted: true });
+    expect(y.tongguan).toMatchObject({
+      a: '土',
+      b: '水',
+      attacker: '土',
+      target: '水',
+      adopted: true,
+    });
   });
 
   it('方向冲突 → 不采用，只写 notes（C03 同型）', () => {
@@ -289,7 +305,11 @@ describe('通关修正（§5 Y-TG）', () => {
   it('两强之一不足 25% 或两强不相克 → 不检查', () => {
     expect(tongguanPair(pw(4, 0, 2.4, 1, 2.6), 10)).toBeNull(); // 木 40%、水 26%：水生木
     expect(tongguanPair(pw(5, 0, 2.4, 0.1, 2.5), 10)).toBeNull(); // 木克土但土 24%
-    expect(tongguanPair(pw(5, 0, 2.5, 0, 2.5), 10)).toMatchObject({ a: '木', b: '土', element: '火' });
+    expect(tongguanPair(pw(5, 0, 2.5, 0, 2.5), 10)).toMatchObject({
+      a: '木',
+      b: '土',
+      element: '火',
+    });
   });
 
   it('特殊格局跳过互换、调候、通关', () => {
@@ -316,7 +336,20 @@ function rng(seed: number): () => number {
   };
 }
 
-const ZHIS: readonly Zhi[] = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
+const ZHIS: readonly Zhi[] = [
+  '子',
+  '丑',
+  '寅',
+  '卯',
+  '辰',
+  '巳',
+  '午',
+  '未',
+  '申',
+  '酉',
+  '戌',
+  '亥',
+];
 const SPECIALS: readonly SpecialPattern[] = ['从财', '从杀', '从儿', '从势', '专旺', '从强'];
 
 interface Sample {
@@ -336,7 +369,13 @@ const samples: Sample[] = (() => {
     if (WUXING_ORDER.every((e) => p[e] === 0)) continue;
     const zhi = ZHIS[Math.floor(rand() * 12)] as Zhi;
     const special = rand() < 0.1 ? (SPECIALS[Math.floor(rand() * 6)] as SpecialPattern) : null;
-    const st = mk(dm, p, special === null ? {} : { level: special.startsWith('从') && special !== '从强' ? '从弱' : '从强', special });
+    const st = mk(
+      dm,
+      p,
+      special === null
+        ? {}
+        : { level: special.startsWith('从') && special !== '从强' ? '从弱' : '从强', special },
+    );
     out.push({ st, zhi, y: computeYongshen(st, zhi) });
   }
   return out;
@@ -425,13 +464,17 @@ describe('yongshen.md §9 自检清单（属性测试，6000 个种子固定的�
     for (const s of samples) {
       const ids = yIds(s.y);
       expect(ids[0]).toBe(s.y.fy_rule);
-      expect(ids.filter((id) => id.startsWith('Y-FY-') || id === 'Y-CONG' || id === 'Y-ZHUANWANG')).toHaveLength(1);
+      expect(
+        ids.filter((id) => id.startsWith('Y-FY-') || id === 'Y-CONG' || id === 'Y-ZHUANWANG'),
+      ).toHaveLength(1);
       expect(s.y.basis).toHaveLength(ids.length);
       for (const b of s.y.basis) expect(b.length).toBeGreaterThan(10);
       // 标志字段与命中编号一致
       expect(s.y.swap).toBe(ids.includes('Y-SWAP'));
       expect(s.y.tg).toBe(ids.includes('Y-TG'));
-      expect(s.y.th === null ? null : `Y-TH-${s.y.th}`).toBe(ids.find((id) => id.startsWith('Y-TH-')) ?? null);
+      expect(s.y.th === null ? null : `Y-TH-${s.y.th}`).toBe(
+        ids.find((id) => id.startsWith('Y-TH-')) ?? null,
+      );
     }
   });
 
@@ -455,11 +498,16 @@ describe('cases.json 喜用神（§9 第 6 条）', () => {
   }
 
   it('C12 用神缺位互换、C16 调候覆盖、C01 调候一致、C20 v1.1 原用神保留', () => {
-    const y = (id: string) => (analyses.get(id) as NonNullable<ReturnType<typeof analyses.get>>).yongshen;
+    const y = (id: string) =>
+      (analyses.get(id) as NonNullable<ReturnType<typeof analyses.get>>).yongshen;
     expect([y('C12').swap_from, y('C12').swap_to]).toEqual(['火', '土']);
     expect([y('C16').th, y('C16').th_removed]).toEqual(['NEUTRAL-OVERRIDE', '水']);
     expect(y('C01').th).toBe('AGREE');
-    expect([y('C20').th, y('C20').fy.yong, y('C20').xi[0]]).toEqual(['NEUTRAL-OVERRIDE', '水', '水']);
+    expect([y('C20').th, y('C20').fy.yong, y('C20').xi[0]]).toEqual([
+      'NEUTRAL-OVERRIDE',
+      '水',
+      '水',
+    ]);
   });
 
   it('§6 输出示例（C16）：结构、喜忌、rules_hit 一致；调候依据句与示例逐字相同', () => {
@@ -474,12 +522,18 @@ describe('cases.json 喜用神（§9 第 6 条）', () => {
     expect(y.basis[0]).toMatch(/^乙木生于丑月，同党占 42%，属中和偏弱/);
   });
 
-  it('analyze：rules_hit 为 S- 在前、Y- 在后；notes 合并 strength 与 yongshen', () => {
+  it('analyze：rules_hit 为 S- 在前、Y- 在后（三柱再接 S-NOHOUR，T18）；notes 合并 strength、yongshen、no_hour', () => {
     const a = analyses.get('C18') as NonNullable<ReturnType<typeof analyses.get>>;
     const ids = a.rules_hit.map((h) => h.ruleId);
-    const firstY = ids.findIndex((id) => id.startsWith('Y-'));
-    expect(ids.slice(0, firstY).every((id) => id.startsWith('S-'))).toBe(true);
-    expect(ids.slice(firstY).every((id) => id.startsWith('Y-'))).toBe(true);
-    expect(a.notes).toEqual([...a.strength.notes, ...a.yongshen.notes]);
+    expect(ids.at(-1)).toBe('S-NOHOUR');
+    const body = ids.slice(0, -1);
+    const firstY = body.findIndex((id) => id.startsWith('Y-'));
+    expect(body.slice(0, firstY).every((id) => id.startsWith('S-'))).toBe(true);
+    expect(body.slice(firstY).every((id) => id.startsWith('Y-'))).toBe(true);
+    expect(a.notes).toEqual([
+      ...a.strength.notes,
+      ...a.yongshen.notes,
+      ...(a.no_hour?.notes ?? []),
+    ]);
   });
 });
