@@ -148,7 +148,7 @@
   内容：Zod schema（texts/README.md §2）；YAML 加载（AST 级检查，禁止锚点 / 别名 / 自定义 tag）；`slots.ts`（report-sections.md §3 全部槽位：必需、维度、修饰字段、选几条、字数、依据模板、润色、无时辰、顺序）+ 解析 md 表格行的比对测试；`fields.ts`（texts/README.md §3 字段、类型、取值域）。
   验收：rules/texts 两个样板文件加载通过；md 表格与 `slots.ts` 比对测试通过，故意改一个槽位 id 时变红。
 
-- [ ] **T23 条件树求值器**
+- [x] **T23 条件树求值器**
   依赖：T22
   内容：`all / any / not` 与 11 个叶子运算符；空值语义（null 时只有 `exists:false` 为真）；深度 ≤ 3；特异度计算；不 eval 字符串。
   验收：每个运算符真 / 假 / null 三种用例；深度超限报错；属性测试：`not(x)` 在非 null 时与 x 相反。
