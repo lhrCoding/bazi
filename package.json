@@ -18,7 +18,8 @@
     "test": "npm run test --workspaces --if-present",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "texts:lint": "tsx scripts/texts-lint.ts"
+    "texts:lint": "tsx scripts/texts-lint.ts",
+    "texts:batch": "tsx scripts/texts-batch.ts"
   },
   "devDependencies": {
     "prettier": "3.9.10",

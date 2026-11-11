@@ -163,7 +163,7 @@
   内容：L7 时柱用语需 `requires_hour`；L8 字数（占位符按典型长度计）与变体数；L9 「依据：」与术语后全角括号；L10 4-gram Jaccard ≤ 0.6（同槽位条目间、同条目变体间）；L11 approved 的 reviewer / quote.verified / edition；L12 绝对化用语与人称（「您」「命主」「大师」）。
   验收：每条规则违规 / 合规样例；全部 L1–L12 在 CI 中对 rules/texts 运行。
 
-- [ ] **T26 批次清单与抽检脚本**
+- [x] **T26 批次清单与抽检脚本**
   依赖：T24
   内容：`rules/texts/batches.yaml` schema（ARCHITECTURE 4.3.8）；`texts:batch sample B1`：10% 向上取整、至少 5 条，种子 = 批次号 + 轮次；重抽换样本且必含上次不通过条目；`approve` 批量改 approved 并写 reviewer「用户（批次号、日期）」；`reject` 整批退回 draft。抽检单内容（触发案例、覆盖率表）在 T37 补全。
   验收：同一种子两次抽样结果相同；第二轮必含上轮不通过条目；approve / reject 对 YAML 的改动正确且不改动其他字段与格式。
