@@ -33,7 +33,7 @@ function get<T>(m: Map<string, T>, id: string): T {
 }
 function expectedNoHour(id: string): Record<string, unknown> {
   const c = cases.find((x) => x.id === id);
-  return (c?.expected as { no_hour: Record<string, unknown> }).no_hour;
+  return (c?.expected as unknown as { no_hour: Record<string, unknown> }).no_hour;
 }
 
 describe('strength.md §5 参数 ⇔ 代码常量', () => {
