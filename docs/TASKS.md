@@ -170,7 +170,7 @@
 
 ## E 拼装引擎（`packages/core/src/report`）—— 全部 【rules】
 
-- [ ] **T27 ctx 构造（一）：基础字段**
+- [x] **T27 ctx 构造（一）：基础字段**
   依赖：T17, T18
   内容：`buildCtx` 的 profile、pillars、day、month、el、ten_gods（细分十神）、strength（direction、paradox、百分比取整）、gods（top_yidang / top_tongdang / top）、power_pct、yongshen（含 *_god、swap、th、tg）、`chart_key`。
   验收：C16 的 ctx 与 report-sections.md §0 示例结构一致（数值以代码为准）；ctx 通过 `fields.ts` 校验（字段与取值域）；ctx 中不含出生日期。
