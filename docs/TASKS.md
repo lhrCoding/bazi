@@ -143,7 +143,7 @@
 
 ## D 素材库工具链（`packages/core/src/texts` + `scripts/`，可与 B、C 并行）
 
-- [ ] **T22 素材 schema、加载器、槽位注册表、字段字典** 【rules】
+- [x] **T22 素材 schema、加载器、槽位注册表、字段字典** 【rules】
   依赖：T02
   内容：Zod schema（texts/README.md §2）；YAML 加载（AST 级检查，禁止锚点 / 别名 / 自定义 tag）；`slots.ts`（report-sections.md §3 全部槽位：必需、维度、修饰字段、选几条、字数、依据模板、润色、无时辰、顺序）+ 解析 md 表格行的比对测试；`fields.ts`（texts/README.md §3 字段、类型、取值域）。
   验收：rules/texts 两个样板文件加载通过；md 表格与 `slots.ts` 比对测试通过，故意改一个槽位 id 时变红。
