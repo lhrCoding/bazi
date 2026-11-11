@@ -5,6 +5,7 @@ import type { RuleHit } from './rule-hit';
 import type { Strength } from './strength-level';
 import type { Yongshen } from './yongshen';
 import type { Confidence, NoHourScan } from './nohour';
+import type { Scores } from './scoring';
 import type { Shensha } from './shensha';
 
 export type WuXing = '木' | '火' | '土' | '金' | '水';
@@ -36,8 +37,7 @@ export interface Jishen {
 }
 
 /**
- * analyze(chart) 的输出（ARCHITECTURE §4.2）。T17 起包含旺衰与喜用神，T18 起包含三柱扫描与置信度，T19 起包含吉神；
- * 大运 / 流年评分（T20）在对应任务中追加字段。
+ * analyze(chart) 的输出（ARCHITECTURE §4.2）。T17 起包含旺衰与喜用神，T18 起包含三柱扫描与置信度，T19 起包含吉神，T20 起包含大运 / 流年评分；
  */
 export interface Analysis {
   /** 旺衰（strength.md §2–§4、§6） */
@@ -52,6 +52,11 @@ export interface Analysis {
   no_hour: NoHourScan | null;
   /** 吉神（shensha.md，T19）：只做展示，不参与任何判定（SS-SCOPE） */
   shensha: Shensha;
+  /**
+   * 大运 / 流年评分（report-sections.md §8，T20）。只由喜忌集合与柱、大运、流年计算，吉神不参与。
+   * 传入的 chart 不含 dayun / liunian（单元测试只给 pillars）时为 null。
+   */
+  scores: Scores | null;
   /** strength、yongshen、no_hour 的 notes 依次合并 */
   notes: string[];
   /** 命中的 S- / Y- 规则，按判定顺序（cases.json 格式见 formatRuleHit） */

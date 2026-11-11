@@ -524,7 +524,10 @@ describe('cases.json 喜用神（§9 第 6 条）', () => {
 
   it('analyze：rules_hit 为 S- 在前、Y- 在后（三柱再接 S-NOHOUR，T18）；notes 合并 strength、yongshen、no_hour', () => {
     const a = analyses.get('C18') as NonNullable<ReturnType<typeof analyses.get>>;
-    const ids = a.rules_hit.map((h) => h.ruleId);
+    const all = a.rules_hit.map((h) => h.ruleId);
+    // T20 起评分规则 R- 接在最后
+    expect(all.slice(-2)).toEqual(['R-YUN-SCORE', 'R-LN-SCORE']);
+    const ids = all.slice(0, -2);
     expect(ids.at(-1)).toBe('S-NOHOUR');
     const body = ids.slice(0, -1);
     const firstY = body.findIndex((id) => id.startsWith('Y-'));

@@ -19,6 +19,7 @@ import type { RuleId } from './rule-ids';
 import { checkCong, checkZhuanwang, computeStrengthLevel } from './strength-level';
 import { computeStrengthPower } from './strength-power';
 import { computeNoHourScan } from './nohour';
+import { computeScores } from './scoring';
 import { computeShensha, TAIJI, TIANYI, WENCHANG, YUEDE } from './shensha';
 import { computeYongshen, fuyi, SPECIAL_PICKS, TIAOHOU_NEED, tongguanPair } from './yongshen';
 
@@ -54,7 +55,10 @@ export const RULE_IMPLEMENTATIONS: Readonly<Partial<Record<RuleId, RuleImplement
   // strength.md §1.2：藏干比例表，排盘（藏干、十神）与计分共用；与 md JSON 参数块的比对见 rules-params.test.ts。
   'S-HIDE': { module: 'bazi/ten-gods.ts（HIDDEN_STEMS）', impl: HIDDEN_STEMS },
   // strength.md §2–§3、§6（T15）：五行力量、十神分组、S、得令 / 得地 / 得势、power_display_pct。
-  'S-POWER': { module: 'rules/strength-power.ts（computeStrengthPower）', impl: computeStrengthPower },
+  'S-POWER': {
+    module: 'rules/strength-power.ts（computeStrengthPower）',
+    impl: computeStrengthPower,
+  },
   'S-ROOT': {
     module: 'rules/strength-power.ts（computeStrengthPower；系数 ROOTLESS_STEM_FACTOR）',
     impl: computeStrengthPower,
@@ -77,7 +81,10 @@ export const RULE_IMPLEMENTATIONS: Readonly<Partial<Record<RuleId, RuleImplement
     impl: checkZhuanwang,
   },
   // yongshen.md（T17）：判定顺序 格局 → 扶抑 → 互换 → 调候 → 通关 → 闲神，全部在 computeYongshen 中按顺序执行。
-  'Y-CONG': { module: 'rules/yongshen.ts（computeYongshen；从弱表 SPECIAL_PICKS）', impl: SPECIAL_PICKS },
+  'Y-CONG': {
+    module: 'rules/yongshen.ts（computeYongshen；从弱表 SPECIAL_PICKS）',
+    impl: SPECIAL_PICKS,
+  },
   'Y-ZHUANWANG': {
     module: 'rules/yongshen.ts（computeYongshen；专旺 / 从强表 SPECIAL_PICKS）',
     impl: SPECIAL_PICKS,
@@ -109,8 +116,18 @@ export const RULE_IMPLEMENTATIONS: Readonly<Partial<Record<RuleId, RuleImplement
   'SS-WENCHANG': { module: 'rules/shensha.ts（WENCHANG）', impl: WENCHANG },
   'SS-YUEDE': { module: 'rules/shensha.ts（YUEDE）', impl: YUEDE },
   'SS-OUTPUT': {
-    module: 'rules/shensha.ts（computeJishen 去重 / by 合并 / 固定顺序；computeShensha jishen_display）',
+    module:
+      'rules/shensha.ts（computeJishen 去重 / by 合并 / 固定顺序；computeShensha jishen_display）',
     impl: computeShensha,
+  },
+  // report-sections.md §8（T20）
+  'R-YUN-SCORE': {
+    module: 'rules/scoring.ts（elementScores / ganzhiScore / tierOf）',
+    impl: computeScores,
+  },
+  'R-LN-SCORE': {
+    module: 'rules/scoring.ts（liunianRelations / computeScores）',
+    impl: computeScores,
   },
   // strength.md §5（T18）
   'S-NOHOUR': {
@@ -127,8 +144,6 @@ export const PENDING_RULES: Readonly<Partial<Record<RuleId, PendingRule>>> = {
     note: '释义常量随第 0 章小表在 T31 落地；禁用表述并入 R-CHECK 禁用词表，在 T33 完成',
   },
   // report-sections.md
-  'R-YUN-SCORE': { task: 'T20', note: '大运评分与 tier' },
-  'R-LN-SCORE': { task: 'T20', note: '流年评分与 tier' },
   'R-SLOT': { task: 'T22', note: '槽位注册表 slots.ts 与 md 表格比对' },
   'R-CTX': { task: 'T28', note: '拼装上下文 ctx（T27 基础字段、T28 其余字段）' },
   'R-PERSONA': { task: 'T28', note: 'ten_gods.persona 选取顺序' },

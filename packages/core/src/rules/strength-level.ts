@@ -36,7 +36,6 @@ import type {
   ZhuanwangSpecial,
 } from './types';
 
-
 /** 专旺时的「一行得气」名称（§4.2，报告可用）。 */
 export const ZHUANWANG_NAMES: Readonly<Record<WuXing, string>> = {
   木: '曲直',
@@ -125,12 +124,9 @@ export function ordinaryLevel(S: number): StrengthLevel {
   return '身弱';
 }
 
-
 /** §4.3：S 与等级阈值 0.50 / 0.45 / 0.40 任一相差 < 0.01。 */
 export function isBorderline(S: number): boolean {
-  return Object.values(LEVEL_THRESHOLDS).some(
-    (t) => Math.abs(S - t) < BORDERLINE_DELTA - FP_EPS,
-  );
+  return Object.values(LEVEL_THRESHOLDS).some((t) => Math.abs(S - t) < BORDERLINE_DELTA - FP_EPS);
 }
 
 function branchesOf(pillars: Pillars): Zhi[] {

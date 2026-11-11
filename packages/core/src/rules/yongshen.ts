@@ -19,13 +19,7 @@ import type { Zhi } from '../bazi/ganzhi';
 import { ruleHit, type RuleHit } from './rule-hit';
 import { elementOfGroup, godGroupOf, WUXING_ORDER } from './strength-power';
 import type { Strength } from './strength-level';
-import type {
-  GodGroup,
-  SpecialPattern,
-  StrengthDirection,
-  StrengthLevel,
-  WuXing,
-} from './types';
+import type { GodGroup, SpecialPattern, StrengthDirection, StrengthLevel, WuXing } from './types';
 
 // ---------- 参数（yongshen.md 中的数值，rules-params.test.ts 比对） ----------
 
@@ -51,12 +45,7 @@ export const TIAOHOU_NEED: Readonly<Partial<Record<Zhi, WuXing>>> = {
 // ---------- 类型 ----------
 
 export type FyRuleId =
-  | 'Y-FY-W-SHA'
-  | 'Y-FY-W-SHI'
-  | 'Y-FY-W-CAI'
-  | 'Y-FY-S-YIN'
-  | 'Y-FY-S-BI-GUAN'
-  | 'Y-FY-S-BI-SHI';
+  'Y-FY-W-SHA' | 'Y-FY-W-SHI' | 'Y-FY-W-CAI' | 'Y-FY-S-YIN' | 'Y-FY-S-BI-GUAN' | 'Y-FY-S-BI-SHI';
 
 /** report-sections.md §0 / texts/README.md §3 `yongshen.fy_rule`：扶抑子规则，特殊格局时为 Y-CONG / Y-ZHUANWANG。 */
 export type FyRule = FyRuleId | 'Y-CONG' | 'Y-ZHUANWANG';
@@ -401,7 +390,9 @@ export function computeYongshen(st: YongshenStrengthInput, monthZhi: Zhi): Yongs
       const keptNote = oldYong === kill ? '（扶抑选出的用神保留为第一喜神）' : '';
       basis.push(
         `${cond}，按调候改取${need}为用神，${oldYong}降为喜神${keptNote}` +
-          (thRemoved === null ? '。' : `；${thRemoved}${REMOVED_REASON[thRemoved] ?? ''}，不列入喜神。`),
+          (thRemoved === null
+            ? '。'
+            : `；${thRemoved}${REMOVED_REASON[thRemoved] ?? ''}，不列入喜神。`),
       );
     } else {
       th = 'ADD-XI';
@@ -499,7 +490,9 @@ function finish(y: Omit<Yongshen, 'xian'>): Yongshen {
   const xian = WUXING_ORDER.filter((e) => !used.has(e));
   const all = [y.yong, ...y.xi, ...y.ji, ...xian];
   if (all.length !== 5 || new Set(all).size !== 5) {
-    throw new Error('喜用神结果不满足 yongshen.md §6：用、喜、忌、闲必须两两不重复且合起来正好五个五行');
+    throw new Error(
+      '喜用神结果不满足 yongshen.md §6：用、喜、忌、闲必须两两不重复且合起来正好五个五行',
+    );
   }
   return { ...y, xian };
 }

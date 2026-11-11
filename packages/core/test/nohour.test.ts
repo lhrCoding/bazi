@@ -249,8 +249,18 @@ describe('cases.json 三柱案例', () => {
   });
 
   it('rules_hit：S-NOHOUR 排在 Y- 之后，说明为最终置信度', () => {
-    expect(get(analyses, 'C18').rules_hit.map(formatRuleHit).at(-1)).toBe('S-NOHOUR:高');
-    expect(get(analyses, 'C19').rules_hit.map(formatRuleHit).at(-1)).toBe('S-NOHOUR:低');
+    expect(
+      get(analyses, 'C18')
+        .rules_hit.map(formatRuleHit)
+        .filter((h) => !h.startsWith('R-'))
+        .at(-1),
+    ).toBe('S-NOHOUR:高');
+    expect(
+      get(analyses, 'C19')
+        .rules_hit.map(formatRuleHit)
+        .filter((h) => !h.startsWith('R-'))
+        .at(-1),
+    ).toBe('S-NOHOUR:低');
   });
 });
 
