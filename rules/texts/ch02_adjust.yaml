@@ -37,7 +37,7 @@
     - {f: yongshen.th_element, eq: 火}
     - {f: yongshen.favorable, contains: 火}
   priority: 50
-  length: [100, 160]
+  length: [90, 160]
   polish_allowed: true
   variants:
     - "再看季节。你生在{month.branch}月，是一年里最冷的时段，而命局里火只占 {power_pct.火}%。《穷通宝鉴》论冬天出生的命局，大多先看有没有火来暖局，这叫调候。你的扶抑结论本来就把火列为有利的五行，两条思路指向同一处，“火对你有利”这个判断因此更有把握。"
@@ -55,7 +55,7 @@
     - {f: yongshen.th_element, eq: 水}
     - {f: yongshen.favorable, contains: 水}
   priority: 50
-  length: [100, 160]
+  length: [90, 160]
   polish_allowed: true
   variants:
     - "季节也要考虑。{month.branch}月是一年里最炎热干燥的时段，你的命局里水只有 {power_pct.水}%。古人论夏月命局，讲究先以水来降温润燥，这一步叫调候。巧的是，按扶抑你本来就需要水，两种方法得出了同一个答案。所以水在你这里既能平衡强弱，也能调节燥热，作用是双重的。"
@@ -73,7 +73,7 @@
     - {f: yongshen.th_element, eq: 火}
     - {f: yongshen.favorable, contains: 火}
   priority: 50
-  length: [100, 160]
+  length: [90, 160]
   polish_allowed: true
   variants:
     - "再看季节。你生在{month.branch}月，天寒地冻，命局里火只占 {power_pct.火}%，偏冷。古法按冷暖做的这种调整叫调候。不过你的命局强弱失衡更明显，扶抑仍是根本，所以用神不变，只把火补进喜神，排在最后，起辅助作用。可以理解为：先解决力量够不够，再兼顾温度够不够。"
@@ -91,7 +91,7 @@
     - {f: yongshen.th_element, eq: 水}
     - {f: yongshen.favorable, contains: 水}
   priority: 50
-  length: [100, 160]
+  length: [90, 160]
   polish_allowed: true
   variants:
     - "季节同样要看。{month.branch}月暑热当令，你的命局里水只有 {power_pct.水}%，偏燥。按调候的思路，燥局需要一些水来润泽。但你的强弱失衡更突出，扶抑仍然优先，所以用神保持不变，水作为辅助补进喜神末位。换句话说：先把力量的平衡找回来，再顾及燥湿。"
@@ -109,7 +109,7 @@
     - {f: yongshen.th_element, eq: 火}
     - {f: yongshen.yong, eq: 火}
   priority: 50
-  length: [100, 160]
+  length: [90, 160]
   polish_allowed: true
   variants:
     - "季节在你的命局里分量很重。你生在{month.branch}月，天寒地冻，而火只占 {power_pct.火}%。你的旺衰接近中和，扶抑的需求不算急，这时冷暖反而成了主要矛盾。按本报告的规则，中和命局遇到明显的寒冷，由调候五行直接担任用神，所以你的用神定为火。扶抑那一步的结论没有作废，最终的用、喜排序见下面的结论。"
@@ -127,7 +127,7 @@
     - {f: yongshen.th_element, eq: 水}
     - {f: yongshen.yong, eq: 水}
   priority: 50
-  length: [100, 160]
+  length: [90, 160]
   polish_allowed: true
   variants:
     - "季节在你的命局里是关键。{month.branch}月炎热干燥，你的命局里水只有 {power_pct.水}%。由于旺衰接近中和，扶抑并不急迫，燥热便成了最需要解决的问题。按本报告的规则，此时由调候五行直接做用神，所以你的用神定为水。扶抑那一步的结论仍有参考价值，最终排序见下面的结论。"

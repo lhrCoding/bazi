@@ -13,7 +13,7 @@
   when: {all: [{f: strength.direction, eq: 偏弱}, {f: gods.top_yidang, eq: 官杀}]}
   asserts: []
   priority: 50
-  length: [150, 220]
+  length: [140, 220]
   polish_allowed: true
   variants:
     - "把命盘里的天干地支按位置加权计分后，帮扶你的一方，也就是比劫和印星，合计占 {strength.S_pct}%；消耗你的一方占 {strength.yidang_pct}%，其中分量最重的是官杀，占 {gods.官杀_pct}%。官杀代表规则、要求和外部压力，是三股消耗力量里最硬的一种。所以你的结构可以概括为：压力来得多，自身的支撑相对不足。这不是坏事的预告，而是提示你更需要能把压力接住、转化的力量。"
@@ -28,7 +28,7 @@
   when: {all: [{f: strength.direction, eq: 偏弱}, {f: gods.top_yidang, eq: 食伤}]}
   asserts: []
   priority: 50
-  length: [150, 220]
+  length: [140, 220]
   polish_allowed: true
   variants:
     - "按位置加权计分，帮扶你的比劫和印星合计 {strength.S_pct}%，消耗你的力量合计 {strength.yidang_pct}%，其中最重的是食伤，占 {gods.食伤_pct}%。食伤是你向外输出的才华、表达和付出，它消耗你的方式不是压迫，而是往外流。所以你的结构更像一口泉眼：流出去的多，补进来的少。好处是想法和表达不缺，需要留意的是精力容易被透支；学会给自己回血，比再多做一件事更重要。"
@@ -43,7 +43,7 @@
   when: {all: [{f: strength.direction, eq: 偏弱}, {f: gods.top_yidang, eq: 财}]}
   asserts: []
   priority: 50
-  length: [150, 220]
+  length: [140, 220]
   polish_allowed: true
   variants:
     - "把各柱力量加权汇总，帮扶你的比劫和印星合计 {strength.S_pct}%，消耗你的一方合计 {strength.yidang_pct}%，其中最重的是财星，占 {gods.财_pct}%。财星代表你要去掌控和经营的资源、事务与结果。古人把类似的结构叫“财多身弱”：机会和事情摆在面前很多，但要一一拿下，需要的体力和心力也多。它提示的不是缺机会，而是要量力而行，先把能驾驭的部分做好。"
@@ -60,7 +60,7 @@
   when: {all: [{f: strength.direction, eq: 偏旺}, {f: gods.top_yidang, eq: 官杀}]}
   asserts: []
   priority: 50
-  length: [150, 220]
+  length: [140, 220]
   polish_allowed: true
   variants:
     - "加权计分后，帮扶你的比劫和印星合计 {strength.S_pct}%，接近或超过一半，你这一方的力量是充足的；消耗你的一方合计 {strength.yidang_pct}%，其中最有分量的是官杀，占 {gods.官杀_pct}%。对偏旺的命局来说，官杀不只是压力，也是给充沛的能量立规矩、定方向的力量，好比奔马配上缰绳。你的结构里自我力量足，同时也有一定的约束在场，关键看两者能否配合得当。"
@@ -76,7 +76,7 @@
   when: {all: [{f: strength.direction, eq: 偏旺}, {f: gods.top_yidang, eq: 食伤}]}
   asserts: []
   priority: 50
-  length: [150, 220]
+  length: [140, 220]
   polish_allowed: true
   variants:
     - "按位置加权，帮扶你的比劫和印星合计 {strength.S_pct}%，你这一方底气充足；消耗你的一方合计 {strength.yidang_pct}%，其中最有分量的是食伤，占 {gods.食伤_pct}%。食伤是向外输出的才华与表达。对偏旺的命局来说，这是一个现成的出口：多余的能量可以顺着它变成作品、技能和影响力。你的结构里，能量和出口都在，关键是让出口保持通畅。现实中，这类结构的人往往闲不住，越有事做状态越好。"
@@ -91,7 +91,7 @@
   when: {all: [{f: strength.direction, eq: 偏旺}, {f: gods.top_yidang, eq: 财}]}
   asserts: []
   priority: 50
-  length: [150, 220]
+  length: [140, 220]
   polish_allowed: true
   variants:
     - "加权计分后，帮扶你的比劫和印星合计 {strength.S_pct}%，你这一方力量充足；消耗你的一方合计 {strength.yidang_pct}%，其中最重的是财星，占 {gods.财_pct}%。财星是你能掌控和经营的资源。力量偏旺的人有力气，最需要的是值得投入的对象，而财星恰好是对面最强的一股，好比力气大的人面前正好有一片可以开垦的地。你的结构提示：把精力放在具体的经营和成果上，最容易看到回报。"
@@ -109,7 +109,7 @@
     - {f: strength.de_ling, eq: true}
     - {f: strength.direction, eq: 偏弱}
   priority: 80
-  length: [150, 220]
+  length: [140, 220]
   polish_allowed: true
   variants:
     - "按老口诀，你生在{month.branch}月，月令本气是{month.main_god|名}，站在你这一边，这叫“得令”，常常被直接当成身旺。但本报告把各柱的力量全部计入后发现：帮扶你的一方合计只占 {strength.S_pct}%，消耗你的一方占 {strength.yidang_pct}%，其中最重的是{gods.top_yidang|名}，占 {gods.top_yidang_pct}%。好比主场作战，但对面的人更多——所以结论是偏弱，而不是“得令就旺”。这正是本报告坚持逐项计分、而不只看口诀的原因。"
@@ -127,7 +127,7 @@
     - {f: strength.de_ling, eq: false}
     - {f: strength.direction, eq: 偏旺}
   priority: 80
-  length: [150, 220]
+  length: [140, 220]
   polish_allowed: true
   variants:
     - "按老口诀，你生在{month.branch}月，月令本气是{month.main_god|名}，不站在你这一边，这叫“失令”，常被直接当成身弱。但本报告把各柱的力量全部计入后发现：帮扶你的一方合计占 {strength.S_pct}%，其中比劫占 {gods.比劫_pct}%、印星占 {gods.印_pct}%，消耗你的一方只占 {strength.yidang_pct}%。也就是说，月令虽然不帮你，其余各柱里你的同类和印星却不少，整体反而偏旺。这正是只看月令容易看错的地方。"
@@ -146,7 +146,7 @@
     - {f: strength.direction, eq: 偏弱}
     - {f: gods.top_yidang, eq: 财}
   priority: 80
-  length: [150, 220]
+  length: [140, 220]
   polish_allowed: true
   variants:
     - "你的命局力量分布非常悬殊：帮扶你的一方只占 {strength.S_pct}%，而财星一项就占了 {gods.财_pct}%。更关键的是，日主在各个地支里找不到本气或中气的根，天干也没有比劫、印星相助。按本报告的规则，这几条同时满足，才算古法所说的“从格”；你的命局属于其中的“从财”。这种情况下，日主不再按普通身弱来看待，而是顺着最强的财星走，下一章的喜忌也会因此和普通命局不同。"
@@ -164,7 +164,7 @@
     - {f: strength.direction, eq: 偏弱}
     - {f: gods.top_yidang, eq: 官杀}
   priority: 80
-  length: [150, 220]
+  length: [140, 220]
   polish_allowed: true
   variants:
     - "你的命局力量分布一边倒：帮扶你的一方只占 {strength.S_pct}%，官杀一项却占了 {gods.官杀_pct}%。日主在各个地支里没有本气或中气的根，年、月、时三干也没有比劫、印星。按本报告的规则，这几条同时满足才算“从格”，你的命局属于“从杀”：日主不再和压力对抗，而是顺从并融入代表规则与权责的官杀。所以它不能按普通身弱来理解，喜忌也会随之不同。"
@@ -181,7 +181,7 @@
     - {f: strength.direction, eq: 偏弱}
     - {f: gods.top_yidang, eq: 食伤}
   priority: 80
-  length: [150, 220]
+  length: [140, 220]
   polish_allowed: true
   variants:
     - "你的命局力量分布一边倒：帮扶你的一方只占 {strength.S_pct}%，食伤一项占了 {gods.食伤_pct}%。日主在各个地支里没有本气或中气的根，天干也没有比劫、印星相助。这几条同时满足，按古法属于“从格”中的“从儿”：食伤是日主生出来的力量，古人把它比作“儿”，日主顺着它走，把能量全部化为才华和表达。这和普通身弱的看法正好不同。"
@@ -197,7 +197,7 @@
   asserts:
     - {f: strength.direction, eq: 偏弱}
   priority: 80
-  length: [150, 220]
+  length: [140, 220]
   polish_allowed: true
   variants:
     - "你的命局帮扶力量只有 {strength.S_pct}%，日主在地支里没有本气或中气的根，天干也没有比劫、印星。与从财、从杀不同，消耗你的三方，食伤 {gods.食伤_pct}%、财星 {gods.财_pct}%、官杀 {gods.官杀_pct}%，都有分量，却没有哪一方独大。古法把这种情况叫“从势”：日主不跟从某一种力量，而是顺应整体的大势。它和普通身弱的处理方式不同，喜忌会在下一章单独说明。"
@@ -215,7 +215,7 @@
     - {f: strength.direction, eq: 偏旺}
     - {f: strength.de_ling, eq: true}
   priority: 80
-  length: [150, 220]
+  length: [140, 220]
   polish_allowed: true
   variants:
     - "你的命局力量高度集中：帮扶你的一方占 {strength.S_pct}%，其中比劫 {gods.比劫_pct}%、印星 {gods.印_pct}%；而代表约束的官杀只有 {gods.官杀_pct}%，财星也只有 {gods.财_pct}%。同时你生得月令，同类力量当家。按本报告的规则，这几条全部满足，属于古法所说的“专旺”，也叫“一行得气”：一种力量独当一面。这种格局不宜按普通身旺去压制，而是顺其旺势，下一章会说明具体怎么取用。"
@@ -233,7 +233,7 @@
     - {f: strength.direction, eq: 偏旺}
     - {f: strength.de_ling, eq: true}
   priority: 80
-  length: [150, 220]
+  length: [140, 220]
   polish_allowed: true
   variants:
     - "你的命局力量高度集中：帮扶你的一方占 {strength.S_pct}%，其中印星占 {gods.印_pct}%，比劫占 {gods.比劫_pct}%；官杀只有 {gods.官杀_pct}%，财星只有 {gods.财_pct}%，而且你生得月令。这几条全部满足，按古法属于“从强”：生扶你的印星极旺，日主顺着这股力量走。好比一位被众人簇拥的主角，顺着众人的托举向前，比独自逆行更稳。它和普通身旺不同，不宜强行去压，下一章会说明喜忌怎么取。"
@@ -251,7 +251,7 @@
   asserts: []
   priority: 0
   fallback: true
-  length: [60, 120]
+  length: [45, 120]
   polish_allowed: false
   variants:
     - "在你的命局里，帮扶你的力量合计占 {strength.S_pct}%，消耗你的力量合计占 {strength.yidang_pct}%，其中最强的一方是{gods.top_yidang|名}，占 {gods.top_yidang_pct}%。"

@@ -15,7 +15,7 @@
     - {f: strength.direction, eq: 偏弱}
     - {f: gods.top_yidang, eq: 官杀}
   priority: 50
-  length: [150, 230]
+  length: [115, 230]
   polish_allowed: true
   quote:
     text: "道有体用，不可以一端论也，要在扶之抑之得其宜。"
@@ -38,7 +38,7 @@
     - {f: strength.direction, eq: 偏弱}
     - {f: gods.top_yidang, eq: 食伤}
   priority: 50
-  length: [150, 230]
+  length: [115, 230]
   polish_allowed: true
   quote:
     text: "道有体用，不可以一端论也，要在扶之抑之得其宜。"
@@ -61,7 +61,7 @@
     - {f: strength.direction, eq: 偏弱}
     - {f: gods.top_yidang, eq: 财}
   priority: 50
-  length: [150, 230]
+  length: [115, 230]
   polish_allowed: true
   quote:
     text: "道有体用，不可以一端论也，要在扶之抑之得其宜。"
@@ -85,7 +85,7 @@
     - {f: strength.direction, eq: 偏旺}
     - {f: gods.top_tongdang, eq: 印}
   priority: 50
-  length: [150, 230]
+  length: [115, 230]
   polish_allowed: true
   quote:
     text: "道有体用，不可以一端论也，要在扶之抑之得其宜。"
@@ -108,7 +108,7 @@
     - {f: strength.direction, eq: 偏旺}
     - {f: gods.top_tongdang, eq: 比劫}
   priority: 50
-  length: [150, 230]
+  length: [115, 230]
   polish_allowed: true
   quote:
     text: "道有体用，不可以一端论也，要在扶之抑之得其宜。"
@@ -132,7 +132,7 @@
     - {f: gods.top_tongdang, eq: 比劫}
     - {f: gods.官杀_pct, lt: 15}
   priority: 50
-  length: [150, 230]
+  length: [115, 230]
   polish_allowed: true
   quote:
     text: "道有体用，不可以一端论也，要在扶之抑之得其宜。"
@@ -155,7 +155,7 @@
   asserts:
     - {f: yongshen.fy_rule, eq: Y-CONG}
   priority: 80
-  length: [150, 230]
+  length: [115, 230]
   polish_allowed: true
   variants:
     - "你的命局属于特殊的“从财格”。日主{day.stem}{day.element}在四个地支里找不到本气或中气的根，年、月、时三干也没有帮手，而财星占了全盘 {gods.财_pct}%。遇到这种情况，古法不再勉强去扶一个扶不起来的日主，而是顺着最强的一方走，称为“从”。所以你的喜忌和普通偏弱命局正好相反：{el.财}为用，{el.食伤}为喜，{el.比劫}与{el.印}反而需要节制。本项目只认条件最严的“真从”，你的命局全部满足。"
@@ -172,7 +172,7 @@
   asserts:
     - {f: yongshen.fy_rule, eq: Y-CONG}
   priority: 80
-  length: [150, 230]
+  length: [115, 230]
   polish_allowed: true
   variants:
     - "你的命局属于特殊的“从杀格”。日主{day.stem}{day.element}在地支里没有本气或中气的根，天干也没有比劫和印星，而官杀占了全盘 {gods.官杀_pct}%。这种情况下，古法不再去扶一个扶不起来的日主，而是顺从最强的官杀。所以你的喜忌和普通偏弱命局不同：{el.官杀}为用，{el.财}为喜；{el.印}、{el.比劫}，以及会去克制官杀的{el.食伤}，反而需要节制。"
@@ -189,7 +189,7 @@
   asserts:
     - {f: yongshen.fy_rule, eq: Y-CONG}
   priority: 80
-  length: [150, 230]
+  length: [115, 230]
   polish_allowed: true
   variants:
     - "你的命局属于特殊的“从儿格”。日主在地支里没有本气或中气的根，天干也没有比劫和印星，而由你生出的食伤占了全盘 {gods.食伤_pct}%。古法遇到这种结构，主张顺着食伤走，让能量化成才华和作品，再由食伤去生财星。所以按格局，{el.食伤}为用，{el.财}为喜；会克制食伤的{el.印}、与食伤相战的{el.官杀}需要节制，而{el.比劫}能生食伤，不在节制之列。"
@@ -206,7 +206,7 @@
   asserts:
     - {f: yongshen.fy_rule, eq: Y-CONG}
   priority: 80
-  length: [150, 230]
+  length: [115, 230]
   polish_allowed: true
   variants:
     - "你的命局属于特殊的“从势格”。日主在地支里无根，天干无比劫、印星，消耗你的三方——食伤 {gods.食伤_pct}%、财星 {gods.财_pct}%、官杀 {gods.官杀_pct}%——都有分量，却没有谁独大。古法的处理是顺应整体大势，并以居中的财星为用：财星上承食伤、下生官杀，能把三股力量串成一条线。所以按格局，{el.财}为用，{el.食伤}与{el.官杀}为喜，{el.印}与{el.比劫}需要节制。"
@@ -223,7 +223,7 @@
   asserts:
     - {f: yongshen.fy_rule, eq: Y-ZHUANWANG}
   priority: 80
-  length: [150, 230]
+  length: [115, 230]
   polish_allowed: true
   variants:
     - "你的命局属于特殊的“专旺格”。帮扶力量高达 {strength.S_pct}%，生于得令之月，官杀与财星都非常弱。古法遇到这种一行独旺的结构，不主张硬去压制，而是顺其旺势，并让它有地方流出去。所以按格局，与你同类的{el.比劫}为用，生扶你的{el.印}和疏导你的{el.食伤}为喜；逆着旺势去克制的{el.官杀}，以及{el.财}，需要节制。"
@@ -240,7 +240,7 @@
   asserts:
     - {f: yongshen.fy_rule, eq: Y-ZHUANWANG}
   priority: 80
-  length: [150, 230]
+  length: [115, 230]
   polish_allowed: true
   variants:
     - "你的命局属于特殊的“从强格”。帮扶力量高达 {strength.S_pct}%，其中印星最多，占 {gods.印_pct}%，官杀与财星都很弱。古法对这类印星极旺的命局，主张顺着生扶的力量走，而不是勉强去削弱它：局势已成，硬碰只会失衡。所以按格局，{el.印}为用，{el.比劫}为喜；{el.财}、{el.食伤}、{el.官杀}与旺势相逆，需要节制。"
@@ -257,7 +257,7 @@
   when: {all: [{f: profile.confidence, eq: 低}, {f: yongshen.fy_rule, in: [Y-FY-W-SHA, Y-FY-W-SHI]}]}
   asserts: [{f: strength.direction, eq: 偏弱}]
   priority: 70
-  length: [150, 230]
+  length: [115, 230]
   polish_allowed: true
   variants:
     - "先说明一点：你没有提供时辰，而不同时辰下旺衰结论差别较大，所以本章的喜忌仅供参考。按三柱计算，你的命局偏弱，消耗你最多的是{gods.top_yidang|名}，占 {gods.top_yidang_pct}%。扶抑这一步的思路是借印星来生扶、缓冲，再以比劫为辅：印星对应{el.印}，比劫对应{el.比劫}。若日后补上准确时辰，这一步的结论可能改变。"
@@ -273,7 +273,7 @@
   when: {all: [{f: profile.confidence, eq: 低}, {f: yongshen.fy_rule, eq: Y-FY-W-CAI}]}
   asserts: [{f: strength.direction, eq: 偏弱}, {f: gods.top_yidang, eq: 财}]
   priority: 70
-  length: [150, 230]
+  length: [115, 230]
   polish_allowed: true
   variants:
     - "先说明：没有时辰信息，而不同时辰会让旺衰结论在偏弱和偏旺之间摇摆，所以以下内容仅供参考。按三柱计算，你的命局偏弱，消耗你最多的是财星，占 {gods.财_pct}%。扶抑这一步会取同类的比劫来分担，即{el.比劫}为用、{el.印}为喜，因为印星在财多的局里容易受克。补上时辰后，这一步可能需要调整。"
@@ -288,7 +288,7 @@
   when: {all: [{f: profile.confidence, eq: 低}, {f: yongshen.fy_rule, in: [Y-FY-S-YIN, Y-FY-S-BI-GUAN, Y-FY-S-BI-SHI]}]}
   asserts: [{f: strength.direction, eq: 偏旺}]
   priority: 70
-  length: [150, 230]
+  length: [115, 230]
   polish_allowed: true
   variants:
     - "先说明：没有时辰信息，不同时辰会让旺衰结论明显不同，所以本章喜忌仅供参考。按三柱计算，你的命局偏旺，帮扶力量占 {strength.S_pct}%。扶抑这一步的方向是给多余的力量找出口或加以约束，具体取哪一种，取决于同党里是比劫还是印星占多、官杀够不够分量。你的三柱结果见下面的结论；补上时辰后可能会变。"

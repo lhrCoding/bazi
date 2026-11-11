@@ -94,7 +94,7 @@
   asserts: []
   priority: 0
   fallback: true
-  length: [20, 80]
+  length: [15, 80]
   polish_allowed: false
   variants:
     - "你的用神是{yongshen.yong}，在你的命局里对应{yongshen.yong_god|名}。"

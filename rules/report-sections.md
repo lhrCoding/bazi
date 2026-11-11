@@ -1,6 +1,7 @@
 # report-sections.md —— 免费结果页 + 付费报告：素材库拼装规则
 
-> 版本：v2.1（2026-11-11）：§8 明确 tier 区间左闭右开、未起运流年大运分按 0，修正 §0 示例 1.4 的 tier（用户裁定 Q4）。
+> 版本：v2.2（2026-11-11）：§3 放宽 6 个槽位的字数下限（CH1-DAYMASTER 110、CH1-BALANCE 140、CH2-TIAOHOU 90、CH2-METHOD 115、CH6-WATCH 25、CH6-HEAD 70），按第 1 批素材实际字数，用户裁定（T25）。
+> v2.1（2026-11-11）：§8 明确 tier 区间左闭右开、未起运流年大运分按 0，修正 §0 示例 1.4 的 tier（用户裁定 Q4）。
 > v2（2026-10-29，mingli-expert）
 > v2 重大变更（用户决定）：付费报告**不再由大模型撰写**，改为「素材库拼装」——运行时由确定性代码根据排盘 + 规则结论，从预先写好、经人工审核的文字段落（rules/texts/）中选取并拼成报告。同样的输入永远得到同样的报告。
 > 产品口径：单档完整报告 ¥9.9（暂定，以 CLAUDE.md / PRD 为准）；系统只存订单（订单记录排盘输入与素材库版本号 texts_version，重看报告时用同一版本重新拼装，不另存报告全文）；5,000～8,000 字 + 3～4 张图表 + 逐年卡片。
@@ -108,9 +109,9 @@
 ### 第 1 章 你的日主与旺衰
 | 槽位 | 必需 | 维度 | 选几条 | 每条字数 | 依据模板 | 润色 | 无时辰 |
 |---|---|---|---|---|---|---|---|
-| CH1-DAYMASTER 日干底色 | Y | day.stem（10） | 1 | 120–180 | 日主{day.stem}{day.element} | 可 | 照常 |
+| CH1-DAYMASTER 日干底色 | Y | day.stem（10） | 1 | 110–180 | 日主{day.stem}{day.element} | 可 | 照常 |
 | CH1-MONTH 月令得失 | Y | day.element × month.main_god（5×5） | 1 | 100–150 | 生于{month.branch}月，月令本气{month.main_qi}为{month.main_god} | 可 | 照常 |
-| CH1-BALANCE 力量对比 | Y | strength.direction × gods.top_yidang（2×3）；另有 strength.special（6）、strength.paradox（2）专用条目，优先级更高 | 1 | 150–220 | 同党 {S_pct}%（比劫 {比劫_pct}%、印 {印_pct}%）；异党最强 {top_yidang} | 可 | 照常 |
+| CH1-BALANCE 力量对比 | Y | strength.direction × gods.top_yidang（2×3）；另有 strength.special（6）、strength.paradox（2）专用条目，优先级更高 | 1 | 140–220 | 同党 {S_pct}%（比劫 {比劫_pct}%、印 {印_pct}%）；异党最强 {top_yidang} | 可 | 照常 |
 | CH1-CONCLUSION 结论 | Y | strength.level（6）；修饰：strength.borderline、profile.time_known、profile.confidence | 1 | 80–130 | 规则 S-LEVEL：{level} | 否 | 自动换用 time_known=false 条目 |
 | CH1-QUOTE 古籍一句 | N | strength.direction / strength.special | 0–1 | 原文 + 出处 | — | 否 | 照常 |
 
@@ -119,9 +120,9 @@
 ### 第 2 章 喜用神详解
 | 槽位 | 必需 | 维度 | 选几条 | 每条字数 | 依据模板 | 润色 | 无时辰 |
 |---|---|---|---|---|---|---|---|
-| CH2-METHOD 取用思路 | Y | yongshen.fy_rule（扶抑 6 种）+ strength.special（6 种），共 12；修饰：profile.confidence | 1 | 150–230 | 规则 {fy_rule} | 可 | 置信“低”换用“仅供参考”条目 |
+| CH2-METHOD 取用思路 | Y | yongshen.fy_rule（扶抑 6 种）+ strength.special（6 种），共 12；修饰：profile.confidence | 1 | 115–230 | 规则 {fy_rule} | 可 | 置信“低”换用“仅供参考”条目 |
 | CH2-SWAP 用神缺位说明 | N | yongshen.swap=true（通用条目，用占位符） | 0–1 | 80–130 | 规则 Y-SWAP | 可 | 照常 |
-| CH2-TIAOHOU 调候 | N | yongshen.th（3）× month.season（冬 / 夏） | 0–1 | 100–160 | 规则 Y-TH-* | 可 | 照常 |
+| CH2-TIAOHOU 调候 | N | yongshen.th（3）× month.season（冬 / 夏） | 0–1 | 90–160 | 规则 Y-TH-* | 可 | 照常 |
 | CH2-TONGGUAN 通关 | N | yongshen.tg=true × 通关五行（5） | 0–1 | 80–130 | 规则 Y-TG | 可 | 照常 |
 | CH2-SUMMARY 结论 | Y | **代码模板，不走素材**：“综合以上，你的用神是{yong}，喜神是{xi}，需要节制的是{ji}，{xian}为闲神。” | 1 | 固定 | — | 否 | 置信“低”加“仅供参考” |
 | CH2-ROLE-YONG / -XI / -JI 各五行的作用 | Y | 角色 × 该五行对应的十神组（3×5=15） | 用 1、喜 1–2、忌 1–2 | 80–130 | {五行}是你的{十神组}，占 {x}% | 可 | 照常 |
@@ -166,10 +167,10 @@
 
 | 槽位 | 必需 | 维度 | 选几条 | 每条字数 | 润色 | 无时辰 |
 |---|---|---|---|---|---|---|
-| CH6-HEAD 年度主题 | Y | item.stem_ten_god（10）× item.tier（5） | 1 | 80–120 | 可 | 照常 |
+| CH6-HEAD 年度主题 | Y | item.stem_ten_god（10）× item.tier（5） | 1 | 70–120 | 可 | 照常 |
 | CH6-CAREER / CH6-WEALTH / CH6-LOVE / CH6-HEALTH 四领域 | Y | item.stem_god（5）× item.tier_group（3） | 各 1 | 40–70 | 可 | 照常 |
 | CH6-DO 适合做 | Y | item.stem_god（5）× item.tier_group（3） | 1（1–2 句） | 30–60 | 否 | 照常 |
-| CH6-WATCH 留意 | Y | item.stem_god（5）× item.tier_group（3） | 1（1–2 句） | 30–60 | 否 | 照常 |
+| CH6-WATCH 留意 | Y | item.stem_god（5）× item.tier_group（3） | 1（1–2 句） | 25–60 | 否 | 照常 |
 | CH6-REL 年度冲合 | N | 关系类型（冲日支 / 冲月支 / 合日支 / 冲时支） | 0–2 | 40–60 | 可 | 不计算、不展示“冲时支” |
 
 - `do` / `watch` 素材必须可执行（“适合在上半年完成证书考试”），不得是“保持积极心态”。

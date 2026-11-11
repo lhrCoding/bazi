@@ -300,7 +300,7 @@
   asserts: []
   priority: 0
   fallback: true
-  length: [40, 100]
+  length: [35, 100]
   polish_allowed: false
   variants:
     - "综合来看，你的日主旺衰等级为“{strength.level}”，帮扶力量占 {strength.S_pct}%，消耗力量占 {strength.yidang_pct}%。"

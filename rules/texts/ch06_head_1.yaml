@@ -13,7 +13,7 @@
   slot: CH6-HEAD
   when: {all: [{f: item.stem_ten_god, eq: 比肩}, {f: item.tier, eq: 顺势期}]}
   priority: 50
-  length: [80, 120]
+  length: [70, 120]
   polish_allowed: true
   variants:
     - "这一年天干透出比肩，主题是自己做主。整体评分处在最好的“顺势期”，同类的力量在帮你：适合独立负责一摊事、开启个人项目，或与志同道合的人结伴发力。你的主见此时更容易被认可，可以大胆一点。"
@@ -27,7 +27,7 @@
   slot: CH6-HEAD
   when: {all: [{f: item.stem_ten_god, eq: 比肩}, {f: item.tier, eq: 向好}]}
   priority: 50
-  length: [80, 120]
+  length: [70, 120]
   polish_allowed: true
   variants:
     - "这一年天干是比肩，评分“向好”。比肩代表与你同类的人和自身的主见，今年它带来的多是助力：朋友、同行愿意搭把手，你也更有底气推动自己想做的事。适合扩大圈子、找搭档，把一个人的计划变成几个人的行动。"
@@ -41,7 +41,7 @@
   slot: CH6-HEAD
   when: {all: [{f: item.stem_ten_god, eq: 比肩}, {f: item.tier, eq: 平稳}]}
   priority: 50
-  length: [80, 120]
+  length: [70, 120]
   polish_allowed: true
   variants:
     - "这一年天干是比肩，评分“平稳”。同类力量出现，但不偏帮也不添乱：独立处理事情的能力在线，人际上有往来也有比较。适合按自己的节奏推进既定计划，不必刻意求变，把手上的事情做扎实就是今年的收获。"
@@ -55,7 +55,7 @@
   slot: CH6-HEAD
   when: {all: [{f: item.stem_ten_god, eq: 比肩}, {f: item.tier, eq: 宜稳守}]}
   priority: 50
-  length: [80, 120]
+  length: [70, 120]
   polish_allowed: true
   variants:
     - "这一年天干是比肩，评分“宜稳守”。比肩在今年更像竞争者而非帮手：同类增多，资源要分，意见也容易相左。适合守住自己的阵地，合作先把分工和规则说清楚，不急于和人比高低，把力气留给自己能掌控的事。"
@@ -69,7 +69,7 @@
   slot: CH6-HEAD
   when: {all: [{f: item.stem_ten_god, eq: 比肩}, {f: item.tier, eq: 宜保守、打基础}]}
   priority: 50
-  length: [80, 120]
+  length: [70, 120]
   polish_allowed: true
   variants:
     - "这一年天干是比肩，评分落在“宜保守、打基础”。同类力量过旺，竞争和摩擦相对多，不是扩张的好时机。适合沉下心修炼基本功、梳理人际关系，合伙或共同出钱的事情尽量缓一缓，等形势明朗再说。"
@@ -84,7 +84,7 @@
   slot: CH6-HEAD
   when: {all: [{f: item.stem_ten_god, eq: 劫财}, {f: item.tier, eq: 顺势期}]}
   priority: 50
-  length: [80, 120]
+  length: [70, 120]
   polish_allowed: true
   variants:
     - "这一年天干是劫财，评分“顺势期”。劫财代表行动力、竞争心和社交能量，今年它站在你这一边：敢争取、善结交，团队作战尤其顺手。适合参与竞争性的项目、拓展人脉，把冲劲转化为看得见的成绩。"
@@ -98,7 +98,7 @@
   slot: CH6-HEAD
   when: {all: [{f: item.stem_ten_god, eq: 劫财}, {f: item.tier, eq: 向好}]}
   priority: 50
-  length: [80, 120]
+  length: [70, 120]
   polish_allowed: true
   variants:
     - "这一年天干是劫财，评分“向好”。社交圈活跃，朋友和同行带来的机会增多，你的行动力也被调动起来。适合主动出击、与人合作推进项目；开销会随着往来增加，提前留一点预算，热闹和实惠就能兼得。"
@@ -112,7 +112,7 @@
   slot: CH6-HEAD
   when: {all: [{f: item.stem_ten_god, eq: 劫财}, {f: item.tier, eq: 平稳}]}
   priority: 50
-  length: [80, 120]
+  length: [70, 120]
   polish_allowed: true
   variants:
     - "这一年天干是劫财，评分“平稳”。人际往来增多，有合作也有竞争，两者大致相抵。适合维持现有节奏，在团队里发挥行动快的长处，同时对人情开销和冲动决定多一分克制，这一年就能过得踏实。"
@@ -126,7 +126,7 @@
   slot: CH6-HEAD
   when: {all: [{f: item.stem_ten_god, eq: 劫财}, {f: item.tier, eq: 宜稳守}]}
   priority: 50
-  length: [80, 120]
+  length: [70, 120]
   polish_allowed: true
   variants:
     - "这一年天干是劫财，评分“宜稳守”。劫财偏旺时，容易出现争抢和额外开销：别人分走机会，或自己一时冲动多花钱。适合守住既有成果，合作、共同出钱的事先把规则写清楚，少做意气之争。"
@@ -140,7 +140,7 @@
   slot: CH6-HEAD
   when: {all: [{f: item.stem_ten_god, eq: 劫财}, {f: item.tier, eq: 宜保守、打基础}]}
   priority: 50
-  length: [80, 120]
+  length: [70, 120]
   polish_allowed: true
   variants:
     - "这一年天干是劫财，评分落在“宜保守、打基础”。竞争与消耗都偏多，不宜大举扩张，也不宜为别人的财务承担责任。适合收缩战线、积累实力，先把基本盘稳住，把精力放在提升自己而不是与人比拼上。"
@@ -155,7 +155,7 @@
   slot: CH6-HEAD
   when: {all: [{f: item.stem_ten_god, eq: 食神}, {f: item.tier, eq: 顺势期}]}
   priority: 50
-  length: [80, 120]
+  length: [70, 120]
   polish_allowed: true
   variants:
     - "这一年天干是食神，评分“顺势期”。食神代表才华的自然流露、生活的品味与从容，今年它与你的需要相合：作品、手艺、内容输出容易得到好评，心情也比较舒展。适合推出个人作品、开设课程或发展兴趣副业。"
@@ -169,7 +169,7 @@
   slot: CH6-HEAD
   when: {all: [{f: item.stem_ten_god, eq: 食神}, {f: item.tier, eq: 向好}]}
   priority: 50
-  length: [80, 120]
+  length: [70, 120]
   polish_allowed: true
   variants:
     - "这一年天干是食神，评分“向好”。表达和创造的欲望增强，人也更放松，适合学一门手艺、做内容、讲课或组织活动。好心情会带来好人缘，顺势把擅长的东西展示出来，往往能收获意外的认可。"
@@ -183,7 +183,7 @@
   slot: CH6-HEAD
   when: {all: [{f: item.stem_ten_god, eq: 食神}, {f: item.tier, eq: 平稳}]}
   priority: 50
-  length: [80, 120]
+  length: [70, 120]
   polish_allowed: true
   variants:
     - "这一年天干是食神，评分“平稳”。日子比较安稳，有余力照顾生活和兴趣，工作上按部就班即可。适合培养一项长期爱好，或在本职中多做一点有创意的改进，不必急于求成，慢慢积累就有收获。"
@@ -197,7 +197,7 @@
   slot: CH6-HEAD
   when: {all: [{f: item.stem_ten_god, eq: 食神}, {f: item.tier, eq: 宜稳守}]}
   priority: 50
-  length: [80, 120]
+  length: [70, 120]
   polish_allowed: true
   variants:
     - "这一年天干是食神，评分“宜稳守”。安逸感较强，容易松懈，或者想法多、落实少。适合给自己定清楚的进度，把创意落到具体的交付上；享受生活之余，也要留意开销和时间别被慢慢消磨掉。"
@@ -211,7 +211,7 @@
   slot: CH6-HEAD
   when: {all: [{f: item.stem_ten_god, eq: 食神}, {f: item.tier, eq: 宜保守、打基础}]}
   priority: 50
-  length: [80, 120]
+  length: [70, 120]
   polish_allowed: true
   variants:
     - "这一年天干是食神，评分落在“宜保守、打基础”。精力容易分散在享受和琐事上，新开的头多、做完的少。适合收拢目标，只保留一两件最重要的事，专心把基本功练扎实，其余的留到明年再说。"
@@ -226,7 +226,7 @@
   slot: CH6-HEAD
   when: {all: [{f: item.stem_ten_god, eq: 伤官}, {f: item.tier, eq: 顺势期}]}
   priority: 50
-  length: [80, 120]
+  length: [70, 120]
   polish_allowed: true
   variants:
     - "这一年天干是伤官，评分“顺势期”。伤官代表锋芒毕露的才华和敢于打破常规的勇气，今年它正合你的需要：提出新方案、做有突破的作品、在公开场合表达观点，都容易被看见。适合大胆创新，同时注意表达方式。"
@@ -240,7 +240,7 @@
   slot: CH6-HEAD
   when: {all: [{f: item.stem_ten_god, eq: 伤官}, {f: item.tier, eq: 向好}]}
   priority: 50
-  length: [80, 120]
+  length: [70, 120]
   polish_allowed: true
   variants:
     - "这一年天干是伤官，评分“向好”。表达欲和创造力都在上升，适合写作、演讲、设计、技术改进等需要个人见解的事情。你说的话更有分量，也更容易得罪人，好主意配上好语气，效果加倍。"
@@ -254,7 +254,7 @@
   slot: CH6-HEAD
   when: {all: [{f: item.stem_ten_god, eq: 伤官}, {f: item.tier, eq: 平稳}]}
   priority: 50
-  length: [80, 120]
+  length: [70, 120]
   polish_allowed: true
   variants:
     - "这一年天干是伤官，评分“平稳”。想法多、表达欲强，但外部环境不特别推动，也不特别阻拦。适合在本职范围内做些创新尝试，有意见先私下沟通，避免在公开场合与人正面冲突。"
@@ -268,7 +268,7 @@
   slot: CH6-HEAD
   when: {all: [{f: item.stem_ten_god, eq: 伤官}, {f: item.tier, eq: 宜稳守}]}
   priority: 50
-  length: [80, 120]
+  length: [70, 120]
   polish_allowed: true
   variants:
     - "这一年天干是伤官，评分“宜稳守”。伤官偏旺时，容易对规则和上级产生不满，说话直、摩擦多。适合把锋芒收一收，重要的意见用书面、讲理的方式提出；签字、承诺之前多看一遍细则。"
@@ -282,7 +282,7 @@
   slot: CH6-HEAD
   when: {all: [{f: item.stem_ten_god, eq: 伤官}, {f: item.tier, eq: 宜保守、打基础}]}
   priority: 50
-  length: [80, 120]
+  length: [70, 120]
   polish_allowed: true
   variants:
     - "这一年天干是伤官，评分落在“宜保守、打基础”。情绪和言语都容易失控，与规则、权威的摩擦偏多，不宜贸然辞职、转行或公开对抗。适合低调做事、钻研技术，把锐气积蓄成真本事。"
@@ -297,7 +297,7 @@
   slot: CH6-HEAD
   when: {all: [{f: item.stem_ten_god, eq: 偏财}, {f: item.tier, eq: 顺势期}]}
   priority: 50
-  length: [80, 120]
+  length: [70, 120]
   polish_allowed: true
   variants:
     - "这一年天干是偏财，评分“顺势期”。偏财代表灵活的机会、额外的收入来源和广泛的人脉，今年它与你相合：商务往来顺畅，新渠道容易打开。适合拓展业务、尝试新的收入方式，好机会来时可以果断一些。"
@@ -311,7 +311,7 @@
   slot: CH6-HEAD
   when: {all: [{f: item.stem_ten_god, eq: 偏财}, {f: item.tier, eq: 向好}]}
   priority: 50
-  length: [80, 120]
+  length: [70, 120]
   polish_allowed: true
   variants:
     - "这一年天干是偏财，评分“向好”。社交与商务机会增多，额外的收入来源可能出现。适合多参加行业活动、维护客户关系，对新机会保持开放，但每一笔都先算清付出和回报，再决定要不要做。"
@@ -325,7 +325,7 @@
   slot: CH6-HEAD
   when: {all: [{f: item.stem_ten_god, eq: 偏财}, {f: item.tier, eq: 平稳}]}
   priority: 50
-  length: [80, 120]
+  length: [70, 120]
   polish_allowed: true
   variants:
     - "这一年天干是偏财，评分“平稳”。机会时有出现，但不必每个都抓，挑和自己专长相关的去做就好。适合维持主要收入，适度尝试小规模的新项目；人情往来量力而行，账目随时理清楚。"
@@ -339,7 +339,7 @@
   slot: CH6-HEAD
   when: {all: [{f: item.stem_ten_god, eq: 偏财}, {f: item.tier, eq: 宜稳守}]}
   priority: 50
-  length: [80, 120]
+  length: [70, 120]
   polish_allowed: true
   variants:
     - "这一年天干是偏财，评分“宜稳守”。看似机会多，实际不少是来得快、去得也快。适合守住稳定收入，对快钱和陌生人的合作邀约多做核实，大额开支先放一放，等看清楚再决定。"
@@ -353,7 +353,7 @@
   slot: CH6-HEAD
   when: {all: [{f: item.stem_ten_god, eq: 偏财}, {f: item.tier, eq: 宜保守、打基础}]}
   priority: 50
-  length: [80, 120]
+  length: [70, 120]
   polish_allowed: true
   variants:
     - "这一年天干是偏财，评分落在“宜保守、打基础”。收支上波动的可能性偏大，不宜冒进，不宜为别人的财务承担责任，也不宜被高回报的说法打动。适合精简开支、积累储备，把精力放在提升赚钱能力本身。"

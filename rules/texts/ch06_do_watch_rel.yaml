@@ -238,7 +238,7 @@
   slot: CH6-WATCH
   when: {all: [{f: item.stem_god, eq: 比劫}, {f: item.tier_group, eq: 好}]}
   priority: 50
-  length: [30, 60]
+  length: [25, 60]
   polish_allowed: false
   variants:
     - "留意合作中的分工和收益分配，事先约定好，比事后协商省心得多。"
@@ -252,7 +252,7 @@
   slot: CH6-WATCH
   when: {all: [{f: item.stem_god, eq: 比劫}, {f: item.tier_group, eq: 平}]}
   priority: 50
-  length: [30, 60]
+  length: [25, 60]
   polish_allowed: false
   variants:
     - "留意人情往来的开销，聚会和送礼量力而行，不必为了面子超出预算。"
@@ -266,7 +266,7 @@
   slot: CH6-WATCH
   when: {all: [{f: item.stem_god, eq: 比劫}, {f: item.tier_group, eq: 守}]}
   priority: 50
-  length: [30, 60]
+  length: [25, 60]
   polish_allowed: false
   variants:
     - "留意合伙、共同出钱和为别人承担财务责任的事情，能推迟就尽量推迟。"
@@ -280,7 +280,7 @@
   slot: CH6-WATCH
   when: {all: [{f: item.stem_god, eq: 印}, {f: item.tier_group, eq: 好}]}
   priority: 50
-  length: [30, 60]
+  length: [25, 60]
   polish_allowed: false
   variants:
     - "留意学习计划贪多，选一两项坚持完成，比同时开很多个头更有收获。"
@@ -294,7 +294,7 @@
   slot: CH6-WATCH
   when: {all: [{f: item.stem_god, eq: 印}, {f: item.tier_group, eq: 平}]}
   priority: 50
-  length: [30, 60]
+  length: [25, 60]
   polish_allowed: false
   variants:
     - "留意久坐和作息不规律，学习或工作一小时就起来活动几分钟。"
@@ -308,7 +308,7 @@
   slot: CH6-WATCH
   when: {all: [{f: item.stem_god, eq: 印}, {f: item.tier_group, eq: 守}]}
   priority: 50
-  length: [30, 60]
+  length: [25, 60]
   polish_allowed: false
   variants:
     - "留意过度思虑和拖延，任何计划超过两周没有动静，就先做最小的一步。"
@@ -322,7 +322,7 @@
   slot: CH6-WATCH
   when: {all: [{f: item.stem_god, eq: 食伤}, {f: item.tier_group, eq: 好}]}
   priority: 50
-  length: [30, 60]
+  length: [25, 60]
   polish_allowed: false
   variants:
     - "留意在顺利、高兴时说话过满或许下太多承诺，答应之前先确认自己做得到。"
@@ -336,7 +336,7 @@
   slot: CH6-WATCH
   when: {all: [{f: item.stem_god, eq: 食伤}, {f: item.tier_group, eq: 平}]}
   priority: 50
-  length: [30, 60]
+  length: [25, 60]
   polish_allowed: false
   variants:
     - "留意娱乐和消遣占用的时间，给每天留出一段不被打扰的专注时间。"
@@ -350,7 +350,7 @@
   slot: CH6-WATCH
   when: {all: [{f: item.stem_god, eq: 食伤}, {f: item.tier_group, eq: 守}]}
   priority: 50
-  length: [30, 60]
+  length: [25, 60]
   polish_allowed: false
   variants:
     - "留意言语上的冲突，尤其是对上级和规则的不满，不在公开场合发泄。"
@@ -364,7 +364,7 @@
   slot: CH6-WATCH
   when: {all: [{f: item.stem_god, eq: 财}, {f: item.tier_group, eq: 好}]}
   priority: 50
-  length: [30, 60]
+  length: [25, 60]
   polish_allowed: false
   variants:
     - "留意收入增加后开销也跟着变大，进账时先存下一部分，再安排消费。"
@@ -378,7 +378,7 @@
   slot: CH6-WATCH
   when: {all: [{f: item.stem_god, eq: 财}, {f: item.tier_group, eq: 平}]}
   priority: 50
-  length: [30, 60]
+  length: [25, 60]
   polish_allowed: false
   variants:
     - "留意自动续费、会员和各种小额支出，它们累积起来往往比想象中多。"
@@ -392,7 +392,7 @@
   slot: CH6-WATCH
   when: {all: [{f: item.stem_god, eq: 财}, {f: item.tier_group, eq: 守}]}
   priority: 50
-  length: [30, 60]
+  length: [25, 60]
   polish_allowed: false
   variants:
     - "留意高回报、低门槛的赚钱说法，不熟悉的领域不碰，大额支出多等几天再决定。"
@@ -406,7 +406,7 @@
   slot: CH6-WATCH
   when: {all: [{f: item.stem_god, eq: 官杀}, {f: item.tier_group, eq: 好}]}
   priority: 50
-  length: [30, 60]
+  length: [25, 60]
   polish_allowed: false
   variants:
     - "留意责任增加后的身体负担，再忙也要保证睡眠和基本的运动量。"
@@ -420,7 +420,7 @@
   slot: CH6-WATCH
   when: {all: [{f: item.stem_god, eq: 官杀}, {f: item.tier_group, eq: 平}]}
   priority: 50
-  length: [30, 60]
+  length: [25, 60]
   polish_allowed: false
   variants:
     - "留意各类截止日期和手续流程，提前一周处理，避免临时赶工出错。"
@@ -434,7 +434,7 @@
   slot: CH6-WATCH
   when: {all: [{f: item.stem_god, eq: 官杀}, {f: item.tier_group, eq: 守}]}
   priority: 50
-  length: [30, 60]
+  length: [25, 60]
   polish_allowed: false
   variants:
     - "留意与上级、机构的正面冲突，有分歧时按程序反映，并保留书面记录。"
