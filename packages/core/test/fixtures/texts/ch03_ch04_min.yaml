@@ -1,0 +1,87 @@
+# 测试素材：第 3、4 章最小集合（见同目录 README）
+- id: CH3-BASE-FALLBACK
+  slot: CH3-BASE
+  when: {}
+  priority: 0
+  fallback: true
+  length: [1, 300]
+  variants: ['【测试素材】日主{day.stem}的性格底色。']
+  status: draft
+  author: test
+  reviewer: null
+  updated: 2026-11-11
+- id: CH3-GOD-FALLBACK
+  slot: CH3-GOD
+  when: {}
+  priority: 0
+  fallback: true
+  length: [1, 300]
+  variants: ['【测试素材】突出十神 {item.ten_god}。']
+  status: draft
+  author: test
+  reviewer: null
+  updated: 2026-11-11
+- id: CH3-STYLE-FALLBACK
+  slot: CH3-STYLE
+  when: {}
+  priority: 0
+  fallback: true
+  length: [1, 300]
+  variants: ['【测试素材】做事风格：{strength.level}。']
+  status: draft
+  author: test
+  reviewer: null
+  updated: 2026-11-11
+- id: CH3-TALENT-FALLBACK
+  slot: CH3-TALENT
+  when: {}
+  priority: 0
+  fallback: true
+  length: [1, 300]
+  variants: ['【测试素材】天赋：{gods.top|名}。']
+  status: draft
+  author: test
+  reviewer: null
+  updated: 2026-11-11
+- id: CH3-SHENSHA-ANY
+  slot: CH3-SHENSHA
+  when: { f: shensha_first, exists: true }
+  priority: 50
+  length: [1, 300]
+  variants: ['【测试素材】吉神 {shensha_first}。', '【测试素材】吉神点缀：{shensha_first}。']
+  status: draft
+  author: test
+  reviewer: null
+  updated: 2026-11-11
+- id: CH4-WHY-FALLBACK
+  slot: CH4-WHY
+  when: {}
+  priority: 0
+  fallback: true
+  length: [1, 300]
+  variants: ['【测试素材】用神{yongshen.yong}、喜神{yongshen.xi1}。']
+  status: draft
+  author: test
+  reviewer: null
+  updated: 2026-11-11
+- id: CH4-ELEMENT-FALLBACK
+  slot: CH4-ELEMENT
+  when: {}
+  priority: 0
+  fallback: true
+  length: [1, 300]
+  variants: ['【测试素材】{item.element}（{item.role}）的生活建议。']
+  status: draft
+  author: test
+  reviewer: null
+  updated: 2026-11-11
+- id: CH4-NOTE-FIXED
+  slot: CH4-NOTE
+  when: {}
+  priority: 0
+  length: [1, 300]
+  variants: ['【测试素材】这里不推荐具体投资品种，也不推荐购买任何物品。']
+  status: draft
+  author: test
+  reviewer: null
+  updated: 2026-11-11

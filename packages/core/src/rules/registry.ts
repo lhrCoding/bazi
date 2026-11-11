@@ -19,6 +19,7 @@ import type { RuleId } from './rule-ids';
 import { checkCong, checkZhuanwang, computeStrengthLevel } from './strength-level';
 import { computeStrengthPower } from './strength-power';
 import { computeNoHourScan } from './nohour';
+import { chapter0 } from '../report/assemble';
 import { buildCtx, personaOf } from '../report/ctx';
 import { SLOTS } from '../report/slots';
 import { computeScores } from './scoring';
@@ -122,6 +123,11 @@ export const RULE_IMPLEMENTATIONS: Readonly<Partial<Record<RuleId, RuleImplement
       'rules/shensha.ts（computeJishen 去重 / by 合并 / 固定顺序；computeShensha jishen_display）',
     impl: computeShensha,
   },
+  // shensha.md §3（T31）：吉神只在第 0 章小表与第 3 章 CH3-SHENSHA（assemble-0-4.test.ts 对 20 个案例检查）
+  'SS-DISPLAY': {
+    module: 'report/assemble.ts（chapter0 吉神小表、chapter3 CH3-SHENSHA）',
+    impl: chapter0,
+  },
   // report-sections.md §0 / §6（T27 / T28）：ctx 构造与 persona 选取
   'R-CTX': {
     module: 'report/ctx.ts（buildCtxBase / buildCtx；ctxProblems 按字段字典校验）',
@@ -148,7 +154,6 @@ export const RULE_IMPLEMENTATIONS: Readonly<Partial<Record<RuleId, RuleImplement
 
 export const PENDING_RULES: Readonly<Partial<Record<RuleId, PendingRule>>> = {
   // shensha.md
-  'SS-DISPLAY': { task: 'T31', note: '吉神只在付费报告第 0 章小表、第 3 章 CH3-SHENSHA 出现' },
   'SS-WORDING': {
     task: 'T33',
     note: '释义常量随第 0 章小表在 T31 落地；禁用表述并入 R-CHECK 禁用词表，在 T33 完成',
