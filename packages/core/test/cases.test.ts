@@ -53,6 +53,7 @@ function computeActual(c: LoadedCase): CaseActual {
     'strength.special': sp.special,
     'strength.borderline': sp.borderline,
     yongshen: { yong: ys.yong, xi: ys.xi, ji: ys.ji, xian: ys.xian },
+    shensha_ji: analysis.shensha.jishen,
     rules_hit: [...chart.rules_hit, ...analysis.rules_hit.map(formatRuleHit)],
   };
 }

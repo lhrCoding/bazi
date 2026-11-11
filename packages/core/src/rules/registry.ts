@@ -19,6 +19,7 @@ import type { RuleId } from './rule-ids';
 import { checkCong, checkZhuanwang, computeStrengthLevel } from './strength-level';
 import { computeStrengthPower } from './strength-power';
 import { computeNoHourScan } from './nohour';
+import { computeShensha, TAIJI, TIANYI, WENCHANG, YUEDE } from './shensha';
 import { computeYongshen, fuyi, SPECIAL_PICKS, TIAOHOU_NEED, tongguanPair } from './yongshen';
 
 /** docs/TASKS.md 的任务编号。 */
@@ -101,6 +102,16 @@ export const RULE_IMPLEMENTATIONS: Readonly<Partial<Record<RuleId, RuleImplement
   },
   'Y-TH-ADD-XI': { module: 'rules/yongshen.ts（computeYongshen ④）', impl: computeYongshen },
   'Y-TG': { module: 'rules/yongshen.ts（tongguanPair / computeYongshen ⑤）', impl: tongguanPair },
+  // shensha.md（T19）：吉神只展示，analyze 最后计算、只读柱（解耦回归测试见 shensha.test.ts）
+  'SS-SCOPE': { module: 'rules/analyze.ts（computeShensha 在所有判定之后）', impl: computeShensha },
+  'SS-TIANYI': { module: 'rules/shensha.ts（TIANYI）', impl: TIANYI },
+  'SS-TAIJI': { module: 'rules/shensha.ts（TAIJI）', impl: TAIJI },
+  'SS-WENCHANG': { module: 'rules/shensha.ts（WENCHANG）', impl: WENCHANG },
+  'SS-YUEDE': { module: 'rules/shensha.ts（YUEDE）', impl: YUEDE },
+  'SS-OUTPUT': {
+    module: 'rules/shensha.ts（computeJishen 去重 / by 合并 / 固定顺序；computeShensha jishen_display）',
+    impl: computeShensha,
+  },
   // strength.md §5（T18）
   'S-NOHOUR': {
     module: 'rules/nohour.ts（computeNoHourScan；13 时柱 scanHourPillars、置信度 confidenceOf）',
@@ -110,15 +121,6 @@ export const RULE_IMPLEMENTATIONS: Readonly<Partial<Record<RuleId, RuleImplement
 
 export const PENDING_RULES: Readonly<Partial<Record<RuleId, PendingRule>>> = {
   // shensha.md
-  'SS-SCOPE': {
-    task: 'T19',
-    note: '总原则：吉神不参与任何判定（由 T19 的解耦回归测试与评分输入类型落实）',
-  },
-  'SS-TIANYI': { task: 'T19', note: '天乙贵人表' },
-  'SS-TAIJI': { task: 'T19', note: '太极贵人表' },
-  'SS-WENCHANG': { task: 'T19', note: '文昌贵人表' },
-  'SS-YUEDE': { task: 'T19', note: '月德贵人表' },
-  'SS-OUTPUT': { task: 'T19', note: '去重、by 合并、固定顺序、jishen_display' },
   'SS-DISPLAY': { task: 'T31', note: '吉神只在付费报告第 0 章小表、第 3 章 CH3-SHENSHA 出现' },
   'SS-WORDING': {
     task: 'T33',

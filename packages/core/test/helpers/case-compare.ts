@@ -332,9 +332,7 @@ export const FIELD_CHECKS: readonly FieldCheck[] = [
  * 显式「待实现」清单：字段键 → 负责任务。
  * 某任务完成后，从这里删掉对应字段，并在 cases.test.ts 的 computeActual 中输出该字段。
  */
-export const PENDING_FIELDS: Readonly<Record<string, string>> = {
-  shensha_ji: 'T19',
-};
+export const PENDING_FIELDS: Readonly<Record<string, string>> = {};
 
 /** cases.json 中存在但本对照测试不比对的字段（路径 → 原因）。 */
 export const NOT_COMPARED: Readonly<Record<string, string>> = {

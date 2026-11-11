@@ -35,6 +35,9 @@ export type {
 export { RULES_VERSION, RULE_IDS, formatRuleHit, analyze } from './rules';
 export type {
   Analysis,
+  Jishen,
+  JishenHit,
+  Shensha,
   Confidence,
   NoHourAlt,
   NoHourScan,

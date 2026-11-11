@@ -98,5 +98,16 @@ export {
   type NoHourScan,
   type NoHourSlot,
 } from './nohour';
+export {
+  computeJishen,
+  computeShensha,
+  intersectJishen,
+  JISHEN_ORDER,
+  TAIJI,
+  TIANYI,
+  WENCHANG,
+  YUEDE,
+  type Shensha,
+} from './shensha';
 export { analyze } from './analyze';
 export { RULES_FILES, RULES_VERSION } from './version';
