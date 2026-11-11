@@ -19,6 +19,7 @@ import type { RuleId } from './rule-ids';
 import { checkCong, checkZhuanwang, computeStrengthLevel } from './strength-level';
 import { computeStrengthPower } from './strength-power';
 import { computeNoHourScan } from './nohour';
+import { SLOTS } from '../report/slots';
 import { computeScores } from './scoring';
 import { computeShensha, TAIJI, TIANYI, WENCHANG, YUEDE } from './shensha';
 import { computeYongshen, fuyi, SPECIAL_PICKS, TIAOHOU_NEED, tongguanPair } from './yongshen';
@@ -120,6 +121,8 @@ export const RULE_IMPLEMENTATIONS: Readonly<Partial<Record<RuleId, RuleImplement
       'rules/shensha.ts（computeJishen 去重 / by 合并 / 固定顺序；computeShensha jishen_display）',
     impl: computeShensha,
   },
+  // report-sections.md §3（T22）：槽位注册表，test/slots.test.ts 与 md 表格逐字段比对
+  'R-SLOT': { module: 'report/slots.ts（SLOTS）', impl: SLOTS },
   // report-sections.md §8（T20）
   'R-YUN-SCORE': {
     module: 'rules/scoring.ts（elementScores / ganzhiScore / tierOf）',
@@ -144,7 +147,6 @@ export const PENDING_RULES: Readonly<Partial<Record<RuleId, PendingRule>>> = {
     note: '释义常量随第 0 章小表在 T31 落地；禁用表述并入 R-CHECK 禁用词表，在 T33 完成',
   },
   // report-sections.md
-  'R-SLOT': { task: 'T22', note: '槽位注册表 slots.ts 与 md 表格比对' },
   'R-CTX': { task: 'T28', note: '拼装上下文 ctx（T27 基础字段、T28 其余字段）' },
   'R-PERSONA': { task: 'T28', note: 'ten_gods.persona 选取顺序' },
   'R-SEC': { task: 'T32', note: '章节与篇幅（assembleReport）' },
