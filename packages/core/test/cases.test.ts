@@ -15,8 +15,7 @@ import {
   type CaseActual,
 } from './helpers/case-compare';
 import { loadCases, type LoadedCase } from './helpers/cases';
-import { computeChart } from '../src/index';
-import { computeStrength } from '../src/rules';
+import { analyze, computeChart, formatRuleHit } from '../src/index';
 
 const { cases } = loadCases();
 
@@ -26,13 +25,14 @@ const REF_DATE_MS = Date.parse('2026-10-30T00:00:00+08:00');
 /**
  * 引擎实际输出 → 按字段键扁平化。
  * T13 起统一走公开 API computeChart（BirthInput 由 loader 从案例 input 映射：农历含闰月、出生地 → placeCode、
- * 无时辰 → time = null），不再逐个调用内部模块。T15 / T16 起旺衰字段取自规则引擎 computeStrength(chart.pillars)；
- * analyze(chart) 公开入口在喜用神全链（T17）完成后汇总，届时这里改走 analyze。
+ * 无时辰 → time = null），不再逐个调用内部模块。T17 起旺衰、喜用神、rules_hit 统一走公开 API analyze(chart)。
  */
 function computeActual(c: LoadedCase): CaseActual {
   const chart = computeChart(c.input, REF_DATE_MS);
   const first3 = chart.dayun.steps.slice(0, 3);
-  const sp = computeStrength(chart.pillars);
+  const analysis = analyze(chart);
+  const sp = analysis.strength;
+  const ys = analysis.yongshen;
   return {
     'pillars.year': chart.pillars.year,
     'pillars.month': chart.pillars.month,
@@ -52,6 +52,8 @@ function computeActual(c: LoadedCase): CaseActual {
     'strength.level': sp.level,
     'strength.special': sp.special,
     'strength.borderline': sp.borderline,
+    yongshen: { yong: ys.yong, xi: ys.xi, ji: ys.ji, xian: ys.xian },
+    rules_hit: [...chart.rules_hit, ...analysis.rules_hit.map(formatRuleHit)],
   };
 }
 

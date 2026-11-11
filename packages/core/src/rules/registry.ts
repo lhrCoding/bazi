@@ -18,6 +18,7 @@ import { HIDDEN_STEMS } from '../bazi/ten-gods';
 import type { RuleId } from './rule-ids';
 import { checkCong, checkZhuanwang, computeStrengthLevel } from './strength-level';
 import { computeStrengthPower } from './strength-power';
+import { computeYongshen, fuyi, SPECIAL_PICKS, TIAOHOU_NEED, tongguanPair } from './yongshen';
 
 /** docs/TASKS.md 的任务编号。 */
 export type TaskId = `T${number}`;
@@ -73,25 +74,37 @@ export const RULE_IMPLEMENTATIONS: Readonly<Partial<Record<RuleId, RuleImplement
     module: 'rules/strength-level.ts（checkZhuanwang / zhuanwangSpecialOf）',
     impl: checkZhuanwang,
   },
+  // yongshen.md（T17）：判定顺序 格局 → 扶抑 → 互换 → 调候 → 通关 → 闲神，全部在 computeYongshen 中按顺序执行。
+  'Y-CONG': { module: 'rules/yongshen.ts（computeYongshen；从弱表 SPECIAL_PICKS）', impl: SPECIAL_PICKS },
+  'Y-ZHUANWANG': {
+    module: 'rules/yongshen.ts（computeYongshen；专旺 / 从强表 SPECIAL_PICKS）',
+    impl: SPECIAL_PICKS,
+  },
+  'Y-FY-W-SHA': { module: 'rules/yongshen.ts（fuyi）', impl: fuyi },
+  'Y-FY-W-SHI': { module: 'rules/yongshen.ts（fuyi）', impl: fuyi },
+  'Y-FY-W-CAI': { module: 'rules/yongshen.ts（fuyi）', impl: fuyi },
+  'Y-FY-S-YIN': { module: 'rules/yongshen.ts（fuyi）', impl: fuyi },
+  'Y-FY-S-BI-GUAN': { module: 'rules/yongshen.ts（fuyi；阈值 FY_GUANSHA_MIN）', impl: fuyi },
+  'Y-FY-S-BI-SHI': { module: 'rules/yongshen.ts（fuyi；阈值 FY_GUANSHA_MIN）', impl: fuyi },
+  'Y-SWAP': {
+    module: 'rules/yongshen.ts（computeYongshen ③；阈值 SWAP_XI_MIN）',
+    impl: computeYongshen,
+  },
+  'Y-TH-AGREE': {
+    module: 'rules/yongshen.ts（computeYongshen ④；TIAOHOU_NEED / TH_MAX_SHARE）',
+    impl: TIAOHOU_NEED,
+  },
+  'Y-TH-NEUTRAL-OVERRIDE': {
+    module: 'rules/yongshen.ts（computeYongshen ④；v1.1 原用神保留为第一喜神）',
+    impl: computeYongshen,
+  },
+  'Y-TH-ADD-XI': { module: 'rules/yongshen.ts（computeYongshen ④）', impl: computeYongshen },
+  'Y-TG': { module: 'rules/yongshen.ts（tongguanPair / computeYongshen ⑤）', impl: tongguanPair },
 };
 
 export const PENDING_RULES: Readonly<Partial<Record<RuleId, PendingRule>>> = {
   // strength.md
   'S-NOHOUR': { task: 'T18', note: '三柱 13 时柱扫描与置信度' },
-  // yongshen.md
-  'Y-CONG': { task: 'T17', note: '从弱格喜忌' },
-  'Y-ZHUANWANG': { task: 'T17', note: '专旺 / 从强格喜忌' },
-  'Y-FY-W-SHA': { task: 'T17', note: '扶抑：身弱、官杀最强' },
-  'Y-FY-W-SHI': { task: 'T17', note: '扶抑：身弱、食伤最强' },
-  'Y-FY-W-CAI': { task: 'T17', note: '扶抑：身弱、财最强' },
-  'Y-FY-S-YIN': { task: 'T17', note: '扶抑：身旺、印最强' },
-  'Y-FY-S-BI-GUAN': { task: 'T17', note: '扶抑：身旺、比劫最强且官杀 ≥ 1.0' },
-  'Y-FY-S-BI-SHI': { task: 'T17', note: '扶抑：身旺、比劫最强且官杀 < 1.0' },
-  'Y-SWAP': { task: 'T17', note: '用神缺位互换' },
-  'Y-TH-AGREE': { task: 'T17', note: '调候与扶抑一致' },
-  'Y-TH-NEUTRAL-OVERRIDE': { task: 'T17', note: '中和命局调候接管用神' },
-  'Y-TH-ADD-XI': { task: 'T17', note: '身弱 / 身旺调候追加喜神' },
-  'Y-TG': { task: 'T17', note: '通关（方向一致才采用）' },
   // shensha.md
   'SS-SCOPE': {
     task: 'T19',

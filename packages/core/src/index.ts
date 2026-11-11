@@ -32,5 +32,21 @@ export type {
 } from './bazi/types';
 
 // ② 规则引擎（T14 起）
-export { RULES_VERSION, RULE_IDS, formatRuleHit } from './rules';
-export type { RuleHit, RuleEvidence, RuleEvidenceValue, RuleId } from './rules';
+export { RULES_VERSION, RULE_IDS, formatRuleHit, analyze } from './rules';
+export type {
+  Analysis,
+  FyRule,
+  GodGroup,
+  RuleHit,
+  RuleEvidence,
+  RuleEvidenceValue,
+  RuleId,
+  SpecialPattern,
+  Strength,
+  StrengthDirection,
+  StrengthLevel,
+  TiaohouKind,
+  TongguanCheck,
+  WuXing,
+  Yongshen,
+} from './rules';

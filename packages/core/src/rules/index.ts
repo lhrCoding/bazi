@@ -62,4 +62,28 @@ export {
   type CongCheck,
   type ZhuanwangCheck,
 } from './strength-level';
+export {
+  computeYongshen,
+  fuyi,
+  rankAliens,
+  tongguanPair,
+  wuxingKe,
+  wuxingSheng,
+  SPECIAL_PICKS,
+  WEAK_ALIEN_PRIORITY,
+  TIAOHOU_NEED,
+  FY_GUANSHA_MIN,
+  SWAP_XI_MIN,
+  TH_MAX_SHARE,
+  TG_MIN_SHARE,
+  type Yongshen,
+  type YongshenStrengthInput,
+  type FyRule,
+  type FyRuleId,
+  type FuyiResult,
+  type GroupPick,
+  type TiaohouKind,
+  type TongguanCheck,
+} from './yongshen';
+export { analyze } from './analyze';
 export { RULES_FILES, RULES_VERSION } from './version';

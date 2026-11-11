@@ -1,8 +1,9 @@
 /**
- * 规则引擎输出类型（T03 初版，只含 cases.json 对照所需字段）。
- * T15–T20 逐步补全（power_display_pct、confidence、notes、basis、评分等）。
+ * 规则引擎输出类型。
  */
 import type { RuleHit } from './rule-hit';
+import type { Strength } from './strength-level';
+import type { Yongshen } from './yongshen';
 
 export type WuXing = '木' | '火' | '土' | '金' | '水';
 export type GodGroup = '比劫' | '印' | '食伤' | '财' | '官杀';
@@ -32,28 +33,17 @@ export interface Jishen {
   hits: JishenHit[];
 }
 
+/**
+ * analyze(chart) 的输出（ARCHITECTURE §4.2）。T17 起包含旺衰与喜用神；
+ * 三柱扫描（T18）、吉神（T19）、大运 / 流年评分（T20）在对应任务中追加字段。
+ */
 export interface Analysis {
-  strength: {
-    S: number;
-    /** strength.md S-LEVEL 的等级（T16） */
-    level: StrengthLevel;
-    special: SpecialPattern | null;
-    de_ling: boolean;
-    de_di: boolean;
-    de_shi: number;
-    power: Record<WuXing, number>;
-    gods: Record<GodGroup, number>;
-    borderline: boolean;
-  };
-  yongshen: {
-    yong: WuXing;
-    xi: WuXing[];
-    ji: WuXing[];
-    xian: WuXing[];
-  };
-  shensha: {
-    jishen: Jishen[];
-  };
-  /** 命中的 S- / Y- / SS- 规则（T14 起为 RuleHit 对象；cases.json 格式见 formatRuleHit） */
+  /** 旺衰（strength.md §2–§4、§6） */
+  strength: Strength;
+  /** 喜用神（yongshen.md） */
+  yongshen: Yongshen;
+  /** strength 与 yongshen 的 notes 依次合并 */
+  notes: string[];
+  /** 命中的 S- / Y- 规则，按判定顺序（cases.json 格式见 formatRuleHit） */
   rules_hit: readonly RuleHit[];
 }
