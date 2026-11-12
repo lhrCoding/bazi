@@ -22,7 +22,8 @@
     "texts:batch": "tsx scripts/texts-batch.ts",
     "texts:coverage": "tsx scripts/texts-coverage.ts",
     "texts:sample": "tsx scripts/texts-sample.ts",
-    "texts:preview": "tsx scripts/texts-preview.ts"
+    "texts:preview": "tsx scripts/texts-preview.ts",
+    "texts:release": "tsx scripts/texts-release.ts"
   },
   "devDependencies": {
     "prettier": "3.9.10",

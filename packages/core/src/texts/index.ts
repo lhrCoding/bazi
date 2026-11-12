@@ -6,4 +6,5 @@ export * from './condition';
 export * from './coverage';
 export * from './fields';
 export * from './lint';
+export * from './release';
 export * from './schema';

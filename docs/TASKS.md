@@ -225,7 +225,7 @@
   内容：`texts:preview`：cases.json 全部案例生成完整报告 HTML（本地输出目录，不提交）；抽检单：被抽条目全部变体 + 能触发它的 cases.json 案例（及该案例报告片段）+ 本批覆盖率表 + lint 结果（PRD 9.3 建议）。
   验收：对样板批次生成可读的抽检单；预览 HTML 在手机宽度下可读。
 
-- [ ] **T38 素材发布脚本与服务端快照加载**
+- [x] **T38 素材发布脚本与服务端快照加载**
   依赖：T25, T35
   内容：`texts:release`：只收 approved、lint 全过、静态 + 动态覆盖率 100%，`texts_version` + 1，生成 `apps/web/texts-releases/v{N}.json`，与上一快照比对（approved 条目只许追加变体），提示打 tag `texts-v{N}`；`apps/web/server/texts-store.ts` 启动时加载全部快照并校验（必需槽位有兜底、生产只含 approved）；开发模式可直接加载 rules/texts 工作区（`texts_version = dev`）。
   验收：用 fixture 素材走一遍发布；删除已批准条目的变体时发布失败；启动校验失败时进程退出并给出原因。
