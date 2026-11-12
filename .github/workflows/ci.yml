@@ -43,3 +43,6 @@ jobs:
 
       - name: 素材 lint（L1–L12，rules/texts）
         run: npm run texts:lint
+
+      - name: 素材静态覆盖率（已批准批次的章节有缺口即失败）
+        run: npm run texts:coverage

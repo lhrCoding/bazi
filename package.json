@@ -19,7 +19,8 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "texts:lint": "tsx scripts/texts-lint.ts",
-    "texts:batch": "tsx scripts/texts-batch.ts"
+    "texts:batch": "tsx scripts/texts-batch.ts",
+    "texts:coverage": "tsx scripts/texts-coverage.ts"
   },
   "devDependencies": {
     "prettier": "3.9.10",
