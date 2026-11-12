@@ -3,6 +3,7 @@
  * T22：槽位注册表；其余由后续任务实现。
  */
 export * from './assemble';
+export * from './check';
 export * from './ctx';
 export * from './render';
 export * from './select';
