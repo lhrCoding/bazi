@@ -190,6 +190,8 @@ export interface AssembleInput {
   ctx: Ctx;
   library: TextLibrary;
   glossary: readonly GlossaryTerm[];
+  /** 可选观察钩子：每次选段前回调槽位与求值上下文（T35 动态抽样检查 asserts 缺陷用；不影响拼装结果） */
+  onSlot?: (slot: string, evalCtx: Readonly<Record<string, unknown>>) => void;
 }
 
 /** 一份报告的拼装状态：变体计数、术语加注、引文计数、事件 */
@@ -220,6 +222,7 @@ export class ReportBuilder {
     item?: Readonly<Record<string, unknown>>,
     basisItem = item,
   ): ParaBlock[] {
+    this.input.onSlot?.(slotId, item === undefined ? this.evalCtx : { ...this.evalCtx, item });
     const pick = selectSlot(this.input.library, slotId, this.evalCtx, k, item);
     if (pick.fallbackUsed) this.events.push({ type: 'fallback_used', slot: slotId });
     if (pick.entries.length === 0) {

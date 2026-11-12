@@ -279,6 +279,35 @@ export function lintEntries(
   return issues;
 }
 
+/**
+ * 术语释义也会随自动加注进入报告正文（render.ts Annotator），因此同样按 L4 词表检查（2026-11-12：README §8
+ * 「通关」释义曾含禁用词「化解」，T35 动态抽样发现）。问题 id 写作 (glossary:术语)。
+ */
+export function lintGlossary(
+  glossary: readonly { term: string; note: string }[],
+  words: Wordlists,
+): LintIssue[] {
+  const issues: LintIssue[] = [];
+  for (const g of glossary) {
+    let t = g.note;
+    for (const w of words.whitelist) t = t.split(w).join('□'.repeat(w.length));
+    for (const [kind, list] of [
+      ['禁用词', words.forbidden],
+      ['疾病名词', words.disease],
+      ['金融产品词', words.finance],
+    ] as const) {
+      for (const w of list)
+        if (w && t.includes(w))
+          issues.push({
+            id: `(glossary:${g.term})`,
+            rule: 'L4',
+            message: `释义命中${kind}「${w}」`,
+          });
+    }
+  }
+  return issues;
+}
+
 // ---------------------------------------------------------------- L7–L12
 
 export const HOUR_WORDS = ['时柱', '时干', '时支', '出生时辰'] as const;
@@ -325,7 +354,7 @@ export function variantLength(text: string): number {
   return n + [...rest.replace(/\s/g, '')].length;
 }
 
-function grams4(text: string): Set<string> {
+export function grams4(text: string): Set<string> {
   const t = [...text.replace(PLACEHOLDER_RE, '◇').replace(/\s/g, '')];
   const out = new Set<string>();
   for (let i = 0; i + 4 <= t.length; i++) out.add(t.slice(i, i + 4).join(''));
@@ -333,9 +362,13 @@ function grams4(text: string): Set<string> {
 }
 
 export function jaccard4(a: string, b: string): number {
-  const A = grams4(a);
-  const B = grams4(b);
+  return jaccardSets(grams4(a), grams4(b));
+}
+
+/** 两个 4-gram 集合的 Jaccard（预先切好 gram 时用，避免重复切分） */
+export function jaccardSets(A: ReadonlySet<string>, B: ReadonlySet<string>): number {
   if (A.size === 0 && B.size === 0) return 0;
+  if (A.size > B.size) [A, B] = [B, A];
   let inter = 0;
   for (const g of A) if (B.has(g)) inter++;
   return inter / (A.size + B.size - inter);

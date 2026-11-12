@@ -5,6 +5,7 @@ import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import {
   lintEntries,
+  lintGlossary,
   parseForbiddenWordsFromMd,
   type Wordlists,
 } from '../../packages/core/src/texts/lint';
@@ -79,7 +80,10 @@ export function loadAndLintTexts(textsDir: string, sectionsMd: string): LoadedTe
       for (const p of err.problems) problems.push(`(${file})\tL1\t${p}`);
     }
   }
-  for (const i of lintEntries(entries, wl, { glossary: glossary.map((g) => g.term) })) {
+  for (const i of [
+    ...lintEntries(entries, wl, { glossary: glossary.map((g) => g.term) }),
+    ...lintGlossary(glossary, wl),
+  ]) {
     problems.push(`${i.id}\t${i.rule}\t${i.message}`);
   }
   return { files, entries, fileOf, problems, notes };

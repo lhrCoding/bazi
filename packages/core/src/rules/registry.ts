@@ -21,6 +21,7 @@ import { computeStrengthPower } from './strength-power';
 import { computeNoHourScan } from './nohour';
 import { altPossibility, assembleReport, chapter0 } from '../report/assemble';
 import { rcheck, SHENSHA_FORBIDDEN } from '../report/check';
+import { runSample } from '../report/sample';
 import { buildCtx, personaOf } from '../report/ctx';
 import { SLOTS } from '../report/slots';
 import { computeScores } from './scoring';
@@ -129,6 +130,11 @@ export const RULE_IMPLEMENTATIONS: Readonly<Partial<Record<RuleId, RuleImplement
     module: 'report/check.ts（SHENSHA_FORBIDDEN）、report/assemble.ts（JISHEN_NOTES）',
     impl: SHENSHA_FORBIDDEN,
   },
+  // report-sections.md §5（T34 静态穷举、T35 动态抽样）
+  'R-COVER': {
+    module: 'texts/coverage.ts（computeCoverage）、report/sample.ts（runSample）',
+    impl: runSample,
+  },
   // report-sections.md §7（T33）：成品检查，生产告警放行、测试失败
   'R-CHECK': { module: 'report/check.ts（rcheck / assertRCheck）', impl: rcheck },
   // report-sections.md §2 / §4（T31 / T32）：章节顺序与三柱降级（字数校验见 R-CHECK）
@@ -169,7 +175,6 @@ export const RULE_IMPLEMENTATIONS: Readonly<Partial<Record<RuleId, RuleImplement
 export const PENDING_RULES: Readonly<Partial<Record<RuleId, PendingRule>>> = {
   // shensha.md
   // report-sections.md
-  'R-COVER': { task: 'T35', note: '覆盖率（T34 静态穷举、T35 动态抽样）' },
   'R-POLISH': { task: 'T36', note: '润色接口，默认关闭' },
   'R-FREE': { task: 'T43', note: '免费结果页 4 个模块（代码模板）' },
 };

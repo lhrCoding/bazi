@@ -9,6 +9,7 @@ import { describe, expect, it } from 'vitest';
 import {
   jaccard4,
   lintEntries,
+  lintGlossary,
   parseForbiddenWordsFromMd,
   placeholderLength,
   variantLength,
@@ -259,7 +260,8 @@ describe('L6 五行与喜忌词共现', () => {
   });
 });
 
-const GLOSSARY = glossaryFromReadme(readRulesFile('texts/README.md')).map((g) => g.term);
+const GLOSSARY_ITEMS = glossaryFromReadme(readRulesFile('texts/README.md'));
+const GLOSSARY = GLOSSARY_ITEMS.map((g) => g.term);
 const lint12 = (e: TextEntry | TextEntry[]): LintIssue[] =>
   lintEntries(Array.isArray(e) ? e : [e], WORDS, { glossary: GLOSSARY });
 
@@ -404,6 +406,15 @@ describe('L12 绝对化用语与人称', () => {
     expect(lintEntries([e], w, { glossary: GLOSSARY })).toEqual([]);
     // 每个变体每个词报一次：变体 1「一定」、变体 2「一定」
     expect(lint12(e).filter((i) => i.rule === 'L12')).toHaveLength(2);
+  });
+});
+
+describe('术语释义（lintGlossary）', () => {
+  it('释义中的禁用词报 L4；README §8 示例术语表当前无问题', () => {
+    expect(lintGlossary([{ term: '通关', note: '用第三种五行化解两种力量的对立' }], WORDS)).toEqual(
+      [{ id: '(glossary:通关)', rule: 'L4', message: '释义命中禁用词「化解」' }],
+    );
+    expect(lintGlossary(GLOSSARY_ITEMS, WORDS)).toEqual([]);
   });
 });
 

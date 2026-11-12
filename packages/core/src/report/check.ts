@@ -16,7 +16,7 @@
  * - SIMILARITY：任两段正文 4-gram Jaccard ≤ 0.5（跨年同条目同变体的重复会在此报警，见 texts/README.md §5.2）。
  */
 import type { Wordlists } from '../texts/lint';
-import { jaccard4 } from '../texts/lint';
+import { grams4, jaccardSets } from '../texts/lint';
 import type { Block, ParaBlock, Report, YearCard } from './assemble';
 import type { Ctx } from './ctx';
 import { slotDef } from './slots';
@@ -212,11 +212,12 @@ export function rcheck(report: Report, ctx: Ctx, words: Wordlists): RCheckResult
   }
 
   // SIMILARITY
+  const grams = body.map(({ p }) => grams4(p.text));
   for (let i = 0; i < body.length; i++) {
     for (let j = i + 1; j < body.length; j++) {
       const a = body[i] as { chapter: number; p: ParaBlock };
       const c = body[j] as { chapter: number; p: ParaBlock };
-      const s = jaccard4(a.p.text, c.p.text);
+      const s = jaccardSets(grams[i] as Set<string>, grams[j] as Set<string>);
       if (s > SIMILARITY_MAX) {
         fail(
           'SIMILARITY',

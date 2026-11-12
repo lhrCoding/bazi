@@ -6,5 +6,6 @@ export * from './assemble';
 export * from './check';
 export * from './ctx';
 export * from './render';
+export * from './sample';
 export * from './select';
 export * from './slots';

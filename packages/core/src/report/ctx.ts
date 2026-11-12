@@ -18,6 +18,7 @@ import type { Gan, GanZhi, Zhi } from '../bazi/ganzhi';
 import { HIDDEN_STEMS, ganWuXing, tenGodOf, type TenGod } from '../bazi/ten-gods';
 import type { Chart } from '../bazi/types';
 import { elementOfGroup, godGroupOf } from '../rules/strength-power';
+import { rankAliens } from '../rules/yongshen';
 import { LIU_CHONG, LIU_HE, type Tier, type TierGroup } from '../rules/scoring';
 import type { Analysis, GodGroup, JishenName, StrengthLevel, WuXing } from '../rules/types';
 import { GLOBAL_FIELDS } from '../texts/fields';
@@ -120,10 +121,23 @@ export function pct(x: number, total: number): number {
 }
 
 /** 按值取最大；并列按 TOP_PRIORITY */
+/** 只消除二进制表示误差（与 rules/yongshen.ts、strength-level.ts 同口径）：差值 < 1e-9 视为并列 */
+const FP_EPS = 1e-9;
+
+/** 力量降序比较器；并列（含浮点误差）按 TOP_PRIORITY */
+export function byPower(
+  v: Readonly<Record<GodGroup, number>>,
+): (a: GodGroup, b: GodGroup) => number {
+  return (a, b) => {
+    if (v[a] > v[b] + FP_EPS) return -1;
+    if (v[b] > v[a] + FP_EPS) return 1;
+    return TOP_PRIORITY.indexOf(a) - TOP_PRIORITY.indexOf(b);
+  };
+}
+
+/** 按力量取最大；并列按 TOP_PRIORITY */
 function topOf<G extends GodGroup>(groups: readonly G[], v: Record<GodGroup, number>): G {
-  return [...groups].sort(
-    (a, b) => v[b] - v[a] || TOP_PRIORITY.indexOf(a) - TOP_PRIORITY.indexOf(b),
-  )[0] as G;
+  return [...groups].sort(byPower(v))[0] as G;
 }
 
 /** chart_key = 四柱干支拼接（无时辰 --）| 性别 | 是否有时辰（1/0）（texts/README.md §5.2） */
@@ -158,8 +172,10 @@ export function buildCtxBase(chart: Chart, analysis: Analysis): CtxBase {
   const godsPct = Object.fromEntries(
     GODS.map((g) => [`${g}_pct`, pct(st.gods[g], total)]),
   ) as Record<`${GodGroup}_pct`, number>;
-  const topYidang = topOf(['食伤', '财', '官杀'] as const, st.gods);
-  const topTongdang: '比劫' | '印' = st.gods['比劫'] >= st.gods['印'] ? '比劫' : '印';
+  // 与规则引擎同一口径（含浮点容差）：异党并列 官杀 > 食伤 > 财（yongshen.md §3.1，直接用 rankAliens）；
+  // 同党 比劫 ≥ 印 取比劫（§3.2）。T35 动态抽样发现此前直接比浮点数，并列时与 fy_rule 不一致。
+  const topYidang = rankAliens(st.gods)[0] as '食伤' | '财' | '官杀';
+  const topTongdang: '比劫' | '印' = st.gods['比劫'] >= st.gods['印'] - FP_EPS ? '比劫' : '印';
   const S_pct = Math.round(st.S * 100);
   const paradox =
     st.de_ling && st.direction === '偏弱'
@@ -458,9 +474,7 @@ export function personaOf(base: CtxBase, godValues: Record<GodGroup, number>): T
       (stems.includes(zheng) ? zheng : pian)
     );
   };
-  const groups = [...GODS].sort(
-    (a, b) => godValues[b] - godValues[a] || TOP_PRIORITY.indexOf(a) - TOP_PRIORITY.indexOf(b),
-  );
+  const groups = [...GODS].sort(byPower(godValues));
   const out: TenGod[] = [tg.month_stem];
   for (const g of groups) {
     if (out.length >= 2) break;
@@ -542,9 +556,7 @@ export function buildCtx(chart: Chart, analysis: Analysis): Ctx {
   }));
 
   const favorableGroups = GODS.filter((g) => ys.favorable.includes(base.el[g]));
-  const careerMode = [...favorableGroups].sort(
-    (a, b) => st.gods[b] - st.gods[a] || TOP_PRIORITY.indexOf(a) - TOP_PRIORITY.indexOf(b),
-  )[0] as GodGroup;
+  const careerMode = [...favorableGroups].sort(byPower(st.gods))[0] as GodGroup;
   const partnerGroup: GodGroup = base.profile.gender === '男' ? '财' : '官杀';
   const caiPct = base.gods['财_pct'];
   const jishen = analysis.shensha.jishen_display.map((j) => j.name);
