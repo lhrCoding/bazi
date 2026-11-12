@@ -8,6 +8,7 @@
   "types": "./src/index.ts",
   "exports": {
     ".": "./src/index.ts",
+    "./birth": "./src/birth/index.ts",
     "./report": "./src/report/index.ts",
     "./texts": "./src/texts/index.ts",
     "./texts/yaml": "./src/texts/yaml.ts"
