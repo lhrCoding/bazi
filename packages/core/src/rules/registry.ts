@@ -21,6 +21,7 @@ import { computeStrengthPower } from './strength-power';
 import { computeNoHourScan } from './nohour';
 import { altPossibility, assembleReport, chapter0 } from '../report/assemble';
 import { rcheck, SHENSHA_FORBIDDEN } from '../report/check';
+import { polishReport } from '../report/polish';
 import { runSample } from '../report/sample';
 import { buildCtx, personaOf } from '../report/ctx';
 import { SLOTS } from '../report/slots';
@@ -130,6 +131,11 @@ export const RULE_IMPLEMENTATIONS: Readonly<Partial<Record<RuleId, RuleImplement
     module: 'report/check.ts（SHENSHA_FORBIDDEN）、report/assemble.ts（JISHEN_NOTES）',
     impl: SHENSHA_FORBIDDEN,
   },
+  // report-sections.md §9（T36）：润色接口默认关闭，MVP 只有 NoopPolisher；校验与超时已实现
+  'R-POLISH': {
+    module: 'report/polish.ts（createPolisher / polishReport / validatePolish）',
+    impl: polishReport,
+  },
   // report-sections.md §5（T34 静态穷举、T35 动态抽样）
   'R-COVER': {
     module: 'texts/coverage.ts（computeCoverage）、report/sample.ts（runSample）',
@@ -175,7 +181,6 @@ export const RULE_IMPLEMENTATIONS: Readonly<Partial<Record<RuleId, RuleImplement
 export const PENDING_RULES: Readonly<Partial<Record<RuleId, PendingRule>>> = {
   // shensha.md
   // report-sections.md
-  'R-POLISH': { task: 'T36', note: '润色接口，默认关闭' },
   'R-FREE': { task: 'T43', note: '免费结果页 4 个模块（代码模板）' },
 };
 

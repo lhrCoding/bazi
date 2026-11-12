@@ -58,6 +58,7 @@ const para = (slot: string, n: number): ParaBlock => ({
   variant: 0,
   text: text(n),
   basis: '依据',
+  polishable: false,
 });
 const card = (year: number, n: number): YearCard => ({
   type: 'yearCard',

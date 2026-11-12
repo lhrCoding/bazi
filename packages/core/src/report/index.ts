@@ -5,6 +5,7 @@
 export * from './assemble';
 export * from './check';
 export * from './ctx';
+export * from './polish';
 export * from './render';
 export * from './sample';
 export * from './select';

@@ -32,6 +32,8 @@ export interface ParaBlock {
   text: string;
   /** 「依据：」之后的文字；null = 不追加 */
   basis: string | null;
+  /** 可送润色：槽位润色 = 可 且条目 polish_allowed ≠ false；代码模板段为 false（report-sections.md §9） */
+  polishable: boolean;
   quote?: { text: string; source: string };
 }
 export interface NoticeBlock {
@@ -246,6 +248,7 @@ export class ReportBuilder {
       slot: slotId,
       entry: e.id,
       variant: chosen.variantIndex,
+      polishable: (slotDef(slotId)?.polish ?? false) && e.polish_allowed !== false,
       text,
       basis: basisFor(slotId, this.evalCtx, basisItem),
     };
@@ -268,6 +271,7 @@ export class ReportBuilder {
       slot: slotId,
       entry: null,
       variant: null,
+      polishable: false,
       text: this.annotator.annotate(text, annotate),
       basis: basisFor(slotId, this.evalCtx),
     };
