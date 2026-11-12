@@ -383,7 +383,8 @@ export function chapter1(b: ReportBuilder): Chapter {
     kind: 'power',
     data: (['木', '火', '土', '金', '水'] as const).map((w) => ({
       element: w,
-      pct: analysis.strength.power_display_pct[w],
+      // 报告中的百分比一律取整（report-sections.md §0）
+      pct: Math.round(analysis.strength.power_display_pct[w]),
     })),
   });
   blocks.push(...b.slot('CH1-BALANCE', 1));

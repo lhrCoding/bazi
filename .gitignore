@@ -13,3 +13,5 @@ next-env.d.ts
 *.db-shm
 .DS_Store
 .history/
+# 本地报告预览（npm run texts:preview）
+/preview/

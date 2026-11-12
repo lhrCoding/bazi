@@ -20,12 +20,14 @@ cpSync(SRC, texts, { recursive: true });
 afterAll(() => rmSync(tmp, { recursive: true, force: true }));
 
 const sectionsMd = readRulesFile('report-sections.md');
+const RULES = fileURLToPath(new URL('../../../rules/', import.meta.url));
 const opts = (date: string, fail?: string[]) => ({
   textsDir: texts,
   reportsDir: reports,
   sectionsMd,
   date,
   fail,
+  rulesDir: RULES,
 });
 const files =
   (parse(readFileSync(join(texts, 'batches.yaml'), 'utf8')) as { files: string[] }[])[0]?.files ??
@@ -63,6 +65,10 @@ describe('texts:batch 全流程', () => {
     const sheet = readFileSync(join(reports, 'texts-batch', 'B1-r1.md'), 'utf8');
     for (const id of b.rounds[0]?.sample ?? []) expect(sheet).toContain(`. ${id}`);
     expect(sheet).toContain('种子：`B1-r1`');
+    // T37：本批覆盖率表、触发案例与原段落
+    expect(sheet).toContain('| CH1-DAYMASTER | 10 | 10 |');
+    expect(sheet).toMatch(/能触发它的案例（cases\.json，共 \d+ 个/);
+    expect(sheet).toMatch(/- \*\*C\d\d\*\* /);
   });
 
   it('未出结果时不能重抽', () => {

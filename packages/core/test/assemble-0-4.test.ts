@@ -254,3 +254,16 @@ describe('吉神只出现在第 0、3 章；引文与加注', () => {
     expect(JSON.stringify(build('C12').chapters)).toBe(JSON.stringify(build('C12').chapters));
   });
 });
+
+describe('图1 五行力量', () => {
+  it('百分比为整数（T37 预览发现此前输出未取整的浮点数）', () => {
+    for (const c of cases) {
+      const ch1 = build(c.id).chapters[1]?.blocks ?? [];
+      const chart = ch1.find((b) => b.type === 'chart' && b.kind === 'power');
+      expect(
+        chart?.type === 'chart' && chart.data.every((d) => Number.isInteger(d.pct)),
+        c.id,
+      ).toBe(true);
+    }
+  });
+});

@@ -8,7 +8,7 @@
  * - reject <批次> --fail id1,id2：最近一轮必须 pending，且不通过条目都在该轮样本中 → 该轮 result = fail、记下 failed；
  *   本批全部条目退回 draft、reviewer = null；批次 status = rejected。下一次 sample 必含这些条目、其余换样本。
  * 本批条目 = batches.yaml 中该批次 files 列出的文件里的全部条目。
- * 抽检单中「能触发该条目的 cases.json 案例」与「本批覆盖率表」在 T37 补全。
+ * 抽检单（T37 补全）：被抽条目全部变体 + 能触发它的 cases.json 案例与报告原段落 + 本批覆盖率表 + lint 结果。
  */
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -22,6 +22,9 @@ import {
 } from '../../packages/core/src/texts/batch';
 import type { TextEntry } from '../../packages/core/src/texts/schema';
 import { parseTextsYaml } from '../../packages/core/src/texts/yaml';
+import { chapterParas } from '../../packages/core/src/report/check';
+import { computeCoverage } from '../../packages/core/src/texts/coverage';
+import { buildCaseReports } from './case-reports';
 import { loadAndLintTexts } from './texts-load';
 
 export interface BatchOptions {
@@ -31,6 +34,8 @@ export interface BatchOptions {
   /** YYYY-MM-DD */
   date: string;
   fail?: string[] | undefined;
+  /** 仓库 rules/ 目录（抽检单的触发案例与覆盖率表要读 cases.json 等）；默认 textsDir 的上一级 */
+  rulesDir?: string | undefined;
 }
 
 interface BatchInfo {
@@ -77,11 +82,52 @@ function setAllStatus(
   return n;
 }
 
+interface SheetExtra {
+  /** 条目 id → 命中它的 cases.json 案例与报告中的原段落 */
+  triggers: Map<string, { caseId: string; title: string; text: string }[]>;
+  coverage: { slot: string; combos: number; covered: number }[];
+  lintNote: string;
+}
+
+/** 抽检单附加信息：用全部素材为 cases.json 每个案例拼装报告，记下每条素材被哪些案例选中；本批槽位覆盖率 */
+function sheetExtra(
+  rulesDir: string,
+  all: readonly TextEntry[],
+  batchEntries: readonly TextEntry[],
+): SheetExtra {
+  const reports = buildCaseReports(rulesDir, all, ['draft', 'reviewed', 'approved']);
+  const triggers = new Map<string, { caseId: string; title: string; text: string }[]>();
+  for (const r of reports) {
+    for (const ch of r.report.chapters) {
+      for (const p of chapterParas(ch.blocks)) {
+        if (!p.entry) continue;
+        const list = triggers.get(p.entry) ?? [];
+        if (!list.some((x) => x.caseId === r.id))
+          list.push({ caseId: r.id, title: r.title, text: p.text });
+        triggers.set(p.entry, list);
+      }
+    }
+  }
+  const base = reports.find((r) => r.id === 'C16')?.ctx ?? reports[0]?.ctx;
+  const slots = new Set(batchEntries.map((e) => e.slot));
+  const cov = computeCoverage(batchEntries, (base ?? {}) as never, [
+    'draft',
+    'reviewed',
+    'approved',
+  ]);
+  return {
+    triggers,
+    coverage: cov.slots.filter((s) => slots.has(s.slot)),
+    lintNote: `${all.length} 条素材`,
+  };
+}
+
 function sheet(
   batch: string,
   r: BatchRound,
   entries: readonly TextEntry[],
   fileOf: Map<string, string>,
+  extra: SheetExtra,
 ): string {
   const byId = new Map(entries.map((e) => [e.id, e]));
   const out = [
@@ -90,8 +136,16 @@ function sheet(
     `- 种子：\`${r.seed}\`（可复现：同一种子抽样结果永远相同）`,
     `- 日期：${r.date}`,
     `- 本批条目：${entries.length} 条；抽检 ${r.sample.length} 条（10% 向上取整、至少 5 条）`,
-    `- 自动检查：L1–L12 全部通过`,
-    `- 触发案例与本批覆盖率表：T37 补全`,
+    `- 自动检查：L1–L12 全部通过（${extra.lintNote}）`,
+    '',
+    '### 本批覆盖率（静态穷举，修饰字段取默认值）',
+    '',
+    '| 槽位 | 组合 | 已覆盖 |',
+    '|---|---|---|',
+    ...extra.coverage.map(
+      (c) =>
+        `| ${c.slot} | ${c.combos} | ${c.covered}${c.covered === c.combos ? '' : '（有缺口）'} |`,
+    ),
     '',
     '请逐条给出「通过 / 不通过 + 意见」。全部通过 → `npm run texts:batch -- approve ' +
       batch +
@@ -118,6 +172,20 @@ function sheet(
         '',
       );
     if (e.notes) out.push(`作者说明：${e.notes}`, '');
+    const hits = extra.triggers.get(id) ?? [];
+    if (hits.length === 0) {
+      out.push(
+        '能触发它的案例：cases.json 中没有案例命中（可在 `npm run texts:preview` 之外另找命盘核对）',
+        '',
+      );
+    } else {
+      out.push(
+        `能触发它的案例（cases.json，共 ${hits.length} 个，列前 ${Math.min(3, hits.length)} 个）：`,
+        '',
+      );
+      for (const h of hits.slice(0, 3)) out.push(`- **${h.caseId}** ${h.title}：${h.text}`);
+      out.push('');
+    }
     out.push('结论：☐ 通过　☐ 不通过　意见：', '');
   });
   return out.join('\n');
@@ -159,7 +227,16 @@ export function runBatch(cmd: string, batch: string, opts: BatchOptions): string
     const dir = join(opts.reportsDir, 'texts-batch');
     mkdirSync(dir, { recursive: true });
     const p = join(dir, `${batch}-r${r.round}.md`);
-    writeFileSync(p, sheet(batch, r, entries, loaded.fileOf));
+    writeFileSync(
+      p,
+      sheet(
+        batch,
+        r,
+        entries,
+        loaded.fileOf,
+        sheetExtra(opts.rulesDir ?? join(opts.textsDir, '..'), loaded.entries, entries),
+      ),
+    );
     log.push(
       `${batch} 第 ${r.round} 轮抽样（种子 ${r.seed}）：${r.sample.length} / ${ids.size} 条`,
       `抽检单：${p}`,

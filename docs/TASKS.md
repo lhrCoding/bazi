@@ -220,7 +220,7 @@
   内容：同输入两次报告 JSON 逐字相等的测试；cases.json 全部案例拼装 p95 < 200 ms；`Polisher` 接口 + `NoopPolisher`；`REPORT_POLISH_ENABLED` 默认 false，设为 true 但无实现时报错；测试中把 fetch / http 替换为抛错桩，验证关闭状态零外部调用。
   验收：三项测试通过（P0-7 「逐字一致」「关闭时不产生外部 AI 调用」）。
 
-- [ ] **T37 预览报告与抽检单生成**
+- [x] **T37 预览报告与抽检单生成**
   依赖：T26, T35
   内容：`texts:preview`：cases.json 全部案例生成完整报告 HTML（本地输出目录，不提交）；抽检单：被抽条目全部变体 + 能触发它的 cases.json 案例（及该案例报告片段）+ 本批覆盖率表 + lint 结果（PRD 9.3 建议）。
   验收：对样板批次生成可读的抽检单；预览 HTML 在手机宽度下可读。
