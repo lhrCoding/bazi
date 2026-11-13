@@ -54,22 +54,17 @@ test.describe('其他手机浏览器', () => {
     await expect(page.getByTestId('sheet-nohour')).toContainText('未提供出生时辰');
   });
 
-  test('mock 全流程：结果页 → 模拟支付 → /pay/done（URL 无出生信息）→ 自动到报告页', async ({
+  test('mock 全流程：点「支付宝支付」即成功 → /pay/done（URL 无出生信息）→ 自动到报告页', async ({
     page,
   }) => {
     const urls: string[] = [];
     page.on('request', (r) => urls.push(r.url()));
     await openPay(page, withHour.payload);
     await page.getByTestId('pay-primary').click();
-    await page.waitForURL(/\/pay\/mock\?o=/);
-    const orderNo = new URL(page.url()).searchParams.get('o') ?? '';
-    expect(await page.evaluate((k) => localStorage.getItem(k), `pending:${orderNo}`)).toBe(
-      withHour.payload,
-    );
-    await page.getByRole('button', { name: '模拟支付成功', exact: true }).click();
     await page.waitForURL(/\/r\//);
     const u = new URL(page.url());
-    expect(u.pathname).toBe(`/r/${orderNo}`);
+    const orderNo = u.pathname.split('/')[2] ?? '';
+    expect(orderNo).toMatch(/^[0-9A-Za-z]{22}$/);
     expect(u.hash.slice(1)).toBe(withHour.payload);
     await expect(page.getByTestId('legal-footer')).toBeVisible(); // T46：报告页也有免责声明
     expect(await page.evaluate((k) => localStorage.getItem(k), `pending:${orderNo}`)).toBeNull();
@@ -84,16 +79,6 @@ test.describe('其他手机浏览器', () => {
     }
   });
 
-  test('回调丢失：返回页轮询，10 秒后主动查单到 paid 并跳转', async ({ page }) => {
-    test.setTimeout(45_000);
-    await openPay(page, withHour.payload);
-    await page.getByTestId('pay-primary').click();
-    await page.waitForURL(/\/pay\/mock\?o=/);
-    await page.getByRole('button', { name: /回调丢失/ }).click();
-    await expect(page.getByTestId('done-checking')).toBeVisible();
-    await page.waitForURL(/\/r\//, { timeout: 25_000 });
-  });
-
   test('返回页：本机没有载荷 → 提示回原浏览器；坏订单号 → 链接不完整', async ({
     page,
     request,
@@ -102,7 +87,6 @@ test.describe('其他手机浏览器', () => {
       data: { payload: withHour.payload, channel: 'mock' },
     });
     const { orderNo } = (await r.json()) as { orderNo: string };
-    await request.post('/api/pay/mock', { data: { orderNo } });
     await page.goto(`/pay/done?o=${orderNo}`);
     await expect(page.getByTestId('done-nopayload')).toBeVisible();
     await page.goto('/pay/done?o=bad');

@@ -1,5 +1,5 @@
 /**
- * T47 E2E（API 级）：在 next start 生产构建里走通「建单 → 模拟支付 → paid」，并确认 better-sqlite3 在 Next 运行时可用。
+ * T47 E2E（API 级）：在 next start 生产构建里走通「建单 → mock 自动支付 → paid」，并确认 better-sqlite3 在 Next 运行时可用。
  */
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -9,20 +9,14 @@ const cases = JSON.parse(readFileSync(join(__dirname, 'cases.fixture.json'), 'ut
   payload: string;
 }[];
 
-test('mock 全流程：建单 → 模拟支付 → 回调 → paid；重复支付不重复生效', async ({ request }) => {
+test('mock 自动支付：建单即 paid（用户 2026-11-13：真实支付留白）', async ({ request }) => {
   const res = await request.post('/api/orders', {
     data: { payload: cases[0]?.payload, channel: 'mock' },
   });
   expect(res.status()).toBe(201);
   const { orderNo, pay } = (await res.json()) as { orderNo: string; pay: { url: string } };
   expect(orderNo).toMatch(/^[0-9A-Za-z]{22}$/);
-  expect(pay.url).toBe(`/pay/mock?o=${orderNo}`);
-  expect(await (await request.get(`/api/orders/${orderNo}/status`)).json()).toEqual({
-    status: 'created',
-  });
-  for (let i = 0; i < 2; i++) {
-    expect((await request.post('/api/pay/mock', { data: { orderNo } })).status()).toBe(200);
-  }
+  expect(pay.url).toBe(`/pay/done?o=${orderNo}`);
   expect(await (await request.get(`/api/orders/${orderNo}/status`)).json()).toEqual({
     status: 'paid',
   });

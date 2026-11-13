@@ -78,6 +78,9 @@ export async function handleCreateOrder(req: Request, deps: OrdersDeps): Promise
       clientIp: ip,
       openid: null,
     });
+    // mock 自动支付：按真实回调流程立即置 paid
+    const auto = provider.autoComplete?.(order.orderNo);
+    if (auto) await handleNotify(body.channel, auto, deps);
     return Response.json(
       { orderNo: order.orderNo, pay },
       { status: 201, headers: { 'cache-control': 'no-store' } },

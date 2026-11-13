@@ -1,7 +1,9 @@
 /**
  * mock 支付渠道（TASKS T47；开发 / 测试用，生产禁用）。
  *
- * 模拟渠道一侧的行为：createPayment 返回模拟支付页 /pay/mock?o=<订单号>；用户在该页点「模拟支付成功」后，
+ * 用户 2026-11-13 决定：真实支付先留白，点支付按钮即算支付成功（autoPay，默认开启）——下单后 autoComplete 立即生成签名回调，
+ * 订单 API 按真实回调流程置 paid，前端经 /pay/done 直接到报告页。
+ * 模拟渠道一侧的行为：用户付款后，
  * pay() 记下渠道侧已付款并按真实渠道的方式发回调（HMAC 签名的 JSON），回调也可以故意「丢失」，用来测试查单兜底。
  * 回调验签用进程内随机密钥（只有本进程签的回调才能通过）。
  */
@@ -21,7 +23,12 @@ export interface MockProvider extends PaymentProvider {
   readonly lastCreate: CreatePaymentInput | null;
 }
 
-export function createMockProvider(opts: { siteUrl: string; secret?: Buffer }): MockProvider {
+export function createMockProvider(opts: {
+  siteUrl: string;
+  secret?: Buffer;
+  /** 下单即付款（默认 false，便于单元测试分别模拟回调 / 查单） */
+  autoPay?: boolean;
+}): MockProvider {
   const secret = opts.secret ?? randomBytes(32);
   const created = new Map<string, CreatePaymentInput>();
   const paid = new Map<string, ChannelPaid>();
@@ -37,7 +44,10 @@ export function createMockProvider(opts: { siteUrl: string; secret?: Buffer }): 
     async createPayment(input): Promise<PayParams> {
       lastCreate = input;
       created.set(input.orderNo, input);
-      return { kind: 'redirect', url: `/pay/mock?o=${encodeURIComponent(input.orderNo)}` };
+      return { kind: 'redirect', url: `/pay/done?o=${encodeURIComponent(input.orderNo)}` };
+    },
+    autoComplete(orderNo) {
+      return opts.autoPay ? (this.pay(orderNo)?.notify ?? null) : null;
     },
     pay(orderNo) {
       const c = created.get(orderNo);

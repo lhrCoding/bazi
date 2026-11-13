@@ -56,7 +56,10 @@ export function createAppContext(env: NodeJS.ProcessEnv): AppContext {
   mkdirSync(dirname(dbPath), { recursive: true });
   const db = openOrdersDb(dbPath);
   const fpKey = loadFpKey({ BIRTH_FP_KEY: env.BIRTH_FP_KEY, BIRTH_FP_KEY_ID: env.BIRTH_FP_KEY_ID });
-  const mock = mode === 'mock' ? createMockProvider({ siteUrl }) : null;
+  const mock =
+    mode === 'mock'
+      ? createMockProvider({ siteUrl, autoPay: env.MOCK_PAYMENT_AUTO !== '0' })
+      : null;
   const providers: AppContext['providers'] = mock ? { mock } : {};
   const releasesDir = join(process.cwd(), 'texts-releases');
   const textsVersion = () =>

@@ -50,4 +50,9 @@ export interface PaymentProvider {
   /** 主动查单；未支付返回 null */
   queryOrder(orderNo: string): Promise<ChannelPaid | null>;
   closeOrder(orderNo: string): Promise<void>;
+  /**
+   * 仅 mock（自动支付模式）：下单后立即生成一条签名回调，由订单 API 按真实回调流程处理（验签 → 金额 → 置 paid）。
+   * 真实渠道不实现。
+   */
+  autoComplete?(orderNo: string): Request | null;
 }

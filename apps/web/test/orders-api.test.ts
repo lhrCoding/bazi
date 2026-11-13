@@ -70,7 +70,7 @@ describe('mock 全流程', () => {
   it('建单 → 模拟支付页 → 回调 → paid；订单字段正确', async () => {
     const { deps, mock, logs } = setup();
     const { orderNo, pay } = await create(deps);
-    expect(pay).toEqual({ kind: 'redirect', url: `/pay/mock?o=${orderNo}` });
+    expect(pay).toEqual({ kind: 'redirect', url: `/pay/done?o=${orderNo}` });
     expect(getOrder(deps.db, orderNo)).toMatchObject({
       status: 'created',
       amountFen: 990,
@@ -147,6 +147,17 @@ describe('mock 全流程', () => {
     tick(5_000);
     await status(deps, orderNo);
     expect(queries).toBe(2);
+  });
+});
+
+describe('mock 自动支付（用户 2026-11-13：点支付即成功）', () => {
+  it('下单即按回调流程置 paid，只记一次', async () => {
+    const { deps, logs } = setup();
+    deps.providers.mock = createMockProvider({ siteUrl: 'http://localhost', autoPay: true });
+    const { orderNo, pay } = await create(deps);
+    expect(pay.url).toBe(`/pay/done?o=${orderNo}`);
+    expect(getOrder(deps.db, orderNo)).toMatchObject({ status: 'paid', channel: 'mock' });
+    expect(logs().match(/order paid/g)).toHaveLength(1);
   });
 });
 
