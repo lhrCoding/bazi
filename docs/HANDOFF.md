@@ -145,6 +145,7 @@
 | 电脑端二维码只预留了位置（mock 走跳转），二维码图片渲染随微信 Native 实现 | T50 |
 | 微信内「微信支付」需 openid 静默授权，目前点了会提示「后续版本接入」（mock 模式下直接走 mock） | T49 |
 | 换浏览器 / 换设备打开 `/pay/done` 时本机没有载荷，只能提示回原浏览器（P1「链接找回」未做） | P1 |
+| CSP：接真实支付时把渠道域名加进 `server/security-headers.ts` 的 `PAYMENT_ORIGINS`（支付宝表单提交地址等），否则会被 CSP 拦截；style-src 为 'unsafe-inline'（style 属性无法带 nonce） | T49–T51 |
 | **`ALLOW_MOCK_PAYMENT=1`、`TEXTS_DEV_WORKSPACE=1` 只给 E2E 用**（生产构建里放行 mock 支付 / 草稿素材），部署时绝不能设；上线检查清单要加一条 | T59–T65 |
 | 页脚免责组件已放进报告占位页并有 E2E 断言；T53 正式报告页需保留 | T53 报告页 |
 | 排盘限流可用 `CHART_RATE_LIMIT` 放宽（只在 playwright.config.ts 设置，生产不设） | — |

@@ -340,7 +340,7 @@
 
 ## J 隐私、安全与上线准备
 
-- [ ] **T59 安全响应头与 CSP**
+- [x] **T59 安全响应头与 CSP**
   依赖：T54
   内容：CSP（`script-src 'self'`、`connect-src 'self'` + 支付所需域名、`frame-ancestors 'none'`）；`Referrer-Policy: no-referrer`；`/r/*` 加 `X-Robots-Tag: noindex`；检查全站无第三方脚本。
   验收：E2E 断言响应头；构建产物扫描无外部脚本地址。

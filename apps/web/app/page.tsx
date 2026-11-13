@@ -6,9 +6,6 @@ import { BirthForm } from './birth-form';
 import { LegalFooter } from './legal-footer';
 import { MIN_YEAR, type LunarMonth } from './birth-form-logic';
 
-// 年份下拉到「今年」：每天重新生成一次
-export const revalidate = 86400;
-
 function lunarTable(thisYear: number): Record<number, LunarMonth[]> {
   const t: Record<number, LunarMonth[]> = {};
   for (let y = MIN_YEAR; y <= thisYear; y++) {
