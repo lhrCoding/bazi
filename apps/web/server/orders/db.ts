@@ -9,11 +9,18 @@ import Database from 'better-sqlite3';
 import { drizzle, type BetterSQLite3Database } from 'drizzle-orm/better-sqlite3';
 import * as schema from './schema';
 
-export const MIGRATIONS_DIR = join(import.meta.dirname, 'migrations');
+/**
+ * 迁移目录。Node / vitest 下用模块所在目录；Next 打包后 import.meta.dirname 不可用，退回「工作目录/server/orders/migrations」
+ * （next start 与 standalone 的工作目录都是 apps/web；standalone 产物需带上该目录，见 next.config.ts outputFileTracingIncludes）。
+ */
+export function migrationsDir(): string {
+  const here = (import.meta as { dirname?: string }).dirname;
+  return here ? join(here, 'migrations') : join(process.cwd(), 'server', 'orders', 'migrations');
+}
 
 export type OrdersDb = BetterSQLite3Database<typeof schema> & { $client: Database.Database };
 
-export function runMigrations(sqlite: Database.Database, dir = MIGRATIONS_DIR): string[] {
+export function runMigrations(sqlite: Database.Database, dir = migrationsDir()): string[] {
   sqlite.exec(
     'CREATE TABLE IF NOT EXISTS schema_migrations (version TEXT PRIMARY KEY NOT NULL, applied_at INTEGER NOT NULL)',
   );

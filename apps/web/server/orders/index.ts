@@ -78,7 +78,14 @@ export function getOrder(db: OrdersDb, orderNo: string): OrderRow | null {
 
 export function createOrder(
   db: OrdersDb,
-  input: { birthFp: string; fpKeyId: string; textsVersion: number; now: number },
+  input: {
+    birthFp: string;
+    fpKeyId: string;
+    textsVersion: number;
+    now: number;
+    /** 下单时选择的渠道（主动查单时据此找渠道）；置 paid 时以回调 / 查单的渠道为准 */
+    channel?: Channel | null;
+  },
 ): OrderRow {
   if (!/^[0-9a-f]{64}$/.test(input.birthFp)) throw new TypeError('birthFp 必须是 64 位 hex');
   const row: OrderRow = {
@@ -88,7 +95,7 @@ export function createOrder(
     birthFp: input.birthFp,
     fpKeyId: input.fpKeyId,
     textsVersion: input.textsVersion,
-    channel: null,
+    channel: input.channel ?? null,
     channelTxnId: null,
     createdAt: input.now,
     paidAt: null,

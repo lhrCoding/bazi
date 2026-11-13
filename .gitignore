@@ -18,3 +18,5 @@ next-env.d.ts
 # Playwright 产物
 test-results/
 playwright-report/
+# 本地订单库（DATABASE_PATH 默认）
+apps/web/data/

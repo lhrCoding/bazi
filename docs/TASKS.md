@@ -276,7 +276,7 @@
 
 ## H 支付（先 mock，真实渠道联调放后）
 
-- [ ] **T47 支付抽象 + mock 渠道 + 订单 API**
+- [x] **T47 支付抽象 + mock 渠道 + 订单 API**
   依赖：T42, T41, T43
   内容：`PaymentProvider` 接口；mock 实现（模拟支付页 + 模拟回调）；`POST /api/orders`（规范化 → 排盘校验 → 指纹 → 建单，texts_version 取当前发布版）、`GET /api/orders/:no/status`（10 秒未回调时主动查单）、`POST /api/pay/notify/:channel`（幂等）。下单参数中不含出生信息。
   验收：mock 全流程走通；重复回调只处理一次；下单请求发给渠道的参数里搜不到出生信息（测试断言）。

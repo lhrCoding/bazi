@@ -125,8 +125,10 @@
 | 出生地表 56 条低精度条目（来源坐标矛盾取均值，清单 `scripts/geo/low-precision.txt`），最多约 1 分钟真太阳时 | 有空时对照地图人工修正 |
 | E2E（`npm run e2e -w @zhiming/web`）：Playwright 1.65 自带内核不支持本机 macOS 12，暂用系统 Chrome（`channel: 'chrome'`）；CI 设 `PW_CHANNEL` 用自带 chromium。webServer 用 `next start`，有 standalone 警告但可用 | T64 |
 | better-sqlite3 用 12.11.1：13.x 要求 Node ≥ 22，本机是 Node 20.18.1（CI / 生产按架构用 Node 22） | 本机升级 Node 22 后可升级 |
-| better-sqlite3 是原生模块，Next 打包时需作为服务端外部包（Next 默认列表含它；订单 API 接入时实际运行确认） | T47 |
-| 「¥9.9 查看完整报告」按钮暂无动作 | T47 支付确认面板 |
+| standalone 部署需带上 `server/orders/migrations/*.sql`（已在 next.config.ts outputFileTracingIncludes 声明；better-sqlite3 在 next start 下已由 E2E 验证可用），Docker 构建时再确认一次 | T60 部署 |
+| 「¥9.9 查看完整报告」按钮暂无动作（订单 API 与 mock 渠道已就绪） | T48 前端支付流程 |
+| **`ALLOW_MOCK_PAYMENT=1` 只给 E2E 用**（生产构建里放行 mock 支付），部署时绝不能设；上线检查清单要加一条 | T59–T65 |
+| 新订单 texts_version：开发为 0，生产取 texts-releases/ 最大发布号；T53 接入 TextsStore 后统一取 `current` | T53 |
 | 页脚免责组件 `LegalFooter` 报告页尚未接入，E2E 只断言了首页、结果页 | T53 报告页 |
 | 排盘限流可用 `CHART_RATE_LIMIT` 放宽（只在 playwright.config.ts 设置，生产不设） | — |
 | ENGINE_VERSION 已升到 1.1.0（T40 出生地坐标换正式数据，四柱不变） | — |
