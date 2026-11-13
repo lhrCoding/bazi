@@ -2,5 +2,4 @@
 
 只给拼装引擎测试用（T31 起），**不是正式素材**，正文统一以【测试素材】开头，不进入 rules/texts、不发布。
 
-- `ch03_ch04_min.yaml`：第 4 章每个必需槽位一条兜底（另加 CH3-SHENSHA-ANY 一条供发布测试、CH4-NOTE 固定文本）；第 3 章必需槽位的兜底已随第 2 批真实素材移到 rules/texts/ch03_persona.yaml（2026-11-13），
-  用于在正式第 2 / 3 批素材写好之前验证第 3、4 章的结构与顺序。第 1、2 章测试直接用 rules/texts 的第 1 批草稿。
+- `ch03_ch04_min.yaml`：CH3-SHENSHA-ANY 与 CH5-REL-TEST（条件永不成立）两条，供发布测试（release.test.ts）修改用；第 3、4 章的兜底与固定文本已随第 2、3 批真实素材移到 rules/texts（2026-11-13）。

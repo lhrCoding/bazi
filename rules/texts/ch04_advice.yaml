@@ -1,0 +1,500 @@
+# 第 4 章「适合的行业 / 颜色 / 方位 / 数字」（第 3 批 B3，草稿）
+# 槽位：CH4-WHY（用神 × 第一喜神 20 种有序对）、CH4-ELEMENT（五行 5 × 用 / 喜，循环）、CH4-NOTE（固定文本）；建议表 CH4-TABLE 由代码生成。
+# 写法约定：
+#   - CH4-WHY = 用神段 + 喜神段 + 两者生克关系段（喜生用 / 用生喜 / 喜克用 / 用克喜）。正文写出五行字，asserts 锁定 yong 与 xi1（L6）。
+#   - 只谈生活化参考，不推荐投资品种、不推荐任何物品；CH4-NOTE 按用户 2026-11-13 拍板 D3 (b)：用“声称能改运的物品”，不用禁用词。
+
+# ======================= CH4-WHY =======================
+- id: CH4-WHY-MU-HUO
+  slot: CH4-WHY
+  when: {all: [{f: yongshen.yong, eq: 木}, {f: yongshen.xi1, eq: 火}]}
+  asserts: [{f: yongshen.yong, eq: 木}, {f: yongshen.xi1, eq: 火}]
+  priority: 50
+  length: [120, 180]
+  polish_allowed: true
+  variants:
+    - "建议表以木为主线：木代表生长、舒展和条理，对你来说，多接触让人放松、有生机的环境，做需要长期积累和规划的事，就是在补用神。喜神火作为第二重助力，带来热情和说做就做的行动力。两者是相生的关系：木生火，用神的力量会自然流向喜神，先把用神补足，喜神的作用也会跟着出来。"
+    - "用神是木，意味着“生长”是你需要的力量：绿色、东方、春天，以及教育、文化、设计一类需要慢慢培育的方向，都与它相应，值得长期投入。第一喜神是火，它让你多一份表达自我的勇气。木能生火，用神是源头、喜神是延伸，所以安排上以用神为主、喜神为辅，顺序不要颠倒。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH4-WHY-MU-TU
+  slot: CH4-WHY
+  when: {all: [{f: yongshen.yong, eq: 木}, {f: yongshen.xi1, eq: 土}]}
+  asserts: [{f: yongshen.yong, eq: 木}, {f: yongshen.xi1, eq: 土}]
+  priority: 50
+  length: [120, 180]
+  polish_allowed: true
+  variants:
+    - "建议表以木为主线：木代表生长、舒展和条理，对你来说，多接触让人放松、有生机的环境，做需要长期积累和规划的事，就是在补用神。喜神土作为第二重助力，带来踏实的作风和定力。两者之间是木克土的关系，用神主导、喜神从旁调和，安排时不必在两者之间平均用力，以用神为重心即可。"
+    - "用神是木，意味着“生长”是你需要的力量：绿色、东方、春天，以及教育、文化、设计一类需要慢慢培育的方向，都与它相应，值得长期投入。第一喜神是土，它让你多一份稳住局面的底气。木能克土，所以两者的分工很清楚：用神是主角，喜神是配角，在生活里多偏向用神的方向，再适度加入喜神的元素。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH4-WHY-MU-JIN
+  slot: CH4-WHY
+  when: {all: [{f: yongshen.yong, eq: 木}, {f: yongshen.xi1, eq: 金}]}
+  asserts: [{f: yongshen.yong, eq: 木}, {f: yongshen.xi1, eq: 金}]
+  priority: 50
+  length: [120, 180]
+  polish_allowed: true
+  variants:
+    - "建议表以木为主线：木代表生长、舒展和条理，对你来说，多接触让人放松、有生机的环境，做需要长期积累和规划的事，就是在补用神。喜神金作为第二重助力，带来条理和该断则断的决心。两者之间是金克木的关系，这里的喜神不是来帮倒忙，而是负责把握分寸，让用神发挥得有节有度。"
+    - "用神是木，意味着“生长”是你需要的力量：绿色、东方、春天，以及教育、文化、设计一类需要慢慢培育的方向，都与它相应，值得长期投入。第一喜神是金，它让你多一份当机立断的清醒和果敢。金能克木，看似相反，其实是一收一放的搭配：用神负责发力，喜神负责收住，两者都照顾到才算平衡。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH4-WHY-MU-SHUI
+  slot: CH4-WHY
+  when: {all: [{f: yongshen.yong, eq: 木}, {f: yongshen.xi1, eq: 水}]}
+  asserts: [{f: yongshen.yong, eq: 木}, {f: yongshen.xi1, eq: 水}]
+  priority: 50
+  length: [120, 180]
+  polish_allowed: true
+  variants:
+    - "建议表以木为主线：木代表生长、舒展和条理，对你来说，多接触让人放松、有生机的环境，做需要长期积累和规划的事，就是在补用神。喜神水作为第二重助力，带来灵活的思路和见识。两者是相生的关系：水生木，喜神在后面持续给用神补给，所以这两方面的建议可以放在一起用，效果会叠加。"
+    - "用神是木，意味着“生长”是你需要的力量：绿色、东方、春天，以及教育、文化、设计一类需要慢慢培育的方向，都与它相应，值得长期投入。第一喜神是水，它让你多一份随机应变的余地和见识。水能生木，等于为用神提供了源源不断的支持，表里的两行建议互相配合，比单用一个更稳。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH4-WHY-HUO-MU
+  slot: CH4-WHY
+  when: {all: [{f: yongshen.yong, eq: 火}, {f: yongshen.xi1, eq: 木}]}
+  asserts: [{f: yongshen.yong, eq: 火}, {f: yongshen.xi1, eq: 木}]
+  priority: 50
+  length: [120, 180]
+  polish_allowed: true
+  variants:
+    - "建议表以火为主线：火代表温暖、光亮和表达，对你来说，多晒太阳、多和人交流，选择能被看见、能输出想法的事情，就是在补用神。喜神木作为第二重助力，带来成长的空间和人情味。两者是相生的关系：木生火，喜神在后面持续给用神补给，所以这两方面的建议可以放在一起用，效果会叠加。"
+    - "用神是火，意味着“温度”和“表达”是你需要的力量：红色、南方、夏天，以及传媒、能源、演艺、餐饮一类热闹外放的方向，都与它相应。第一喜神是木，它让你多一份向上生长的耐心。木能生火，等于为用神提供了源源不断的支持，表里的两行建议互相配合，比单用一个更稳。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH4-WHY-HUO-TU
+  slot: CH4-WHY
+  when: {all: [{f: yongshen.yong, eq: 火}, {f: yongshen.xi1, eq: 土}]}
+  asserts: [{f: yongshen.yong, eq: 火}, {f: yongshen.xi1, eq: 土}]
+  priority: 50
+  length: [120, 180]
+  polish_allowed: true
+  variants:
+    - "建议表以火为主线：火代表温暖、光亮和表达，对你来说，多晒太阳、多和人交流，选择能被看见、能输出想法的事情，就是在补用神。喜神土作为第二重助力，带来踏实的作风和定力。两者是相生的关系：火生土，用神的力量会自然流向喜神，先把用神补足，喜神的作用也会跟着出来。"
+    - "用神是火，意味着“温度”和“表达”是你需要的力量：红色、南方、夏天，以及传媒、能源、演艺、餐饮一类热闹外放的方向，都与它相应。第一喜神是土，它让你多一份稳住局面的底气。火能生土，用神是源头、喜神是延伸，所以安排上以用神为主、喜神为辅，顺序不要颠倒。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH4-WHY-HUO-JIN
+  slot: CH4-WHY
+  when: {all: [{f: yongshen.yong, eq: 火}, {f: yongshen.xi1, eq: 金}]}
+  asserts: [{f: yongshen.yong, eq: 火}, {f: yongshen.xi1, eq: 金}]
+  priority: 50
+  length: [120, 180]
+  polish_allowed: true
+  variants:
+    - "建议表以火为主线：火代表温暖、光亮和表达，对你来说，多晒太阳、多和人交流，选择能被看见、能输出想法的事情，就是在补用神。喜神金作为第二重助力，带来条理和该断则断的决心。两者之间是火克金的关系，用神主导、喜神从旁调和，安排时不必在两者之间平均用力，以用神为重心即可。"
+    - "用神是火，意味着“温度”和“表达”是你需要的力量：红色、南方、夏天，以及传媒、能源、演艺、餐饮一类热闹外放的方向，都与它相应。第一喜神是金，它让你多一份当机立断的清醒和果敢。火能克金，所以两者的分工很清楚：用神是主角，喜神是配角，在生活里多偏向用神的方向，再适度加入喜神的元素。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH4-WHY-HUO-SHUI
+  slot: CH4-WHY
+  when: {all: [{f: yongshen.yong, eq: 火}, {f: yongshen.xi1, eq: 水}]}
+  asserts: [{f: yongshen.yong, eq: 火}, {f: yongshen.xi1, eq: 水}]
+  priority: 50
+  length: [120, 180]
+  polish_allowed: true
+  variants:
+    - "建议表以火为主线：火代表温暖、光亮和表达，对你来说，多晒太阳、多和人交流，选择能被看见、能输出想法的事情，就是在补用神。喜神水作为第二重助力，带来灵活的思路和见识。两者之间是水克火的关系，这里的喜神不是来帮倒忙，而是负责把握分寸，让用神发挥得有节有度。"
+    - "用神是火，意味着“温度”和“表达”是你需要的力量：红色、南方、夏天，以及传媒、能源、演艺、餐饮一类热闹外放的方向，都与它相应。第一喜神是水，它让你多一份随机应变的余地和见识。水能克火，看似相反，其实是一收一放的搭配：用神负责发力，喜神负责收住，两者都照顾到才算平衡。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH4-WHY-TU-MU
+  slot: CH4-WHY
+  when: {all: [{f: yongshen.yong, eq: 土}, {f: yongshen.xi1, eq: 木}]}
+  asserts: [{f: yongshen.yong, eq: 土}, {f: yongshen.xi1, eq: 木}]
+  priority: 50
+  length: [120, 180]
+  polish_allowed: true
+  variants:
+    - "建议表以土为主线：土代表稳定、承载和信用，对你来说，规律的生活、可靠的人际关系、需要耐心经营的事情，就是在补用神。喜神木作为第二重助力，带来成长的空间和人情味。两者之间是木克土的关系，这里的喜神不是来帮倒忙，而是负责把握分寸，让用神发挥得有节有度。"
+    - "用神是土，意味着“稳”是你需要的力量：黄色、中部、季节交替之时，以及地产、建筑、农业、管理一类讲究根基的方向，都与它相应。第一喜神是木，它让你多一份向上生长的耐心。木能克土，看似相反，其实是一收一放的搭配：用神负责发力，喜神负责收住，两者都照顾到才算平衡。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH4-WHY-TU-HUO
+  slot: CH4-WHY
+  when: {all: [{f: yongshen.yong, eq: 土}, {f: yongshen.xi1, eq: 火}]}
+  asserts: [{f: yongshen.yong, eq: 土}, {f: yongshen.xi1, eq: 火}]
+  priority: 50
+  length: [120, 180]
+  polish_allowed: true
+  variants:
+    - "建议表以土为主线：土代表稳定、承载和信用，对你来说，规律的生活、可靠的人际关系、需要耐心经营的事情，就是在补用神。喜神火作为第二重助力，带来热情和说做就做的行动力。两者是相生的关系：火生土，喜神在后面持续给用神补给，所以这两方面的建议可以放在一起用，效果会叠加。"
+    - "用神是土，意味着“稳”是你需要的力量：黄色、中部、季节交替之时，以及地产、建筑、农业、管理一类讲究根基的方向，都与它相应。第一喜神是火，它让你多一份表达自我的勇气。火能生土，等于为用神提供了源源不断的支持，表里的两行建议互相配合，比单用一个更稳。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH4-WHY-TU-JIN
+  slot: CH4-WHY
+  when: {all: [{f: yongshen.yong, eq: 土}, {f: yongshen.xi1, eq: 金}]}
+  asserts: [{f: yongshen.yong, eq: 土}, {f: yongshen.xi1, eq: 金}]
+  priority: 50
+  length: [120, 180]
+  polish_allowed: true
+  variants:
+    - "建议表以土为主线：土代表稳定、承载和信用，对你来说，规律的生活、可靠的人际关系、需要耐心经营的事情，就是在补用神。喜神金作为第二重助力，带来条理和该断则断的决心。两者是相生的关系：土生金，用神的力量会自然流向喜神，先把用神补足，喜神的作用也会跟着出来。"
+    - "用神是土，意味着“稳”是你需要的力量：黄色、中部、季节交替之时，以及地产、建筑、农业、管理一类讲究根基的方向，都与它相应。第一喜神是金，它让你多一份当机立断的清醒和果敢。土能生金，用神是源头、喜神是延伸，所以安排上以用神为主、喜神为辅，顺序不要颠倒。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH4-WHY-TU-SHUI
+  slot: CH4-WHY
+  when: {all: [{f: yongshen.yong, eq: 土}, {f: yongshen.xi1, eq: 水}]}
+  asserts: [{f: yongshen.yong, eq: 土}, {f: yongshen.xi1, eq: 水}]
+  priority: 50
+  length: [120, 180]
+  polish_allowed: true
+  variants:
+    - "建议表以土为主线：土代表稳定、承载和信用，对你来说，规律的生活、可靠的人际关系、需要耐心经营的事情，就是在补用神。喜神水作为第二重助力，带来灵活的思路和见识。两者之间是土克水的关系，用神主导、喜神从旁调和，安排时不必在两者之间平均用力，以用神为重心即可。"
+    - "用神是土，意味着“稳”是你需要的力量：黄色、中部、季节交替之时，以及地产、建筑、农业、管理一类讲究根基的方向，都与它相应。第一喜神是水，它让你多一份随机应变的余地和见识。土能克水，所以两者的分工很清楚：用神是主角，喜神是配角，在生活里多偏向用神的方向，再适度加入喜神的元素。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH4-WHY-JIN-MU
+  slot: CH4-WHY
+  when: {all: [{f: yongshen.yong, eq: 金}, {f: yongshen.xi1, eq: 木}]}
+  asserts: [{f: yongshen.yong, eq: 金}, {f: yongshen.xi1, eq: 木}]
+  priority: 50
+  length: [120, 180]
+  polish_allowed: true
+  variants:
+    - "建议表以金为主线：金代表规则、决断和精准，对你来说，清晰的边界、讲求标准的工作、简洁有序的环境，就是在补用神。喜神木作为第二重助力，带来成长的空间和人情味。两者之间是金克木的关系，用神主导、喜神从旁调和，安排时不必在两者之间平均用力，以用神为重心即可。"
+    - "用神是金，意味着“秩序”是你需要的力量：白色、西方、秋天，以及金融、法律、机械、技术一类讲究精确的方向，都与它相应。第一喜神是木，它让你多一份向上生长的耐心。金能克木，所以两者的分工很清楚：用神是主角，喜神是配角，在生活里多偏向用神的方向，再适度加入喜神的元素。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH4-WHY-JIN-HUO
+  slot: CH4-WHY
+  when: {all: [{f: yongshen.yong, eq: 金}, {f: yongshen.xi1, eq: 火}]}
+  asserts: [{f: yongshen.yong, eq: 金}, {f: yongshen.xi1, eq: 火}]
+  priority: 50
+  length: [120, 180]
+  polish_allowed: true
+  variants:
+    - "建议表以金为主线：金代表规则、决断和精准，对你来说，清晰的边界、讲求标准的工作、简洁有序的环境，就是在补用神。喜神火作为第二重助力，带来热情和说做就做的行动力。两者之间是火克金的关系，这里的喜神不是来帮倒忙，而是负责把握分寸，让用神发挥得有节有度。"
+    - "用神是金，意味着“秩序”是你需要的力量：白色、西方、秋天，以及金融、法律、机械、技术一类讲究精确的方向，都与它相应。第一喜神是火，它让你多一份表达自我的勇气。火能克金，看似相反，其实是一收一放的搭配：用神负责发力，喜神负责收住，两者都照顾到才算平衡。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH4-WHY-JIN-TU
+  slot: CH4-WHY
+  when: {all: [{f: yongshen.yong, eq: 金}, {f: yongshen.xi1, eq: 土}]}
+  asserts: [{f: yongshen.yong, eq: 金}, {f: yongshen.xi1, eq: 土}]
+  priority: 50
+  length: [120, 180]
+  polish_allowed: true
+  variants:
+    - "建议表以金为主线：金代表规则、决断和精准，对你来说，清晰的边界、讲求标准的工作、简洁有序的环境，就是在补用神。喜神土作为第二重助力，带来踏实的作风和定力。两者是相生的关系：土生金，喜神在后面持续给用神补给，所以这两方面的建议可以放在一起用，效果会叠加。"
+    - "用神是金，意味着“秩序”是你需要的力量：白色、西方、秋天，以及金融、法律、机械、技术一类讲究精确的方向，都与它相应。第一喜神是土，它让你多一份稳住局面的底气。土能生金，等于为用神提供了源源不断的支持，表里的两行建议互相配合，比单用一个更稳。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH4-WHY-JIN-SHUI
+  slot: CH4-WHY
+  when: {all: [{f: yongshen.yong, eq: 金}, {f: yongshen.xi1, eq: 水}]}
+  asserts: [{f: yongshen.yong, eq: 金}, {f: yongshen.xi1, eq: 水}]
+  priority: 50
+  length: [120, 180]
+  polish_allowed: true
+  variants:
+    - "建议表以金为主线：金代表规则、决断和精准，对你来说，清晰的边界、讲求标准的工作、简洁有序的环境，就是在补用神。喜神水作为第二重助力，带来灵活的思路和见识。两者是相生的关系：金生水，用神的力量会自然流向喜神，先把用神补足，喜神的作用也会跟着出来。"
+    - "用神是金，意味着“秩序”是你需要的力量：白色、西方、秋天，以及金融、法律、机械、技术一类讲究精确的方向，都与它相应。第一喜神是水，它让你多一份随机应变的余地和见识。金能生水，用神是源头、喜神是延伸，所以安排上以用神为主、喜神为辅，顺序不要颠倒。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH4-WHY-SHUI-MU
+  slot: CH4-WHY
+  when: {all: [{f: yongshen.yong, eq: 水}, {f: yongshen.xi1, eq: 木}]}
+  asserts: [{f: yongshen.yong, eq: 水}, {f: yongshen.xi1, eq: 木}]
+  priority: 50
+  length: [120, 180]
+  polish_allowed: true
+  variants:
+    - "建议表以水为主线：水代表流动、智慧和沟通，对你来说，多学习、多交流、多接触新信息，让生活保持一定的流动性，就是在补用神。喜神木作为第二重助力，带来成长的空间和人情味。两者是相生的关系：水生木，用神的力量会自然流向喜神，先把用神补足，喜神的作用也会跟着出来。"
+    - "用神是水，意味着“流动”是你需要的力量：黑色与蓝色、北方、冬天，以及物流、贸易、咨询、信息一类需要灵活应变的方向，都与它相应。第一喜神是木，它让你多一份向上生长的耐心。水能生木，用神是源头、喜神是延伸，所以安排上以用神为主、喜神为辅，顺序不要颠倒。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH4-WHY-SHUI-HUO
+  slot: CH4-WHY
+  when: {all: [{f: yongshen.yong, eq: 水}, {f: yongshen.xi1, eq: 火}]}
+  asserts: [{f: yongshen.yong, eq: 水}, {f: yongshen.xi1, eq: 火}]
+  priority: 50
+  length: [120, 180]
+  polish_allowed: true
+  variants:
+    - "建议表以水为主线：水代表流动、智慧和沟通，对你来说，多学习、多交流、多接触新信息，让生活保持一定的流动性，就是在补用神。喜神火作为第二重助力，带来热情和说做就做的行动力。两者之间是水克火的关系，用神主导、喜神从旁调和，安排时不必在两者之间平均用力，以用神为重心即可。"
+    - "用神是水，意味着“流动”是你需要的力量：黑色与蓝色、北方、冬天，以及物流、贸易、咨询、信息一类需要灵活应变的方向，都与它相应。第一喜神是火，它让你多一份表达自我的勇气。水能克火，所以两者的分工很清楚：用神是主角，喜神是配角，在生活里多偏向用神的方向，再适度加入喜神的元素。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH4-WHY-SHUI-TU
+  slot: CH4-WHY
+  when: {all: [{f: yongshen.yong, eq: 水}, {f: yongshen.xi1, eq: 土}]}
+  asserts: [{f: yongshen.yong, eq: 水}, {f: yongshen.xi1, eq: 土}]
+  priority: 50
+  length: [120, 180]
+  polish_allowed: true
+  variants:
+    - "建议表以水为主线：水代表流动、智慧和沟通，对你来说，多学习、多交流、多接触新信息，让生活保持一定的流动性，就是在补用神。喜神土作为第二重助力，带来踏实的作风和定力。两者之间是土克水的关系，这里的喜神不是来帮倒忙，而是负责把握分寸，让用神发挥得有节有度。"
+    - "用神是水，意味着“流动”是你需要的力量：黑色与蓝色、北方、冬天，以及物流、贸易、咨询、信息一类需要灵活应变的方向，都与它相应。第一喜神是土，它让你多一份稳住局面的底气。土能克水，看似相反，其实是一收一放的搭配：用神负责发力，喜神负责收住，两者都照顾到才算平衡。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH4-WHY-SHUI-JIN
+  slot: CH4-WHY
+  when: {all: [{f: yongshen.yong, eq: 水}, {f: yongshen.xi1, eq: 金}]}
+  asserts: [{f: yongshen.yong, eq: 水}, {f: yongshen.xi1, eq: 金}]
+  priority: 50
+  length: [120, 180]
+  polish_allowed: true
+  variants:
+    - "建议表以水为主线：水代表流动、智慧和沟通，对你来说，多学习、多交流、多接触新信息，让生活保持一定的流动性，就是在补用神。喜神金作为第二重助力，带来条理和该断则断的决心。两者是相生的关系：金生水，喜神在后面持续给用神补给，所以这两方面的建议可以放在一起用，效果会叠加。"
+    - "用神是水，意味着“流动”是你需要的力量：黑色与蓝色、北方、冬天，以及物流、贸易、咨询、信息一类需要灵活应变的方向，都与它相应。第一喜神是金，它让你多一份当机立断的清醒和果敢。金能生水，等于为用神提供了源源不断的支持，表里的两行建议互相配合，比单用一个更稳。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH4-WHY-FALLBACK
+  slot: CH4-WHY
+  when: {}
+  asserts: []
+  priority: 0
+  fallback: true
+  length: [20, 80]
+  polish_allowed: false
+  variants:
+    - "上表按你的用神与第一喜神给出生活化的参考，以用神为主、喜神为辅。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+# ======================= CH4-ELEMENT（循环：用神、第一喜神各 1） =======================
+- id: CH4-ELEMENT-MU-YONG
+  slot: CH4-ELEMENT
+  when: {all: [{f: item.element, eq: 木}, {f: item.role, eq: 用}]}
+  asserts: [{f: item.element, eq: 木}]
+  priority: 50
+  length: [80, 120]
+  polish_allowed: true
+  variants:
+    - "木的生活建议：居家可以多放绿植，衣着用些绿色、青色，日常多去公园和自然里走走；早睡早起、坚持阅读和学习，也都与木的生长之意相合，长期坚持会很受益。作为用神，这些建议可以当作日常的重点长期坚持，坚持得越久，越能感受到状态的改善。"
+    - "和木有关的生活方式：亲近草木、保持规律作息、给自己安排长期的学习计划；办公和居住环境明亮通透一些，会让人更舒展，心情也更开阔。它是你的用神，值得多花些心思经营，衣食住行里都可以有意识地加入一些。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH4-ELEMENT-MU-XI
+  slot: CH4-ELEMENT
+  when: {all: [{f: item.element, eq: 木}, {f: item.role, eq: 喜}]}
+  asserts: [{f: item.element, eq: 木}]
+  priority: 50
+  length: [80, 120]
+  polish_allowed: true
+  variants:
+    - "木的生活建议：居家可以多放绿植，衣着用些绿色、青色，日常多去公园和自然里走走；早睡早起、坚持阅读和学习，也都与木的生长之意相合，长期坚持会很受益。作为喜神，这些只是辅助，有空时适当加入即可，不必为此打乱原本的生活节奏。"
+    - "和木有关的生活方式：亲近草木、保持规律作息、给自己安排长期的学习计划；办公和居住环境明亮通透一些，会让人更舒展，心情也更开阔。它是你的喜神，不必刻意追求，顺手做到就好，和用神的建议搭配起来效果更好。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH4-ELEMENT-HUO-YONG
+  slot: CH4-ELEMENT
+  when: {all: [{f: item.element, eq: 火}, {f: item.role, eq: 用}]}
+  asserts: [{f: item.element, eq: 火}]
+  priority: 50
+  length: [80, 120]
+  polish_allowed: true
+  variants:
+    - "火的生活建议：多晒太阳，衣着可以加入红色、橙色等暖色；多参加聚会和交流，做运动让身体热起来，把想法说出来、写出来，也是在借火的力量。作为用神，这些建议可以当作日常的重点长期坚持，坚持得越久，越能感受到状态的改善。"
+    - "和火有关的生活方式：保持适度的社交和表达，居住环境采光好一些，培养一项能让你兴奋起来的爱好；心情明朗，本身就是火的状态。它是你的用神，值得多花些心思经营，衣食住行里都可以有意识地加入一些。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH4-ELEMENT-HUO-XI
+  slot: CH4-ELEMENT
+  when: {all: [{f: item.element, eq: 火}, {f: item.role, eq: 喜}]}
+  asserts: [{f: item.element, eq: 火}]
+  priority: 50
+  length: [80, 120]
+  polish_allowed: true
+  variants:
+    - "火的生活建议：多晒太阳，衣着可以加入红色、橙色等暖色；多参加聚会和交流，做运动让身体热起来，把想法说出来、写出来，也是在借火的力量。作为喜神，这些只是辅助，有空时适当加入即可，不必为此打乱原本的生活节奏。"
+    - "和火有关的生活方式：保持适度的社交和表达，居住环境采光好一些，培养一项能让你兴奋起来的爱好；心情明朗，本身就是火的状态。它是你的喜神，不必刻意追求，顺手做到就好，和用神的建议搭配起来效果更好。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH4-ELEMENT-TU-YONG
+  slot: CH4-ELEMENT
+  when: {all: [{f: item.element, eq: 土}, {f: item.role, eq: 用}]}
+  asserts: [{f: item.element, eq: 土}]
+  priority: 50
+  length: [80, 120]
+  polish_allowed: true
+  variants:
+    - "土的生活建议：生活节奏规律，三餐定时，衣着可以用黄色、米色、咖啡色；多做踏实具体的事，比如做饭、整理、园艺，让心安定下来。作为用神，这些建议可以当作日常的重点长期坚持，坚持得越久，越能感受到状态的改善。"
+    - "和土有关的生活方式：重视家和根基，经营稳定的人际关系，做事有计划、讲信用；周末可以去郊外、田园走走，接触土地会让人踏实。它是你的用神，值得多花些心思经营，衣食住行里都可以有意识地加入一些。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH4-ELEMENT-TU-XI
+  slot: CH4-ELEMENT
+  when: {all: [{f: item.element, eq: 土}, {f: item.role, eq: 喜}]}
+  asserts: [{f: item.element, eq: 土}]
+  priority: 50
+  length: [80, 120]
+  polish_allowed: true
+  variants:
+    - "土的生活建议：生活节奏规律，三餐定时，衣着可以用黄色、米色、咖啡色；多做踏实具体的事，比如做饭、整理、园艺，让心安定下来。作为喜神，这些只是辅助，有空时适当加入即可，不必为此打乱原本的生活节奏。"
+    - "和土有关的生活方式：重视家和根基，经营稳定的人际关系，做事有计划、讲信用；周末可以去郊外、田园走走，接触土地会让人踏实。它是你的喜神，不必刻意追求，顺手做到就好，和用神的建议搭配起来效果更好。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH4-ELEMENT-JIN-YONG
+  slot: CH4-ELEMENT
+  when: {all: [{f: item.element, eq: 金}, {f: item.role, eq: 用}]}
+  asserts: [{f: item.element, eq: 金}]
+  priority: 50
+  length: [80, 120]
+  polish_allowed: true
+  variants:
+    - "金的生活建议：环境保持简洁有序，衣着可以用白色、银色、灰色；给生活定一些清楚的规则和目标，做事讲求标准，定期断舍离也很适合你。作为用神，这些建议可以当作日常的重点长期坚持，坚持得越久，越能感受到状态的改善。"
+    - "和金有关的生活方式：练习专注和决断，学一门讲究精确的技能，适度的力量训练也与金相合；把边界划清楚、把杂物理干净，人会轻松很多。它是你的用神，值得多花些心思经营，衣食住行里都可以有意识地加入一些。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH4-ELEMENT-JIN-XI
+  slot: CH4-ELEMENT
+  when: {all: [{f: item.element, eq: 金}, {f: item.role, eq: 喜}]}
+  asserts: [{f: item.element, eq: 金}]
+  priority: 50
+  length: [80, 120]
+  polish_allowed: true
+  variants:
+    - "金的生活建议：环境保持简洁有序，衣着可以用白色、银色、灰色；给生活定一些清楚的规则和目标，做事讲求标准，定期断舍离也很适合你。作为喜神，这些只是辅助，有空时适当加入即可，不必为此打乱原本的生活节奏。"
+    - "和金有关的生活方式：练习专注和决断，学一门讲究精确的技能，适度的力量训练也与金相合；把边界划清楚、把杂物理干净，人会轻松很多。它是你的喜神，不必刻意追求，顺手做到就好，和用神的建议搭配起来效果更好。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH4-ELEMENT-SHUI-YONG
+  slot: CH4-ELEMENT
+  when: {all: [{f: item.element, eq: 水}, {f: item.role, eq: 用}]}
+  asserts: [{f: item.element, eq: 水}]
+  priority: 50
+  length: [80, 120]
+  polish_allowed: true
+  variants:
+    - "水的生活建议：衣着可以用黑色、深蓝色，居家可以有一处安静的角落；多读书、多旅行、多和不同的人交流，让信息和视野保持流动。作为用神，这些建议可以当作日常的重点长期坚持，坚持得越久，越能感受到状态的改善。"
+    - "和水有关的生活方式：保持好奇心和学习习惯，适当游泳或去水边散心，给自己留出独处思考的时间；灵活应变，本身就是水的智慧。它是你的用神，值得多花些心思经营，衣食住行里都可以有意识地加入一些。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH4-ELEMENT-SHUI-XI
+  slot: CH4-ELEMENT
+  when: {all: [{f: item.element, eq: 水}, {f: item.role, eq: 喜}]}
+  asserts: [{f: item.element, eq: 水}]
+  priority: 50
+  length: [80, 120]
+  polish_allowed: true
+  variants:
+    - "水的生活建议：衣着可以用黑色、深蓝色，居家可以有一处安静的角落；多读书、多旅行、多和不同的人交流，让信息和视野保持流动。作为喜神，这些只是辅助，有空时适当加入即可，不必为此打乱原本的生活节奏。"
+    - "和水有关的生活方式：保持好奇心和学习习惯，适当游泳或去水边散心，给自己留出独处思考的时间；灵活应变，本身就是水的智慧。它是你的喜神，不必刻意追求，顺手做到就好，和用神的建议搭配起来效果更好。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH4-ELEMENT-FALLBACK
+  slot: CH4-ELEMENT
+  when: {}
+  asserts: []
+  priority: 0
+  fallback: true
+  length: [20, 80]
+  polish_allowed: false
+  variants:
+    - "可以参考上表的颜色、方位与季节，把对应的元素自然地融入生活。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+# ======================= CH4-NOTE（固定文本，D3 (b)） =======================
+- id: CH4-NOTE-FIXED
+  slot: CH4-NOTE
+  when: {}
+  priority: 0
+  length: [1, 300]
+  variants:
+    - "以上内容是传统五行文化的生活化参考，不构成投资建议：本报告不推荐任何投资品种，也不推荐购买任何声称能改运的物品。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13

@@ -27,7 +27,6 @@ const read = (dir: string) =>
     .map((file) => ({ file, source: readFileSync(dir + file, 'utf8') }));
 const REAL_DIR = fileURLToPath(new URL('../../../rules/texts/', import.meta.url));
 const real = parseTextsFiles(read(REAL_DIR));
-const fixture = parseTextsFiles(read(fileURLToPath(new URL('./fixtures/texts/', import.meta.url))));
 const chart = computeChart(
   loadCases().cases.find((c) => c.id === 'C16')?.input as never,
   Date.parse('2026-10-30T00:00:00+08:00'),
@@ -82,13 +81,8 @@ describe('第 1 批真实素材（开发期统计 draft）', () => {
     expect(r.gaps.filter((g) => [1, 2, 6].includes(chOf(g.slot)))).toEqual([]);
     expect(r.fallbackProblems.filter((p) => [1, 2, 6].includes(chOf(p)))).toEqual([]);
   });
-  it('缺口清单只在尚未写素材的第 4 章，且等于这些槽位的全部组合', () => {
-    const chapters = [...new Set(r.gaps.map((g) => chOf(g.slot)))].sort();
-    expect(chapters).toEqual([4]);
-    const expected = r.slots
-      .filter((s) => [4].includes(s.chapter))
-      .reduce((n, s) => n + s.combos, 0);
-    expect(r.gaps).toHaveLength(expected);
+  it('第 1–3 批素材写完：没有任何缺口', () => {
+    expect(r.gaps).toEqual([]);
   });
   it('只统计 approved（生产口径）：全部为缺口', () => {
     const a = computeCoverage(real, base, ['approved']);
@@ -105,11 +99,6 @@ describe('故意删素材 / fixture', () => {
       { slot: 'CH1-DAYMASTER', combo: { 'day.stem': '甲' } },
       { slot: 'CH6-HEAD', combo: { 'item.stem_ten_god': '七杀', 'item.tier': '向好' } },
     ]);
-  });
-  it('fixture 只有兜底：第 4 章全部组合都是缺口（兜底不计覆盖），兜底与固定文本无问题', () => {
-    const r = computeCoverage(fixture, base, ALL);
-    for (const s of r.slots.filter((x) => x.chapter === 4)) expect(s.covered, s.slot).toBe(0);
-    expect(r.fallbackProblems.filter((p) => chOf(p) === 4)).toEqual([]);
   });
   it('兜底唯一性：同槽位两条兜底报问题', () => {
     const fb = real.find((e) => e.id === 'CH1-DAYMASTER-FALLBACK') as TextEntry;

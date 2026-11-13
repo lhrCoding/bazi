@@ -1,4 +1,4 @@
-# 测试素材：第 4 章最小集合 + CH3-SHENSHA-ANY（发布测试用；见同目录 README）。第 3 章必需槽位已有真实素材（rules/texts/ch03_persona.yaml，第 2 批），2026-11-13 从夹具移除
+# 测试素材：CH3-SHENSHA-ANY、CH5-REL-TEST（发布测试用；见同目录 README）。第 3、4 章已有真实素材（第 2、3 批），2026-11-13 从夹具移除
 - id: CH3-SHENSHA-ANY
   slot: CH3-SHENSHA
   when: { f: shensha_first, exists: true }
@@ -9,35 +9,14 @@
   author: test
   reviewer: null
   updated: 2026-11-11
-- id: CH4-WHY-FALLBACK
-  slot: CH4-WHY
-  when: {}
-  priority: 0
-  fallback: true
+- id: CH5-REL-TEST
+  slot: CH5-REL
+  # 条件永远不成立：只供发布测试凑足第二条条目，不会进入任何真实报告
+  when: { f: item.relations, contains: { type: 冲, a: 测试支, b: 测试支 } }
+  priority: 50
   length: [1, 300]
-  variants: ['【测试素材】用神{yongshen.yong}、喜神{yongshen.xi1}。']
+  variants: ['【测试素材】大运冲合测试一。', '【测试素材】大运冲合测试二。']
   status: draft
   author: test
   reviewer: null
-  updated: 2026-11-11
-- id: CH4-ELEMENT-FALLBACK
-  slot: CH4-ELEMENT
-  when: {}
-  priority: 0
-  fallback: true
-  length: [1, 300]
-  variants: ['【测试素材】{item.element}（{item.role}）的生活建议。']
-  status: draft
-  author: test
-  reviewer: null
-  updated: 2026-11-11
-- id: CH4-NOTE-FIXED
-  slot: CH4-NOTE
-  when: {}
-  priority: 0
-  length: [1, 300]
-  variants: ['【测试素材】这里不推荐具体投资品种，也不推荐购买任何物品。']
-  status: draft
-  author: test
-  reviewer: null
-  updated: 2026-11-11
+  updated: 2026-11-13

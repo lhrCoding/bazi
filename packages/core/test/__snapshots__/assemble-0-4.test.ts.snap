@@ -2,20 +2,7 @@
 
 exports[`C01 / C12 / C14 / C04：第 0–4 章结构与顺序 > C01 结构快照 1`] = `
 {
-  "events": [
-    {
-      "slot": "CH4-WHY",
-      "type": "fallback_used",
-    },
-    {
-      "slot": "CH4-ELEMENT",
-      "type": "fallback_used",
-    },
-    {
-      "slot": "CH4-ELEMENT",
-      "type": "fallback_used",
-    },
-  ],
+  "events": [],
   "shape": [
     [
       "table:chart",
@@ -62,20 +49,7 @@ exports[`C01 / C12 / C14 / C04：第 0–4 章结构与顺序 > C01 结构快照
 
 exports[`C01 / C12 / C14 / C04：第 0–4 章结构与顺序 > C04 结构快照 1`] = `
 {
-  "events": [
-    {
-      "slot": "CH4-WHY",
-      "type": "fallback_used",
-    },
-    {
-      "slot": "CH4-ELEMENT",
-      "type": "fallback_used",
-    },
-    {
-      "slot": "CH4-ELEMENT",
-      "type": "fallback_used",
-    },
-  ],
+  "events": [],
   "shape": [
     [
       "table:chart",
@@ -121,20 +95,7 @@ exports[`C01 / C12 / C14 / C04：第 0–4 章结构与顺序 > C04 结构快照
 
 exports[`C01 / C12 / C14 / C04：第 0–4 章结构与顺序 > C12 结构快照 1`] = `
 {
-  "events": [
-    {
-      "slot": "CH4-WHY",
-      "type": "fallback_used",
-    },
-    {
-      "slot": "CH4-ELEMENT",
-      "type": "fallback_used",
-    },
-    {
-      "slot": "CH4-ELEMENT",
-      "type": "fallback_used",
-    },
-  ],
+  "events": [],
   "shape": [
     [
       "table:chart",
@@ -181,20 +142,7 @@ exports[`C01 / C12 / C14 / C04：第 0–4 章结构与顺序 > C12 结构快照
 
 exports[`C01 / C12 / C14 / C04：第 0–4 章结构与顺序 > C14 结构快照 1`] = `
 {
-  "events": [
-    {
-      "slot": "CH4-WHY",
-      "type": "fallback_used",
-    },
-    {
-      "slot": "CH4-ELEMENT",
-      "type": "fallback_used",
-    },
-    {
-      "slot": "CH4-ELEMENT",
-      "type": "fallback_used",
-    },
-  ],
+  "events": [],
   "shape": [
     [
       "table:chart",
