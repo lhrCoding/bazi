@@ -4,7 +4,7 @@
  * - cases.json：有出生地的案例（C08、C09）比对 derived 的真太阳时、经度修正、均时差；
  *   没有出生地的案例一律 tst_status = 未校正、true_solar_time = null、当地时间 = 北京标准时间。
  * - 未校正时离时辰边界 < 30 分钟的提示标记（按北京标准时间判断，夏令时期间先换成标准时）。
- * - 测试用出生地代码与临时地区表（core/geo）一致。
+ * - 测试用出生地代码能在出生地表（core/geo）查到，经度与 cases.json 相差 ≤ 0.05°。
  */
 import { describe, expect, it } from 'vitest';
 import { IANAZone } from 'luxon';
@@ -196,20 +196,20 @@ describe('其他', () => {
   });
 });
 
-describe('临时地区表（core/geo，正式表见 T40）', () => {
-  it('测试用出生地代码都能查到，经度与 cases.json 一致', () => {
+describe('出生地表（core/geo，T40 正式表；详细测试见 places.test.ts）', () => {
+  it('测试用出生地代码都能查到，经度与 cases.json 相差 ≤ 0.05°（T40 验收精度；正式表以民政部 + Wikidata 为准）', () => {
     for (const [name, { code, longitude }] of Object.entries(TEST_PLACE_CODES)) {
       const p = findPlace(code);
       expect(p, name).not.toBeNull();
-      expect(p?.longitude).toBe(longitude);
+      expect(Math.abs((p?.longitude ?? 0) - longitude)).toBeLessThanOrEqual(0.05);
     }
   });
 
-  it('代码唯一、6 位数字；经度在范围内且精度 0.01°；时区有效', () => {
+  it('代码唯一（6 位数字或 X-id）；经度在范围内且精度 0.01°；时区有效', () => {
     const places = listPlaces();
     expect(new Set(places.map((p) => p.code)).size).toBe(places.length);
     for (const p of places) {
-      expect(p.code).toMatch(/^\d{6}$/);
+      expect(p.code).toMatch(/^(\d{6}|X-\d+)$/); // 行政区划代码，或台湾 / 海外城市 X-<GeoNames id>
       expect(Math.abs(p.longitude)).toBeLessThanOrEqual(180);
       expect(Math.round(p.longitude * 100) / 100).toBe(p.longitude);
       expect(IANAZone.isValidZone(p.timezone)).toBe(true);

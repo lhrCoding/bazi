@@ -11,3 +11,5 @@ design
 .claude
 .history
 *.md
+# 生成文件（scripts/geo/build-places.ts），不格式化
+packages/core/src/geo/places.data.ts
