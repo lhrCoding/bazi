@@ -1592,3 +1592,94 @@ a {
   border-radius: 6px;
   padding: 10px 14px;
 }
+
+/* ===== 五行力量图（共用，UI.md §8 图一） ===== */
+.power-chart {
+  display: block;
+  max-width: 520px;
+  margin: 0 auto;
+  font-family: var(--font-sans);
+  overflow: visible;
+}
+.power-chart .pc-el {
+  font-family: var(--font-serif);
+  font-size: 17px;
+  font-weight: 600;
+}
+.power-chart .pc-sub {
+  font-size: 10.5px;
+  fill: var(--color-ink-3);
+}
+.power-chart .pc-sub.day {
+  fill: var(--color-zhu);
+}
+.power-chart .pc-track {
+  fill: var(--color-paper-3);
+}
+.power-chart .pc-dayframe {
+  fill: none;
+  stroke: var(--color-zhu);
+  stroke-width: 1;
+}
+.power-chart .pc-pct {
+  font-size: 13px;
+  fill: var(--color-ink-2);
+  font-variant-numeric: tabular-nums;
+}
+.power-chart .pc-tag {
+  fill: none;
+  stroke: var(--color-line);
+}
+.power-chart .pc-tag-用 {
+  fill: var(--color-zhu);
+  stroke: var(--color-zhu);
+}
+.power-chart .pc-tag-喜 {
+  stroke: var(--color-zhu);
+}
+.power-chart .pc-tag-忌 {
+  stroke: var(--color-ink-3);
+}
+.power-chart .pc-tag-闲 {
+  stroke: none;
+}
+.power-chart .pc-tagt {
+  font-size: 11px;
+  fill: var(--color-ink-3);
+}
+.power-chart .pc-tagt-用 {
+  fill: #fbf3ec;
+}
+.power-chart .pc-tagt-喜 {
+  fill: var(--color-zhu);
+}
+.rp-fig {
+  margin: 8px 0 16px;
+  padding: 14px 12px 4px;
+  background: var(--color-paper-2);
+  border: 1px solid var(--color-line);
+  border-radius: 6px;
+}
+.rp-figttl {
+  font-family: var(--font-serif);
+  font-size: 14px;
+  color: var(--color-ink-2);
+  margin-bottom: 8px;
+}
+.rp-line {
+  display: block;
+  white-space: nowrap;
+}
+/* 第〇章命盘表：窄屏（iPhone SE 375）完整显示——行名可换行、藏干小字逐行 */
+.rp-table-chart th,
+.rp-table-chart td {
+  padding: 5px 3px;
+}
+.rp-table-chart tbody th {
+  white-space: normal;
+  width: 2.6em;
+  line-height: 1.35;
+}
+.rp-table-chart tbody td {
+  font-size: 12px;
+}

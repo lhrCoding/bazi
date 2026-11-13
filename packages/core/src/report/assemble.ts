@@ -13,6 +13,7 @@ import type { Gan, Zhi } from '../bazi/ganzhi';
 import type { TenGod } from '../bazi/ten-gods';
 import type { Chart } from '../bazi/types';
 import type { Analysis, JishenName, WuXing } from '../rules/types';
+import { godGroupOf } from '../rules/strength-power';
 import { RULES_VERSION } from '../rules/version';
 import type { TextEntry } from '../texts/schema';
 import type { Ctx } from './ctx';
@@ -61,6 +62,8 @@ export interface ChartBlock {
   /** power：图1 五行力量；dayun：图2 大运时间轴；liunian：图3 流年趋势线 */
   kind: 'power' | 'dayun' | 'liunian';
   data: Record<string, unknown>[];
+  /** 固定图注（图一：UI.md §8，解释图中占比与正文百分比两套口径） */
+  caption?: string;
 }
 export type Block = ParaBlock | NoticeBlock | TableBlock | ChartBlock | YearCard;
 
@@ -374,18 +377,47 @@ export function altPossibility(analysis: Analysis): string | null {
   return `另一种可能：若出生于${hours.join('、')}，结论会偏向${other[0]?.direction}。`;
 }
 
+/** 十神组 → 读者名（report-sections.md §0） */
+const GOD_READER: Readonly<Record<string, string>> = {
+  比劫: '比劫',
+  印: '印星',
+  食伤: '食伤',
+  财: '财星',
+  官杀: '官杀',
+};
+
+/** 图一每行：五行、占比（含日主）、十神组读者名、喜忌角色、是否日主所在五行（UI.md §8 图一） */
+export function powerChartData(analysis: Analysis): Record<string, unknown>[] {
+  const dm = analysis.strength.day_master.element;
+  const ys = analysis.yongshen;
+  const roleOf = (w: WuXing): '用' | '喜' | '忌' | '闲' =>
+    w === ys.yong ? '用' : ys.xi.includes(w) ? '喜' : ys.ji.includes(w) ? '忌' : '闲';
+  return (['木', '火', '土', '金', '水'] as const).map((w) => ({
+    element: w,
+    // 报告中的百分比一律取整（report-sections.md §0）
+    pct: Math.round(analysis.strength.power_display_pct[w]),
+    god: GOD_READER[godGroupOf(dm, w)] as string,
+    role: roleOf(w),
+    day: w === dm,
+  }));
+}
+
+export function powerCaption(ctx: Ctx): string {
+  return (
+    `红框为日主所在五行。图中占比包含日主本身；正文中的百分比不含日主，所以比劫在正文中为 ${ctx.gods.比劫_pct}%。` +
+    `同党（帮扶你的力量）占 ${ctx.strength.S_pct}%，异党（消耗你的力量）占 ${ctx.strength.yidang_pct}%。`
+  );
+}
+
 export function chapter1(b: ReportBuilder): Chapter {
   b.startChapter();
-  const { analysis } = b.input;
+  const { analysis, ctx } = b.input;
   const blocks: Block[] = [...b.slot('CH1-DAYMASTER', 1), ...b.slot('CH1-MONTH', 1)];
   blocks.push({
     type: 'chart',
     kind: 'power',
-    data: (['木', '火', '土', '金', '水'] as const).map((w) => ({
-      element: w,
-      // 报告中的百分比一律取整（report-sections.md §0）
-      pct: Math.round(analysis.strength.power_display_pct[w]),
-    })),
+    data: powerChartData(analysis),
+    caption: powerCaption(ctx),
   });
   blocks.push(...b.slot('CH1-BALANCE', 1));
   const alt = altPossibility(analysis);

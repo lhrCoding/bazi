@@ -1,9 +1,10 @@
 /**
  * 报告块渲染（TASKS T54；UI.md §7.3）：para（依据行、古籍引文、结论框、题签、小标题）、notice、table。
- * 图表（chart）与逐年卡片（yearCard）在 T55 / T56 实现，这里先给占位组件。
+ * 图一五行力量（T55）用共用 SVG 组件；图二、图三与逐年卡片（yearCard）在 T56 实现，这里先给占位组件。
  * 所有文字来自报告 JSON，前端不增删内容。
  */
 import type { Block, ParaBlock, TableBlock } from '@zhiming/core/report';
+import { PowerChart, type PowerRow } from '../../power-chart';
 
 /** 用小标题样式显示的槽位（第二章各角色、第七章各领域） */
 const HEADED = /^CH2-ROLE-|^CH7-/;
@@ -56,7 +57,13 @@ function Table({ b }: { b: TableBlock }) {
                   </th>
                 ) : (
                   <td key={j} className={b.kind === 'chart' && j === 3 ? 'day' : undefined}>
-                    {c}
+                    {b.kind === 'chart' && c.includes('、')
+                      ? c.split('、').map((x) => (
+                          <span key={x} className="rp-line">
+                            {x}
+                          </span>
+                        ))
+                      : c}
                   </td>
                 ),
               )}
@@ -81,14 +88,18 @@ export function BlockView({ b }: { b: Block }) {
     case 'table':
       return <Table b={b} />;
     case 'chart':
-      // T55（图一）/ T56（图二、图三）替换为 SVG 图表
+      if (b.kind === 'power')
+        return (
+          <figure className="rp-fig" data-testid="power-chart">
+            <figcaption className="rp-figttl">图一　五行力量</figcaption>
+            <PowerChart rows={b.data as unknown as PowerRow[]} title="图一 五行力量" />
+            {b.caption && <p className="rp-notice">{b.caption}</p>}
+          </figure>
+        );
+      // T56：图二 大运时间轴、图三 流年趋势
       return (
         <div className="rp-chart-ph" data-chart={b.kind}>
-          {b.kind === 'power'
-            ? '图一 五行力量'
-            : b.kind === 'dayun'
-              ? '图二 大运时间轴'
-              : '图三 流年趋势'}
+          {b.kind === 'dayun' ? '图二 大运时间轴' : '图三 流年趋势'}
         </div>
       );
     default:

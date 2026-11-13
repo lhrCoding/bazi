@@ -99,3 +99,25 @@ test('篡改载荷 / 缺载荷 → 链接无效提示，不显示报告', async 
   await expect(page.getByTestId('report-error')).toContainText('链接不完整');
   await expect(page.getByTestId('cover')).toHaveCount(0);
 });
+
+test.describe('iPhone SE 宽度（375×667）', () => {
+  test.use({ viewport: { width: 375, height: 667 } });
+  test('第〇章命盘表与图一完整显示，无横向滚动', async ({ page, request }) => {
+    for (const c of [cases[0]!, cases.find((x) => !x.hourKnown)!]) {
+      await page.goto(await paidLink(request, c.payload));
+      const table = page.locator('#ch0 table').first();
+      await expect(table).toBeVisible();
+      const fits = await table.evaluate(
+        (t) =>
+          (t.parentElement as HTMLElement).scrollWidth <=
+          (t.parentElement as HTMLElement).clientWidth,
+      );
+      expect(fits, c.id).toBe(true);
+      const chart = page.getByTestId('power-chart');
+      await expect(chart.locator('svg g[data-element]')).toHaveCount(5);
+      await expect(chart.locator('g[data-day="true"]')).toHaveCount(1);
+      await expect(chart).toContainText('红框为日主所在五行');
+      expect(await noHScroll(page), c.id).toBe(true);
+    }
+  });
+});

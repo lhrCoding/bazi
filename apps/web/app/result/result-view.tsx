@@ -10,6 +10,7 @@ import { decodePayload, encodePayload, type PayloadV1 } from '@zhiming/core/birt
 import type { FreeResult } from '@zhiming/core/report';
 import { echoText } from '../birth-form-logic';
 import { LegalFooter } from '../legal-footer';
+import { PowerChart } from '../power-chart';
 import { detectEnv, type PayEnv } from '../pay-env';
 import type { Channel } from '../../server/orders/schema';
 import { PaySheet } from './pay-sheet';
@@ -25,13 +26,6 @@ const EL_CLASS: Readonly<Record<string, string>> = {
   土: 'e-tu',
   金: 'e-jin',
   水: 'e-shui',
-};
-const EL_VAR: Readonly<Record<string, string>> = {
-  木: 'var(--color-mu)',
-  火: 'var(--color-huo)',
-  土: 'var(--color-tu)',
-  金: 'var(--color-jin)',
-  水: 'var(--color-shui)',
 };
 const GAN_EL: Readonly<Record<string, string>> = {
   甲: '木',
@@ -227,28 +221,10 @@ function Power({ r }: { r: FreeResult }) {
       <h2>
         <span className="no">二</span>五行强弱<small>含日主本身</small>
       </h2>
-      <div className="bars" role="list">
-        {data.map(({ element, pct }) => {
-          const day = element === dayElement;
-          return (
-            <div
-              key={element}
-              className={`bar${day ? ' is-day' : ''}`}
-              role="listitem"
-              aria-label={`${element} ${pct}%`}
-            >
-              <span className={`k ${EL_CLASS[element]}`}>
-                {element}
-                {day && <small>日主</small>}
-              </span>
-              <span className="t">
-                {pct > 0 && <i style={{ width: `${pct}%`, background: EL_VAR[element] }} />}
-              </span>
-              <span className="v">{pct}%</span>
-            </div>
-          );
-        })}
-      </div>
+      <PowerChart
+        title="五行强弱"
+        rows={data.map(({ element, pct }) => ({ element, pct, day: element === dayElement }))}
+      />
       <p className="cap">
         帮扶你的力量（同党）占 <span className="hl">{supportPct}%</span>，消耗你的力量（异党）占{' '}
         {100 - supportPct}%。
