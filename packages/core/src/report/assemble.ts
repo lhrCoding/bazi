@@ -220,12 +220,18 @@ export class ReportBuilder {
     this.quotesInChapter = 0;
   }
 
-  /** 素材槽位 → 段落块（0–k 个）。basisItem 给依据用的 item（默认同 item） */
+  /**
+   * 素材槽位 → 段落块（0–k 个）。basisItem 给依据用的 item（默认同 item）；
+   * 也可传函数，按选中的条目决定依据 item（CH7-HEALTH：每条健康段对应它自己触发的那个五行）。
+   */
   slot(
     slotId: string,
     k: number,
     item?: Readonly<Record<string, unknown>>,
-    basisItem = item,
+    basisItem:
+      | Readonly<Record<string, unknown>>
+      | ((e: TextEntry) => Readonly<Record<string, unknown>> | undefined)
+      | undefined = item,
   ): ParaBlock[] {
     this.input.onSlot?.(slotId, item === undefined ? this.evalCtx : { ...this.evalCtx, item });
     const pick = selectSlot(this.input.library, slotId, this.evalCtx, k, item);
@@ -235,7 +241,9 @@ export class ReportBuilder {
       if (slotDef(slotId)?.required) this.events.push({ type: 'slot_empty', slot: slotId });
       return [];
     }
-    return pick.entries.map((e) => this.para(slotId, e, item, basisItem));
+    return pick.entries.map((e) =>
+      this.para(slotId, e, item, typeof basisItem === 'function' ? basisItem(e) : basisItem),
+    );
   }
 
   private para(
@@ -727,7 +735,12 @@ export function chapter7(b: ReportBuilder): Chapter {
   if (ctx.liunian.some((l) => l.relations.some((r) => r.b === '日支')))
     blocks.push(...b.slot('CH7-LOVE-YEARS', 1));
   const ex = healthExtremes(ctx);
-  blocks.push(...b.slot('CH7-HEALTH', Math.max(1, Math.min(2, ex.length)), undefined, ex[0]));
+  // 每条健康段的依据对应它自己触发的五行（条目 when 引用 power_pct.<五行>）；五行均衡时依据为 undefined
+  blocks.push(
+    ...b.slot('CH7-HEALTH', Math.max(1, Math.min(2, ex.length)), undefined, (e) =>
+      ex.find((x) => JSON.stringify(e.when).includes(`power_pct.${x.element}`)),
+    ),
+  );
   blocks.push(...b.slot('CH7-HEALTH-END', 1));
   return { id: 7, title: CHAPTER_TITLES[7] as string, blocks };
 }

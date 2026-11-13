@@ -265,7 +265,8 @@ export function basisFor(
       return hits.length ? hits.join('、') : null;
     }
     case 'CH7-HEALTH': {
-      if (!item) throw new RenderError('CH7-HEALTH 依据需要 item（五行）');
+      // 五行均衡（没有 > 40% 或 < 5% 的五行）时选「均衡」条目，没有对应五行
+      if (!item) return '五行占比均在 5%～40% 之间，较为均衡';
       return `${item.element}占 ${pp[String(item.element)]}%`;
     }
     default:

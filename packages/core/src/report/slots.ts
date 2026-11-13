@@ -23,7 +23,7 @@ export interface SlotDef {
   required: boolean;
   source: SlotSource;
   loop: boolean;
-  /** 非循环但由拼装代码传入单个 item（如 CH5-TRANSITION 的下一步大运），素材可引用 item.* 字段 */
+  /** 非循环但由拼装代码传入单个 item（CH5-TRANSITION 的下一步大运、CH7-CAREER-NOW 的当前大运），素材可引用 item.* 字段 */
   itemContext?: true;
   /** md「维度」列原文 */
   dimension: string;
@@ -725,6 +725,7 @@ export const SLOTS: readonly SlotDef[] = [
     required: false,
     source: 'material',
     loop: false,
+    itemContext: true,
     dimension: '当前大运 stem_god（5）× tier_group（3）',
     dimensionFields: null,
     modifierFields: [],
