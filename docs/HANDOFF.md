@@ -127,7 +127,10 @@
 | E2E（`npm run e2e -w @zhiming/web`）：Playwright 1.65 自带内核不支持本机 macOS 12，暂用系统 Chrome（`channel: 'chrome'`）；CI 设 `PW_CHANNEL` 用自带 chromium。webServer 用 `next start`，有 standalone 警告但可用 | T64 |
 | better-sqlite3 用 12.11.1：13.x 要求 Node ≥ 22，本机是 Node 20.18.1（CI / 生产按架构用 Node 22） | 本机升级 Node 22 后可升级 |
 | standalone 部署需带上 `server/orders/migrations/*.sql`（已在 next.config.ts outputFileTracingIncludes 声明；better-sqlite3 在 next start 下已由 E2E 验证可用），Docker 构建时再确认一次 | T60 部署 |
-| `/r/<订单号>` 目前是占位页（只有标题与页脚） | T53 报告页 |
+| 报告页图表（图一 / 二 / 三）与逐年卡片目前是占位块 | T55、T56 |
+| 报告页「保存为长图」按钮暂为禁用 | T58 |
+| 术语加注「（……）」引擎输出为普通括号，前端无法区分，未按 UI.md §7.3 做小号灰字；需引擎输出标记（如段落里附 annotations 位置） | 有空时 / 素材定稿前 |
+| 报告封面回显不含出生地名称（报告 JSON 不带地名），选了出生地时只写「已按出生地校正真太阳时」 | 视需要 |
 | 支付返回页未做画板 F「支付没有完成」：渠道取消支付后回到返回页，目前显示「确认中」→ 30 秒后「暂时没有收到支付结果」；接真实渠道时按 return 参数区分 | T49–T51 |
 | 电脑端二维码只预留了位置（mock 走跳转），二维码图片渲染随微信 Native 实现 | T50 |
 | 微信内「微信支付」需 openid 静默授权，目前点了会提示「后续版本接入」（mock 模式下直接走 mock） | T49 |
