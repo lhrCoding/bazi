@@ -30,7 +30,16 @@ export interface FreeResult {
     /** 真太阳时说明（选了出生地）或未校正灰字；三柱为 null */
     tstNotice: string | null;
     /** 交节日无时辰：交节时刻（北京时间）与当前采用的一侧；否则 null */
-    jieqi: { time: string; name: string; side: 'before' | 'after' | null; prompt: string } | null;
+    jieqi: {
+      time: string;
+      name: string;
+      side: 'before' | 'after' | null;
+      prompt: string;
+      /** 选「之前 / 之后」时的年柱、月柱（由调用方另排两次盘得到，T45 结果页按钮上直接写出） */
+      options: { before: [string, string]; after: [string, string] } | null;
+    } | null;
+    /** 所选出生地全称（输入回显、真太阳时说明用）；未选为 null */
+    placeName: string | null;
   };
   power: {
     data: { element: WuXing; pct: number }[];
@@ -41,6 +50,12 @@ export interface FreeResult {
   };
   strength: {
     level: string;
+    /** 从格 / 专旺子类型（如「从财」）；结果页把四档刻度换成「从财格」标签 */
+    special: string | null;
+    /** 三个「得」：得令、得地、得势（天干帮手个数） */
+    deLing: boolean;
+    deDi: boolean;
+    deShi: number;
     sentence: string;
     /** 三柱置信度灰字；有时辰或置信「高」为 null */
     confidenceNote: string | null;
@@ -69,7 +84,17 @@ export const FREE_RESULT_KEYS: readonly (keyof FreeResult)[] = [
 
 const ORDER = ['木', '火', '土', '金', '水'] as const;
 
-export function buildFreeResult(chart: Chart, analysis: Analysis): FreeResult {
+export interface FreeResultExtra {
+  /** 交节日无时辰：另按「之前 / 之后」排的盘 */
+  jieqiAlt?: { before: Chart; after: Chart };
+  placeName?: string | null;
+}
+
+export function buildFreeResult(
+  chart: Chart,
+  analysis: Analysis,
+  extra: FreeResultExtra = {},
+): FreeResult {
   const st = analysis.strength;
   const ys = analysis.yongshen;
   const keys = ['year', 'month', 'day', 'hour'] as const;
@@ -100,6 +125,18 @@ export function buildFreeResult(chart: Chart, analysis: Analysis): FreeResult {
           name: jb.name,
           side: chart.jieqi_side,
           prompt: `你出生当天 ${jb.time.slice(11, 16)} 交节（${jb.name}），若知道出生在此之前或之后，结果会更准。`,
+          options: extra.jieqiAlt
+            ? {
+                before: [
+                  extra.jieqiAlt.before.pillars.year,
+                  extra.jieqiAlt.before.pillars.month,
+                ] as [string, string],
+                after: [extra.jieqiAlt.after.pillars.year, extra.jieqiAlt.after.pillars.month] as [
+                  string,
+                  string,
+                ],
+              }
+            : null,
         }
       : null;
 
@@ -121,6 +158,7 @@ export function buildFreeResult(chart: Chart, analysis: Analysis): FreeResult {
       ) as FreeResult['pillars']['hidden'],
       tstNotice,
       jieqi,
+      placeName: extra.placeName ?? null,
     },
     power: {
       data: ORDER.map((w) => ({ element: w, pct: Math.round(st.power_display_pct[w]) })),
@@ -130,6 +168,10 @@ export function buildFreeResult(chart: Chart, analysis: Analysis): FreeResult {
     },
     strength: {
       level: st.level,
+      special: st.special,
+      deLing: st.de_ling,
+      deDi: st.de_di,
+      deShi: st.de_shi,
       sentence: `${dayGan}${dayEl}生于${chart.pillars.month[1]}月，${deLing}，帮扶力量占 ${supportPct}%，属${st.level}。`,
       confidenceNote,
     },

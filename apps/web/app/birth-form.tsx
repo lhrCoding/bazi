@@ -5,11 +5,12 @@
  * 出生信息只出现在 # 之后（片段不发给服务器）。
  */
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
-import { encodePayload } from '@zhiming/core/birth';
+import { useEffect, useState } from 'react';
+import { decodePayload, encodePayload } from '@zhiming/core/birth';
 import {
   dayOptions,
   EMPTY_FORM,
+  fromPayload,
   errorField,
   hints,
   hourOptions,
@@ -66,6 +67,26 @@ export function BirthForm({ lunar, thisYear }: { lunar: LunarTable; thisYear: nu
   const [sheet, setSheet] = useState(false);
   const [busy, setBusy] = useState(false);
   const router = useRouter();
+
+  // 从结果页「修改」回来：/#<载荷> 预填（片段不发给服务器）；出生地全称另查
+  useEffect(() => {
+    const d = decodePayload(window.location.hash.slice(1));
+    if (!d.ok) return;
+    const st = fromPayload(d.payload);
+    // 片段只在水合后可读（服务端渲染没有 location），挂载时读一次属于同步外部状态
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setS(st);
+    const code = st.place?.code;
+    if (code)
+      void fetch(`/api/places?code=${encodeURIComponent(code)}`)
+        .then((r) =>
+          r.ok ? (r.json() as Promise<{ items: { place: FormState['place'] }[] }>) : null,
+        )
+        .then((b) => {
+          const place = b?.items[0]?.place;
+          if (place) setS((prev) => ({ ...prev, place }));
+        });
+  }, []);
   const h = hints(s, lunar);
 
   const update = (patch: Partial<FormState>, clear: (keyof FormErrors)[]) => {

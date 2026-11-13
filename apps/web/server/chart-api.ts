@@ -9,6 +9,7 @@ import type { Logger } from 'pino';
 import { z } from 'zod';
 import { analyze, computeChart } from '@zhiming/core';
 import { decodePayload, payloadToBirthInput, PayloadError } from '@zhiming/core/birth';
+import { findPlace } from '@zhiming/core/geo';
 import { buildFreeResult } from '@zhiming/core/report';
 import { ApiError, handleApiError } from './errors';
 import { clientIp, type RateLimiter } from './rate-limit';
@@ -36,8 +37,19 @@ export async function handleChart(req: Request, deps: ChartDeps): Promise<Respon
     const body = BodySchema.parse(json);
     const d = decodePayload(body.payload);
     if (!d.ok) throw new PayloadError(d.code);
-    const chart = computeChart(payloadToBirthInput(d.payload), deps.now());
-    return Response.json(buildFreeResult(chart, analyze(chart)), {
+    const input = payloadToBirthInput(d.payload);
+    const now = deps.now();
+    const chart = computeChart(input, now);
+    // 交节日无时辰：另排「之前 / 之后」两盘，结果页按钮上直接写出对应年月柱（UI.md §5.3）
+    const jieqiAlt =
+      !chart.hourKnown && chart.jieqi_on_birthday
+        ? {
+            before: computeChart({ ...input, jieqiChoice: 'before' }, now),
+            after: computeChart({ ...input, jieqiChoice: 'after' }, now),
+          }
+        : undefined;
+    const placeName = input.placeCode ? (findPlace(input.placeCode)?.name ?? null) : null;
+    return Response.json(buildFreeResult(chart, analyze(chart), { jieqiAlt, placeName }), {
       headers: { 'cache-control': 'no-store' },
     });
   } catch (e) {

@@ -106,6 +106,22 @@ describe('正常返回', () => {
     expect(r.nohourNotice).toContain('可信度为「低」');
   });
 
+  it('T45：交节两侧年月柱、出生地全称、三个「得」', async () => {
+    const r19 = (await call({ payload: payloadOf('C19') })).json as FreeResult;
+    const opts = r19.pillars.jieqi?.options;
+    expect(opts).not.toBeNull();
+    expect(opts?.before[0]).not.toBe(opts?.after[0]); // 立春前后年柱不同
+    expect(opts?.before[1]).not.toBe(opts?.after[1]);
+    expect(r19.pillars.placeName).toBeNull();
+    const r08 = (await call({ payload: payloadOf('C08') })).json as FreeResult;
+    expect(r08.pillars.placeName).toMatch(/^新疆维吾尔自治区乌鲁木齐市/);
+    expect(r08.pillars.jieqi).toBeNull();
+    const r16 = (await call({ payload: payloadOf('C16') })).json as FreeResult;
+    expect(r16.strength).toMatchObject({ deLing: false, special: null });
+    expect(typeof r16.strength.deDi).toBe('boolean');
+    expect(Number.isInteger(r16.strength.deShi)).toBe(true);
+  });
+
   it('三柱高置信（C18）：置信度灰字为空', async () => {
     const r = (await call({ payload: payloadOf('C18') })).json as FreeResult;
     expect(r.strength.confidenceNote).toBeNull();

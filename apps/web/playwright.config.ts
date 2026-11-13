@@ -20,5 +20,6 @@ export default defineConfig({
     url: `http://127.0.0.1:${PORT}`,
     timeout: 240_000,
     reuseExistingServer: !process.env.CI,
+    env: { CHART_RATE_LIMIT: '10000' },
   },
 });

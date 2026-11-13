@@ -1,0 +1,102 @@
+[
+  {
+    "id": "C01",
+    "payload": "eyJ2IjoxLCJjIjoicyIsImQiOiIyMDI0LTAyLTA0IiwibHAiOjAsInQiOiIxNjoxMCIsImciOiJtIiwicCI6bnVsbCwiaiI6bnVsbH0",
+    "hourKnown": true
+  },
+  {
+    "id": "C02",
+    "payload": "eyJ2IjoxLCJjIjoicyIsImQiOiIyMDI0LTAyLTA0IiwibHAiOjAsInQiOiIxNjo0NSIsImciOiJmIiwicCI6bnVsbCwiaiI6bnVsbH0",
+    "hourKnown": true
+  },
+  {
+    "id": "C03",
+    "payload": "eyJ2IjoxLCJjIjoicyIsImQiOiIyMDIzLTAxLTI4IiwibHAiOjAsInQiOiIxMDowMCIsImciOiJtIiwicCI6bnVsbCwiaiI6bnVsbH0",
+    "hourKnown": true
+  },
+  {
+    "id": "C04",
+    "payload": "eyJ2IjoxLCJjIjoicyIsImQiOiIxOTk1LTAzLTE1IiwibHAiOjAsInQiOiIwMDozMCIsImciOiJmIiwicCI6bnVsbCwiaiI6bnVsbH0",
+    "hourKnown": true
+  },
+  {
+    "id": "C05",
+    "payload": "eyJ2IjoxLCJjIjoicyIsImQiOiIxOTk1LTAzLTE1IiwibHAiOjAsInQiOiIyMzozMCIsImciOiJtIiwicCI6bnVsbCwiaiI6bnVsbH0",
+    "hourKnown": true
+  },
+  {
+    "id": "C06",
+    "payload": "eyJ2IjoxLCJjIjoibCIsImQiOiIyMDIzLTAyLTE4IiwibHAiOjEsInQiOiIxMDowMCIsImciOiJmIiwicCI6bnVsbCwiaiI6bnVsbH0",
+    "hourKnown": true
+  },
+  {
+    "id": "C07",
+    "payload": "eyJ2IjoxLCJjIjoibCIsImQiOiIyMDIzLTAyLTE1IiwibHAiOjEsInQiOiIwODozMCIsImciOiJtIiwicCI6bnVsbCwiaiI6bnVsbH0",
+    "hourKnown": true
+  },
+  {
+    "id": "C08",
+    "payload": "eyJ2IjoxLCJjIjoicyIsImQiOiIyMDAxLTAzLTEwIiwibHAiOjAsInQiOiIwMDo0MCIsImciOiJtIiwicCI6IjY1MDEwMCIsImoiOm51bGx9",
+    "hourKnown": true
+  },
+  {
+    "id": "C09",
+    "payload": "eyJ2IjoxLCJjIjoicyIsImQiOiIxOTkwLTExLTAzIiwibHAiOjAsInQiOiIwNjo1MCIsImciOiJmIiwicCI6IjIzMDEwMCIsImoiOm51bGx9",
+    "hourKnown": true
+  },
+  {
+    "id": "C10",
+    "payload": "eyJ2IjoxLCJjIjoicyIsImQiOiIxOTg4LTA3LTE1IiwibHAiOjAsInQiOiIxMTozMCIsImciOiJtIiwicCI6bnVsbCwiaiI6bnVsbH0",
+    "hourKnown": true
+  },
+  {
+    "id": "C11",
+    "payload": "eyJ2IjoxLCJjIjoicyIsImQiOiIxOTgxLTEwLTI3IiwibHAiOjAsInQiOiIxMToyOCIsImciOiJtIiwicCI6bnVsbCwiaiI6bnVsbH0",
+    "hourKnown": true
+  },
+  {
+    "id": "C12",
+    "payload": "eyJ2IjoxLCJjIjoicyIsImQiOiIxOTg1LTAzLTEwIiwibHAiOjAsInQiOiIwMToxOCIsImciOiJmIiwicCI6bnVsbCwiaiI6bnVsbH0",
+    "hourKnown": true
+  },
+  {
+    "id": "C13",
+    "payload": "eyJ2IjoxLCJjIjoicyIsImQiOiIxOTY3LTA3LTA3IiwibHAiOjAsInQiOiIxODoxMSIsImciOiJtIiwicCI6bnVsbCwiaiI6bnVsbH0",
+    "hourKnown": true
+  },
+  {
+    "id": "C14",
+    "payload": "eyJ2IjoxLCJjIjoicyIsImQiOiIxOTY4LTA5LTI0IiwibHAiOjAsInQiOiIxODoxOSIsImciOiJmIiwicCI6bnVsbCwiaiI6bnVsbH0",
+    "hourKnown": true
+  },
+  {
+    "id": "C15",
+    "payload": "eyJ2IjoxLCJjIjoicyIsImQiOiIxOTgzLTAzLTI4IiwibHAiOjAsInQiOiIxNDo0MyIsImciOiJtIiwicCI6bnVsbCwiaiI6bnVsbH0",
+    "hourKnown": true
+  },
+  {
+    "id": "C16",
+    "payload": "eyJ2IjoxLCJjIjoicyIsImQiOiIxOTk0LTAxLTA5IiwibHAiOjAsInQiOiIwNjo0NSIsImciOiJmIiwicCI6bnVsbCwiaiI6bnVsbH0",
+    "hourKnown": true
+  },
+  {
+    "id": "C17",
+    "payload": "eyJ2IjoxLCJjIjoicyIsImQiOiIxOTk4LTA4LTA0IiwibHAiOjAsInQiOiIxMjoyNyIsImciOiJtIiwicCI6bnVsbCwiaiI6bnVsbH0",
+    "hourKnown": true
+  },
+  {
+    "id": "C18",
+    "payload": "eyJ2IjoxLCJjIjoicyIsImQiOiIxOTkwLTA1LTIwIiwibHAiOjAsInQiOm51bGwsImciOiJmIiwicCI6bnVsbCwiaiI6bnVsbH0",
+    "hourKnown": false
+  },
+  {
+    "id": "C19",
+    "payload": "eyJ2IjoxLCJjIjoicyIsImQiOiIyMDI0LTAyLTA0IiwibHAiOjAsInQiOm51bGwsImciOiJtIiwicCI6bnVsbCwiaiI6bnVsbH0",
+    "hourKnown": false
+  },
+  {
+    "id": "C20",
+    "payload": "eyJ2IjoxLCJjIjoicyIsImQiOiIxOTgxLTEyLTIyIiwibHAiOjAsInQiOiIyMDowMCIsImciOiJtIiwicCI6bnVsbCwiaiI6bnVsbH0",
+    "hourKnown": true
+  }
+]

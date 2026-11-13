@@ -8,7 +8,7 @@
  * 出生地不是出生信息的敏感部分，但仍不写日志；响应可缓存（与用户无关）。
  */
 import type { Logger } from 'pino';
-import { listPlaces, searchPlaces, type Place } from '@zhiming/core/geo';
+import { findPlace, listPlaces, searchPlaces, type Place } from '@zhiming/core/geo';
 import { ApiError, handleApiError } from './errors';
 import { clientIp, type RateLimiter } from './rate-limit';
 
@@ -127,6 +127,16 @@ export function handlePlaces(req: Request, deps: PlacesDeps): Response {
   try {
     if (!deps.limiter.hit(clientIp(req.headers))) throw new ApiError('E_RATE_LIMITED', 429);
     const url = new URL(req.url);
+    const code = url.searchParams.get('code');
+    if (code !== null) {
+      // 结果页「修改」回到首页时，按代码取回出生地全称
+      const p = /^(\d{6}|X-\d{1,12})$/.test(code) ? findPlace(code) : null;
+      if (!p) throw new ApiError('E_BAD_REQUEST', 404);
+      return Response.json(
+        { items: [{ label: p.name, place: toSel(p), next: null }] },
+        { headers: { 'cache-control': 'public, max-age=3600' } },
+      );
+    }
     const q = url.searchParams.get('q');
     let items: PlaceItem[] | null;
     if (q !== null) {

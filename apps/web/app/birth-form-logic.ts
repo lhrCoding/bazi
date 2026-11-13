@@ -177,3 +177,49 @@ export function errorField(code: string): keyof FormErrors {
   if (/^E_(LUNAR_|DATE_|INVALID_DATETIME)/.test(code)) return 'date';
   return 'form';
 }
+
+// ---------------------------------------------------------------- 载荷 → 表单 / 回显（T45）
+
+const LUNAR_MONTHS = [
+  '正月',
+  '二月',
+  '三月',
+  '四月',
+  '五月',
+  '六月',
+  '七月',
+  '八月',
+  '九月',
+  '十月',
+  '冬月',
+  '腊月',
+] as const;
+
+/** 从结果页回到首页「修改」时预填；出生地全称由调用方另查 */
+export function fromPayload(p: PayloadV1): FormState {
+  const [y, m, d] = p.d.split('-').map(Number) as [number, number, number];
+  const [hh, mm] = p.t ? (p.t.split(':').map(Number) as [number, number]) : [null, null];
+  return {
+    cal: p.c,
+    y: String(y),
+    m: p.lp === 1 ? `L${m}` : String(m),
+    d: String(d),
+    hh: hh === null ? '' : String(hh),
+    mm: mm === null ? '' : String(mm),
+    nohour: p.t === null,
+    g: p.g,
+    place: p.p ? { code: p.p, full: '', xinjiang: p.p.startsWith('65') } : null,
+  };
+}
+
+/** 结果页输入回显：「公历 1981年10月27日 11:28 · 男 · 未选出生地」 */
+export function echoText(p: PayloadV1, placeName: string | null): string {
+  const [y, m, d] = p.d.split('-').map(Number) as [number, number, number];
+  const date =
+    p.c === 's'
+      ? `公历 ${y}年${m}月${d}日`
+      : `农历 ${y}年${p.lp === 1 ? '闰' : ''}${LUNAR_MONTHS[m - 1] ?? ''}${lunarDayLabel(d)}`;
+  const time = p.t ?? '时辰未知';
+  const place = p.p ? (placeName ?? '已选出生地') : '未选出生地';
+  return `${date} ${time} · ${p.g === 'm' ? '男' : '女'} · ${place}`;
+}
