@@ -15,7 +15,12 @@ import { randomBirthInputs, runSample } from '../packages/core/src/report/sample
 import { createLibrary } from '../packages/core/src/report/select';
 import { computeCoverage } from '../packages/core/src/texts/coverage';
 import { parseForbiddenWordsFromMd } from '../packages/core/src/texts/lint';
-import { buildRelease, SnapshotSchema, type Snapshot } from '../packages/core/src/texts/release';
+import {
+  buildRelease,
+  RELEASE_WARN_ONLY_RULES,
+  SnapshotSchema,
+  type Snapshot,
+} from '../packages/core/src/texts/release';
 import { glossaryFromReadme } from '../packages/core/src/texts/yaml';
 import { toBirthInput, type RawCase } from '../packages/core/test/helpers/cases';
 import { loadAndLintTexts } from './lib/texts-load';
@@ -47,6 +52,7 @@ const staticCoverage = [
 
 // 动态抽样（只在静态覆盖率通过后跑，避免空耗）
 const dynamic: string[] = [];
+const warnings: string[] = [];
 if (approved.length > 0 && staticCoverage.length === 0) {
   const whitelist = read('rules/texts/wordlists/whitelist.txt')
     .split('\n')
@@ -77,8 +83,11 @@ if (approved.length > 0 && staticCoverage.length === 0) {
   for (const d of m.assertDefects) dynamic.push(`asserts 缺陷 ${d.entry} ×${d.count}`);
   if (m.lengthPassRate < 0.99)
     dynamic.push(`字数达标率 ${(m.lengthPassRate * 100).toFixed(1)}% < 99%`);
-  for (const [rule, n] of Object.entries(m.rcheckFailedReports))
-    dynamic.push(`R-CHECK ${rule} 不通过 ${n} 份`);
+  for (const [rule, n] of Object.entries(m.rcheckFailedReports)) {
+    if (RELEASE_WARN_ONLY_RULES.includes(rule))
+      warnings.push(`R-CHECK ${rule} 不通过 ${n} 份（只告警，D1）`);
+    else dynamic.push(`R-CHECK ${rule} 不通过 ${n} 份`);
+  }
 } else if (approved.length > 0) {
   dynamic.push('静态覆盖率未通过，未运行动态抽样');
 }
@@ -101,6 +110,7 @@ const r = buildRelease(
   { rulesVersion: RULES_VERSION, releasedAt: today },
   { lint, staticCoverage, dynamic },
 );
+for (const w of warnings) console.warn(`警告：${w}`);
 if (!r.snapshot) {
   console.error(`发布被拒绝（${r.problems.length} 项）：`);
   for (const p of r.problems.slice(0, 50)) console.error(`  ${p}`);

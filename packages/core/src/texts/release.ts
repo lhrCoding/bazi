@@ -23,6 +23,13 @@ export const SnapshotSchema = z.strictObject({
 });
 export type Snapshot = z.infer<typeof SnapshotSchema>;
 
+/**
+ * 发布时只告警、不阻断的 R-CHECK 规则（用户 2026-11-13 拍板 D1 (c)）：
+ * 变体公式不改，同一条素材跨年再次命中时可能选到同一变体而触发段落相似度报警；
+ * 除此之外再给第 6 章高频条目补第 3 个变体以降低重复概率（素材工作）。
+ */
+export const RELEASE_WARN_ONLY_RULES: readonly string[] = ['SIMILARITY'];
+
 export interface ReleaseChecks {
   lint: readonly string[];
   staticCoverage: readonly string[];
