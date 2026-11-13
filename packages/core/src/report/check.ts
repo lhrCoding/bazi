@@ -10,7 +10,8 @@
  * - YEAR_GANZHI：正文中的「dddd年」与干支字面 ⊆ ctx 中出现过的年份 / 干支（四柱、大运、流年）。
  * - WUXING：「有利 / 喜 / 喜神 / 用神 + 五行」不得是忌神；「忌 / 忌神 / 节制 + 五行」不得是用喜（关键词后 4 字内的五行，
  *   含「、」连接的后续五行；关键词与五行之间不能隔着「、」——「土为喜、金宜节制」里的金不属于「喜」；前面是「不 / 非」时不算）。
- * - LENGTH：第 1–7 章各章与全文字数（§2；三柱第 3 章下限 550、全文下限 4,800）。字数 = 正文非空白字符数（含术语加注）。
+ * - LENGTH：第 1–7 章各章与全文字数（§2；三柱第 3 章下限 550、全文下限 4,800；只有一步大运可写时第 5 章下限 550、
+ *   没有当前大运时第 7 章下限 700，D12）。字数 = 正文非空白字符数（含术语加注）。
  * - BASIS：第 1–3、7 章每段都有依据（依据模板为「—」或无的槽位除外）；第 6 章每张卡有十神与档位。
  * - WORDS：禁用词 / 疾病名词 / 金融产品词 / 吉神禁用表述（shensha.md §4，SS-WORDING）（白名单豁免）。
  * - SIMILARITY：任两段正文 4-gram Jaccard ≤ 0.5（跨年同条目同变体的重复会在此报警，见 texts/README.md §5.2）。
@@ -46,6 +47,10 @@ export const CHAPTER_LENGTH: Readonly<Record<number, readonly [number, number]>>
   7: [800, 1300],
 };
 export const NOHOUR_CH3_MIN = 550;
+/** 只有一步大运可写（没有「当前」或没有「下一步」）时第 5 章下限（用户拍板 D12） */
+export const SINGLE_STEP_CH5_MIN = 550;
+/** 没有当前大运（尚未起运）时第 7 章下限（无 CH7-CAREER-NOW 段，D12） */
+export const NO_CURRENT_DAYUN_CH7_MIN = 700;
 export const TOTAL_LENGTH: readonly [number, number] = [5000, 8000];
 export const NOHOUR_TOTAL_MIN = 4800;
 export const SIMILARITY_MAX = 0.5;
@@ -110,6 +115,16 @@ function allTexts(b: Block): string[] {
   }
 }
 
+/** 章节字数下限（§2，及 §4 / D12 的放宽情形） */
+export function chapterMin(chapter: number, base: number, hourKnown: boolean, ctx: Ctx): number {
+  const hasCurrent = ctx.dayun.some((d) => d.phase === 'current');
+  const hasNext = ctx.dayun.some((d) => d.phase === 'next');
+  if (chapter === 3 && !hourKnown) return NOHOUR_CH3_MIN;
+  if (chapter === 5 && !(hasCurrent && hasNext)) return SINGLE_STEP_CH5_MIN;
+  if (chapter === 7 && !hasCurrent) return NO_CURRENT_DAYUN_CH7_MIN;
+  return base;
+}
+
 export function rcheck(report: Report, ctx: Ctx, words: Wordlists): RCheckResult {
   const failures: RCheckFailure[] = [];
   const fail = (
@@ -144,7 +159,7 @@ export function rcheck(report: Report, ctx: Ctx, words: Wordlists): RCheckResult
     if (range) {
       const n = paras.reduce((s, p) => s + textLength(p.text), 0);
       total += n;
-      const lo = ch.id === 3 && !hourKnown ? NOHOUR_CH3_MIN : range[0];
+      const lo = chapterMin(ch.id, range[0], hourKnown, ctx);
       if (n < lo || n > range[1])
         fail('LENGTH', ch.id, null, `第 ${ch.id} 章 ${n} 字，不在 [${lo}, ${range[1]}]`);
     }
