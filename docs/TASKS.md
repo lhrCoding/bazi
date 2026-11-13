@@ -345,7 +345,7 @@
   内容：CSP（`script-src 'self'`、`connect-src 'self'` + 支付所需域名、`frame-ancestors 'none'`）；`Referrer-Policy: no-referrer`；`/r/*` 加 `X-Robots-Tag: noindex`；检查全站无第三方脚本。
   验收：E2E 断言响应头；构建产物扫描无外部脚本地址。
 
-- [ ] **T60 日志不含出生信息的哨兵测试**
+- [x] **T60 日志不含出生信息的哨兵测试**
   依赖：T41, T53, T47
   内容：用特征出生信息跑免费、下单、mock 支付、打开报告、篡改链接、非法输入全流程，收集应用 stdout / stderr（Docker 环境下另含 Caddy 日志，T61 后补上），搜索日期多种写法、载荷全串及任意 16 字符子串、canonical 串。
   验收：零命中；故意在某处 `log(payload)` 时测试变红（P0-10）。

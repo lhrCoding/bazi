@@ -20,3 +20,5 @@ test-results/
 playwright-report/
 # 本地订单库（DATABASE_PATH 默认）
 apps/web/data/
+# E2E 服务日志（日志哨兵测试读取）
+apps/web/.e2e-logs/

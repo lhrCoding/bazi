@@ -16,7 +16,8 @@ export default defineConfig({
   use: { baseURL: `http://127.0.0.1:${PORT}`, trace: 'off' },
   projects: [{ name: 'iphone', use: { ...iphone, channel: process.env.PW_CHANNEL ?? 'chrome' } }],
   webServer: {
-    command: `npx next build && npx next start -p ${PORT} -H 127.0.0.1`,
+    // 服务进程的 stdout / stderr 同时写入 .e2e-logs/server.log，供日志哨兵测试（T60）检查
+    command: `mkdir -p .e2e-logs && : > .e2e-logs/server.log && (npx next build && npx next start -p ${PORT} -H 127.0.0.1) 2>&1 | tee -a .e2e-logs/server.log`,
     url: `http://127.0.0.1:${PORT}`,
     timeout: 240_000,
     reuseExistingServer: !process.env.CI,
