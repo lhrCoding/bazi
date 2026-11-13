@@ -972,6 +972,21 @@
   reviewer: null
   updated: 2026-11-13
 
+- id: CH5-FAR-NONE
+  slot: CH5-FAR
+  when: {all: [{f: dayun_summary.far_group, exists: false}]}
+  asserts: []
+  priority: 50
+  length: [80, 150]
+  polish_allowed: true
+  variants:
+    - "按传统排法列出的几步大运，你已经走过了大部分，本报告不再往更远处推演。到了这个阶段，生活的质量更多取决于当下的安排：保持规律作息和适度运动，经营好家庭与朋友，培养一两项能长期投入的兴趣，都是值得用心的事。"
+    - "表上列出的大运大多已经走过，后面的走势本报告不做展开。比起看更远的阶段，不如把注意力放在眼前：身体照顾好，心情放松些，多和家人朋友相处，把经验分享给晚辈，这些都会让日子过得踏实而有意义。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
 - id: CH5-FAR-FALLBACK
   slot: CH5-FAR
   when: {}
