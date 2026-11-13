@@ -420,6 +420,19 @@ a {
   .row {
     padding: 6px 0;
   }
+  .go {
+    padding-top: 8px;
+  }
+  .trust {
+    margin-top: 6px;
+  }
+  .foot {
+    margin-top: 6px;
+  }
+  .wrap {
+    padding-top: max(8px, env(safe-area-inset-top));
+    padding-bottom: max(8px, env(safe-area-inset-bottom));
+  }
 }
 
 /* ===== 免费结果页（design/result.html） ===== */
@@ -928,4 +941,89 @@ a {
   .wrap.wrap-result {
     padding-top: 28px;
   }
+}
+
+/* ===== 隐私说明 / 免责声明（design/legal.html） ===== */
+.wrap.wrap-legal {
+  max-width: 640px;
+  display: block;
+  min-height: 0;
+  padding: max(12px, env(safe-area-inset-top)) 18px 32px;
+}
+.wrap-legal .top {
+  justify-content: space-between;
+  height: 44px;
+}
+.wrap-legal .top .l {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--color-ink);
+}
+.legal-nav {
+  display: flex;
+  gap: 14px;
+  font-size: 14px;
+}
+.legal-sec {
+  margin-top: 18px;
+  font-size: 15px;
+}
+.legal-sec h1 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 24px;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+.legal-sec h2 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 17px;
+  margin: 18px 0 6px;
+}
+.legal-sec p {
+  margin-top: 6px;
+}
+.legal-sec .lead {
+  color: var(--color-ink-2);
+}
+.legal-sec ul {
+  padding-left: 1.2em;
+  margin-top: 6px;
+  list-style: disc;
+}
+.legal-sec li {
+  margin-top: 4px;
+}
+.legal-sec b {
+  font-weight: 600;
+}
+.fields {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 8px;
+  font-size: 14px;
+  background: var(--color-paper-2);
+}
+.fields th,
+.fields td {
+  border: 1px solid var(--color-line);
+  padding: 6px 8px;
+  text-align: left;
+  vertical-align: top;
+}
+.fields th {
+  font-weight: normal;
+  color: var(--color-ink-3);
+  font-size: 12.5px;
+}
+.fields td:first-child {
+  white-space: nowrap;
+}
+.attrib {
+  margin-top: 24px;
+  font-size: 12px;
+  color: var(--color-ink-3);
 }

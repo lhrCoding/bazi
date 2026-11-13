@@ -3,6 +3,7 @@
  */
 import { lunarMonthsOf } from '@zhiming/core';
 import { BirthForm } from './birth-form';
+import { LegalFooter } from './legal-footer';
 import { MIN_YEAR, type LunarMonth } from './birth-form-logic';
 
 // 年份下拉到「今年」：每天重新生成一次
@@ -38,10 +39,7 @@ export default function HomePage() {
         <p>免费排出四柱与五行喜忌。代码按节气精确排盘，同一生日结果永远一致。</p>
       </div>
       <BirthForm lunar={lunarTable(thisYear)} thisYear={thisYear} />
-      <footer className="foot">
-        内容为传统文化参考与娱乐，不构成医疗、投资、法律建议 · <a href="/privacy">隐私说明</a> ·{' '}
-        <a href="/disclaimer">免责声明</a>
-      </footer>
+      <LegalFooter />
     </div>
   );
 }

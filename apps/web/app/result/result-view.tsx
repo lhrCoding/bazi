@@ -9,6 +9,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { decodePayload, encodePayload, type PayloadV1 } from '@zhiming/core/birth';
 import type { FreeResult } from '@zhiming/core/report';
 import { echoText } from '../birth-form-logic';
+import { LegalFooter } from '../legal-footer';
 
 type State =
   | { kind: 'loading' }
@@ -475,14 +476,7 @@ export function ResultView() {
           <PayGuide r={st.data} payRef={payRef} />
         </>
       )}
-      <footer className="foot foot-result">
-        本页内容由代码按固定规则计算，仅作传统文化参考与娱乐，
-        <br />
-        不构成医疗、投资、法律等任何专业建议。
-        <br />
-        <a href="/privacy">隐私说明</a> · <a href="/disclaimer">免责声明</a> ·
-        你的出生信息不会被保存
-      </footer>
+      <LegalFooter variant="result" />
       {st.kind === 'ok' && stick && (
         <div className="stick" data-testid="stick">
           <div className="in">
