@@ -82,11 +82,11 @@ describe('第 1 批真实素材（开发期统计 draft）', () => {
     expect(r.gaps.filter((g) => [1, 2, 6].includes(chOf(g.slot)))).toEqual([]);
     expect(r.fallbackProblems.filter((p) => [1, 2, 6].includes(chOf(p)))).toEqual([]);
   });
-  it('缺口清单只在尚未写素材的第 3、4、5、7 章，且等于这些槽位的全部组合', () => {
+  it('缺口清单只在尚未写素材的第 4、5、7 章，且等于这些槽位的全部组合', () => {
     const chapters = [...new Set(r.gaps.map((g) => chOf(g.slot)))].sort();
-    expect(chapters).toEqual([3, 4, 5, 7]);
+    expect(chapters).toEqual([4, 5, 7]);
     const expected = r.slots
-      .filter((s) => [3, 4, 5, 7].includes(s.chapter))
+      .filter((s) => [4, 5, 7].includes(s.chapter))
       .reduce((n, s) => n + s.combos, 0);
     expect(r.gaps).toHaveLength(expected);
   });
@@ -106,11 +106,10 @@ describe('故意删素材 / fixture', () => {
       { slot: 'CH6-HEAD', combo: { 'item.stem_ten_god': '七杀', 'item.tier': '向好' } },
     ]);
   });
-  it('fixture 只有兜底：第 3、4 章全部组合都是缺口（兜底不计覆盖），兜底与固定文本无问题', () => {
+  it('fixture 只有兜底：第 4 章全部组合都是缺口（兜底不计覆盖），兜底与固定文本无问题', () => {
     const r = computeCoverage(fixture, base, ALL);
-    for (const s of r.slots.filter((x) => [3, 4].includes(x.chapter)))
-      expect(s.covered, s.slot).toBe(0);
-    expect(r.fallbackProblems.filter((p) => [3, 4].includes(chOf(p)))).toEqual([]);
+    for (const s of r.slots.filter((x) => x.chapter === 4)) expect(s.covered, s.slot).toBe(0);
+    expect(r.fallbackProblems.filter((p) => chOf(p) === 4)).toEqual([]);
   });
   it('兜底唯一性：同槽位两条兜底报问题', () => {
     const fb = real.find((e) => e.id === 'CH1-DAYMASTER-FALLBACK') as TextEntry;

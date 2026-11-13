@@ -189,3 +189,33 @@
     - "C20 起运、交节时刻等字段待 T21 代码复核补全；T21 同时确认其他案例在 yongshen.md v1.1 下结论不变"
     - "古籍 4 句逐字对照底本（K15）"
     - "lint（T24/T25）与覆盖率（T34/T35）就绪后跑自动检查；按结果修改后改为 reviewed，再生成抽检单交用户（K08 / U09）"
+
+- batch: B2
+  scope: [CH3, CH5, CH7]
+  status: drafting
+  status_note: "撰写中：CH3 已完成（lint、静态覆盖率通过）；CH5、CH7 待写。全部写完后统一自审，抽检放到查漏补缺阶段（用户 2026-11-13 拍板 D4）"
+  drafted: null
+  submitted: null
+  author: claude
+  files:
+    - ch03_persona.yaml          # CH3-BASE 11、CH3-GOD 21、CH3-STYLE 7、CH3-TALENT 11、CH3-SHENSHA 4
+  totals:
+    entries: 54            # 至 2026-11-13：CH3 54（含兜底 4）
+    fallback_entries: 4
+    variants: 104          # 非兜底 50 × 2 + 兜底 4 × 1
+  rounds: []
+
+  entries:
+    CH3-BASE: [CH3-BASE-JIA, CH3-BASE-YI, CH3-BASE-BING, CH3-BASE-DING, CH3-BASE-WU, CH3-BASE-JI, CH3-BASE-GENG,
+               CH3-BASE-XIN, CH3-BASE-REN, CH3-BASE-GUI, CH3-BASE-FALLBACK]
+    CH3-GOD: [CH3-GOD-BIJIAN-Y, CH3-GOD-BIJIAN-N, CH3-GOD-JIECAI-Y, CH3-GOD-JIECAI-N, CH3-GOD-SHISHEN-Y,
+              CH3-GOD-SHISHEN-N, CH3-GOD-SHANGGUAN-Y, CH3-GOD-SHANGGUAN-N, CH3-GOD-PIANCAI-Y, CH3-GOD-PIANCAI-N,
+              CH3-GOD-ZHENGCAI-Y, CH3-GOD-ZHENGCAI-N, CH3-GOD-QISHA-Y, CH3-GOD-QISHA-N, CH3-GOD-ZHENGGUAN-Y,
+              CH3-GOD-ZHENGGUAN-N, CH3-GOD-PIANYIN-Y, CH3-GOD-PIANYIN-N, CH3-GOD-ZHENGYIN-Y, CH3-GOD-ZHENGYIN-N,
+              CH3-GOD-FALLBACK]
+    CH3-STYLE: [CH3-STYLE-SHENWANG, CH3-STYLE-ZHONGWANG, CH3-STYLE-ZHONGRUO, CH3-STYLE-SHENRUO, CH3-STYLE-CONGRUO,
+                CH3-STYLE-CONGQIANG, CH3-STYLE-FALLBACK]
+    CH3-TALENT: [CH3-TALENT-BIJIE-WANG, CH3-TALENT-BIJIE-RUO, CH3-TALENT-YIN-WANG, CH3-TALENT-YIN-RUO,
+                 CH3-TALENT-SHISHANG-WANG, CH3-TALENT-SHISHANG-RUO, CH3-TALENT-CAI-WANG, CH3-TALENT-CAI-RUO,
+                 CH3-TALENT-GUANSHA-WANG, CH3-TALENT-GUANSHA-RUO, CH3-TALENT-FALLBACK]
+    CH3-SHENSHA: [CH3-SHENSHA-TIANYI, CH3-SHENSHA-YUEDE, CH3-SHENSHA-WENCHANG, CH3-SHENSHA-TAIJI]
