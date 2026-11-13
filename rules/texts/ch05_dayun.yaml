@@ -1,0 +1,988 @@
+# 第 5 章「十年大运」（第 2 批 B2，草稿）
+# 槽位：CH5-INTRO（有无时辰 2）、CH5-PAST（已过大运多数组 3，非必需）、CH5-STEP（天干十神 10 × tier 5，循环：当前 + 下一步）、
+#       CH5-REL（大运支冲日支 / 冲月支 / 合日支，非必需）、CH5-TRANSITION（换运年在未来 3 年内，非必需）、CH5-FAR（更远大运多数组 3）。
+# 写法约定：
+#   - CH5-STEP = 十神主线段 + 档位走势段（同一槽位内只有一半相同，L10 Jaccard 约 0.33）；同时用于当前步与下一步，不写“现在 / 今后”。
+#   - 年份、干支只经占位符出现；“大运”后不加括号（术语自动加注）；起运年龄由依据行给出，正文不写。
+#   - 档位只讲节奏与建议，不写吉凶；“交运”写过渡期，不写“交运凶”。
+
+# ======================= CH5-INTRO =======================
+- id: CH5-INTRO-HOUR
+  slot: CH5-INTRO
+  when: {all: [{f: profile.time_known, eq: true}]}
+  asserts: []
+  priority: 50
+  length: [80, 120]
+  polish_allowed: false
+  variants:
+    - "大运是传统命理中以十年为一步划分的人生阶段，每一步由一组干支代表，影响这十年的主线与节奏。下面先看已经走过的几步，再细看当前与下一步，最后简述更远的阶段，帮助你把握整体节奏。"
+    - "命理里把人生按十年分成一步步的大运，每一步都有自己的主题和走势。本章按时间顺序展开：已过的大运合在一起回顾，当前与下一步重点解读，更远的阶段只做概括，方便你从整体上把握人生的节奏。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH5-INTRO-NOHOUR
+  slot: CH5-INTRO
+  when: {all: [{f: profile.time_known, eq: false}]}
+  asserts: []
+  priority: 50
+  length: [80, 120]
+  polish_allowed: false
+  variants:
+    - "大运以十年为一步，描述人生不同阶段的主线与节奏。由于没有提供具体时辰，起运年龄只能估算，误差约四个月，换运的具体年份可能前后相差一年左右，阅读时请留一点余地，整体走势仍有参考价值。"
+    - "命理里用大运把人生分成一个个十年的阶段。你没有提供具体时辰，所以起运年龄是估算值，可能与实际相差几个月，涉及换运的年份请当作大致参考，整体趋势仍然可以参照，不必过于纠结具体年份。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH5-INTRO-FALLBACK
+  slot: CH5-INTRO
+  when: {}
+  asserts: []
+  priority: 0
+  fallback: true
+  length: [20, 80]
+  polish_allowed: false
+  variants:
+    - "大运以十年为一步，下面按时间顺序介绍你的各步大运。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+# ======================= CH5-PAST 已过大运合述（非必需） =======================
+- id: CH5-PAST-HAO
+  slot: CH5-PAST
+  when: {all: [{f: dayun_summary.past_group, eq: 好}]}
+  asserts: []
+  priority: 50
+  length: [100, 180]
+  polish_allowed: true
+  variants:
+    - "回头看已经走过的几步大运，整体以助力为主，属于比较顺的阶段。那几年里，你可能更容易得到机会、获得支持，也积累了不少经验和资源。这些既是过去的成果，也是你面对之后各个阶段时最可靠的底气，值得好好珍惜和延续，也提醒你继续保持当时那份积极。"
+    - "已经走过的大运大多落在顺势或向好的区间。回想那段时间，或许有过不少水到渠成的经历，或者遇到了关键的人和机会。这份积累会一直跟着你，在后面节奏变化的时候，帮你更从容地应对。顺的时候学到的经验，换个阶段同样用得上。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH5-PAST-PING
+  slot: CH5-PAST
+  when: {all: [{f: dayun_summary.past_group, eq: 平}]}
+  asserts: []
+  priority: 50
+  length: [100, 180]
+  polish_allowed: true
+  variants:
+    - "回头看已经走过的几步大运，整体比较平稳，没有特别大的起落。这样的阶段往往在不知不觉中打下了基础：学到的本事、养成的习惯、结下的关系，都在悄悄为后面的发展做准备，只是当时未必察觉。平淡的日子，往往藏着最扎实的成长。"
+    - "已经走过的大运大多属于平稳的区间。那段时间也许平淡，却是积累的好时候：很多能力和认知，正是在没有大风大浪的日子里慢慢长出来的，它们会在之后的阶段逐渐显出价值。回头看，你会发现那段时间并没有白过，它让你的根基更稳。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH5-PAST-SHOU
+  slot: CH5-PAST
+  when: {all: [{f: dayun_summary.past_group, eq: 守}]}
+  asserts: []
+  priority: 50
+  length: [100, 180]
+  polish_allowed: true
+  variants:
+    - "回头看已经走过的几步大运，整体以稳守为主，可能经历过一些需要咬牙坚持的时候。那些不太顺的日子，往往也是磨练心性、学会取舍的阶段。能走到现在，本身就说明你具备相当的韧性，这份韧性会一直是你的财富，在之后的阶段继续支撑你。"
+    - "已经走过的大运大多落在宜稳守的区间，或许有过不少需要靠自己扛过去的时刻。回头看，那些经历让你更了解自己，也更清楚什么才是真正重要的。这些体会会帮你在后面的阶段走得更稳、更有方向。经历过不容易的人，更懂得珍惜顺利的时刻。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+# ======================= CH5-STEP 当前步 / 下一步（循环） =======================
+- id: CH5-STEP-BIJIAN-SHUNSHI
+  slot: CH5-STEP
+  when: {all: [{f: item.stem_ten_god, eq: 比肩}, {f: item.tier, eq: 顺势期}]}
+  asserts: []
+  priority: 50
+  length: [200, 300]
+  polish_allowed: true
+  variants:
+    - "这步{item.ganzhi}大运从{item.start_year}年走到{item.end_year}年，天干是比肩。比肩主事的十年，主线是“自立”：你会更想按自己的方式做事，独立负责一摊事、建立自己的圈子，同伴和朋友的分量也会明显上升。这段时间，你的主见会帮你开出属于自己的路。从整体走势看，这步运落在“顺势期”，外部环境与你的需要比较合拍。可以把重要的计划放在这十年推进，主动争取机会、扩大投入，努力往往能得到成比例甚至超出预期的回报。顺势的时候，更要看清方向，让每一分努力都落在实处。"
+    - "{item.start_year}年到{item.end_year}年是{item.ganzhi}大运，天干为比肩。这十年里，“自己做主”会成为反复出现的主题：独立门户、自己带项目、与志同道合的人结伴，都是常见的走向，个人的意志和选择会被放到更前面。你会更清楚自己想要什么，也更愿意为之负责。这十年整体属于“顺势期”，是一段适合大步向前的时间。看准的方向不妨坚定推进，该争取的位置、该开启的事业，放在这时去做阻力相对小；顺的时候也记得留一些积累，为后面的阶段打底。把握住这段窗口期，你会走得比预想的更远。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH5-STEP-BIJIAN-XIANGHAO
+  slot: CH5-STEP
+  when: {all: [{f: item.stem_ten_god, eq: 比肩}, {f: item.tier, eq: 向好}]}
+  asserts: []
+  priority: 50
+  length: [200, 300]
+  polish_allowed: true
+  variants:
+    - "这步{item.ganzhi}大运从{item.start_year}年走到{item.end_year}年，天干是比肩。比肩主事的十年，主线是“自立”：你会更想按自己的方式做事，独立负责一摊事、建立自己的圈子，同伴和朋友的分量也会明显上升。这段时间，你的主见会帮你开出属于自己的路。从整体走势看，这步运评为“向好”，助力多于阻力。适合稳步推进既定目标，在擅长的方向上加一把劲；不必冒进，但该出手的时候要出手，持续投入会慢慢积累出明显的成果。好的趋势需要你主动去接住，行动比等待更重要。"
+    - "{item.start_year}年到{item.end_year}年是{item.ganzhi}大运，天干为比肩。这十年里，“自己做主”会成为反复出现的主题：独立门户、自己带项目、与志同道合的人结伴，都是常见的走向，个人的意志和选择会被放到更前面。你会更清楚自己想要什么，也更愿意为之负责。这十年整体趋势“向好”，大方向上是在往前走的。可以有计划地扩展自己的事业和生活版图，多尝试、多积累；遇到小的波折不必过度担心，保持节奏，整体会朝着好的方向发展。一步一个脚印，向好的势头会越积越明显。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH5-STEP-BIJIAN-PINGWEN
+  slot: CH5-STEP
+  when: {all: [{f: item.stem_ten_god, eq: 比肩}, {f: item.tier, eq: 平稳}]}
+  asserts: []
+  priority: 50
+  length: [200, 300]
+  polish_allowed: true
+  variants:
+    - "这步{item.ganzhi}大运从{item.start_year}年走到{item.end_year}年，天干是比肩。比肩主事的十年，主线是“自立”：你会更想按自己的方式做事，独立负责一摊事、建立自己的圈子，同伴和朋友的分量也会明显上升。这段时间，你的主见会帮你开出属于自己的路。从整体走势看，这步运属于“平稳”，没有特别大的推力，也少有明显的阻碍。很适合打磨能力、稳定生活、处理好长期积累下来的事情；成果更多取决于你自己的规划和坚持，平稳本身就是一种优势。平稳的十年，最适合把根扎深。"
+    - "{item.start_year}年到{item.end_year}年是{item.ganzhi}大运，天干为比肩。这十年里，“自己做主”会成为反复出现的主题：独立门户、自己带项目、与志同道合的人结伴，都是常见的走向，个人的意志和选择会被放到更前面。你会更清楚自己想要什么，也更愿意为之负责。这十年整体走势“平稳”，节奏不快不慢。与其期待外部的大机会，不如把精力放在可控的事情上：提升专业、照顾家庭和健康、把手头的事做扎实，稳定的积累会在下一个阶段转化为底气。不慌不忙地经营，就是这段时间最好的策略。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH5-STEP-BIJIAN-WENSHOU
+  slot: CH5-STEP
+  when: {all: [{f: item.stem_ten_god, eq: 比肩}, {f: item.tier, eq: 宜稳守}]}
+  asserts: []
+  priority: 50
+  length: [200, 300]
+  polish_allowed: true
+  variants:
+    - "这步{item.ganzhi}大运从{item.start_year}年走到{item.end_year}年，天干是比肩。比肩主事的十年，主线是“自立”：你会更想按自己的方式做事，独立负责一摊事、建立自己的圈子，同伴和朋友的分量也会明显上升。这段时间，你的主见会帮你开出属于自己的路。从整体走势看，这步运宜“稳守”，外部条件不一定都顺着你，推进起来可能多费些力气。适合守住已有的成果，重要决定多做准备、多留余地，不急于大幅扩张，把精力放在巩固基础上会更稳妥。守得住，本身就是一种能力。"
+    - "{item.start_year}年到{item.end_year}年是{item.ganzhi}大运，天干为比肩。这十年里，“自己做主”会成为反复出现的主题：独立门户、自己带项目、与志同道合的人结伴，都是常见的走向，个人的意志和选择会被放到更前面。你会更清楚自己想要什么，也更愿意为之负责。这十年整体建议“稳守”。这并不意味着停下来，而是换一种节奏：控制风险，量力而行，优先打磨能力和关系；遇到看起来很诱人的机会，先算清楚代价再决定，稳中求进往往比冒进更有收获。把基础守牢，等节奏转换时，你会比别人准备得更充分。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH5-STEP-BIJIAN-BAOSHOU
+  slot: CH5-STEP
+  when: {all: [{f: item.stem_ten_god, eq: 比肩}, {f: item.tier, eq: 宜保守、打基础}]}
+  asserts: []
+  priority: 50
+  length: [200, 300]
+  polish_allowed: true
+  variants:
+    - "这步{item.ganzhi}大运从{item.start_year}年走到{item.end_year}年，天干是比肩。比肩主事的十年，主线是“自立”：你会更想按自己的方式做事，独立负责一摊事、建立自己的圈子，同伴和朋友的分量也会明显上升。这段时间，你的主见会帮你开出属于自己的路。从整体走势看，这步运的建议是“宜保守、打基础”。外部助力相对少，更适合向内用力：学习、积累、调养身体、整理生活与财务，为下一个阶段做准备。少做高风险的决定，打好的基础会在后面派上用场。慢一点没关系，重要的是方向对、基础牢。"
+    - "{item.start_year}年到{item.end_year}年是{item.ganzhi}大运，天干为比肩。这十年里，“自己做主”会成为反复出现的主题：独立门户、自己带项目、与志同道合的人结伴，都是常见的走向，个人的意志和选择会被放到更前面。你会更清楚自己想要什么，也更愿意为之负责。这十年整体建议“宜保守、打基础”，是一段适合沉淀的时间。把目标放得务实一些，重心放在能力、健康和关系的长期经营上；不必和别人比速度，稳稳走完这一步，后面的路会更好走。沉下心来积累，这段时间并不会白白度过。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH5-STEP-JIECAI-SHUNSHI
+  slot: CH5-STEP
+  when: {all: [{f: item.stem_ten_god, eq: 劫财}, {f: item.tier, eq: 顺势期}]}
+  asserts: []
+  priority: 50
+  length: [200, 300]
+  polish_allowed: true
+  variants:
+    - "这步{item.ganzhi}大运从{item.start_year}年走到{item.end_year}年，天干是劫财。劫财主事的十年，主线是“竞争与合作”：机会往往和别人一起争取，社交和团队的作用很大，行动节奏也会比以往更快。和谁同行、如何分工，会直接影响这十年的成色。从整体走势看，这步运落在“顺势期”，外部环境与你的需要比较合拍。可以把重要的计划放在这十年推进，主动争取机会、扩大投入，努力往往能得到成比例甚至超出预期的回报。顺势的时候，更要看清方向，让每一分努力都落在实处。"
+    - "{item.start_year}年到{item.end_year}年是{item.ganzhi}大运，天干为劫财。这十年人际往来频繁，合伙、团队、圈子里的互动会占用你不少精力，竞争意识也会被激发出来，很多事情需要和别人一起推动才能成。选对伙伴、立好规矩，是这一步的关键功课。这十年整体属于“顺势期”，是一段适合大步向前的时间。看准的方向不妨坚定推进，该争取的位置、该开启的事业，放在这时去做阻力相对小；顺的时候也记得留一些积累，为后面的阶段打底。把握住这段窗口期，你会走得比预想的更远。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH5-STEP-JIECAI-XIANGHAO
+  slot: CH5-STEP
+  when: {all: [{f: item.stem_ten_god, eq: 劫财}, {f: item.tier, eq: 向好}]}
+  asserts: []
+  priority: 50
+  length: [200, 300]
+  polish_allowed: true
+  variants:
+    - "这步{item.ganzhi}大运从{item.start_year}年走到{item.end_year}年，天干是劫财。劫财主事的十年，主线是“竞争与合作”：机会往往和别人一起争取，社交和团队的作用很大，行动节奏也会比以往更快。和谁同行、如何分工，会直接影响这十年的成色。从整体走势看，这步运评为“向好”，助力多于阻力。适合稳步推进既定目标，在擅长的方向上加一把劲；不必冒进，但该出手的时候要出手，持续投入会慢慢积累出明显的成果。好的趋势需要你主动去接住，行动比等待更重要。"
+    - "{item.start_year}年到{item.end_year}年是{item.ganzhi}大运，天干为劫财。这十年人际往来频繁，合伙、团队、圈子里的互动会占用你不少精力，竞争意识也会被激发出来，很多事情需要和别人一起推动才能成。选对伙伴、立好规矩，是这一步的关键功课。这十年整体趋势“向好”，大方向上是在往前走的。可以有计划地扩展自己的事业和生活版图，多尝试、多积累；遇到小的波折不必过度担心，保持节奏，整体会朝着好的方向发展。一步一个脚印，向好的势头会越积越明显。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH5-STEP-JIECAI-PINGWEN
+  slot: CH5-STEP
+  when: {all: [{f: item.stem_ten_god, eq: 劫财}, {f: item.tier, eq: 平稳}]}
+  asserts: []
+  priority: 50
+  length: [200, 300]
+  polish_allowed: true
+  variants:
+    - "这步{item.ganzhi}大运从{item.start_year}年走到{item.end_year}年，天干是劫财。劫财主事的十年，主线是“竞争与合作”：机会往往和别人一起争取，社交和团队的作用很大，行动节奏也会比以往更快。和谁同行、如何分工，会直接影响这十年的成色。从整体走势看，这步运属于“平稳”，没有特别大的推力，也少有明显的阻碍。很适合打磨能力、稳定生活、处理好长期积累下来的事情；成果更多取决于你自己的规划和坚持，平稳本身就是一种优势。平稳的十年，最适合把根扎深。"
+    - "{item.start_year}年到{item.end_year}年是{item.ganzhi}大运，天干为劫财。这十年人际往来频繁，合伙、团队、圈子里的互动会占用你不少精力，竞争意识也会被激发出来，很多事情需要和别人一起推动才能成。选对伙伴、立好规矩，是这一步的关键功课。这十年整体走势“平稳”，节奏不快不慢。与其期待外部的大机会，不如把精力放在可控的事情上：提升专业、照顾家庭和健康、把手头的事做扎实，稳定的积累会在下一个阶段转化为底气。不慌不忙地经营，就是这段时间最好的策略。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH5-STEP-JIECAI-WENSHOU
+  slot: CH5-STEP
+  when: {all: [{f: item.stem_ten_god, eq: 劫财}, {f: item.tier, eq: 宜稳守}]}
+  asserts: []
+  priority: 50
+  length: [200, 300]
+  polish_allowed: true
+  variants:
+    - "这步{item.ganzhi}大运从{item.start_year}年走到{item.end_year}年，天干是劫财。劫财主事的十年，主线是“竞争与合作”：机会往往和别人一起争取，社交和团队的作用很大，行动节奏也会比以往更快。和谁同行、如何分工，会直接影响这十年的成色。从整体走势看，这步运宜“稳守”，外部条件不一定都顺着你，推进起来可能多费些力气。适合守住已有的成果，重要决定多做准备、多留余地，不急于大幅扩张，把精力放在巩固基础上会更稳妥。守得住，本身就是一种能力。"
+    - "{item.start_year}年到{item.end_year}年是{item.ganzhi}大运，天干为劫财。这十年人际往来频繁，合伙、团队、圈子里的互动会占用你不少精力，竞争意识也会被激发出来，很多事情需要和别人一起推动才能成。选对伙伴、立好规矩，是这一步的关键功课。这十年整体建议“稳守”。这并不意味着停下来，而是换一种节奏：控制风险，量力而行，优先打磨能力和关系；遇到看起来很诱人的机会，先算清楚代价再决定，稳中求进往往比冒进更有收获。把基础守牢，等节奏转换时，你会比别人准备得更充分。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH5-STEP-JIECAI-BAOSHOU
+  slot: CH5-STEP
+  when: {all: [{f: item.stem_ten_god, eq: 劫财}, {f: item.tier, eq: 宜保守、打基础}]}
+  asserts: []
+  priority: 50
+  length: [200, 300]
+  polish_allowed: true
+  variants:
+    - "这步{item.ganzhi}大运从{item.start_year}年走到{item.end_year}年，天干是劫财。劫财主事的十年，主线是“竞争与合作”：机会往往和别人一起争取，社交和团队的作用很大，行动节奏也会比以往更快。和谁同行、如何分工，会直接影响这十年的成色。从整体走势看，这步运的建议是“宜保守、打基础”。外部助力相对少，更适合向内用力：学习、积累、调养身体、整理生活与财务，为下一个阶段做准备。少做高风险的决定，打好的基础会在后面派上用场。慢一点没关系，重要的是方向对、基础牢。"
+    - "{item.start_year}年到{item.end_year}年是{item.ganzhi}大运，天干为劫财。这十年人际往来频繁，合伙、团队、圈子里的互动会占用你不少精力，竞争意识也会被激发出来，很多事情需要和别人一起推动才能成。选对伙伴、立好规矩，是这一步的关键功课。这十年整体建议“宜保守、打基础”，是一段适合沉淀的时间。把目标放得务实一些，重心放在能力、健康和关系的长期经营上；不必和别人比速度，稳稳走完这一步，后面的路会更好走。沉下心来积累，这段时间并不会白白度过。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH5-STEP-SHISHEN-SHUNSHI
+  slot: CH5-STEP
+  when: {all: [{f: item.stem_ten_god, eq: 食神}, {f: item.tier, eq: 顺势期}]}
+  asserts: []
+  priority: 50
+  length: [200, 300]
+  polish_allowed: true
+  variants:
+    - "这步{item.ganzhi}大运从{item.start_year}年走到{item.end_year}年，天干是食神。食神主事的十年，主线是“享受与创造”：生活品质、兴趣爱好、手艺和作品会变得更重要，你更愿意按自己的节奏做喜爱的事。把爱好做出名堂，往往就在这段时间。从整体走势看，这步运落在“顺势期”，外部环境与你的需要比较合拍。可以把重要的计划放在这十年推进，主动争取机会、扩大投入，努力往往能得到成比例甚至超出预期的回报。顺势的时候，更要看清方向，让每一分努力都落在实处。"
+    - "{item.start_year}年到{item.end_year}年是{item.ganzhi}大运，天干为食神。这十年的关键词是从容和产出：适合把擅长的东西做成作品，把兴趣发展成能力，心态上也会比以往松弛一些，更懂得照顾自己的感受。你的品味和手艺，会在这十年里慢慢被更多人认可。这十年整体属于“顺势期”，是一段适合大步向前的时间。看准的方向不妨坚定推进，该争取的位置、该开启的事业，放在这时去做阻力相对小；顺的时候也记得留一些积累，为后面的阶段打底。把握住这段窗口期，你会走得比预想的更远。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH5-STEP-SHISHEN-XIANGHAO
+  slot: CH5-STEP
+  when: {all: [{f: item.stem_ten_god, eq: 食神}, {f: item.tier, eq: 向好}]}
+  asserts: []
+  priority: 50
+  length: [200, 300]
+  polish_allowed: true
+  variants:
+    - "这步{item.ganzhi}大运从{item.start_year}年走到{item.end_year}年，天干是食神。食神主事的十年，主线是“享受与创造”：生活品质、兴趣爱好、手艺和作品会变得更重要，你更愿意按自己的节奏做喜爱的事。把爱好做出名堂，往往就在这段时间。从整体走势看，这步运评为“向好”，助力多于阻力。适合稳步推进既定目标，在擅长的方向上加一把劲；不必冒进，但该出手的时候要出手，持续投入会慢慢积累出明显的成果。好的趋势需要你主动去接住，行动比等待更重要。"
+    - "{item.start_year}年到{item.end_year}年是{item.ganzhi}大运，天干为食神。这十年的关键词是从容和产出：适合把擅长的东西做成作品，把兴趣发展成能力，心态上也会比以往松弛一些，更懂得照顾自己的感受。你的品味和手艺，会在这十年里慢慢被更多人认可。这十年整体趋势“向好”，大方向上是在往前走的。可以有计划地扩展自己的事业和生活版图，多尝试、多积累；遇到小的波折不必过度担心，保持节奏，整体会朝着好的方向发展。一步一个脚印，向好的势头会越积越明显。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH5-STEP-SHISHEN-PINGWEN
+  slot: CH5-STEP
+  when: {all: [{f: item.stem_ten_god, eq: 食神}, {f: item.tier, eq: 平稳}]}
+  asserts: []
+  priority: 50
+  length: [200, 300]
+  polish_allowed: true
+  variants:
+    - "这步{item.ganzhi}大运从{item.start_year}年走到{item.end_year}年，天干是食神。食神主事的十年，主线是“享受与创造”：生活品质、兴趣爱好、手艺和作品会变得更重要，你更愿意按自己的节奏做喜爱的事。把爱好做出名堂，往往就在这段时间。从整体走势看，这步运属于“平稳”，没有特别大的推力，也少有明显的阻碍。很适合打磨能力、稳定生活、处理好长期积累下来的事情；成果更多取决于你自己的规划和坚持，平稳本身就是一种优势。平稳的十年，最适合把根扎深。"
+    - "{item.start_year}年到{item.end_year}年是{item.ganzhi}大运，天干为食神。这十年的关键词是从容和产出：适合把擅长的东西做成作品，把兴趣发展成能力，心态上也会比以往松弛一些，更懂得照顾自己的感受。你的品味和手艺，会在这十年里慢慢被更多人认可。这十年整体走势“平稳”，节奏不快不慢。与其期待外部的大机会，不如把精力放在可控的事情上：提升专业、照顾家庭和健康、把手头的事做扎实，稳定的积累会在下一个阶段转化为底气。不慌不忙地经营，就是这段时间最好的策略。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH5-STEP-SHISHEN-WENSHOU
+  slot: CH5-STEP
+  when: {all: [{f: item.stem_ten_god, eq: 食神}, {f: item.tier, eq: 宜稳守}]}
+  asserts: []
+  priority: 50
+  length: [200, 300]
+  polish_allowed: true
+  variants:
+    - "这步{item.ganzhi}大运从{item.start_year}年走到{item.end_year}年，天干是食神。食神主事的十年，主线是“享受与创造”：生活品质、兴趣爱好、手艺和作品会变得更重要，你更愿意按自己的节奏做喜爱的事。把爱好做出名堂，往往就在这段时间。从整体走势看，这步运宜“稳守”，外部条件不一定都顺着你，推进起来可能多费些力气。适合守住已有的成果，重要决定多做准备、多留余地，不急于大幅扩张，把精力放在巩固基础上会更稳妥。守得住，本身就是一种能力。"
+    - "{item.start_year}年到{item.end_year}年是{item.ganzhi}大运，天干为食神。这十年的关键词是从容和产出：适合把擅长的东西做成作品，把兴趣发展成能力，心态上也会比以往松弛一些，更懂得照顾自己的感受。你的品味和手艺，会在这十年里慢慢被更多人认可。这十年整体建议“稳守”。这并不意味着停下来，而是换一种节奏：控制风险，量力而行，优先打磨能力和关系；遇到看起来很诱人的机会，先算清楚代价再决定，稳中求进往往比冒进更有收获。把基础守牢，等节奏转换时，你会比别人准备得更充分。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH5-STEP-SHISHEN-BAOSHOU
+  slot: CH5-STEP
+  when: {all: [{f: item.stem_ten_god, eq: 食神}, {f: item.tier, eq: 宜保守、打基础}]}
+  asserts: []
+  priority: 50
+  length: [200, 300]
+  polish_allowed: true
+  variants:
+    - "这步{item.ganzhi}大运从{item.start_year}年走到{item.end_year}年，天干是食神。食神主事的十年，主线是“享受与创造”：生活品质、兴趣爱好、手艺和作品会变得更重要，你更愿意按自己的节奏做喜爱的事。把爱好做出名堂，往往就在这段时间。从整体走势看，这步运的建议是“宜保守、打基础”。外部助力相对少，更适合向内用力：学习、积累、调养身体、整理生活与财务，为下一个阶段做准备。少做高风险的决定，打好的基础会在后面派上用场。慢一点没关系，重要的是方向对、基础牢。"
+    - "{item.start_year}年到{item.end_year}年是{item.ganzhi}大运，天干为食神。这十年的关键词是从容和产出：适合把擅长的东西做成作品，把兴趣发展成能力，心态上也会比以往松弛一些，更懂得照顾自己的感受。你的品味和手艺，会在这十年里慢慢被更多人认可。这十年整体建议“宜保守、打基础”，是一段适合沉淀的时间。把目标放得务实一些，重心放在能力、健康和关系的长期经营上；不必和别人比速度，稳稳走完这一步，后面的路会更好走。沉下心来积累，这段时间并不会白白度过。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH5-STEP-SHANGGUAN-SHUNSHI
+  slot: CH5-STEP
+  when: {all: [{f: item.stem_ten_god, eq: 伤官}, {f: item.tier, eq: 顺势期}]}
+  asserts: []
+  priority: 50
+  length: [200, 300]
+  polish_allowed: true
+  variants:
+    - "这步{item.ganzhi}大运从{item.start_year}年走到{item.end_year}年，天干是伤官。伤官主事的十年，主线是“表达与突破”：你的想法更多、更敢说，也更想打破旧框架，技能、作品和个人表达会成为发展的抓手。用作品说话，会比用言语争辩更有力量。从整体走势看，这步运落在“顺势期”，外部环境与你的需要比较合拍。可以把重要的计划放在这十年推进，主动争取机会、扩大投入，努力往往能得到成比例甚至超出预期的回报。顺势的时候，更要看清方向，让每一分努力都落在实处。"
+    - "{item.start_year}年到{item.end_year}年是{item.ganzhi}大运，天干为伤官。这十年创造力和表达欲都会被放大，适合在专业技能、内容、技术上做出自己的东西；同时对规则的不耐烦也可能增加，需要多花心思处理与上级、制度的关系。把锋芒用在作品上，你的名字会被更多人记住。这十年整体属于“顺势期”，是一段适合大步向前的时间。看准的方向不妨坚定推进，该争取的位置、该开启的事业，放在这时去做阻力相对小；顺的时候也记得留一些积累，为后面的阶段打底。把握住这段窗口期，你会走得比预想的更远。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH5-STEP-SHANGGUAN-XIANGHAO
+  slot: CH5-STEP
+  when: {all: [{f: item.stem_ten_god, eq: 伤官}, {f: item.tier, eq: 向好}]}
+  asserts: []
+  priority: 50
+  length: [200, 300]
+  polish_allowed: true
+  variants:
+    - "这步{item.ganzhi}大运从{item.start_year}年走到{item.end_year}年，天干是伤官。伤官主事的十年，主线是“表达与突破”：你的想法更多、更敢说，也更想打破旧框架，技能、作品和个人表达会成为发展的抓手。用作品说话，会比用言语争辩更有力量。从整体走势看，这步运评为“向好”，助力多于阻力。适合稳步推进既定目标，在擅长的方向上加一把劲；不必冒进，但该出手的时候要出手，持续投入会慢慢积累出明显的成果。好的趋势需要你主动去接住，行动比等待更重要。"
+    - "{item.start_year}年到{item.end_year}年是{item.ganzhi}大运，天干为伤官。这十年创造力和表达欲都会被放大，适合在专业技能、内容、技术上做出自己的东西；同时对规则的不耐烦也可能增加，需要多花心思处理与上级、制度的关系。把锋芒用在作品上，你的名字会被更多人记住。这十年整体趋势“向好”，大方向上是在往前走的。可以有计划地扩展自己的事业和生活版图，多尝试、多积累；遇到小的波折不必过度担心，保持节奏，整体会朝着好的方向发展。一步一个脚印，向好的势头会越积越明显。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH5-STEP-SHANGGUAN-PINGWEN
+  slot: CH5-STEP
+  when: {all: [{f: item.stem_ten_god, eq: 伤官}, {f: item.tier, eq: 平稳}]}
+  asserts: []
+  priority: 50
+  length: [200, 300]
+  polish_allowed: true
+  variants:
+    - "这步{item.ganzhi}大运从{item.start_year}年走到{item.end_year}年，天干是伤官。伤官主事的十年，主线是“表达与突破”：你的想法更多、更敢说，也更想打破旧框架，技能、作品和个人表达会成为发展的抓手。用作品说话，会比用言语争辩更有力量。从整体走势看，这步运属于“平稳”，没有特别大的推力，也少有明显的阻碍。很适合打磨能力、稳定生活、处理好长期积累下来的事情；成果更多取决于你自己的规划和坚持，平稳本身就是一种优势。平稳的十年，最适合把根扎深。"
+    - "{item.start_year}年到{item.end_year}年是{item.ganzhi}大运，天干为伤官。这十年创造力和表达欲都会被放大，适合在专业技能、内容、技术上做出自己的东西；同时对规则的不耐烦也可能增加，需要多花心思处理与上级、制度的关系。把锋芒用在作品上，你的名字会被更多人记住。这十年整体走势“平稳”，节奏不快不慢。与其期待外部的大机会，不如把精力放在可控的事情上：提升专业、照顾家庭和健康、把手头的事做扎实，稳定的积累会在下一个阶段转化为底气。不慌不忙地经营，就是这段时间最好的策略。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH5-STEP-SHANGGUAN-WENSHOU
+  slot: CH5-STEP
+  when: {all: [{f: item.stem_ten_god, eq: 伤官}, {f: item.tier, eq: 宜稳守}]}
+  asserts: []
+  priority: 50
+  length: [200, 300]
+  polish_allowed: true
+  variants:
+    - "这步{item.ganzhi}大运从{item.start_year}年走到{item.end_year}年，天干是伤官。伤官主事的十年，主线是“表达与突破”：你的想法更多、更敢说，也更想打破旧框架，技能、作品和个人表达会成为发展的抓手。用作品说话，会比用言语争辩更有力量。从整体走势看，这步运宜“稳守”，外部条件不一定都顺着你，推进起来可能多费些力气。适合守住已有的成果，重要决定多做准备、多留余地，不急于大幅扩张，把精力放在巩固基础上会更稳妥。守得住，本身就是一种能力。"
+    - "{item.start_year}年到{item.end_year}年是{item.ganzhi}大运，天干为伤官。这十年创造力和表达欲都会被放大，适合在专业技能、内容、技术上做出自己的东西；同时对规则的不耐烦也可能增加，需要多花心思处理与上级、制度的关系。把锋芒用在作品上，你的名字会被更多人记住。这十年整体建议“稳守”。这并不意味着停下来，而是换一种节奏：控制风险，量力而行，优先打磨能力和关系；遇到看起来很诱人的机会，先算清楚代价再决定，稳中求进往往比冒进更有收获。把基础守牢，等节奏转换时，你会比别人准备得更充分。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH5-STEP-SHANGGUAN-BAOSHOU
+  slot: CH5-STEP
+  when: {all: [{f: item.stem_ten_god, eq: 伤官}, {f: item.tier, eq: 宜保守、打基础}]}
+  asserts: []
+  priority: 50
+  length: [200, 300]
+  polish_allowed: true
+  variants:
+    - "这步{item.ganzhi}大运从{item.start_year}年走到{item.end_year}年，天干是伤官。伤官主事的十年，主线是“表达与突破”：你的想法更多、更敢说，也更想打破旧框架，技能、作品和个人表达会成为发展的抓手。用作品说话，会比用言语争辩更有力量。从整体走势看，这步运的建议是“宜保守、打基础”。外部助力相对少，更适合向内用力：学习、积累、调养身体、整理生活与财务，为下一个阶段做准备。少做高风险的决定，打好的基础会在后面派上用场。慢一点没关系，重要的是方向对、基础牢。"
+    - "{item.start_year}年到{item.end_year}年是{item.ganzhi}大运，天干为伤官。这十年创造力和表达欲都会被放大，适合在专业技能、内容、技术上做出自己的东西；同时对规则的不耐烦也可能增加，需要多花心思处理与上级、制度的关系。把锋芒用在作品上，你的名字会被更多人记住。这十年整体建议“宜保守、打基础”，是一段适合沉淀的时间。把目标放得务实一些，重心放在能力、健康和关系的长期经营上；不必和别人比速度，稳稳走完这一步，后面的路会更好走。沉下心来积累，这段时间并不会白白度过。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH5-STEP-PIANCAI-SHUNSHI
+  slot: CH5-STEP
+  when: {all: [{f: item.stem_ten_god, eq: 偏财}, {f: item.tier, eq: 顺势期}]}
+  asserts: []
+  priority: 50
+  length: [200, 300]
+  polish_allowed: true
+  variants:
+    - "这步{item.ganzhi}大运从{item.start_year}年走到{item.end_year}年，天干是偏财。偏财主事的十年，主线是“机会与资源”：接触的人和事变多，副业、投资、跨界合作等机会也会更常出现，眼界会被明显拓宽。懂得取舍、守住重点，机会才会真正变成收获。从整体走势看，这步运落在“顺势期”，外部环境与你的需要比较合拍。可以把重要的计划放在这十年推进，主动争取机会、扩大投入，努力往往能得到成比例甚至超出预期的回报。顺势的时候，更要看清方向，让每一分努力都落在实处。"
+    - "{item.start_year}年到{item.end_year}年是{item.ganzhi}大运，天干为偏财。这十年你会更频繁地和资源、人脉打交道，商务往来与灵活的机会增多，生活也会更丰富，关键在于从众多机会里挑出真正值得投入的那几个。把精力集中在少数几件事上，回报会更可观。这十年整体属于“顺势期”，是一段适合大步向前的时间。看准的方向不妨坚定推进，该争取的位置、该开启的事业，放在这时去做阻力相对小；顺的时候也记得留一些积累，为后面的阶段打底。把握住这段窗口期，你会走得比预想的更远。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH5-STEP-PIANCAI-XIANGHAO
+  slot: CH5-STEP
+  when: {all: [{f: item.stem_ten_god, eq: 偏财}, {f: item.tier, eq: 向好}]}
+  asserts: []
+  priority: 50
+  length: [200, 300]
+  polish_allowed: true
+  variants:
+    - "这步{item.ganzhi}大运从{item.start_year}年走到{item.end_year}年，天干是偏财。偏财主事的十年，主线是“机会与资源”：接触的人和事变多，副业、投资、跨界合作等机会也会更常出现，眼界会被明显拓宽。懂得取舍、守住重点，机会才会真正变成收获。从整体走势看，这步运评为“向好”，助力多于阻力。适合稳步推进既定目标，在擅长的方向上加一把劲；不必冒进，但该出手的时候要出手，持续投入会慢慢积累出明显的成果。好的趋势需要你主动去接住，行动比等待更重要。"
+    - "{item.start_year}年到{item.end_year}年是{item.ganzhi}大运，天干为偏财。这十年你会更频繁地和资源、人脉打交道，商务往来与灵活的机会增多，生活也会更丰富，关键在于从众多机会里挑出真正值得投入的那几个。把精力集中在少数几件事上，回报会更可观。这十年整体趋势“向好”，大方向上是在往前走的。可以有计划地扩展自己的事业和生活版图，多尝试、多积累；遇到小的波折不必过度担心，保持节奏，整体会朝着好的方向发展。一步一个脚印，向好的势头会越积越明显。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH5-STEP-PIANCAI-PINGWEN
+  slot: CH5-STEP
+  when: {all: [{f: item.stem_ten_god, eq: 偏财}, {f: item.tier, eq: 平稳}]}
+  asserts: []
+  priority: 50
+  length: [200, 300]
+  polish_allowed: true
+  variants:
+    - "这步{item.ganzhi}大运从{item.start_year}年走到{item.end_year}年，天干是偏财。偏财主事的十年，主线是“机会与资源”：接触的人和事变多，副业、投资、跨界合作等机会也会更常出现，眼界会被明显拓宽。懂得取舍、守住重点，机会才会真正变成收获。从整体走势看，这步运属于“平稳”，没有特别大的推力，也少有明显的阻碍。很适合打磨能力、稳定生活、处理好长期积累下来的事情；成果更多取决于你自己的规划和坚持，平稳本身就是一种优势。平稳的十年，最适合把根扎深。"
+    - "{item.start_year}年到{item.end_year}年是{item.ganzhi}大运，天干为偏财。这十年你会更频繁地和资源、人脉打交道，商务往来与灵活的机会增多，生活也会更丰富，关键在于从众多机会里挑出真正值得投入的那几个。把精力集中在少数几件事上，回报会更可观。这十年整体走势“平稳”，节奏不快不慢。与其期待外部的大机会，不如把精力放在可控的事情上：提升专业、照顾家庭和健康、把手头的事做扎实，稳定的积累会在下一个阶段转化为底气。不慌不忙地经营，就是这段时间最好的策略。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH5-STEP-PIANCAI-WENSHOU
+  slot: CH5-STEP
+  when: {all: [{f: item.stem_ten_god, eq: 偏财}, {f: item.tier, eq: 宜稳守}]}
+  asserts: []
+  priority: 50
+  length: [200, 300]
+  polish_allowed: true
+  variants:
+    - "这步{item.ganzhi}大运从{item.start_year}年走到{item.end_year}年，天干是偏财。偏财主事的十年，主线是“机会与资源”：接触的人和事变多，副业、投资、跨界合作等机会也会更常出现，眼界会被明显拓宽。懂得取舍、守住重点，机会才会真正变成收获。从整体走势看，这步运宜“稳守”，外部条件不一定都顺着你，推进起来可能多费些力气。适合守住已有的成果，重要决定多做准备、多留余地，不急于大幅扩张，把精力放在巩固基础上会更稳妥。守得住，本身就是一种能力。"
+    - "{item.start_year}年到{item.end_year}年是{item.ganzhi}大运，天干为偏财。这十年你会更频繁地和资源、人脉打交道，商务往来与灵活的机会增多，生活也会更丰富，关键在于从众多机会里挑出真正值得投入的那几个。把精力集中在少数几件事上，回报会更可观。这十年整体建议“稳守”。这并不意味着停下来，而是换一种节奏：控制风险，量力而行，优先打磨能力和关系；遇到看起来很诱人的机会，先算清楚代价再决定，稳中求进往往比冒进更有收获。把基础守牢，等节奏转换时，你会比别人准备得更充分。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH5-STEP-PIANCAI-BAOSHOU
+  slot: CH5-STEP
+  when: {all: [{f: item.stem_ten_god, eq: 偏财}, {f: item.tier, eq: 宜保守、打基础}]}
+  asserts: []
+  priority: 50
+  length: [200, 300]
+  polish_allowed: true
+  variants:
+    - "这步{item.ganzhi}大运从{item.start_year}年走到{item.end_year}年，天干是偏财。偏财主事的十年，主线是“机会与资源”：接触的人和事变多，副业、投资、跨界合作等机会也会更常出现，眼界会被明显拓宽。懂得取舍、守住重点，机会才会真正变成收获。从整体走势看，这步运的建议是“宜保守、打基础”。外部助力相对少，更适合向内用力：学习、积累、调养身体、整理生活与财务，为下一个阶段做准备。少做高风险的决定，打好的基础会在后面派上用场。慢一点没关系，重要的是方向对、基础牢。"
+    - "{item.start_year}年到{item.end_year}年是{item.ganzhi}大运，天干为偏财。这十年你会更频繁地和资源、人脉打交道，商务往来与灵活的机会增多，生活也会更丰富，关键在于从众多机会里挑出真正值得投入的那几个。把精力集中在少数几件事上，回报会更可观。这十年整体建议“宜保守、打基础”，是一段适合沉淀的时间。把目标放得务实一些，重心放在能力、健康和关系的长期经营上；不必和别人比速度，稳稳走完这一步，后面的路会更好走。沉下心来积累，这段时间并不会白白度过。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH5-STEP-ZHENGCAI-SHUNSHI
+  slot: CH5-STEP
+  when: {all: [{f: item.stem_ten_god, eq: 正财}, {f: item.tier, eq: 顺势期}]}
+  asserts: []
+  priority: 50
+  length: [200, 300]
+  polish_allowed: true
+  variants:
+    - "这步{item.ganzhi}大运从{item.start_year}年走到{item.end_year}年，天干是正财。正财主事的十年，主线是“经营与积累”：工作上的稳定收入、家庭与生活的规划、长期责任会成为重心，你会更看重踏实的回报。一点一滴的积累，会在这十年里慢慢成形。从整体走势看，这步运落在“顺势期”，外部环境与你的需要比较合拍。可以把重要的计划放在这十年推进，主动争取机会、扩大投入，努力往往能得到成比例甚至超出预期的回报。顺势的时候，更要看清方向，让每一分努力都落在实处。"
+    - "{item.start_year}年到{item.end_year}年是{item.ganzhi}大运，天干为正财。这十年的主题是稳扎稳打：通过持续的付出换来看得见的成果，适合规划财务、经营家庭、在一个领域里慢慢做深，务实会是你最大的优势。你在这段时间打下的家底，会成为长期的依靠。这十年整体属于“顺势期”，是一段适合大步向前的时间。看准的方向不妨坚定推进，该争取的位置、该开启的事业，放在这时去做阻力相对小；顺的时候也记得留一些积累，为后面的阶段打底。把握住这段窗口期，你会走得比预想的更远。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH5-STEP-ZHENGCAI-XIANGHAO
+  slot: CH5-STEP
+  when: {all: [{f: item.stem_ten_god, eq: 正财}, {f: item.tier, eq: 向好}]}
+  asserts: []
+  priority: 50
+  length: [200, 300]
+  polish_allowed: true
+  variants:
+    - "这步{item.ganzhi}大运从{item.start_year}年走到{item.end_year}年，天干是正财。正财主事的十年，主线是“经营与积累”：工作上的稳定收入、家庭与生活的规划、长期责任会成为重心，你会更看重踏实的回报。一点一滴的积累，会在这十年里慢慢成形。从整体走势看，这步运评为“向好”，助力多于阻力。适合稳步推进既定目标，在擅长的方向上加一把劲；不必冒进，但该出手的时候要出手，持续投入会慢慢积累出明显的成果。好的趋势需要你主动去接住，行动比等待更重要。"
+    - "{item.start_year}年到{item.end_year}年是{item.ganzhi}大运，天干为正财。这十年的主题是稳扎稳打：通过持续的付出换来看得见的成果，适合规划财务、经营家庭、在一个领域里慢慢做深，务实会是你最大的优势。你在这段时间打下的家底，会成为长期的依靠。这十年整体趋势“向好”，大方向上是在往前走的。可以有计划地扩展自己的事业和生活版图，多尝试、多积累；遇到小的波折不必过度担心，保持节奏，整体会朝着好的方向发展。一步一个脚印，向好的势头会越积越明显。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH5-STEP-ZHENGCAI-PINGWEN
+  slot: CH5-STEP
+  when: {all: [{f: item.stem_ten_god, eq: 正财}, {f: item.tier, eq: 平稳}]}
+  asserts: []
+  priority: 50
+  length: [200, 300]
+  polish_allowed: true
+  variants:
+    - "这步{item.ganzhi}大运从{item.start_year}年走到{item.end_year}年，天干是正财。正财主事的十年，主线是“经营与积累”：工作上的稳定收入、家庭与生活的规划、长期责任会成为重心，你会更看重踏实的回报。一点一滴的积累，会在这十年里慢慢成形。从整体走势看，这步运属于“平稳”，没有特别大的推力，也少有明显的阻碍。很适合打磨能力、稳定生活、处理好长期积累下来的事情；成果更多取决于你自己的规划和坚持，平稳本身就是一种优势。平稳的十年，最适合把根扎深。"
+    - "{item.start_year}年到{item.end_year}年是{item.ganzhi}大运，天干为正财。这十年的主题是稳扎稳打：通过持续的付出换来看得见的成果，适合规划财务、经营家庭、在一个领域里慢慢做深，务实会是你最大的优势。你在这段时间打下的家底，会成为长期的依靠。这十年整体走势“平稳”，节奏不快不慢。与其期待外部的大机会，不如把精力放在可控的事情上：提升专业、照顾家庭和健康、把手头的事做扎实，稳定的积累会在下一个阶段转化为底气。不慌不忙地经营，就是这段时间最好的策略。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH5-STEP-ZHENGCAI-WENSHOU
+  slot: CH5-STEP
+  when: {all: [{f: item.stem_ten_god, eq: 正财}, {f: item.tier, eq: 宜稳守}]}
+  asserts: []
+  priority: 50
+  length: [200, 300]
+  polish_allowed: true
+  variants:
+    - "这步{item.ganzhi}大运从{item.start_year}年走到{item.end_year}年，天干是正财。正财主事的十年，主线是“经营与积累”：工作上的稳定收入、家庭与生活的规划、长期责任会成为重心，你会更看重踏实的回报。一点一滴的积累，会在这十年里慢慢成形。从整体走势看，这步运宜“稳守”，外部条件不一定都顺着你，推进起来可能多费些力气。适合守住已有的成果，重要决定多做准备、多留余地，不急于大幅扩张，把精力放在巩固基础上会更稳妥。守得住，本身就是一种能力。"
+    - "{item.start_year}年到{item.end_year}年是{item.ganzhi}大运，天干为正财。这十年的主题是稳扎稳打：通过持续的付出换来看得见的成果，适合规划财务、经营家庭、在一个领域里慢慢做深，务实会是你最大的优势。你在这段时间打下的家底，会成为长期的依靠。这十年整体建议“稳守”。这并不意味着停下来，而是换一种节奏：控制风险，量力而行，优先打磨能力和关系；遇到看起来很诱人的机会，先算清楚代价再决定，稳中求进往往比冒进更有收获。把基础守牢，等节奏转换时，你会比别人准备得更充分。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH5-STEP-ZHENGCAI-BAOSHOU
+  slot: CH5-STEP
+  when: {all: [{f: item.stem_ten_god, eq: 正财}, {f: item.tier, eq: 宜保守、打基础}]}
+  asserts: []
+  priority: 50
+  length: [200, 300]
+  polish_allowed: true
+  variants:
+    - "这步{item.ganzhi}大运从{item.start_year}年走到{item.end_year}年，天干是正财。正财主事的十年，主线是“经营与积累”：工作上的稳定收入、家庭与生活的规划、长期责任会成为重心，你会更看重踏实的回报。一点一滴的积累，会在这十年里慢慢成形。从整体走势看，这步运的建议是“宜保守、打基础”。外部助力相对少，更适合向内用力：学习、积累、调养身体、整理生活与财务，为下一个阶段做准备。少做高风险的决定，打好的基础会在后面派上用场。慢一点没关系，重要的是方向对、基础牢。"
+    - "{item.start_year}年到{item.end_year}年是{item.ganzhi}大运，天干为正财。这十年的主题是稳扎稳打：通过持续的付出换来看得见的成果，适合规划财务、经营家庭、在一个领域里慢慢做深，务实会是你最大的优势。你在这段时间打下的家底，会成为长期的依靠。这十年整体建议“宜保守、打基础”，是一段适合沉淀的时间。把目标放得务实一些，重心放在能力、健康和关系的长期经营上；不必和别人比速度，稳稳走完这一步，后面的路会更好走。沉下心来积累，这段时间并不会白白度过。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH5-STEP-QISHA-SHUNSHI
+  slot: CH5-STEP
+  when: {all: [{f: item.stem_ten_god, eq: 七杀}, {f: item.tier, eq: 顺势期}]}
+  asserts: []
+  priority: 50
+  length: [200, 300]
+  polish_allowed: true
+  variants:
+    - "这步{item.ganzhi}大运从{item.start_year}年走到{item.end_year}年，天干是七杀。七杀主事的十年，主线是“压力与担当”：挑战和责任会明显增多，常常需要你在关键时刻顶上去，也正因如此，能力会在压力中快速成长。越过几道坎之后，你会明显感到自己的分量在增加。从整体走势看，这步运落在“顺势期”，外部环境与你的需要比较合拍。可以把重要的计划放在这十年推进，主动争取机会、扩大投入，努力往往能得到成比例甚至超出预期的回报。顺势的时候，更要看清方向，让每一分努力都落在实处。"
+    - "{item.start_year}年到{item.end_year}年是{item.ganzhi}大运，天干为七杀。这十年你会遇到更多需要攻坚的事情：升级的目标、更高的要求、竞争更激烈的环境，扛住了往往就是一次明显的跃升，节奏和身体都需要用心管理。能扛事的人，往往在这样的十年里被委以重任。这十年整体属于“顺势期”，是一段适合大步向前的时间。看准的方向不妨坚定推进，该争取的位置、该开启的事业，放在这时去做阻力相对小；顺的时候也记得留一些积累，为后面的阶段打底。把握住这段窗口期，你会走得比预想的更远。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH5-STEP-QISHA-XIANGHAO
+  slot: CH5-STEP
+  when: {all: [{f: item.stem_ten_god, eq: 七杀}, {f: item.tier, eq: 向好}]}
+  asserts: []
+  priority: 50
+  length: [200, 300]
+  polish_allowed: true
+  variants:
+    - "这步{item.ganzhi}大运从{item.start_year}年走到{item.end_year}年，天干是七杀。七杀主事的十年，主线是“压力与担当”：挑战和责任会明显增多，常常需要你在关键时刻顶上去，也正因如此，能力会在压力中快速成长。越过几道坎之后，你会明显感到自己的分量在增加。从整体走势看，这步运评为“向好”，助力多于阻力。适合稳步推进既定目标，在擅长的方向上加一把劲；不必冒进，但该出手的时候要出手，持续投入会慢慢积累出明显的成果。好的趋势需要你主动去接住，行动比等待更重要。"
+    - "{item.start_year}年到{item.end_year}年是{item.ganzhi}大运，天干为七杀。这十年你会遇到更多需要攻坚的事情：升级的目标、更高的要求、竞争更激烈的环境，扛住了往往就是一次明显的跃升，节奏和身体都需要用心管理。能扛事的人，往往在这样的十年里被委以重任。这十年整体趋势“向好”，大方向上是在往前走的。可以有计划地扩展自己的事业和生活版图，多尝试、多积累；遇到小的波折不必过度担心，保持节奏，整体会朝着好的方向发展。一步一个脚印，向好的势头会越积越明显。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH5-STEP-QISHA-PINGWEN
+  slot: CH5-STEP
+  when: {all: [{f: item.stem_ten_god, eq: 七杀}, {f: item.tier, eq: 平稳}]}
+  asserts: []
+  priority: 50
+  length: [200, 300]
+  polish_allowed: true
+  variants:
+    - "这步{item.ganzhi}大运从{item.start_year}年走到{item.end_year}年，天干是七杀。七杀主事的十年，主线是“压力与担当”：挑战和责任会明显增多，常常需要你在关键时刻顶上去，也正因如此，能力会在压力中快速成长。越过几道坎之后，你会明显感到自己的分量在增加。从整体走势看，这步运属于“平稳”，没有特别大的推力，也少有明显的阻碍。很适合打磨能力、稳定生活、处理好长期积累下来的事情；成果更多取决于你自己的规划和坚持，平稳本身就是一种优势。平稳的十年，最适合把根扎深。"
+    - "{item.start_year}年到{item.end_year}年是{item.ganzhi}大运，天干为七杀。这十年你会遇到更多需要攻坚的事情：升级的目标、更高的要求、竞争更激烈的环境，扛住了往往就是一次明显的跃升，节奏和身体都需要用心管理。能扛事的人，往往在这样的十年里被委以重任。这十年整体走势“平稳”，节奏不快不慢。与其期待外部的大机会，不如把精力放在可控的事情上：提升专业、照顾家庭和健康、把手头的事做扎实，稳定的积累会在下一个阶段转化为底气。不慌不忙地经营，就是这段时间最好的策略。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH5-STEP-QISHA-WENSHOU
+  slot: CH5-STEP
+  when: {all: [{f: item.stem_ten_god, eq: 七杀}, {f: item.tier, eq: 宜稳守}]}
+  asserts: []
+  priority: 50
+  length: [200, 300]
+  polish_allowed: true
+  variants:
+    - "这步{item.ganzhi}大运从{item.start_year}年走到{item.end_year}年，天干是七杀。七杀主事的十年，主线是“压力与担当”：挑战和责任会明显增多，常常需要你在关键时刻顶上去，也正因如此，能力会在压力中快速成长。越过几道坎之后，你会明显感到自己的分量在增加。从整体走势看，这步运宜“稳守”，外部条件不一定都顺着你，推进起来可能多费些力气。适合守住已有的成果，重要决定多做准备、多留余地，不急于大幅扩张，把精力放在巩固基础上会更稳妥。守得住，本身就是一种能力。"
+    - "{item.start_year}年到{item.end_year}年是{item.ganzhi}大运，天干为七杀。这十年你会遇到更多需要攻坚的事情：升级的目标、更高的要求、竞争更激烈的环境，扛住了往往就是一次明显的跃升，节奏和身体都需要用心管理。能扛事的人，往往在这样的十年里被委以重任。这十年整体建议“稳守”。这并不意味着停下来，而是换一种节奏：控制风险，量力而行，优先打磨能力和关系；遇到看起来很诱人的机会，先算清楚代价再决定，稳中求进往往比冒进更有收获。把基础守牢，等节奏转换时，你会比别人准备得更充分。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH5-STEP-QISHA-BAOSHOU
+  slot: CH5-STEP
+  when: {all: [{f: item.stem_ten_god, eq: 七杀}, {f: item.tier, eq: 宜保守、打基础}]}
+  asserts: []
+  priority: 50
+  length: [200, 300]
+  polish_allowed: true
+  variants:
+    - "这步{item.ganzhi}大运从{item.start_year}年走到{item.end_year}年，天干是七杀。七杀主事的十年，主线是“压力与担当”：挑战和责任会明显增多，常常需要你在关键时刻顶上去，也正因如此，能力会在压力中快速成长。越过几道坎之后，你会明显感到自己的分量在增加。从整体走势看，这步运的建议是“宜保守、打基础”。外部助力相对少，更适合向内用力：学习、积累、调养身体、整理生活与财务，为下一个阶段做准备。少做高风险的决定，打好的基础会在后面派上用场。慢一点没关系，重要的是方向对、基础牢。"
+    - "{item.start_year}年到{item.end_year}年是{item.ganzhi}大运，天干为七杀。这十年你会遇到更多需要攻坚的事情：升级的目标、更高的要求、竞争更激烈的环境，扛住了往往就是一次明显的跃升，节奏和身体都需要用心管理。能扛事的人，往往在这样的十年里被委以重任。这十年整体建议“宜保守、打基础”，是一段适合沉淀的时间。把目标放得务实一些，重心放在能力、健康和关系的长期经营上；不必和别人比速度，稳稳走完这一步，后面的路会更好走。沉下心来积累，这段时间并不会白白度过。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH5-STEP-ZHENGGUAN-SHUNSHI
+  slot: CH5-STEP
+  when: {all: [{f: item.stem_ten_god, eq: 正官}, {f: item.tier, eq: 顺势期}]}
+  asserts: []
+  priority: 50
+  length: [200, 300]
+  polish_allowed: true
+  variants:
+    - "这步{item.ganzhi}大运从{item.start_year}年走到{item.end_year}年，天干是正官。正官主事的十年，主线是“规则与位置”：职位、名誉、组织中的角色更受关注，适合在制度清楚的环境里稳步上升，责任也会随之加重。你的可靠和守信，会在这段时间转化为实际的位置。从整体走势看，这步运落在“顺势期”，外部环境与你的需要比较合拍。可以把重要的计划放在这十年推进，主动争取机会、扩大投入，努力往往能得到成比例甚至超出预期的回报。顺势的时候，更要看清方向，让每一分努力都落在实处。"
+    - "{item.start_year}年到{item.end_year}年是{item.ganzhi}大运，天干为正官。这十年和规则、平台、名声相关的事会变多：晋升、考核、身份的确立都是常见主题，守规矩、讲信誉的人在这段时间更容易被看见和托付。在体系里稳步向上，是这一步最自然的走法。这十年整体属于“顺势期”，是一段适合大步向前的时间。看准的方向不妨坚定推进，该争取的位置、该开启的事业，放在这时去做阻力相对小；顺的时候也记得留一些积累，为后面的阶段打底。把握住这段窗口期，你会走得比预想的更远。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH5-STEP-ZHENGGUAN-XIANGHAO
+  slot: CH5-STEP
+  when: {all: [{f: item.stem_ten_god, eq: 正官}, {f: item.tier, eq: 向好}]}
+  asserts: []
+  priority: 50
+  length: [200, 300]
+  polish_allowed: true
+  variants:
+    - "这步{item.ganzhi}大运从{item.start_year}年走到{item.end_year}年，天干是正官。正官主事的十年，主线是“规则与位置”：职位、名誉、组织中的角色更受关注，适合在制度清楚的环境里稳步上升，责任也会随之加重。你的可靠和守信，会在这段时间转化为实际的位置。从整体走势看，这步运评为“向好”，助力多于阻力。适合稳步推进既定目标，在擅长的方向上加一把劲；不必冒进，但该出手的时候要出手，持续投入会慢慢积累出明显的成果。好的趋势需要你主动去接住，行动比等待更重要。"
+    - "{item.start_year}年到{item.end_year}年是{item.ganzhi}大运，天干为正官。这十年和规则、平台、名声相关的事会变多：晋升、考核、身份的确立都是常见主题，守规矩、讲信誉的人在这段时间更容易被看见和托付。在体系里稳步向上，是这一步最自然的走法。这十年整体趋势“向好”，大方向上是在往前走的。可以有计划地扩展自己的事业和生活版图，多尝试、多积累；遇到小的波折不必过度担心，保持节奏，整体会朝着好的方向发展。一步一个脚印，向好的势头会越积越明显。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH5-STEP-ZHENGGUAN-PINGWEN
+  slot: CH5-STEP
+  when: {all: [{f: item.stem_ten_god, eq: 正官}, {f: item.tier, eq: 平稳}]}
+  asserts: []
+  priority: 50
+  length: [200, 300]
+  polish_allowed: true
+  variants:
+    - "这步{item.ganzhi}大运从{item.start_year}年走到{item.end_year}年，天干是正官。正官主事的十年，主线是“规则与位置”：职位、名誉、组织中的角色更受关注，适合在制度清楚的环境里稳步上升，责任也会随之加重。你的可靠和守信，会在这段时间转化为实际的位置。从整体走势看，这步运属于“平稳”，没有特别大的推力，也少有明显的阻碍。很适合打磨能力、稳定生活、处理好长期积累下来的事情；成果更多取决于你自己的规划和坚持，平稳本身就是一种优势。平稳的十年，最适合把根扎深。"
+    - "{item.start_year}年到{item.end_year}年是{item.ganzhi}大运，天干为正官。这十年和规则、平台、名声相关的事会变多：晋升、考核、身份的确立都是常见主题，守规矩、讲信誉的人在这段时间更容易被看见和托付。在体系里稳步向上，是这一步最自然的走法。这十年整体走势“平稳”，节奏不快不慢。与其期待外部的大机会，不如把精力放在可控的事情上：提升专业、照顾家庭和健康、把手头的事做扎实，稳定的积累会在下一个阶段转化为底气。不慌不忙地经营，就是这段时间最好的策略。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH5-STEP-ZHENGGUAN-WENSHOU
+  slot: CH5-STEP
+  when: {all: [{f: item.stem_ten_god, eq: 正官}, {f: item.tier, eq: 宜稳守}]}
+  asserts: []
+  priority: 50
+  length: [200, 300]
+  polish_allowed: true
+  variants:
+    - "这步{item.ganzhi}大运从{item.start_year}年走到{item.end_year}年，天干是正官。正官主事的十年，主线是“规则与位置”：职位、名誉、组织中的角色更受关注，适合在制度清楚的环境里稳步上升，责任也会随之加重。你的可靠和守信，会在这段时间转化为实际的位置。从整体走势看，这步运宜“稳守”，外部条件不一定都顺着你，推进起来可能多费些力气。适合守住已有的成果，重要决定多做准备、多留余地，不急于大幅扩张，把精力放在巩固基础上会更稳妥。守得住，本身就是一种能力。"
+    - "{item.start_year}年到{item.end_year}年是{item.ganzhi}大运，天干为正官。这十年和规则、平台、名声相关的事会变多：晋升、考核、身份的确立都是常见主题，守规矩、讲信誉的人在这段时间更容易被看见和托付。在体系里稳步向上，是这一步最自然的走法。这十年整体建议“稳守”。这并不意味着停下来，而是换一种节奏：控制风险，量力而行，优先打磨能力和关系；遇到看起来很诱人的机会，先算清楚代价再决定，稳中求进往往比冒进更有收获。把基础守牢，等节奏转换时，你会比别人准备得更充分。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH5-STEP-ZHENGGUAN-BAOSHOU
+  slot: CH5-STEP
+  when: {all: [{f: item.stem_ten_god, eq: 正官}, {f: item.tier, eq: 宜保守、打基础}]}
+  asserts: []
+  priority: 50
+  length: [200, 300]
+  polish_allowed: true
+  variants:
+    - "这步{item.ganzhi}大运从{item.start_year}年走到{item.end_year}年，天干是正官。正官主事的十年，主线是“规则与位置”：职位、名誉、组织中的角色更受关注，适合在制度清楚的环境里稳步上升，责任也会随之加重。你的可靠和守信，会在这段时间转化为实际的位置。从整体走势看，这步运的建议是“宜保守、打基础”。外部助力相对少，更适合向内用力：学习、积累、调养身体、整理生活与财务，为下一个阶段做准备。少做高风险的决定，打好的基础会在后面派上用场。慢一点没关系，重要的是方向对、基础牢。"
+    - "{item.start_year}年到{item.end_year}年是{item.ganzhi}大运，天干为正官。这十年和规则、平台、名声相关的事会变多：晋升、考核、身份的确立都是常见主题，守规矩、讲信誉的人在这段时间更容易被看见和托付。在体系里稳步向上，是这一步最自然的走法。这十年整体建议“宜保守、打基础”，是一段适合沉淀的时间。把目标放得务实一些，重心放在能力、健康和关系的长期经营上；不必和别人比速度，稳稳走完这一步，后面的路会更好走。沉下心来积累，这段时间并不会白白度过。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH5-STEP-PIANYIN-SHUNSHI
+  slot: CH5-STEP
+  when: {all: [{f: item.stem_ten_god, eq: 偏印}, {f: item.tier, eq: 顺势期}]}
+  asserts: []
+  priority: 50
+  length: [200, 300]
+  polish_allowed: true
+  variants:
+    - "这步{item.ganzhi}大运从{item.start_year}年走到{item.end_year}年，天干是偏印。偏印主事的十年，主线是“钻研与转向”：你会对特别的领域、技能或思想产生兴趣，愿意静下来深入研究，也可能经历方向上的调整。这时培养的独特专长，可能成为日后的立身之本。从整体走势看，这步运落在“顺势期”，外部环境与你的需要比较合拍。可以把重要的计划放在这十年推进，主动争取机会、扩大投入，努力往往能得到成比例甚至超出预期的回报。顺势的时候，更要看清方向，让每一分努力都落在实处。"
+    - "{item.start_year}年到{item.end_year}年是{item.ganzhi}大运，天干为偏印。这十年内心世界会变得更丰富，适合学习冷门技能、做研究、找到属于自己的专长；思考多了，行动上要注意别一直停在“想”的阶段。给自己一些安静的时间，答案往往在钻研中出现。这十年整体属于“顺势期”，是一段适合大步向前的时间。看准的方向不妨坚定推进，该争取的位置、该开启的事业，放在这时去做阻力相对小；顺的时候也记得留一些积累，为后面的阶段打底。把握住这段窗口期，你会走得比预想的更远。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH5-STEP-PIANYIN-XIANGHAO
+  slot: CH5-STEP
+  when: {all: [{f: item.stem_ten_god, eq: 偏印}, {f: item.tier, eq: 向好}]}
+  asserts: []
+  priority: 50
+  length: [200, 300]
+  polish_allowed: true
+  variants:
+    - "这步{item.ganzhi}大运从{item.start_year}年走到{item.end_year}年，天干是偏印。偏印主事的十年，主线是“钻研与转向”：你会对特别的领域、技能或思想产生兴趣，愿意静下来深入研究，也可能经历方向上的调整。这时培养的独特专长，可能成为日后的立身之本。从整体走势看，这步运评为“向好”，助力多于阻力。适合稳步推进既定目标，在擅长的方向上加一把劲；不必冒进，但该出手的时候要出手，持续投入会慢慢积累出明显的成果。好的趋势需要你主动去接住，行动比等待更重要。"
+    - "{item.start_year}年到{item.end_year}年是{item.ganzhi}大运，天干为偏印。这十年内心世界会变得更丰富，适合学习冷门技能、做研究、找到属于自己的专长；思考多了，行动上要注意别一直停在“想”的阶段。给自己一些安静的时间，答案往往在钻研中出现。这十年整体趋势“向好”，大方向上是在往前走的。可以有计划地扩展自己的事业和生活版图，多尝试、多积累；遇到小的波折不必过度担心，保持节奏，整体会朝着好的方向发展。一步一个脚印，向好的势头会越积越明显。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH5-STEP-PIANYIN-PINGWEN
+  slot: CH5-STEP
+  when: {all: [{f: item.stem_ten_god, eq: 偏印}, {f: item.tier, eq: 平稳}]}
+  asserts: []
+  priority: 50
+  length: [200, 300]
+  polish_allowed: true
+  variants:
+    - "这步{item.ganzhi}大运从{item.start_year}年走到{item.end_year}年，天干是偏印。偏印主事的十年，主线是“钻研与转向”：你会对特别的领域、技能或思想产生兴趣，愿意静下来深入研究，也可能经历方向上的调整。这时培养的独特专长，可能成为日后的立身之本。从整体走势看，这步运属于“平稳”，没有特别大的推力，也少有明显的阻碍。很适合打磨能力、稳定生活、处理好长期积累下来的事情；成果更多取决于你自己的规划和坚持，平稳本身就是一种优势。平稳的十年，最适合把根扎深。"
+    - "{item.start_year}年到{item.end_year}年是{item.ganzhi}大运，天干为偏印。这十年内心世界会变得更丰富，适合学习冷门技能、做研究、找到属于自己的专长；思考多了，行动上要注意别一直停在“想”的阶段。给自己一些安静的时间，答案往往在钻研中出现。这十年整体走势“平稳”，节奏不快不慢。与其期待外部的大机会，不如把精力放在可控的事情上：提升专业、照顾家庭和健康、把手头的事做扎实，稳定的积累会在下一个阶段转化为底气。不慌不忙地经营，就是这段时间最好的策略。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH5-STEP-PIANYIN-WENSHOU
+  slot: CH5-STEP
+  when: {all: [{f: item.stem_ten_god, eq: 偏印}, {f: item.tier, eq: 宜稳守}]}
+  asserts: []
+  priority: 50
+  length: [200, 300]
+  polish_allowed: true
+  variants:
+    - "这步{item.ganzhi}大运从{item.start_year}年走到{item.end_year}年，天干是偏印。偏印主事的十年，主线是“钻研与转向”：你会对特别的领域、技能或思想产生兴趣，愿意静下来深入研究，也可能经历方向上的调整。这时培养的独特专长，可能成为日后的立身之本。从整体走势看，这步运宜“稳守”，外部条件不一定都顺着你，推进起来可能多费些力气。适合守住已有的成果，重要决定多做准备、多留余地，不急于大幅扩张，把精力放在巩固基础上会更稳妥。守得住，本身就是一种能力。"
+    - "{item.start_year}年到{item.end_year}年是{item.ganzhi}大运，天干为偏印。这十年内心世界会变得更丰富，适合学习冷门技能、做研究、找到属于自己的专长；思考多了，行动上要注意别一直停在“想”的阶段。给自己一些安静的时间，答案往往在钻研中出现。这十年整体建议“稳守”。这并不意味着停下来，而是换一种节奏：控制风险，量力而行，优先打磨能力和关系；遇到看起来很诱人的机会，先算清楚代价再决定，稳中求进往往比冒进更有收获。把基础守牢，等节奏转换时，你会比别人准备得更充分。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH5-STEP-PIANYIN-BAOSHOU
+  slot: CH5-STEP
+  when: {all: [{f: item.stem_ten_god, eq: 偏印}, {f: item.tier, eq: 宜保守、打基础}]}
+  asserts: []
+  priority: 50
+  length: [200, 300]
+  polish_allowed: true
+  variants:
+    - "这步{item.ganzhi}大运从{item.start_year}年走到{item.end_year}年，天干是偏印。偏印主事的十年，主线是“钻研与转向”：你会对特别的领域、技能或思想产生兴趣，愿意静下来深入研究，也可能经历方向上的调整。这时培养的独特专长，可能成为日后的立身之本。从整体走势看，这步运的建议是“宜保守、打基础”。外部助力相对少，更适合向内用力：学习、积累、调养身体、整理生活与财务，为下一个阶段做准备。少做高风险的决定，打好的基础会在后面派上用场。慢一点没关系，重要的是方向对、基础牢。"
+    - "{item.start_year}年到{item.end_year}年是{item.ganzhi}大运，天干为偏印。这十年内心世界会变得更丰富，适合学习冷门技能、做研究、找到属于自己的专长；思考多了，行动上要注意别一直停在“想”的阶段。给自己一些安静的时间，答案往往在钻研中出现。这十年整体建议“宜保守、打基础”，是一段适合沉淀的时间。把目标放得务实一些，重心放在能力、健康和关系的长期经营上；不必和别人比速度，稳稳走完这一步，后面的路会更好走。沉下心来积累，这段时间并不会白白度过。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH5-STEP-ZHENGYIN-SHUNSHI
+  slot: CH5-STEP
+  when: {all: [{f: item.stem_ten_god, eq: 正印}, {f: item.tier, eq: 顺势期}]}
+  asserts: []
+  priority: 50
+  length: [200, 300]
+  polish_allowed: true
+  variants:
+    - "这步{item.ganzhi}大运从{item.start_year}年走到{item.end_year}年，天干是正印。正印主事的十年，主线是“学习与支持”：进修、考证、资质提升会更顺手，长辈、老师和平台给到的帮助也会更明显。这段时间学到的东西，会在很久以后继续帮到你。从整体走势看，这步运落在“顺势期”，外部环境与你的需要比较合拍。可以把重要的计划放在这十年推进，主动争取机会、扩大投入，努力往往能得到成比例甚至超出预期的回报。顺势的时候，更要看清方向，让每一分努力都落在实处。"
+    - "{item.start_year}年到{item.end_year}年是{item.ganzhi}大运，天干为正印。这十年适合充电和沉淀：系统地学一门东西、拿到需要的资质、进入重视培养的环境，被支持、被照顾的感觉会比以往更多，心态也更安定。有人支持的时候多学一点，是最划算的投资。这十年整体属于“顺势期”，是一段适合大步向前的时间。看准的方向不妨坚定推进，该争取的位置、该开启的事业，放在这时去做阻力相对小；顺的时候也记得留一些积累，为后面的阶段打底。把握住这段窗口期，你会走得比预想的更远。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH5-STEP-ZHENGYIN-XIANGHAO
+  slot: CH5-STEP
+  when: {all: [{f: item.stem_ten_god, eq: 正印}, {f: item.tier, eq: 向好}]}
+  asserts: []
+  priority: 50
+  length: [200, 300]
+  polish_allowed: true
+  variants:
+    - "这步{item.ganzhi}大运从{item.start_year}年走到{item.end_year}年，天干是正印。正印主事的十年，主线是“学习与支持”：进修、考证、资质提升会更顺手，长辈、老师和平台给到的帮助也会更明显。这段时间学到的东西，会在很久以后继续帮到你。从整体走势看，这步运评为“向好”，助力多于阻力。适合稳步推进既定目标，在擅长的方向上加一把劲；不必冒进，但该出手的时候要出手，持续投入会慢慢积累出明显的成果。好的趋势需要你主动去接住，行动比等待更重要。"
+    - "{item.start_year}年到{item.end_year}年是{item.ganzhi}大运，天干为正印。这十年适合充电和沉淀：系统地学一门东西、拿到需要的资质、进入重视培养的环境，被支持、被照顾的感觉会比以往更多，心态也更安定。有人支持的时候多学一点，是最划算的投资。这十年整体趋势“向好”，大方向上是在往前走的。可以有计划地扩展自己的事业和生活版图，多尝试、多积累；遇到小的波折不必过度担心，保持节奏，整体会朝着好的方向发展。一步一个脚印，向好的势头会越积越明显。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH5-STEP-ZHENGYIN-PINGWEN
+  slot: CH5-STEP
+  when: {all: [{f: item.stem_ten_god, eq: 正印}, {f: item.tier, eq: 平稳}]}
+  asserts: []
+  priority: 50
+  length: [200, 300]
+  polish_allowed: true
+  variants:
+    - "这步{item.ganzhi}大运从{item.start_year}年走到{item.end_year}年，天干是正印。正印主事的十年，主线是“学习与支持”：进修、考证、资质提升会更顺手，长辈、老师和平台给到的帮助也会更明显。这段时间学到的东西，会在很久以后继续帮到你。从整体走势看，这步运属于“平稳”，没有特别大的推力，也少有明显的阻碍。很适合打磨能力、稳定生活、处理好长期积累下来的事情；成果更多取决于你自己的规划和坚持，平稳本身就是一种优势。平稳的十年，最适合把根扎深。"
+    - "{item.start_year}年到{item.end_year}年是{item.ganzhi}大运，天干为正印。这十年适合充电和沉淀：系统地学一门东西、拿到需要的资质、进入重视培养的环境，被支持、被照顾的感觉会比以往更多，心态也更安定。有人支持的时候多学一点，是最划算的投资。这十年整体走势“平稳”，节奏不快不慢。与其期待外部的大机会，不如把精力放在可控的事情上：提升专业、照顾家庭和健康、把手头的事做扎实，稳定的积累会在下一个阶段转化为底气。不慌不忙地经营，就是这段时间最好的策略。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH5-STEP-ZHENGYIN-WENSHOU
+  slot: CH5-STEP
+  when: {all: [{f: item.stem_ten_god, eq: 正印}, {f: item.tier, eq: 宜稳守}]}
+  asserts: []
+  priority: 50
+  length: [200, 300]
+  polish_allowed: true
+  variants:
+    - "这步{item.ganzhi}大运从{item.start_year}年走到{item.end_year}年，天干是正印。正印主事的十年，主线是“学习与支持”：进修、考证、资质提升会更顺手，长辈、老师和平台给到的帮助也会更明显。这段时间学到的东西，会在很久以后继续帮到你。从整体走势看，这步运宜“稳守”，外部条件不一定都顺着你，推进起来可能多费些力气。适合守住已有的成果，重要决定多做准备、多留余地，不急于大幅扩张，把精力放在巩固基础上会更稳妥。守得住，本身就是一种能力。"
+    - "{item.start_year}年到{item.end_year}年是{item.ganzhi}大运，天干为正印。这十年适合充电和沉淀：系统地学一门东西、拿到需要的资质、进入重视培养的环境，被支持、被照顾的感觉会比以往更多，心态也更安定。有人支持的时候多学一点，是最划算的投资。这十年整体建议“稳守”。这并不意味着停下来，而是换一种节奏：控制风险，量力而行，优先打磨能力和关系；遇到看起来很诱人的机会，先算清楚代价再决定，稳中求进往往比冒进更有收获。把基础守牢，等节奏转换时，你会比别人准备得更充分。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH5-STEP-ZHENGYIN-BAOSHOU
+  slot: CH5-STEP
+  when: {all: [{f: item.stem_ten_god, eq: 正印}, {f: item.tier, eq: 宜保守、打基础}]}
+  asserts: []
+  priority: 50
+  length: [200, 300]
+  polish_allowed: true
+  variants:
+    - "这步{item.ganzhi}大运从{item.start_year}年走到{item.end_year}年，天干是正印。正印主事的十年，主线是“学习与支持”：进修、考证、资质提升会更顺手，长辈、老师和平台给到的帮助也会更明显。这段时间学到的东西，会在很久以后继续帮到你。从整体走势看，这步运的建议是“宜保守、打基础”。外部助力相对少，更适合向内用力：学习、积累、调养身体、整理生活与财务，为下一个阶段做准备。少做高风险的决定，打好的基础会在后面派上用场。慢一点没关系，重要的是方向对、基础牢。"
+    - "{item.start_year}年到{item.end_year}年是{item.ganzhi}大运，天干为正印。这十年适合充电和沉淀：系统地学一门东西、拿到需要的资质、进入重视培养的环境，被支持、被照顾的感觉会比以往更多，心态也更安定。有人支持的时候多学一点，是最划算的投资。这十年整体建议“宜保守、打基础”，是一段适合沉淀的时间。把目标放得务实一些，重心放在能力、健康和关系的长期经营上；不必和别人比速度，稳稳走完这一步，后面的路会更好走。沉下心来积累，这段时间并不会白白度过。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH5-STEP-FALLBACK
+  slot: CH5-STEP
+  when: {}
+  asserts: []
+  priority: 0
+  fallback: true
+  length: [20, 90]
+  polish_allowed: false
+  variants:
+    - "这步{item.ganzhi}大运从{item.start_year}年走到{item.end_year}年，整体走势为“{item.tier}”。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+# ======================= CH5-REL 大运与原局冲合（非必需，循环） =======================
+- id: CH5-REL-CHONG-RIZHI
+  slot: CH5-REL
+  when: {all: [{f: item.relations, contains: {type: 冲, a: 大运支, b: 日支}}]}
+  asserts: []
+  priority: 50
+  length: [50, 80]
+  polish_allowed: true
+  variants:
+    - "这步大运的地支与你的日支相冲，生活和亲密关系上的变动可能多一些，比如搬迁、换环境或关系节奏的调整，提前规划、多沟通会更从容。"
+    - "大运地支冲日支，意味着这十年里家庭与伴侣相关的安排更容易发生变化。变化不等于坏事，主动商量、提早准备，能把它变成调整的机会。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH5-REL-CHONG-YUEZHI
+  slot: CH5-REL
+  when: {all: [{f: item.relations, contains: {type: 冲, a: 大运支, b: 月支}}]}
+  asserts: []
+  priority: 50
+  length: [50, 80]
+  polish_allowed: true
+  variants:
+    - "这步大运的地支与你的月支相冲，工作环境、行业或与长辈的关系可能出现变动。适合提前留意趋势，必要时主动调整方向，而不是被动等待。"
+    - "大运地支冲月支，事业平台和成长环境在这十年里可能有较大的转换。保持学习、积累可迁移的能力，变动来时会更有选择的余地。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH5-REL-HE-RIZHI
+  slot: CH5-REL
+  when: {all: [{f: item.relations, contains: {type: 合, a: 大运支, b: 日支}}]}
+  asserts: []
+  priority: 50
+  length: [50, 80]
+  polish_allowed: true
+  variants:
+    - "这步大运的地支与你的日支相合，身边人的配合度和亲密关系的融洽度往往会提高，适合推进需要双方同心的事情，比如共同规划家庭和事业。"
+    - "大运地支合日支，这十年里伴侣与合作者更容易和你站在一起。适合经营长期关系、寻找可靠的搭档，彼此成就的事情会做得更顺。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+# ======================= CH5-TRANSITION 交运过渡（非必需） =======================
+- id: CH5-TRANSITION-NEXT
+  slot: CH5-TRANSITION
+  when: {all: [{f: item.year, exists: true}]}
+  asserts: []
+  priority: 50
+  length: [50, 80]
+  polish_allowed: true
+  variants:
+    - "{item.year}年前后会换入{item.ganzhi}大运，换运前后一年是过渡期，旧的节奏在收尾、新的主线在展开，适合整理与准备，不必急着做大决定。"
+    - "大约{item.year}年起进入{item.ganzhi}大运。换运的前后一年像季节交替，变化会多一些，给自己留出调整的时间，循序渐进地适应新阶段即可。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+# ======================= CH5-FAR 更远大运合述 =======================
+- id: CH5-FAR-HAO
+  slot: CH5-FAR
+  when: {all: [{f: dayun_summary.far_group, eq: 好}]}
+  asserts: []
+  priority: 50
+  length: [80, 150]
+  polish_allowed: true
+  variants:
+    - "再往后看，更远的几步大运整体以助力为主，大方向是向上的。现在打下的基础、积累的能力和人脉，到那时往往能发挥更大的作用，值得为长期目标做些耐心的布局，比如持续学习、经营人脉、照顾好身体。"
+    - "更远的几步大运多数落在顺势或向好的区间。这是一个令人安心的长期趋势：只要保持学习和积累，后面的阶段有不少可以施展的空间。现在多播种，将来就会有更多可以收获的东西。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH5-FAR-PING
+  slot: CH5-FAR
+  when: {all: [{f: dayun_summary.far_group, eq: 平}]}
+  asserts: []
+  priority: 50
+  length: [80, 150]
+  polish_allowed: true
+  variants:
+    - "再往后看，更远的几步大运整体比较平稳。长期来看，成果更多取决于你自己的规划和坚持；保持健康、持续学习、经营好关系，就是为后面的阶段做最好的准备，长期主义会带来稳定的回报。"
+    - "更远的几步大运多数属于平稳的区间，没有大的起伏。这样的长期节奏适合稳步经营，把重心放在可以长期积累的事情上，时间会站在你这一边。不追求一时的快，坚持做对的事，长期下来自然会有好的结果。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH5-FAR-SHOU
+  slot: CH5-FAR
+  when: {all: [{f: dayun_summary.far_group, eq: 守}]}
+  asserts: []
+  priority: 50
+  length: [80, 150]
+  polish_allowed: true
+  variants:
+    - "再往后看，更远的几步大运整体建议稳守。这提醒你在顺的时候多做储备：存一些钱、保持健康、留一项可靠的技能，后面的路就会走得更踏实。提前规划，比临时应对要轻松得多。"
+    - "更远的几步大运多数落在宜稳守的区间。长期来看，稳健比冒进更重要；趁现在多积累、少透支，到时候就能从容应对节奏的变化。稳健的习惯和充足的储备，是给未来自己最好的礼物。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH5-FAR-FALLBACK
+  slot: CH5-FAR
+  when: {}
+  asserts: []
+  priority: 0
+  fallback: true
+  length: [20, 80]
+  polish_allowed: false
+  variants:
+    - "更远的几步大运列在上方的时间轴和列表里，可以对照参考。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13

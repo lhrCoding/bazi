@@ -41,7 +41,8 @@ const batchInfo = () =>
     rounds: { round: number; result: string; sample: string[]; failed: string[] }[];
   };
 
-describe('texts:batch 全流程', () => {
+// 每步都会对整个素材库跑 lint，素材随批次增加而变慢，放宽超时
+describe('texts:batch 全流程', { timeout: 30_000 }, () => {
   it('draft 状态拒绝抽样，且不改任何文件', () => {
     const before = readFileSync(join(texts, 'batches.yaml'), 'utf8');
     expect(() => runBatch('sample', 'B1', opts('2026-11-20'))).toThrow(/不是 reviewed/);
