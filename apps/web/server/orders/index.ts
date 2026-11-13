@@ -13,7 +13,7 @@ import { and, eq } from 'drizzle-orm';
 import type { OrdersDb } from './db';
 import { orders, type Channel, type OrderRow, type OrderStatus } from './schema';
 
-export { openOrdersDb, runMigrations, type OrdersDb } from './db';
+export { openOrdersDb, openOrdersDbReadonly, runMigrations, type OrdersDb } from './db';
 export {
   ORDER_COLUMNS,
   ORDER_STATUSES,

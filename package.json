@@ -25,11 +25,15 @@
     "texts:preview": "tsx scripts/texts-preview.ts",
     "texts:release": "tsx scripts/texts-release.ts",
     "check:bundle": "tsx scripts/check-client-bundle.ts",
-    "e2e": "npm run e2e -w @zhiming/web"
+    "e2e": "npm run e2e -w @zhiming/web",
+    "stats": "tsx scripts/stats.ts"
   },
   "devDependencies": {
     "pinyin-pro": "3.29.4",
     "prettier": "3.9.10",
     "tsx": "4.23.15"
+  },
+  "overrides": {
+    "better-sqlite3": "12.11.1"
   }
 }

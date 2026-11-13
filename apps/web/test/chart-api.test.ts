@@ -213,10 +213,14 @@ describe('性能与日志', () => {
     ms.sort((a, b) => a - b);
     expect(ms[Math.ceil(ms.length * 0.95) - 1]).toBeLessThan(150);
   });
-  it('成功请求不写日志；响应 no-store', async () => {
+  it('成功请求只写一条不含输入的计数事件（T65 运营统计）；响应 no-store', async () => {
     const { d, logs } = deps();
     const res = await handleChart(post(JSON.stringify({ payload: payloadOf('C16') })), d);
     expect(res.headers.get('cache-control')).toBe('no-store');
-    expect(logs()).toBe('');
+    const lines = logs().trim().split('\n');
+    expect(lines).toHaveLength(1);
+    const ev = JSON.parse(lines[0] ?? '{}') as Record<string, unknown>;
+    expect(Object.keys(ev).sort()).toEqual(['evt', 'level', 'msg', 'time']);
+    expect(ev.evt).toBe('chart');
   });
 });

@@ -137,7 +137,7 @@
 |---|---|
 | 出生地表 56 条低精度条目（来源坐标矛盾取均值，清单 `scripts/geo/low-precision.txt`），最多约 1 分钟真太阳时 | 有空时对照地图人工修正 |
 | E2E（`npm run e2e -w @zhiming/web`）：Playwright 1.65 自带内核不支持本机 macOS 12，暂用系统 Chrome（`channel: 'chrome'`）；CI 设 `PW_CHANNEL` 用自带 chromium。webServer 用 `next start`，有 standalone 警告但可用 | T64 |
-| better-sqlite3 用 12.11.1：13.x 要求 Node ≥ 22，本机是 Node 20.18.1（CI / 生产按架构用 Node 22） | 本机升级 Node 22 后可升级 |
+| better-sqlite3 用 12.11.1，并在根 package.json `overrides` 锁定（drizzle-orm 的可选对等依赖曾在根目录另装 13.0.3，Node 20 下一加载即段错误；T65 时发现并修复，现全仓只有一份）。13.x 要求 Node ≥ 22 | 本机升级 Node 22 后可一起升级 |
 | standalone 部署需带上 `server/orders/migrations/*.sql`（已在 next.config.ts outputFileTracingIncludes 声明；better-sqlite3 在 next start 下已由 E2E 验证可用），Docker 构建时再确认一次 | T60 部署 |
 | 图二大运柱旁未写档位文字（列宽只有约 42 px），档位文字放在图例与下方列表；若要严格按 UI.md §8「柱旁写档位文字」需改为横向滚动或缩写 | 视需要 |
 | 报告页「保存为长图」按钮暂为禁用 | T58 |
@@ -148,6 +148,7 @@
 | 微信内「微信支付」需 openid 静默授权，目前点了会提示「后续版本接入」（mock 模式下直接走 mock） | T49 |
 | 换浏览器 / 换设备打开 `/pay/done` 时本机没有载荷，只能提示回原浏览器（P1「链接找回」未做） | P1 |
 | 日志哨兵目前只覆盖应用进程 stdout / stderr（E2E 服务输出 tee 到 apps/web/.e2e-logs/server.log）；Caddy 访问日志在 T61 Docker 化后补进哨兵 | T61 |
+| 运营统计 `npm run stats`：免费排盘次数改为统计应用日志的计数事件（evt=chart，不含输入），原计划的 Caddy 访问日志随 T61 延后；生产需把容器 stdout 落盘后用 `--log` 传入；定时运行（cron）与 ALERT_WEBHOOK_URL 在部署时配置 | T61 / 部署 |
 | CSP：接真实支付时把渠道域名加进 `server/security-headers.ts` 的 `PAYMENT_ORIGINS`（支付宝表单提交地址等），否则会被 CSP 拦截；style-src 为 'unsafe-inline'（style 属性无法带 nonce） | T49–T51 |
 | **`ALLOW_MOCK_PAYMENT=1`、`TEXTS_DEV_WORKSPACE=1` 只给 E2E 用**（生产构建里放行 mock 支付 / 草稿素材），部署时绝不能设；上线检查清单要加一条 | T59–T65 |
 | 页脚免责组件已放进报告占位页并有 E2E 断言；T53 正式报告页需保留 | T53 报告页 |

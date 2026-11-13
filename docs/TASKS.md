@@ -370,7 +370,7 @@
   内容：Playwright：iPhone Safari 视口、Android 微信 UA、桌面 Chrome；首页 → 免费结果 → mock 支付 → 报告页 → 生成长图；检查免责声明、无追加付费按钮、无横向滚动、两条链接提示。
   验收：全部 E2E 通过；真实微信内置浏览器的人工验收清单交 QA。
 
-- [ ] **T65 运营统计脚本**
+- [x] **T65 运营统计脚本**
   依赖：T61
   内容：`npm run stats`：按天统计订单创建 / 支付 / 退款数（数据库）、免费排盘次数（从 Caddy 访问日志计 `POST /api/chart`）、转化率、`fallback_used` / `rcheck_failed` 次数（应用日志）；异常时推送企业微信机器人（webhook 用 mock 测试）。
   验收：测试数据上统计正确；输出中无任何出生信息或指纹。

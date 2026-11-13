@@ -56,3 +56,10 @@ export function openOrdersDb(path: string): OrdersDb {
   runMigrations(sqlite);
   return drizzle({ client: sqlite, schema }) as OrdersDb;
 }
+
+/** 只读打开（运营统计 / 排查用）：不建表、不迁移、不写入；文件不存在即报错 */
+export function openOrdersDbReadonly(path: string): OrdersDb {
+  const sqlite = new Database(path, { readonly: true, fileMustExist: true });
+  sqlite.pragma('busy_timeout = 5000');
+  return drizzle({ client: sqlite, schema }) as OrdersDb;
+}

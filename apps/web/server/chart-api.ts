@@ -49,7 +49,10 @@ export async function handleChart(req: Request, deps: ChartDeps): Promise<Respon
           }
         : undefined;
     const placeName = input.placeCode ? (findPlace(input.placeCode)?.name ?? null) : null;
-    return Response.json(buildFreeResult(chart, analyze(chart), { jieqiAlt, placeName }), {
+    const result = buildFreeResult(chart, analyze(chart), { jieqiAlt, placeName });
+    // 运营统计（T65）：只记一条计数事件，不含任何输入
+    deps.logger.info({ evt: 'chart' }, 'chart');
+    return Response.json(result, {
       headers: { 'cache-control': 'no-store' },
     });
   } catch (e) {

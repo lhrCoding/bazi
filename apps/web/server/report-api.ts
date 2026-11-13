@@ -119,9 +119,23 @@ export async function handleReport(req: Request, deps: ReportDeps): Promise<Resp
           rcheck: check.failures
             .slice(0, 20)
             .map((f) => ({ rule: f.rule, chapter: f.chapter, slot: f.slot })),
+          evt: 'rcheck_failed',
         },
         'rcheck failed (served)',
       );
+    // 运营统计（T65）：兜底素材 / 空槽位次数（只记槽位 id，不记正文）
+    const fallback = report.events.filter((e) => e.type === 'fallback_used').map((e) => e.slot);
+    const empty = report.events.filter((e) => e.type === 'slot_empty').map((e) => e.slot);
+    deps.logger.info(
+      {
+        evt: 'report',
+        orderNo,
+        fallback: fallback.length,
+        slotEmpty: empty.length,
+        fallbackSlots: fallback.slice(0, 20),
+      },
+      'report served',
+    );
     const body: ReportResponse = { meta: report.meta, chapters: report.chapters };
     return Response.json(body, { headers: { 'cache-control': 'no-store' } });
   } catch (e) {
