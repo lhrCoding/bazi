@@ -247,7 +247,7 @@
   内容：`apps/web/server/birth-fp.ts`（HMAC-SHA256、`fp_key_id`、timingSafeEqual）；`server/log.ts`（pino、redact 列表、禁止记录请求体）；统一错误处理：Zod 错误映射为错误码后再记录；API 错误响应格式。
   验收：指纹固定向量测试；Zod 校验失败时日志中不出现输入值（测试捕获日志断言）；改动一个字符载荷指纹不同。
 
-- [ ] **T42 SQLite + Drizzle 订单表与状态机**
+- [x] **T42 SQLite + Drizzle 订单表与状态机**
   依赖：T02
   内容：`orders` 表（ARCHITECTURE 5.1）与迁移；WAL；订单号 128 位随机 base62；状态机集中校验；幂等置 paid（金额必须 990）；**列名白名单测试**。
   验收：合法 / 非法迁移全覆盖；重复置 paid 只生效一次；金额不符拒绝；订单号熵测试；列名集合与白名单完全相等。
