@@ -38,12 +38,12 @@ export interface RCheckResult {
 /** report-sections.md §2 各章目标字数 */
 export const CHAPTER_LENGTH: Readonly<Record<number, readonly [number, number]>> = {
   1: [500, 750],
-  2: [600, 900],
+  2: [450, 900],
   3: [650, 950],
-  4: [400, 650],
-  5: [900, 1300],
-  6: [1700, 2200],
-  7: [900, 1300],
+  4: [350, 650],
+  5: [750, 1300],
+  6: [1550, 2200],
+  7: [800, 1300],
 };
 export const NOHOUR_CH3_MIN = 550;
 export const TOTAL_LENGTH: readonly [number, number] = [5000, 8000];
