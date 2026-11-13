@@ -20,6 +20,7 @@ import { checkCong, checkZhuanwang, computeStrengthLevel } from './strength-leve
 import { computeStrengthPower } from './strength-power';
 import { computeNoHourScan } from './nohour';
 import { altPossibility, assembleReport, chapter0 } from '../report/assemble';
+import { buildFreeResult } from '../report/free';
 import { rcheck, SHENSHA_FORBIDDEN } from '../report/check';
 import { polishReport } from '../report/polish';
 import { runSample } from '../report/sample';
@@ -131,6 +132,11 @@ export const RULE_IMPLEMENTATIONS: Readonly<Partial<Record<RuleId, RuleImplement
     module: 'report/check.ts（SHENSHA_FORBIDDEN）、report/assemble.ts（JISHEN_NOTES）',
     impl: SHENSHA_FORBIDDEN,
   },
+  // report-sections.md §1（T43）：免费结果页 4 个模块，句式为代码模板（texts/free.yaml 未写）
+  'R-FREE': {
+    module: 'report/free.ts（buildFreeResult，FREE_RESULT_KEYS 白名单）',
+    impl: buildFreeResult,
+  },
   // report-sections.md §9（T36）：润色接口默认关闭，MVP 只有 NoopPolisher；校验与超时已实现
   'R-POLISH': {
     module: 'report/polish.ts（createPolisher / polishReport / validatePolish）',
@@ -181,7 +187,6 @@ export const RULE_IMPLEMENTATIONS: Readonly<Partial<Record<RuleId, RuleImplement
 export const PENDING_RULES: Readonly<Partial<Record<RuleId, PendingRule>>> = {
   // shensha.md
   // report-sections.md
-  'R-FREE': { task: 'T43', note: '免费结果页 4 个模块（代码模板）' },
 };
 
 export const DOC_ONLY_RULES: Readonly<Partial<Record<RuleId, DocOnlyRule>>> = {

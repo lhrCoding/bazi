@@ -113,3 +113,10 @@ export function safeEvent(
 ): void {
   logger.info({ event, ...fields });
 }
+
+let shared: Logger | null = null;
+/** 进程级日志实例（stdout） */
+export function appLogger(): Logger {
+  shared ??= createLogger();
+  return shared;
+}
