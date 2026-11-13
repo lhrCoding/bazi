@@ -13,8 +13,8 @@
     "dev": "npm run dev -w apps/web",
     "build": "npm run build -w apps/web",
     "start": "npm run start -w apps/web",
-    "lint": "npm run lint --workspaces --if-present",
-    "typecheck": "npm run typecheck --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present && eslint --config eslint.scripts.mjs scripts",
+    "typecheck": "npm run typecheck --workspaces --if-present && tsc -p tsconfig.scripts.json",
     "test": "npm run test --workspaces --if-present",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
@@ -23,7 +23,9 @@
     "texts:coverage": "tsx scripts/texts-coverage.ts",
     "texts:sample": "tsx scripts/texts-sample.ts",
     "texts:preview": "tsx scripts/texts-preview.ts",
-    "texts:release": "tsx scripts/texts-release.ts"
+    "texts:release": "tsx scripts/texts-release.ts",
+    "check:bundle": "tsx scripts/check-client-bundle.ts",
+    "e2e": "npm run e2e -w @zhiming/web"
   },
   "devDependencies": {
     "pinyin-pro": "3.29.4",

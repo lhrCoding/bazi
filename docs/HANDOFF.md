@@ -153,8 +153,8 @@
 | 页脚免责组件已放进报告占位页并有 E2E 断言；T53 正式报告页需保留 | T53 报告页 |
 | 排盘限流可用 `CHART_RATE_LIMIT` 放宽（只在 playwright.config.ts 设置，生产不设） | — |
 | ENGINE_VERSION 已升到 1.1.0（T40 出生地坐标换正式数据，四柱不变） | — |
-| `scripts/` 不在 lint / typecheck 范围内（只有被测试引用的部分才会被类型检查） | T63 CI 门禁完善 |
-| `scripts/` 引用了 `packages/core/test/helpers/cases.ts` 的 `toBirthInput` | T63 时移到共享位置 |
+| `scripts/` 引用了 `packages/core/test/helpers/cases.ts` 的 `toBirthInput`（不影响运行与 CI，低优先级） | 有空时 |
+| CI 新增 e2e（Playwright 自带 Chromium，PW_CHANNEL=chromium）与 build 任务，尚未在 GitHub 上实际跑过：远端 origin 停在 T16，本地领先约 50 个提交，推送需用户同意；推送后看一次 Actions 结果 | 推送远端后 |
 | **生产启动需要至少一个素材发布快照**（instrumentation.ts 启动预加载，缺快照即退出）：上线前必须先完成第 1 批批准与 `texts:release`（见 D1、D4） | 上线前 |
 | 术语表、「已知局限」、R-CHECK 词表仍从 rules/ 运行时读取，未进发布快照：改 rules/ 会影响已售报告的术语加注（违背「同一订单逐字相同」）；部署也需带上 rules/ 这几个文件 | K01 建 glossary.yaml 时一并放进快照 |
 | 第 5 章依据需要的起运信息已在 ctx（`qiyun`）；第 3、4、5、7、8 章素材未写，报告这些章节为空或为测试素材 | 素材第 2、3 批（K09–K15） |

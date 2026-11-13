@@ -159,7 +159,7 @@ function sheet(
     if (!e) return;
     out.push(`## ${i + 1}. ${e.id}`, '');
     out.push(
-      `- 槽位：${e.slot}　文件：${fileOf.get(id) ?? ''}　优先级：${e.priority}${e.fallback ? '（兜底）' : ''}`,
+      `- 槽位：${e.slot}\u3000文件：${fileOf.get(id) ?? ''}\u3000优先级：${e.priority}${e.fallback ? '（兜底）' : ''}`,
     );
     out.push(`- 触发条件：\`${JSON.stringify(e.when)}\``);
     if (e.asserts.length) out.push(`- 正文断言：\`${JSON.stringify(e.asserts)}\``);

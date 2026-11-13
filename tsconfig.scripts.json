@@ -1,0 +1,6 @@
+{
+  "//": "scripts/ 的类型检查（T63）：沿用 core 的严格选项，另加 Node 类型",
+  "extends": "./packages/core/tsconfig.json",
+  "compilerOptions": { "types": ["node"], "lib": ["ES2022"] },
+  "include": ["scripts/**/*.ts"]
+}

@@ -1,5 +1,9 @@
 name: CI
 
+# 门禁（TASKS T63）：check（lint / 类型 / 格式 / 单元测试含 cases.json 对照与日志哨兵检测器 / 素材 lint / 覆盖率）
+#   → e2e（Playwright，含日志哨兵全流程）→ build（构建 + 客户端代码不含素材正文扫描 → 以后在此构建 Docker 镜像，T61）。
+# 任何一步失败，后续任务都不会运行，因此不会构建出镜像。
+
 on:
   push:
     branches: [main]
@@ -17,7 +21,7 @@ env:
 
 jobs:
   check:
-    name: lint + typecheck + test
+    name: lint + typecheck + format + test
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -32,13 +36,16 @@ jobs:
       - name: 安装依赖
         run: npm ci
 
-      - name: Lint
+      - name: Lint（含 scripts/）
         run: npm run lint
 
-      - name: Typecheck
+      - name: Typecheck（含 scripts/）
         run: npm run typecheck
 
-      - name: Test
+      - name: 格式
+        run: npm run format:check
+
+      - name: 单元测试（含 cases.json 对照、日志哨兵检测器）
         run: npm test
 
       - name: 素材 lint（L1–L12，rules/texts）
@@ -46,3 +53,45 @@ jobs:
 
       - name: 素材静态覆盖率（已批准批次的章节有缺口即失败）
         run: npm run texts:coverage
+
+  e2e:
+    name: e2e（Playwright，含日志哨兵）
+    needs: check
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: 安装依赖
+        run: npm ci
+      - name: 安装 Playwright 浏览器
+        run: npx playwright install --with-deps chromium
+        working-directory: apps/web
+      - name: E2E（服务输出写入 apps/web/.e2e-logs/server.log 供日志哨兵检查）
+        run: npm run e2e
+        env:
+          # CI 用 Playwright 自带 Chromium（本机 macOS 12 用系统 Chrome）
+          PW_CHANNEL: chromium
+          CI: '1'
+
+  build:
+    name: build + 客户端代码扫描
+    needs: [check, e2e]
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: 安装依赖
+        run: npm ci
+      - name: 构建
+        run: npm run build
+      - name: 客户端代码不含素材正文
+        run: npm run check:bundle
+      # T61：在此构建并推送 Docker 镜像（只有上面全部通过才会执行）

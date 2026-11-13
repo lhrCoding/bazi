@@ -37,7 +37,7 @@ for (const row of read('mca2024.html').matchAll(/<tr[^>]*>([\s\S]*?)<\/tr>/g)) {
       (m[1] as string)
         .replace(/<[^>]+>/g, '')
         .replace(/&nbsp;/g, '')
-        .replace(/[\s　]/g, ''),
+        .replace(/[\s\u3000]/g, ''),
     )
     .filter(Boolean);
   const i = cells.findIndex((c) => /^\d{6}$/.test(c));
