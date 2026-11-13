@@ -115,7 +115,7 @@
 |---|---|
 | **GeoNames CC BY 4.0 要求署名**：网站需写「地理数据部分来自 GeoNames」（用户 2026-11-12 同意） | T46 隐私说明 / 关于页 |
 | 出生地表 56 条低精度条目（来源坐标矛盾取均值，清单 `scripts/geo/low-precision.txt`），最多约 1 分钟真太阳时 | 有空时对照地图人工修正 |
-| 出生地表 518 KB 在 core 里；首页搜索不要把整表下发到浏览器（走服务端接口或下发精简索引） | T44 首页表单 |
+| E2E（`npm run e2e -w @zhiming/web`）：Playwright 1.65 自带内核不支持本机 macOS 12，暂用系统 Chrome（`channel: 'chrome'`）；CI 设 `PW_CHANNEL` 用自带 chromium。webServer 用 `next start`，有 standalone 警告但可用 | T64 |
 | better-sqlite3 用 12.11.1：13.x 要求 Node ≥ 22，本机是 Node 20.18.1（CI / 生产按架构用 Node 22） | 本机升级 Node 22 后可升级 |
 | better-sqlite3 是原生模块，Next 打包时需作为服务端外部包（Next 默认列表含它，T43 起实际运行时确认） | T43 |
 | ENGINE_VERSION 已升到 1.1.0（T40 出生地坐标换正式数据，四柱不变） | — |

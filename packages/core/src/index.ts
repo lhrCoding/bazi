@@ -16,6 +16,8 @@ export {
   baziErrorMessage,
   type BaziErrorCode,
 } from './bazi/errors';
+// 首页表单用（T44）：农历月份下拉（闰月、大小月）
+export { leapMonthOf, lunarMonthsOf, type LunarMonthOption } from './bazi/lunar-input';
 export type {
   BirthInput,
   CalRuleId,
