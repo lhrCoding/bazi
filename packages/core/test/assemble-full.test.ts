@@ -17,6 +17,7 @@ import {
   type YearCard,
 } from '../src/report/assemble';
 import { buildCtx } from '../src/report/ctx';
+import type { WuXing } from '../src/rules/types';
 import { basisFor } from '../src/report/render';
 import { createLibrary, variantIndex } from '../src/report/select';
 import { glossaryFromReadme, parseTextsFiles } from '../src/texts/yaml';
@@ -194,15 +195,42 @@ describe('第 6 章逐年卡片', () => {
 });
 
 describe('第 7、8 章', () => {
-  it('第 7 章：素材缺口记 slot_empty 事件；健康段取占比 > 40% / < 5% 的五行', () => {
-    const { report, ctx } = build('C14');
-    // 第 7 章正式素材属于第 2 批、尚未写：必需槽位为空时记事件，而不是报错或输出空段
-    const empty = report.events.filter((e) => e.type === 'slot_empty').map((e) => e.slot);
-    for (const slot of ['CH7-CAREER', 'CH7-WEALTH', 'CH7-LOVE', 'CH7-HEALTH', 'CH7-HEALTH-END']) {
-      expect(empty).toContain(slot);
+  it('第 7 章（第 2 批素材）：无空槽位；健康段每段依据对应它自己触发的五行；均衡时选均衡条目', () => {
+    let multi = 0;
+    let balanced = 0;
+    for (const c of cases) {
+      const { report, ctx } = build(c.id);
+      const empty = report.events.filter((e) => e.type === 'slot_empty').map((e) => e.slot);
+      expect(
+        empty.filter((x) => x.startsWith('CH7')),
+        c.id,
+      ).toEqual([]);
+      const ch7 = (report.chapters[7]?.blocks ?? []).filter(
+        (b): b is ParaBlock => b.type === 'para' && b.slot === 'CH7-HEALTH',
+      );
+      const ex = healthExtremes(ctx);
+      expect(ch7.length, c.id).toBe(Math.max(1, Math.min(2, ex.length)));
+      if (ex.length === 0) {
+        balanced++;
+        expect(ch7[0]?.entry, c.id).toBe('CH7-HEALTH-BALANCED');
+        expect(ch7[0]?.basis, c.id).toBe('五行占比均在 5%～40% 之间，较为均衡');
+      }
+      if (ex.length >= 2) multi++;
+      for (const p of ch7.filter((b) => b.entry !== 'CH7-HEALTH-BALANCED')) {
+        const el = /^(.)占 /.exec(p.basis ?? '')?.[1] as WuXing;
+        expect(
+          ex.map((x) => x.element),
+          c.id,
+        ).toContain(el);
+        // 条目本身就是针对这个五行写的
+        expect(p.text, `${c.id} ${p.entry}`).toContain(el);
+        expect(p.basis, c.id).toBe(`${el}占 ${ctx.power_pct[el]}%`);
+      }
+      // 两个极端五行时，两段分别对应两个不同的五行
+      const els = ch7.map((p) => p.basis?.[0]);
+      expect(new Set(els).size, c.id).toBe(els.length);
     }
-    const ex = healthExtremes(ctx);
-    expect(ex.some((x) => x.element === '金' && x.state === '过旺')).toBe(true);
+    expect(balanced + multi).toBeGreaterThan(0);
   });
   it('第 8 章：规则 / 素材版本、子时口径、真太阳时状态、吉神说明、已知局限（strength.md §8 前 4 条）、免责声明', () => {
     expect(limitations).toHaveLength(4);

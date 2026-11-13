@@ -134,6 +134,7 @@
 | 微信内「微信支付」需 openid 静默授权，目前点了会提示「后续版本接入」（mock 模式下直接走 mock） | T49 |
 | 换浏览器 / 换设备打开 `/pay/done` 时本机没有载荷，只能提示回原浏览器（P1「链接找回」未做） | P1 |
 | 日志哨兵目前只覆盖应用进程 stdout / stderr（E2E 服务输出 tee 到 apps/web/.e2e-logs/server.log）；Caddy 访问日志在 T61 Docker 化后补进哨兵 | T61 |
+| CH7-LOVE-YEARS 规范按「有合 / 有冲 / 都有」分 3 条，但字段字典没有对应字段，暂写 1 条通用条目（年份与关系由依据行列出）；要细分需在 ctx 增加如 `love_years.has_he / has_chong` 并同步 README §3 | 素材定稿前 |
 | 运营统计 `npm run stats`：免费排盘次数改为统计应用日志的计数事件（evt=chart，不含输入），原计划的 Caddy 访问日志随 T61 延后；生产需把容器 stdout 落盘后用 `--log` 传入；定时运行（cron）与 ALERT_WEBHOOK_URL 在部署时配置 | T61 / 部署 |
 | CSP：接真实支付时把渠道域名加进 `server/security-headers.ts` 的 `PAYMENT_ORIGINS`（支付宝表单提交地址等），否则会被 CSP 拦截；style-src 为 'unsafe-inline'（style 属性无法带 nonce） | T49–T51 |
 | **`ALLOW_MOCK_PAYMENT=1`、`TEXTS_DEV_WORKSPACE=1` 只给 E2E 用**（生产构建里放行 mock 支付 / 草稿素材），部署时绝不能设；上线检查清单要加一条 | T59–T65 |

@@ -1,0 +1,944 @@
+# 第 7 章「事业 / 财运 / 感情 / 健康」（第 2 批 B2，草稿）
+# 槽位：CH7-CAREER（career.mode 5 × 旺弱 2）、CH7-CAREER-NOW（当前大运 stem_god 5 × tier_group 3，非必需）、
+#       CH7-WEALTH（财的角色 4 × 财力量档 3）、CH7-LOVE（伴侣星角色 4 × 性别 2）、CH7-LOVE-YEARS（非必需，通用 1 条）、
+#       CH7-HEALTH（过旺 / 过弱五行 10 + 均衡 1，不送润色）、CH7-HEALTH-END（固定文本）。
+# 写法约定（report-sections.md §3 第 7 章）：
+#   - 事业：官杀 → 体系内、管理岗；食伤 → 技术、内容、自主；印 → 学习、资质型；比劫 → 合作、团队、自主经营；财 → 经营、商务、运营。
+#   - 财运：只谈赚钱方式倾向，不谈投资品种、不承诺收入。
+#   - 感情：男命看财星、女命看官杀，对外统一叫“伴侣星”；不写克夫 / 克妻 / 离婚 / 二婚。
+#   - 健康：只写对应身体系统与作息 / 饮食 / 运动建议，不出现任何疾病名；结尾固定接就医提示。
+#   - CH7-LOVE-YEARS 规范按“有合 / 有冲 / 都有”分 3 条，但字段字典暂无对应字段（年份与关系由依据行列出），先写 1 条通用条目。
+
+# ======================= CH7-CAREER =======================
+- id: CH7-CAREER-GUANSHA-WANG
+  slot: CH7-CAREER
+  when: {all: [{f: career.mode, eq: 官杀}, {f: strength.direction, eq: 偏旺}]}
+  asserts: []
+  priority: 50
+  length: [150, 220]
+  polish_allowed: true
+  variants:
+    - "事业上，对你最有帮助的是官杀这股力量。它代表规则、平台和责任，所以你更适合在体系清楚的环境里发展，比如机关事业单位、大型企业，或走管理、带团队的路线；职位与信誉是你积累的重点。在这样的环境里，稳定的规则会成为你的护栏，让你一步步往上走；考核、竞聘这类机会也值得认真准备。你的命局整体偏旺，精力和承受力都比较足，可以主动争取更大的舞台，承担更多责任。不过也要给团队留出空间，独揽一切反而会限制发展。"
+    - "从命局看，你的事业助力来自官杀：组织、制度和职责会推着你成长。适合选择晋升路径清楚的单位，承担管理、监督、项目负责一类的角色，把守规矩和担责任变成你的竞争力。守得住规矩、扛得起责任的人，在组织里往往越走越稳，你的耐心和可靠会慢慢转化为职位和名声。整体偏旺的你适合主动出击，敢于接挑战、带团队，往往能更快地走到前面。同时注意分配精力，别让工作挤占了全部生活。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH7-CAREER-GUANSHA-RUO
+  slot: CH7-CAREER
+  when: {all: [{f: career.mode, eq: 官杀}, {f: strength.direction, eq: 偏弱}]}
+  asserts: []
+  priority: 50
+  length: [150, 220]
+  polish_allowed: true
+  variants:
+    - "事业上，对你最有帮助的是官杀这股力量。它代表规则、平台和责任，所以你更适合在体系清楚的环境里发展，比如机关事业单位、大型企业，或走管理、带团队的路线；职位与信誉是你积累的重点。在这样的环境里，稳定的规则会成为你的护栏，让你一步步往上走；考核、竞聘这类机会也值得认真准备。你的命局整体偏弱，更适合借助平台和团队的力量，选对环境比单打独斗更重要。先在一个领域站稳，再逐步扩展，会走得更稳。"
+    - "从命局看，你的事业助力来自官杀：组织、制度和职责会推着你成长。适合选择晋升路径清楚的单位，承担管理、监督、项目负责一类的角色，把守规矩和担责任变成你的竞争力。守得住规矩、扛得起责任的人，在组织里往往越走越稳，你的耐心和可靠会慢慢转化为职位和名声。整体偏弱的你不必事事亲力亲为，找到可靠的平台和伙伴，能力会被放大得更多。向有经验的人请教，往往能少走很多弯路。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH7-CAREER-SHISHANG-WANG
+  slot: CH7-CAREER
+  when: {all: [{f: career.mode, eq: 食伤}, {f: strength.direction, eq: 偏旺}]}
+  asserts: []
+  priority: 50
+  length: [150, 220]
+  polish_allowed: true
+  variants:
+    - "事业上，对你最有帮助的是食伤这股力量。它代表技能、表达和创造，所以你更适合靠手艺和作品立足，比如技术研发、设计、写作、内容创作、教学培训，或自主空间较大的岗位。专业能力是你最硬的底气，持续打磨一门手艺，会比频繁换方向更有回报，作品本身就会替你说话。你的命局整体偏旺，精力和承受力都比较足，可以主动争取更大的舞台，承担更多责任。不过也要给团队留出空间，独揽一切反而会限制发展。"
+    - "从命局看，你的事业助力来自食伤：把会的东西做出来、讲出来，就是你最好的名片。适合技术型、创意型、内容型的工作，也适合自由职业或在组织里保留较大自主空间的角色。建立自己的作品集或代表性成果，让别人一看就知道你能做什么，机会自然会更多，议价能力也会更强。整体偏旺的你适合主动出击，敢于接挑战、带团队，往往能更快地走到前面。同时注意分配精力，别让工作挤占了全部生活。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH7-CAREER-SHISHANG-RUO
+  slot: CH7-CAREER
+  when: {all: [{f: career.mode, eq: 食伤}, {f: strength.direction, eq: 偏弱}]}
+  asserts: []
+  priority: 50
+  length: [150, 220]
+  polish_allowed: true
+  variants:
+    - "事业上，对你最有帮助的是食伤这股力量。它代表技能、表达和创造，所以你更适合靠手艺和作品立足，比如技术研发、设计、写作、内容创作、教学培训，或自主空间较大的岗位。专业能力是你最硬的底气，持续打磨一门手艺，会比频繁换方向更有回报，作品本身就会替你说话。你的命局整体偏弱，更适合借助平台和团队的力量，选对环境比单打独斗更重要。先在一个领域站稳，再逐步扩展，会走得更稳。"
+    - "从命局看，你的事业助力来自食伤：把会的东西做出来、讲出来，就是你最好的名片。适合技术型、创意型、内容型的工作，也适合自由职业或在组织里保留较大自主空间的角色。建立自己的作品集或代表性成果，让别人一看就知道你能做什么，机会自然会更多，议价能力也会更强。整体偏弱的你不必事事亲力亲为，找到可靠的平台和伙伴，能力会被放大得更多。向有经验的人请教，往往能少走很多弯路。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH7-CAREER-YIN-WANG
+  slot: CH7-CAREER
+  when: {all: [{f: career.mode, eq: 印}, {f: strength.direction, eq: 偏旺}]}
+  asserts: []
+  priority: 50
+  length: [150, 220]
+  polish_allowed: true
+  variants:
+    - "事业上，对你最有帮助的是印星这股力量。它代表学习、资质和支持，所以你更适合走专业路线：需要证书和积累的行业、研究与教育、咨询顾问等，越学越值钱，平台和前辈的提携也很重要。不要吝惜在学习上的投入，资历和证书会在关键时刻替你说话，遇到好老师、好平台也要懂得珍惜。你的命局整体偏旺，精力和承受力都比较足，可以主动争取更大的舞台，承担更多责任。不过也要给团队留出空间，独揽一切反而会限制发展。"
+    - "从命局看，你的事业助力来自印星：知识、资质和贵人的帮助是你的底牌。适合学习型、资质型的职业道路，比如专业技术、教育科研、医药健康服务、法务财务等，持续进修会让你越来越有分量。把时间花在能长期增值的知识和资质上，你会发现职业道路越走越宽，回报也越来越稳定。整体偏旺的你适合主动出击，敢于接挑战、带团队，往往能更快地走到前面。同时注意分配精力，别让工作挤占了全部生活。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH7-CAREER-YIN-RUO
+  slot: CH7-CAREER
+  when: {all: [{f: career.mode, eq: 印}, {f: strength.direction, eq: 偏弱}]}
+  asserts: []
+  priority: 50
+  length: [150, 220]
+  polish_allowed: true
+  variants:
+    - "事业上，对你最有帮助的是印星这股力量。它代表学习、资质和支持，所以你更适合走专业路线：需要证书和积累的行业、研究与教育、咨询顾问等，越学越值钱，平台和前辈的提携也很重要。不要吝惜在学习上的投入，资历和证书会在关键时刻替你说话，遇到好老师、好平台也要懂得珍惜。你的命局整体偏弱，更适合借助平台和团队的力量，选对环境比单打独斗更重要。先在一个领域站稳，再逐步扩展，会走得更稳。"
+    - "从命局看，你的事业助力来自印星：知识、资质和贵人的帮助是你的底牌。适合学习型、资质型的职业道路，比如专业技术、教育科研、医药健康服务、法务财务等，持续进修会让你越来越有分量。把时间花在能长期增值的知识和资质上，你会发现职业道路越走越宽，回报也越来越稳定。整体偏弱的你不必事事亲力亲为，找到可靠的平台和伙伴，能力会被放大得更多。向有经验的人请教，往往能少走很多弯路。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH7-CAREER-BIJIE-WANG
+  slot: CH7-CAREER
+  when: {all: [{f: career.mode, eq: 比劫}, {f: strength.direction, eq: 偏旺}]}
+  asserts: []
+  priority: 50
+  length: [150, 220]
+  polish_allowed: true
+  variants:
+    - "事业上，对你最有帮助的是比劫这股力量。它代表同伴、团队和自主，所以你更适合和志同道合的人一起做事，比如合伙经营、团队型项目、需要协作推进的岗位，人脉和伙伴是你的重要资源。选择合作者时要看重人品和默契，好的伙伴能让你事半功倍，分工和规则也最好在一开始就说清楚。你的命局整体偏旺，精力和承受力都比较足，可以主动争取更大的舞台，承担更多责任。不过也要给团队留出空间，独揽一切反而会限制发展。"
+    - "从命局看，你的事业助力来自比劫：同行、朋友和团队能实实在在地帮到你。适合合作创业、加入氛围好的团队、做需要并肩作战的项目，也适合在行业圈子里经营口碑和人脉。经营好自己的人际网络，口碑和信任会不断为你带来新的机会，团队的力量往往比个人更持久。整体偏旺的你适合主动出击，敢于接挑战、带团队，往往能更快地走到前面。同时注意分配精力，别让工作挤占了全部生活。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH7-CAREER-BIJIE-RUO
+  slot: CH7-CAREER
+  when: {all: [{f: career.mode, eq: 比劫}, {f: strength.direction, eq: 偏弱}]}
+  asserts: []
+  priority: 50
+  length: [150, 220]
+  polish_allowed: true
+  variants:
+    - "事业上，对你最有帮助的是比劫这股力量。它代表同伴、团队和自主，所以你更适合和志同道合的人一起做事，比如合伙经营、团队型项目、需要协作推进的岗位，人脉和伙伴是你的重要资源。选择合作者时要看重人品和默契，好的伙伴能让你事半功倍，分工和规则也最好在一开始就说清楚。你的命局整体偏弱，更适合借助平台和团队的力量，选对环境比单打独斗更重要。先在一个领域站稳，再逐步扩展，会走得更稳。"
+    - "从命局看，你的事业助力来自比劫：同行、朋友和团队能实实在在地帮到你。适合合作创业、加入氛围好的团队、做需要并肩作战的项目，也适合在行业圈子里经营口碑和人脉。经营好自己的人际网络，口碑和信任会不断为你带来新的机会，团队的力量往往比个人更持久。整体偏弱的你不必事事亲力亲为，找到可靠的平台和伙伴，能力会被放大得更多。向有经验的人请教，往往能少走很多弯路。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH7-CAREER-CAI-WANG
+  slot: CH7-CAREER
+  when: {all: [{f: career.mode, eq: 财}, {f: strength.direction, eq: 偏旺}]}
+  asserts: []
+  priority: 50
+  length: [150, 220]
+  polish_allowed: true
+  variants:
+    - "事业上，对你最有帮助的是财星这股力量。它代表资源、经营和结果，所以你更适合与经营打交道的工作，比如商务、销售、运营、财务管理或自己做生意，把资源变成成果是你的强项。把目标量化、把过程管好，你会在可衡量的成绩里获得成就感，也更容易被看见和认可。你的命局整体偏旺，精力和承受力都比较足，可以主动争取更大的舞台，承担更多责任。不过也要给团队留出空间，独揽一切反而会限制发展。"
+    - "从命局看，你的事业助力来自财星：对市场和资源的敏感是你的优势。适合经营型、商务型的岗位，或负责业务、预算、运营的角色，懂得算账、讲求实效会让你在工作中更有话语权。重视成本和回报的意识，会让你在团队里成为可靠的“操盘手”，也更容易得到更大的授权。整体偏旺的你适合主动出击，敢于接挑战、带团队，往往能更快地走到前面。同时注意分配精力，别让工作挤占了全部生活。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH7-CAREER-CAI-RUO
+  slot: CH7-CAREER
+  when: {all: [{f: career.mode, eq: 财}, {f: strength.direction, eq: 偏弱}]}
+  asserts: []
+  priority: 50
+  length: [150, 220]
+  polish_allowed: true
+  variants:
+    - "事业上，对你最有帮助的是财星这股力量。它代表资源、经营和结果，所以你更适合与经营打交道的工作，比如商务、销售、运营、财务管理或自己做生意，把资源变成成果是你的强项。把目标量化、把过程管好，你会在可衡量的成绩里获得成就感，也更容易被看见和认可。你的命局整体偏弱，更适合借助平台和团队的力量，选对环境比单打独斗更重要。先在一个领域站稳，再逐步扩展，会走得更稳。"
+    - "从命局看，你的事业助力来自财星：对市场和资源的敏感是你的优势。适合经营型、商务型的岗位，或负责业务、预算、运营的角色，懂得算账、讲求实效会让你在工作中更有话语权。重视成本和回报的意识，会让你在团队里成为可靠的“操盘手”，也更容易得到更大的授权。整体偏弱的你不必事事亲力亲为，找到可靠的平台和伙伴，能力会被放大得更多。向有经验的人请教，往往能少走很多弯路。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH7-CAREER-FALLBACK
+  slot: CH7-CAREER
+  when: {}
+  asserts: []
+  priority: 0
+  fallback: true
+  length: [20, 80]
+  polish_allowed: false
+  variants:
+    - "事业方向可以参考前面喜用神的分析，选择能发挥你长处的环境。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+# ======================= CH7-CAREER-NOW（非必需，当前大运 item） =======================
+- id: CH7-CAREER-NOW-BIJIE-HAO
+  slot: CH7-CAREER-NOW
+  when: {all: [{f: item.stem_god, eq: 比劫}, {f: item.tier_group, eq: 好}]}
+  asserts: []
+  priority: 50
+  length: [60, 100]
+  polish_allowed: true
+  variants:
+    - "当前的{item.ganzhi}大运以比劫为主线，事业上合作与竞争并存，整体势头向上，适合主动争取机会、推进重要的职业目标。顺势而为，事半功倍。"
+    - "{item.ganzhi}大运里比劫当令，同伴与团队在事业中的分量变重，这段时间助力较多，可以大胆一些，把握升职或转型的窗口。机会来了要敢于伸手。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH7-CAREER-NOW-BIJIE-PING
+  slot: CH7-CAREER-NOW
+  when: {all: [{f: item.stem_god, eq: 比劫}, {f: item.tier_group, eq: 平}]}
+  asserts: []
+  priority: 50
+  length: [60, 100]
+  polish_allowed: true
+  variants:
+    - "当前的{item.ganzhi}大运以比劫为主线，事业上合作与竞争并存，整体节奏平稳，适合打磨专业、稳住基本盘，为下一步做准备。稳步前进就是最好的策略。"
+    - "{item.ganzhi}大运里比劫当令，同伴与团队在事业中的分量变重，这段时间不急不缓，把手头的事做扎实，比频繁变动更有收获。踏实做事，自有回报。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH7-CAREER-NOW-BIJIE-SHOU
+  slot: CH7-CAREER-NOW
+  when: {all: [{f: item.stem_god, eq: 比劫}, {f: item.tier_group, eq: 守}]}
+  asserts: []
+  priority: 50
+  length: [60, 100]
+  polish_allowed: true
+  variants:
+    - "当前的{item.ganzhi}大运以比劫为主线，事业上合作与竞争并存，整体宜稳守，重大跳槽或转行多做准备，先求稳再求进。稳住阵脚，才能走得长远。"
+    - "{item.ganzhi}大运里比劫当令，同伴与团队在事业中的分量变重，这段时间推进会多费些力气，量力而行、守住成果更为稳妥。先守后攻，留足余地。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH7-CAREER-NOW-YIN-HAO
+  slot: CH7-CAREER-NOW
+  when: {all: [{f: item.stem_god, eq: 印}, {f: item.tier_group, eq: 好}]}
+  asserts: []
+  priority: 50
+  length: [60, 100]
+  polish_allowed: true
+  variants:
+    - "当前的{item.ganzhi}大运以印星为主线，事业上适合学习、考证和积累资历，整体势头向上，适合主动争取机会、推进重要的职业目标。顺势而为，事半功倍。"
+    - "{item.ganzhi}大运里印星当令，平台、资质和前辈的支持更为关键，这段时间助力较多，可以大胆一些，把握升职或转型的窗口。机会来了要敢于伸手。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH7-CAREER-NOW-YIN-PING
+  slot: CH7-CAREER-NOW
+  when: {all: [{f: item.stem_god, eq: 印}, {f: item.tier_group, eq: 平}]}
+  asserts: []
+  priority: 50
+  length: [60, 100]
+  polish_allowed: true
+  variants:
+    - "当前的{item.ganzhi}大运以印星为主线，事业上适合学习、考证和积累资历，整体节奏平稳，适合打磨专业、稳住基本盘，为下一步做准备。稳步前进就是最好的策略。"
+    - "{item.ganzhi}大运里印星当令，平台、资质和前辈的支持更为关键，这段时间不急不缓，把手头的事做扎实，比频繁变动更有收获。踏实做事，自有回报。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH7-CAREER-NOW-YIN-SHOU
+  slot: CH7-CAREER-NOW
+  when: {all: [{f: item.stem_god, eq: 印}, {f: item.tier_group, eq: 守}]}
+  asserts: []
+  priority: 50
+  length: [60, 100]
+  polish_allowed: true
+  variants:
+    - "当前的{item.ganzhi}大运以印星为主线，事业上适合学习、考证和积累资历，整体宜稳守，重大跳槽或转行多做准备，先求稳再求进。稳住阵脚，才能走得长远。"
+    - "{item.ganzhi}大运里印星当令，平台、资质和前辈的支持更为关键，这段时间推进会多费些力气，量力而行、守住成果更为稳妥。先守后攻，留足余地。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH7-CAREER-NOW-SHISHANG-HAO
+  slot: CH7-CAREER-NOW
+  when: {all: [{f: item.stem_god, eq: 食伤}, {f: item.tier_group, eq: 好}]}
+  asserts: []
+  priority: 50
+  length: [60, 100]
+  polish_allowed: true
+  variants:
+    - "当前的{item.ganzhi}大运以食伤为主线，事业上靠技能和作品说话，整体势头向上，适合主动争取机会、推进重要的职业目标。顺势而为，事半功倍。"
+    - "{item.ganzhi}大运里食伤当令，表达与创造是事业的主要抓手，这段时间助力较多，可以大胆一些，把握升职或转型的窗口。机会来了要敢于伸手。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH7-CAREER-NOW-SHISHANG-PING
+  slot: CH7-CAREER-NOW
+  when: {all: [{f: item.stem_god, eq: 食伤}, {f: item.tier_group, eq: 平}]}
+  asserts: []
+  priority: 50
+  length: [60, 100]
+  polish_allowed: true
+  variants:
+    - "当前的{item.ganzhi}大运以食伤为主线，事业上靠技能和作品说话，整体节奏平稳，适合打磨专业、稳住基本盘，为下一步做准备。稳步前进就是最好的策略。"
+    - "{item.ganzhi}大运里食伤当令，表达与创造是事业的主要抓手，这段时间不急不缓，把手头的事做扎实，比频繁变动更有收获。踏实做事，自有回报。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH7-CAREER-NOW-SHISHANG-SHOU
+  slot: CH7-CAREER-NOW
+  when: {all: [{f: item.stem_god, eq: 食伤}, {f: item.tier_group, eq: 守}]}
+  asserts: []
+  priority: 50
+  length: [60, 100]
+  polish_allowed: true
+  variants:
+    - "当前的{item.ganzhi}大运以食伤为主线，事业上靠技能和作品说话，整体宜稳守，重大跳槽或转行多做准备，先求稳再求进。稳住阵脚，才能走得长远。"
+    - "{item.ganzhi}大运里食伤当令，表达与创造是事业的主要抓手，这段时间推进会多费些力气，量力而行、守住成果更为稳妥。先守后攻，留足余地。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH7-CAREER-NOW-CAI-HAO
+  slot: CH7-CAREER-NOW
+  when: {all: [{f: item.stem_god, eq: 财}, {f: item.tier_group, eq: 好}]}
+  asserts: []
+  priority: 50
+  length: [60, 100]
+  polish_allowed: true
+  variants:
+    - "当前的{item.ganzhi}大运以财星为主线，事业上与业务、经营的关系更紧密，整体势头向上，适合主动争取机会、推进重要的职业目标。顺势而为，事半功倍。"
+    - "{item.ganzhi}大运里财星当令，资源和结果会成为工作的重心，这段时间助力较多，可以大胆一些，把握升职或转型的窗口。机会来了要敢于伸手。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH7-CAREER-NOW-CAI-PING
+  slot: CH7-CAREER-NOW
+  when: {all: [{f: item.stem_god, eq: 财}, {f: item.tier_group, eq: 平}]}
+  asserts: []
+  priority: 50
+  length: [60, 100]
+  polish_allowed: true
+  variants:
+    - "当前的{item.ganzhi}大运以财星为主线，事业上与业务、经营的关系更紧密，整体节奏平稳，适合打磨专业、稳住基本盘，为下一步做准备。稳步前进就是最好的策略。"
+    - "{item.ganzhi}大运里财星当令，资源和结果会成为工作的重心，这段时间不急不缓，把手头的事做扎实，比频繁变动更有收获。踏实做事，自有回报。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH7-CAREER-NOW-CAI-SHOU
+  slot: CH7-CAREER-NOW
+  when: {all: [{f: item.stem_god, eq: 财}, {f: item.tier_group, eq: 守}]}
+  asserts: []
+  priority: 50
+  length: [60, 100]
+  polish_allowed: true
+  variants:
+    - "当前的{item.ganzhi}大运以财星为主线，事业上与业务、经营的关系更紧密，整体宜稳守，重大跳槽或转行多做准备，先求稳再求进。稳住阵脚，才能走得长远。"
+    - "{item.ganzhi}大运里财星当令，资源和结果会成为工作的重心，这段时间推进会多费些力气，量力而行、守住成果更为稳妥。先守后攻，留足余地。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH7-CAREER-NOW-GUANSHA-HAO
+  slot: CH7-CAREER-NOW
+  when: {all: [{f: item.stem_god, eq: 官杀}, {f: item.tier_group, eq: 好}]}
+  asserts: []
+  priority: 50
+  length: [60, 100]
+  polish_allowed: true
+  variants:
+    - "当前的{item.ganzhi}大运以官杀为主线，事业上责任和要求都会提高，整体势头向上，适合主动争取机会、推进重要的职业目标。顺势而为，事半功倍。"
+    - "{item.ganzhi}大运里官杀当令，职位、考核与担当是这段时间的主题，这段时间助力较多，可以大胆一些，把握升职或转型的窗口。机会来了要敢于伸手。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH7-CAREER-NOW-GUANSHA-PING
+  slot: CH7-CAREER-NOW
+  when: {all: [{f: item.stem_god, eq: 官杀}, {f: item.tier_group, eq: 平}]}
+  asserts: []
+  priority: 50
+  length: [60, 100]
+  polish_allowed: true
+  variants:
+    - "当前的{item.ganzhi}大运以官杀为主线，事业上责任和要求都会提高，整体节奏平稳，适合打磨专业、稳住基本盘，为下一步做准备。稳步前进就是最好的策略。"
+    - "{item.ganzhi}大运里官杀当令，职位、考核与担当是这段时间的主题，这段时间不急不缓，把手头的事做扎实，比频繁变动更有收获。踏实做事，自有回报。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH7-CAREER-NOW-GUANSHA-SHOU
+  slot: CH7-CAREER-NOW
+  when: {all: [{f: item.stem_god, eq: 官杀}, {f: item.tier_group, eq: 守}]}
+  asserts: []
+  priority: 50
+  length: [60, 100]
+  polish_allowed: true
+  variants:
+    - "当前的{item.ganzhi}大运以官杀为主线，事业上责任和要求都会提高，整体宜稳守，重大跳槽或转行多做准备，先求稳再求进。稳住阵脚，才能走得长远。"
+    - "{item.ganzhi}大运里官杀当令，职位、考核与担当是这段时间的主题，这段时间推进会多费些力气，量力而行、守住成果更为稳妥。先守后攻，留足余地。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+# ======================= CH7-WEALTH =======================
+- id: CH7-WEALTH-YONG-QIANG
+  slot: CH7-WEALTH
+  when: {all: [{f: wealth.role, eq: 用}, {f: wealth.level, eq: 强}]}
+  asserts: []
+  priority: 50
+  length: [150, 220]
+  polish_allowed: true
+  variants:
+    - "财运方面，财星在你的命局里是用神对应的力量，赚钱和经营本身就能让你更顺。你适合靠实际的业务、项目和经营来增加收入，主动去争取回报，往往比被动等待更有效。当你在工作中能直接看到产出和回报时，干劲往往最足，也最容易把事情做好，收入增长和个人成长会互相推动。你命局中财星的力量较强，占 {gods.财_pct}%，平时经手的钱和事务都不少，养成记账和预算的习惯会很有帮助。钱进来容易，留下来要靠规划。同时适当分散精力，不必把所有机会都揽在身上，留出余力应对变化。"
+    - "从财运看，财星是对你最有帮助的力量之一，把精力放在能产生实际收益的事情上，会让你整体状态更好。适合多参与经营、销售、项目制的工作，用结果换回报。这类命局的人，往往在负责实际业务、直接面对结果的位置上发挥最好，越做越有信心。财星在你的命局里占 {gods.财_pct}%，力量偏强，赚钱的机会通常不缺，关键在于取舍与规划。学会说“不”，也是一种理财能力。把收入的一部分固定存下来，比追逐更多机会更能带来安全感。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH7-WEALTH-YONG-ZHONG
+  slot: CH7-WEALTH
+  when: {all: [{f: wealth.role, eq: 用}, {f: wealth.level, eq: 中}]}
+  asserts: []
+  priority: 50
+  length: [150, 220]
+  polish_allowed: true
+  variants:
+    - "财运方面，财星在你的命局里是用神对应的力量，赚钱和经营本身就能让你更顺。你适合靠实际的业务、项目和经营来增加收入，主动去争取回报，往往比被动等待更有效。当你在工作中能直接看到产出和回报时，干劲往往最足，也最容易把事情做好，收入增长和个人成长会互相推动。你命局中财星的力量适中，占 {gods.财_pct}%，收入节奏比较平稳，适合长期、有计划地积累。细水长流，往往走得最远。每年给自己定一个可执行的储蓄目标，坚持几年，变化会很明显。"
+    - "从财运看，财星是对你最有帮助的力量之一，把精力放在能产生实际收益的事情上，会让你整体状态更好。适合多参与经营、销售、项目制的工作，用结果换回报。这类命局的人，往往在负责实际业务、直接面对结果的位置上发挥最好，越做越有信心。财星在你的命局里占 {gods.财_pct}%，力量适中，稳定积累比追求一时的高收益更适合你。守住节奏，财务会稳步改善。把收入的增长和能力的提升绑在一起，你的财务会越来越有底气。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH7-WEALTH-YONG-RUO
+  slot: CH7-WEALTH
+  when: {all: [{f: wealth.role, eq: 用}, {f: wealth.level, eq: 弱}]}
+  asserts: []
+  priority: 50
+  length: [150, 220]
+  polish_allowed: true
+  variants:
+    - "财运方面，财星在你的命局里是用神对应的力量，赚钱和经营本身就能让你更顺。你适合靠实际的业务、项目和经营来增加收入，主动去争取回报，往往比被动等待更有效。当你在工作中能直接看到产出和回报时，干劲往往最足，也最容易把事情做好，收入增长和个人成长会互相推动。你命局中财星的力量较弱，占 {gods.财_pct}%，钱更多是一点点攒出来的，耐心和稳健比什么都重要。慢一点没关系，稳才是关键。先把基本生活和应急储备安排好，再考虑其他用途，心里会更踏实。"
+    - "从财运看，财星是对你最有帮助的力量之一，把精力放在能产生实际收益的事情上，会让你整体状态更好。适合多参与经营、销售、项目制的工作，用结果换回报。这类命局的人，往往在负责实际业务、直接面对结果的位置上发挥最好，越做越有信心。财星在你的命局里只占 {gods.财_pct}%，财来得相对慢，适合用稳定的工作和储蓄打底，不碰看不懂的机会。积少成多，时间会给你回报。提升专业能力是增加收入最可靠的办法，比寄望于运气要稳得多。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH7-WEALTH-XI-QIANG
+  slot: CH7-WEALTH
+  when: {all: [{f: wealth.role, eq: 喜}, {f: wealth.level, eq: 强}]}
+  asserts: []
+  priority: 50
+  length: [150, 220]
+  polish_allowed: true
+  variants:
+    - "财运方面，财星在你的命局里属于有利的一方，经营和理财对你是加分项。稳定的工作收入之外，可以发展一项与专长相关的副业，让收入来源更多元。理财上以稳为主，先建立应急储备，再考虑其他安排，会让你在面对变化时更从容。你命局中财星的力量较强，占 {gods.财_pct}%，平时经手的钱和事务都不少，养成记账和预算的习惯会很有帮助。钱进来容易，留下来要靠规划。同时适当分散精力，不必把所有机会都揽在身上，留出余力应对变化。"
+    - "从财运看，财星对你是有帮助的，适度关注收入结构和长期规划，会让生活更有底气。踏实工作、量入为出，再加上一点经营意识，财务会稳步改善。把每一份收入合理分配到生活、储蓄和自我提升上，长期下来会看到明显的积累。财星在你的命局里占 {gods.财_pct}%，力量偏强，赚钱的机会通常不缺，关键在于取舍与规划。学会说“不”，也是一种理财能力。把收入的一部分固定存下来，比追逐更多机会更能带来安全感。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH7-WEALTH-XI-ZHONG
+  slot: CH7-WEALTH
+  when: {all: [{f: wealth.role, eq: 喜}, {f: wealth.level, eq: 中}]}
+  asserts: []
+  priority: 50
+  length: [150, 220]
+  polish_allowed: true
+  variants:
+    - "财运方面，财星在你的命局里属于有利的一方，经营和理财对你是加分项。稳定的工作收入之外，可以发展一项与专长相关的副业，让收入来源更多元。理财上以稳为主，先建立应急储备，再考虑其他安排，会让你在面对变化时更从容。你命局中财星的力量适中，占 {gods.财_pct}%，收入节奏比较平稳，适合长期、有计划地积累。细水长流，往往走得最远。每年给自己定一个可执行的储蓄目标，坚持几年，变化会很明显。"
+    - "从财运看，财星对你是有帮助的，适度关注收入结构和长期规划，会让生活更有底气。踏实工作、量入为出，再加上一点经营意识，财务会稳步改善。把每一份收入合理分配到生活、储蓄和自我提升上，长期下来会看到明显的积累。财星在你的命局里占 {gods.财_pct}%，力量适中，稳定积累比追求一时的高收益更适合你。守住节奏，财务会稳步改善。把收入的增长和能力的提升绑在一起，你的财务会越来越有底气。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH7-WEALTH-XI-RUO
+  slot: CH7-WEALTH
+  when: {all: [{f: wealth.role, eq: 喜}, {f: wealth.level, eq: 弱}]}
+  asserts: []
+  priority: 50
+  length: [150, 220]
+  polish_allowed: true
+  variants:
+    - "财运方面，财星在你的命局里属于有利的一方，经营和理财对你是加分项。稳定的工作收入之外，可以发展一项与专长相关的副业，让收入来源更多元。理财上以稳为主，先建立应急储备，再考虑其他安排，会让你在面对变化时更从容。你命局中财星的力量较弱，占 {gods.财_pct}%，钱更多是一点点攒出来的，耐心和稳健比什么都重要。慢一点没关系，稳才是关键。先把基本生活和应急储备安排好，再考虑其他用途，心里会更踏实。"
+    - "从财运看，财星对你是有帮助的，适度关注收入结构和长期规划，会让生活更有底气。踏实工作、量入为出，再加上一点经营意识，财务会稳步改善。把每一份收入合理分配到生活、储蓄和自我提升上，长期下来会看到明显的积累。财星在你的命局里只占 {gods.财_pct}%，财来得相对慢，适合用稳定的工作和储蓄打底，不碰看不懂的机会。积少成多，时间会给你回报。提升专业能力是增加收入最可靠的办法，比寄望于运气要稳得多。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH7-WEALTH-JI-QIANG
+  slot: CH7-WEALTH
+  when: {all: [{f: wealth.role, eq: 忌}, {f: wealth.level, eq: 强}]}
+  asserts: []
+  priority: 50
+  length: [150, 220]
+  polish_allowed: true
+  variants:
+    - "财运方面，财星在你的命局里需要节制，钱和事务一多，反而容易让你疲于应付。比起追求快速增加收入，更适合先把支出和精力管理好，收入来源宁可少而稳。尤其是借钱给人、替人担保、合伙出资这类事，最好多想一步，留足余地，书面约定也很重要。你命局中财星的力量较强，占 {gods.财_pct}%，平时经手的钱和事务都不少，养成记账和预算的习惯会很有帮助。钱进来容易，留下来要靠规划。同时适当分散精力，不必把所有机会都揽在身上，留出余力应对变化。"
+    - "从财运看，财星对你来说是需要拿捏分寸的力量。机会多不等于都要抓，揽下的事情和钱款往来越多，压力也越大；量力而行、守住本金，比冒险扩张更适合你。财务上保守一点不是坏事，清楚的边界和适度的储蓄，能帮你避开很多不必要的麻烦。财星在你的命局里占 {gods.财_pct}%，力量偏强，赚钱的机会通常不缺，关键在于取舍与规划。学会说“不”，也是一种理财能力。把收入的一部分固定存下来，比追逐更多机会更能带来安全感。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH7-WEALTH-JI-ZHONG
+  slot: CH7-WEALTH
+  when: {all: [{f: wealth.role, eq: 忌}, {f: wealth.level, eq: 中}]}
+  asserts: []
+  priority: 50
+  length: [150, 220]
+  polish_allowed: true
+  variants:
+    - "财运方面，财星在你的命局里需要节制，钱和事务一多，反而容易让你疲于应付。比起追求快速增加收入，更适合先把支出和精力管理好，收入来源宁可少而稳。尤其是借钱给人、替人担保、合伙出资这类事，最好多想一步，留足余地，书面约定也很重要。你命局中财星的力量适中，占 {gods.财_pct}%，收入节奏比较平稳，适合长期、有计划地积累。细水长流，往往走得最远。每年给自己定一个可执行的储蓄目标，坚持几年，变化会很明显。"
+    - "从财运看，财星对你来说是需要拿捏分寸的力量。机会多不等于都要抓，揽下的事情和钱款往来越多，压力也越大；量力而行、守住本金，比冒险扩张更适合你。财务上保守一点不是坏事，清楚的边界和适度的储蓄，能帮你避开很多不必要的麻烦。财星在你的命局里占 {gods.财_pct}%，力量适中，稳定积累比追求一时的高收益更适合你。守住节奏，财务会稳步改善。把收入的增长和能力的提升绑在一起，你的财务会越来越有底气。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH7-WEALTH-JI-RUO
+  slot: CH7-WEALTH
+  when: {all: [{f: wealth.role, eq: 忌}, {f: wealth.level, eq: 弱}]}
+  asserts: []
+  priority: 50
+  length: [150, 220]
+  polish_allowed: true
+  variants:
+    - "财运方面，财星在你的命局里需要节制，钱和事务一多，反而容易让你疲于应付。比起追求快速增加收入，更适合先把支出和精力管理好，收入来源宁可少而稳。尤其是借钱给人、替人担保、合伙出资这类事，最好多想一步，留足余地，书面约定也很重要。你命局中财星的力量较弱，占 {gods.财_pct}%，钱更多是一点点攒出来的，耐心和稳健比什么都重要。慢一点没关系，稳才是关键。先把基本生活和应急储备安排好，再考虑其他用途，心里会更踏实。"
+    - "从财运看，财星对你来说是需要拿捏分寸的力量。机会多不等于都要抓，揽下的事情和钱款往来越多，压力也越大；量力而行、守住本金，比冒险扩张更适合你。财务上保守一点不是坏事，清楚的边界和适度的储蓄，能帮你避开很多不必要的麻烦。财星在你的命局里只占 {gods.财_pct}%，财来得相对慢，适合用稳定的工作和储蓄打底，不碰看不懂的机会。积少成多，时间会给你回报。提升专业能力是增加收入最可靠的办法，比寄望于运气要稳得多。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH7-WEALTH-XIAN-QIANG
+  slot: CH7-WEALTH
+  when: {all: [{f: wealth.role, eq: 闲}, {f: wealth.level, eq: 强}]}
+  asserts: []
+  priority: 50
+  length: [150, 220]
+  polish_allowed: true
+  variants:
+    - "财运方面，财星在你的命局里不算关键，既不是主要助力，也不构成负担。钱财更多随事业和能力自然增长，把重心放在提升本事上，收入会水到渠成。与其把注意力放在钱上，不如把它放在专业和健康上，后两者稳了，财务自然跟着稳。你命局中财星的力量较强，占 {gods.财_pct}%，平时经手的钱和事务都不少，养成记账和预算的习惯会很有帮助。钱进来容易，留下来要靠规划。同时适当分散精力，不必把所有机会都揽在身上，留出余力应对变化。"
+    - "从财运看，财星在你的命局里属于中性的位置。不必刻意追逐财富，也不用过分担心，按部就班地工作、合理安排储蓄，财务就能保持平稳。合理消费、适度储蓄、少做冲动决定，就足以让你的财务状况保持在舒适的水平，日子会过得踏实安心。财星在你的命局里占 {gods.财_pct}%，力量偏强，赚钱的机会通常不缺，关键在于取舍与规划。学会说“不”，也是一种理财能力。把收入的一部分固定存下来，比追逐更多机会更能带来安全感。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH7-WEALTH-XIAN-ZHONG
+  slot: CH7-WEALTH
+  when: {all: [{f: wealth.role, eq: 闲}, {f: wealth.level, eq: 中}]}
+  asserts: []
+  priority: 50
+  length: [150, 220]
+  polish_allowed: true
+  variants:
+    - "财运方面，财星在你的命局里不算关键，既不是主要助力，也不构成负担。钱财更多随事业和能力自然增长，把重心放在提升本事上，收入会水到渠成。与其把注意力放在钱上，不如把它放在专业和健康上，后两者稳了，财务自然跟着稳。你命局中财星的力量适中，占 {gods.财_pct}%，收入节奏比较平稳，适合长期、有计划地积累。细水长流，往往走得最远。每年给自己定一个可执行的储蓄目标，坚持几年，变化会很明显。"
+    - "从财运看，财星在你的命局里属于中性的位置。不必刻意追逐财富，也不用过分担心，按部就班地工作、合理安排储蓄，财务就能保持平稳。合理消费、适度储蓄、少做冲动决定，就足以让你的财务状况保持在舒适的水平，日子会过得踏实安心。财星在你的命局里占 {gods.财_pct}%，力量适中，稳定积累比追求一时的高收益更适合你。守住节奏，财务会稳步改善。把收入的增长和能力的提升绑在一起，你的财务会越来越有底气。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH7-WEALTH-XIAN-RUO
+  slot: CH7-WEALTH
+  when: {all: [{f: wealth.role, eq: 闲}, {f: wealth.level, eq: 弱}]}
+  asserts: []
+  priority: 50
+  length: [150, 220]
+  polish_allowed: true
+  variants:
+    - "财运方面，财星在你的命局里不算关键，既不是主要助力，也不构成负担。钱财更多随事业和能力自然增长，把重心放在提升本事上，收入会水到渠成。与其把注意力放在钱上，不如把它放在专业和健康上，后两者稳了，财务自然跟着稳。你命局中财星的力量较弱，占 {gods.财_pct}%，钱更多是一点点攒出来的，耐心和稳健比什么都重要。慢一点没关系，稳才是关键。先把基本生活和应急储备安排好，再考虑其他用途，心里会更踏实。"
+    - "从财运看，财星在你的命局里属于中性的位置。不必刻意追逐财富，也不用过分担心，按部就班地工作、合理安排储蓄，财务就能保持平稳。合理消费、适度储蓄、少做冲动决定，就足以让你的财务状况保持在舒适的水平，日子会过得踏实安心。财星在你的命局里只占 {gods.财_pct}%，财来得相对慢，适合用稳定的工作和储蓄打底，不碰看不懂的机会。积少成多，时间会给你回报。提升专业能力是增加收入最可靠的办法，比寄望于运气要稳得多。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH7-WEALTH-FALLBACK
+  slot: CH7-WEALTH
+  when: {}
+  asserts: []
+  priority: 0
+  fallback: true
+  length: [20, 80]
+  polish_allowed: false
+  variants:
+    - "财运方面，财星在你的命局里占 {gods.财_pct}%，稳健经营、量入为出最为重要。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+# ======================= CH7-LOVE =======================
+- id: CH7-LOVE-YONG-NAN
+  slot: CH7-LOVE
+  when: {all: [{f: partner.role, eq: 用}, {f: profile.gender, eq: 男}]}
+  asserts: []
+  priority: 50
+  length: [120, 180]
+  polish_allowed: true
+  variants:
+    - "感情方面，传统命理里男命以财星看伴侣，本报告统一称为伴侣星，在你的命局里占 {partner.pct}%。对男性来说，用心经营家庭、在生活细节上多一些体贴，往往比物质上的付出更能打动对方。伴侣星恰好是对你最有帮助的力量，说明好的伴侣往往能给你带来实实在在的支持，关系越稳定，你的状态也越好。值得在感情里多投入一些耐心和真诚。"
+    - "看感情时，古法对男命取财星为伴侣星，它在你的命局里占 {partner.pct}%。作为男性，懂得倾听、愿意分担生活里的琐事和情绪，是让关系长久的关键，比承诺更有说服力。这股力量对你非常重要：一段好的关系，会成为你生活和事业的助力。遇到合适的人时，不妨主动一些，用心经营，彼此都会因此变得更好。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH7-LOVE-YONG-NV
+  slot: CH7-LOVE
+  when: {all: [{f: partner.role, eq: 用}, {f: profile.gender, eq: 女}]}
+  asserts: []
+  priority: 50
+  length: [120, 180]
+  polish_allowed: true
+  variants:
+    - "感情方面，传统命理里女命以官杀看伴侣，本报告统一称为伴侣星，在你的命局里占 {partner.pct}%。对女性来说，保持自己的事业和兴趣，在关系中既亲密又独立，往往更能赢得尊重和珍惜。伴侣星恰好是对你最有帮助的力量，说明好的伴侣往往能给你带来实实在在的支持，关系越稳定，你的状态也越好。值得在感情里多投入一些耐心和真诚。"
+    - "看感情时，古法对女命取官杀为伴侣星，它在你的命局里占 {partner.pct}%。作为女性，清楚表达自己的需要、不委屈求全，是让关系健康长久的重要前提。这股力量对你非常重要：一段好的关系，会成为你生活和事业的助力。遇到合适的人时，不妨主动一些，用心经营，彼此都会因此变得更好。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH7-LOVE-XI-NAN
+  slot: CH7-LOVE
+  when: {all: [{f: partner.role, eq: 喜}, {f: profile.gender, eq: 男}]}
+  asserts: []
+  priority: 50
+  length: [120, 180]
+  polish_allowed: true
+  variants:
+    - "感情方面，传统命理里男命以财星看伴侣，本报告统一称为伴侣星，在你的命局里占 {partner.pct}%。对男性来说，用心经营家庭、在生活细节上多一些体贴，往往比物质上的付出更能打动对方。伴侣星属于对你有利的一方，感情通常能为你提供温暖和依靠。相处中多表达欣赏和感谢，关系会越走越稳，也会让你在其他方面更有底气。"
+    - "看感情时，古法对男命取财星为伴侣星，它在你的命局里占 {partner.pct}%。作为男性，懂得倾听、愿意分担生活里的琐事和情绪，是让关系长久的关键，比承诺更有说服力。这股力量对你是有帮助的：伴侣的陪伴和理解，能让你更安心地面对生活。保持沟通、一起规划未来，是经营这段关系最好的方式。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH7-LOVE-XI-NV
+  slot: CH7-LOVE
+  when: {all: [{f: partner.role, eq: 喜}, {f: profile.gender, eq: 女}]}
+  asserts: []
+  priority: 50
+  length: [120, 180]
+  polish_allowed: true
+  variants:
+    - "感情方面，传统命理里女命以官杀看伴侣，本报告统一称为伴侣星，在你的命局里占 {partner.pct}%。对女性来说，保持自己的事业和兴趣，在关系中既亲密又独立，往往更能赢得尊重和珍惜。伴侣星属于对你有利的一方，感情通常能为你提供温暖和依靠。相处中多表达欣赏和感谢，关系会越走越稳，也会让你在其他方面更有底气。"
+    - "看感情时，古法对女命取官杀为伴侣星，它在你的命局里占 {partner.pct}%。作为女性，清楚表达自己的需要、不委屈求全，是让关系健康长久的重要前提。这股力量对你是有帮助的：伴侣的陪伴和理解，能让你更安心地面对生活。保持沟通、一起规划未来，是经营这段关系最好的方式。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH7-LOVE-JI-NAN
+  slot: CH7-LOVE
+  when: {all: [{f: partner.role, eq: 忌}, {f: profile.gender, eq: 男}]}
+  asserts: []
+  priority: 50
+  length: [120, 180]
+  polish_allowed: true
+  variants:
+    - "感情方面，传统命理里男命以财星看伴侣，本报告统一称为伴侣星，在你的命局里占 {partner.pct}%。对男性来说，用心经营家庭、在生活细节上多一些体贴，往往比物质上的付出更能打动对方。伴侣星在你的命局里属于需要节制的一方，这并不代表感情不好，而是提醒你在关系里保持自我、守住边界。相处时多沟通彼此的期待，比一味迁就更能让关系长久。"
+    - "看感情时，古法对男命取财星为伴侣星，它在你的命局里占 {partner.pct}%。作为男性，懂得倾听、愿意分担生活里的琐事和情绪，是让关系长久的关键，比承诺更有说服力。这股力量需要用得有分寸：感情里投入太多、顾虑太多，都可能让自己累。找到让双方都舒服的相处节奏，给彼此留出空间，关系反而更融洽。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH7-LOVE-JI-NV
+  slot: CH7-LOVE
+  when: {all: [{f: partner.role, eq: 忌}, {f: profile.gender, eq: 女}]}
+  asserts: []
+  priority: 50
+  length: [120, 180]
+  polish_allowed: true
+  variants:
+    - "感情方面，传统命理里女命以官杀看伴侣，本报告统一称为伴侣星，在你的命局里占 {partner.pct}%。对女性来说，保持自己的事业和兴趣，在关系中既亲密又独立，往往更能赢得尊重和珍惜。伴侣星在你的命局里属于需要节制的一方，这并不代表感情不好，而是提醒你在关系里保持自我、守住边界。相处时多沟通彼此的期待，比一味迁就更能让关系长久。"
+    - "看感情时，古法对女命取官杀为伴侣星，它在你的命局里占 {partner.pct}%。作为女性，清楚表达自己的需要、不委屈求全，是让关系健康长久的重要前提。这股力量需要用得有分寸：感情里投入太多、顾虑太多，都可能让自己累。找到让双方都舒服的相处节奏，给彼此留出空间，关系反而更融洽。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH7-LOVE-XIAN-NAN
+  slot: CH7-LOVE
+  when: {all: [{f: partner.role, eq: 闲}, {f: profile.gender, eq: 男}]}
+  asserts: []
+  priority: 50
+  length: [120, 180]
+  polish_allowed: true
+  variants:
+    - "感情方面，传统命理里男命以财星看伴侣，本报告统一称为伴侣星，在你的命局里占 {partner.pct}%。对男性来说，用心经营家庭、在生活细节上多一些体贴，往往比物质上的付出更能打动对方。伴侣星在你的命局里属于中性的位置，感情更多取决于双方的经营和选择。用心对待、真诚沟通，比任何外在条件都重要，好的关系是慢慢相处出来的。"
+    - "看感情时，古法对男命取财星为伴侣星，它在你的命局里占 {partner.pct}%。作为男性，懂得倾听、愿意分担生活里的琐事和情绪，是让关系长久的关键，比承诺更有说服力。这股力量在你的命局里既不是助力也不是负担，感情的走向主要看你们怎样相处。多一些理解与包容，遇到分歧时及时说开，关系就能保持稳定。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH7-LOVE-XIAN-NV
+  slot: CH7-LOVE
+  when: {all: [{f: partner.role, eq: 闲}, {f: profile.gender, eq: 女}]}
+  asserts: []
+  priority: 50
+  length: [120, 180]
+  polish_allowed: true
+  variants:
+    - "感情方面，传统命理里女命以官杀看伴侣，本报告统一称为伴侣星，在你的命局里占 {partner.pct}%。对女性来说，保持自己的事业和兴趣，在关系中既亲密又独立，往往更能赢得尊重和珍惜。伴侣星在你的命局里属于中性的位置，感情更多取决于双方的经营和选择。用心对待、真诚沟通，比任何外在条件都重要，好的关系是慢慢相处出来的。"
+    - "看感情时，古法对女命取官杀为伴侣星，它在你的命局里占 {partner.pct}%。作为女性，清楚表达自己的需要、不委屈求全，是让关系健康长久的重要前提。这股力量在你的命局里既不是助力也不是负担，感情的走向主要看你们怎样相处。多一些理解与包容，遇到分歧时及时说开，关系就能保持稳定。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH7-LOVE-FALLBACK
+  slot: CH7-LOVE
+  when: {}
+  asserts: []
+  priority: 0
+  fallback: true
+  length: [20, 80]
+  polish_allowed: false
+  variants:
+    - "感情方面，真诚沟通、彼此尊重，是经营任何一段关系的基础。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+# ======================= CH7-LOVE-YEARS（非必需，通用） =======================
+- id: CH7-LOVE-YEARS-ANY
+  slot: CH7-LOVE-YEARS
+  when: {all: [{f: profile.gender, exists: true}]}
+  asserts: []
+  priority: 50
+  length: [50, 90]
+  polish_allowed: true
+  variants:
+    - "未来五年里，有的年份流年与你的日支相合或相冲。相合的年份，关系往往容易推进；相冲的年份，生活节奏可能变化，多沟通、早商量会更顺。"
+    - "接下来几年中，有流年与日支发生合或冲。合的那一年，感情和合作更容易有进展；冲的那一年，变动多一些，提前规划、互相体谅就能平稳度过。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+# ======================= CH7-HEALTH（不送润色） =======================
+- id: CH7-HEALTH-MU-WANG
+  slot: CH7-HEALTH
+  when: {all: [{f: power_pct.木, gt: 40}]}
+  asserts: []
+  priority: 50
+  length: [80, 120]
+  polish_allowed: false
+  variants:
+    - "命局中木的力量偏旺，占 {power_pct.木}%。传统五行里木对应肝胆与筋骨，可以多留意作息规律，少熬夜，情绪紧绷时适当放松，平时多做拉伸、瑜伽一类舒展的运动。保持心情舒畅，本身就是很好的调养。"
+    - "你的命局里木偏多，占 {power_pct.木}%。按传统说法，木与肝胆、筋骨相关，日常可以注意早睡、少动气，饮食清淡一些，配合舒展筋骨的运动，让身体保持柔韧。早睡早起，比任何补品都管用。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH7-HEALTH-MU-RUO
+  slot: CH7-HEALTH
+  when: {all: [{f: power_pct.木, lt: 5}]}
+  asserts: []
+  priority: 50
+  length: [80, 120]
+  polish_allowed: false
+  variants:
+    - "命局中木的力量偏弱，只占 {power_pct.木}%。传统五行里木对应肝胆与筋骨，可以多做户外散步和拉伸，保持关节灵活，作息上尽量规律，给身体充足的恢复时间。坚持下去，身体会越来越轻松，精神也更饱满。"
+    - "你的命局里木较少，占 {power_pct.木}%。按传统说法，木与肝胆、筋骨相关，平时可以多接触绿色和自然，坚持温和的运动，注意久坐后的活动与放松。循序渐进，身体会慢慢给你积极的回应。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH7-HEALTH-HUO-WANG
+  slot: CH7-HEALTH
+  when: {all: [{f: power_pct.火, gt: 40}]}
+  asserts: []
+  priority: 50
+  length: [80, 120]
+  polish_allowed: false
+  variants:
+    - "命局中火的力量偏旺，占 {power_pct.火}%。传统五行里火对应心血管与睡眠，可以多留意情绪起伏和休息质量，少吃辛辣燥热的食物，睡前减少刺激，让身心慢下来。心平气和，身体自然会更轻松。"
+    - "你的命局里火偏多，占 {power_pct.火}%。按传统说法，火与心血管、睡眠相关，日常可以注意劳逸结合，避免长期亢奋和过度劳累，选择节奏平缓的运动帮助放松。给自己留出放空的时间，状态会更好。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH7-HEALTH-HUO-RUO
+  slot: CH7-HEALTH
+  when: {all: [{f: power_pct.火, lt: 5}]}
+  asserts: []
+  priority: 50
+  length: [80, 120]
+  polish_allowed: false
+  variants:
+    - "命局中火的力量偏弱，只占 {power_pct.火}%。传统五行里火对应心血管与睡眠，可以多晒太阳、保持适度运动，让身体暖起来，作息规律也有助于改善精神状态。身体暖起来，精神也会跟着好起来。"
+    - "你的命局里火较少，占 {power_pct.火}%。按传统说法，火与心血管、睡眠相关，平时可以注意保暖、规律作息，多参加让自己开心的活动，保持积极的心情。心情愉快，是最好的调养方式之一。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH7-HEALTH-TU-WANG
+  slot: CH7-HEALTH
+  when: {all: [{f: power_pct.土, gt: 40}]}
+  asserts: []
+  priority: 50
+  length: [80, 120]
+  polish_allowed: false
+  variants:
+    - "命局中土的力量偏旺，占 {power_pct.土}%。传统五行里土对应脾胃与消化，可以多留意饮食节制，七分饱、少油腻，饭后适当走动，避免久坐不动。管住嘴、迈开腿，是最朴素也最有效的养生之道。"
+    - "你的命局里土偏多，占 {power_pct.土}%。按传统说法，土与脾胃消化相关，日常饮食宜清淡、规律，少吃夜宵，多做能促进代谢的有氧运动。规律的饮食习惯，会让身体更轻盈、更有活力，精神也更好。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH7-HEALTH-TU-RUO
+  slot: CH7-HEALTH
+  when: {all: [{f: power_pct.土, lt: 5}]}
+  asserts: []
+  priority: 50
+  length: [80, 120]
+  polish_allowed: false
+  variants:
+    - "命局中土的力量偏弱，只占 {power_pct.土}%。传统五行里土对应脾胃与消化，可以注意三餐定时定量，少吃生冷，选择温和易消化的食物，让肠胃少受刺激。照顾好肠胃，精力和心情都会跟着好转。"
+    - "你的命局里土较少，占 {power_pct.土}%。按传统说法，土与脾胃消化相关，平时可以细嚼慢咽、规律进餐，压力大时尤其注意饮食，别让情绪影响胃口。饮食上多一点耐心，身体会给你回报。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH7-HEALTH-JIN-WANG
+  slot: CH7-HEALTH
+  when: {all: [{f: power_pct.金, gt: 40}]}
+  asserts: []
+  priority: 50
+  length: [80, 120]
+  polish_allowed: false
+  variants:
+    - "命局中金的力量偏旺，占 {power_pct.金}%。传统五行里金对应呼吸与皮肤，可以多留意室内通风和空气质量，换季时注意保暖与补水，坚持适度的有氧运动。保持呼吸顺畅、心情舒展，身体会更舒服，人也更有精神。"
+    - "你的命局里金偏多，占 {power_pct.金}%。按传统说法，金与呼吸、皮肤相关，日常可以注意保湿、多喝水，少接触烟尘，情绪上也别太压抑自己。适度表达情绪、不憋在心里，也是照顾身体的重要一部分。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH7-HEALTH-JIN-RUO
+  slot: CH7-HEALTH
+  when: {all: [{f: power_pct.金, lt: 5}]}
+  asserts: []
+  priority: 50
+  length: [80, 120]
+  polish_allowed: false
+  variants:
+    - "命局中金的力量偏弱，只占 {power_pct.金}%。传统五行里金对应呼吸与皮肤，可以多做深呼吸和户外运动，季节变化时及时增减衣物，注意皮肤的清洁与保养。坚持一段时间，你会感到精力更充沛。"
+    - "你的命局里金较少，占 {power_pct.金}%。按传统说法，金与呼吸、皮肤相关，平时可以多去空气清新的地方走走，保持室内湿度适宜，养成规律运动的习惯。好的生活习惯，会慢慢改善身体的状态。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH7-HEALTH-SHUI-WANG
+  slot: CH7-HEALTH
+  when: {all: [{f: power_pct.水, gt: 40}]}
+  asserts: []
+  priority: 50
+  length: [80, 120]
+  polish_allowed: false
+  variants:
+    - "命局中水的力量偏旺，占 {power_pct.水}%。传统五行里水对应肾与泌尿系统，可以多留意保暖和休息，少吃生冷，避免长时间劳累，适当晒太阳、多活动。让身体动起来、多出出汗，状态会明显改善。"
+    - "你的命局里水偏多，占 {power_pct.水}%。按传统说法，水与肾、泌尿相关，日常可以注意腰腹保暖，作息别太晚，适度运动帮助身体代谢。注意保暖、早点休息，是这类命局最简单也最有效的调养方式。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH7-HEALTH-SHUI-RUO
+  slot: CH7-HEALTH
+  when: {all: [{f: power_pct.水, lt: 5}]}
+  asserts: []
+  priority: 50
+  length: [80, 120]
+  polish_allowed: false
+  variants:
+    - "命局中水的力量偏弱，只占 {power_pct.水}%。传统五行里水对应肾与泌尿系统，可以注意多喝水、少熬夜，避免过度消耗体力，给身体留出充分的休息时间。休息好了，做事才有长久的精力，心情也会更平和。"
+    - "你的命局里水较少，占 {power_pct.水}%。按传统说法，水与肾、泌尿相关，平时可以保证饮水量，注意劳逸结合，睡眠充足是最好的调养。别透支自己，身体是一切的本钱，照顾好它就是照顾好未来。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH7-HEALTH-BALANCED
+  slot: CH7-HEALTH
+  when: {all: [{f: power_pct.木, gte: 5}, {f: power_pct.木, lte: 40}, {f: power_pct.火, gte: 5}, {f: power_pct.火, lte: 40}, {f: power_pct.土, gte: 5}, {f: power_pct.土, lte: 40}, {f: power_pct.金, gte: 5}, {f: power_pct.金, lte: 40}, {f: power_pct.水, gte: 5}, {f: power_pct.水, lte: 40}]}
+  asserts: []
+  priority: 50
+  length: [80, 120]
+  polish_allowed: false
+  variants:
+    - "你的五行分布比较均衡，没有特别偏旺或偏弱的一方，这是很好的底子。保持规律作息、均衡饮食和适度运动，就是最适合你的养生方式，不必刻意进补。平衡的状态需要用心维护，别在忙碌时忽视了身体的信号。"
+    - "从命局看，各种力量的分布相对均匀，身体的底子比较平稳。日常把作息、饮食、运动这三件事照顾好，比任何特别的调养都更重要。定期体检、保持好心情，会让这份平衡维持得更久。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+- id: CH7-HEALTH-FALLBACK
+  slot: CH7-HEALTH
+  when: {}
+  asserts: []
+  priority: 0
+  fallback: true
+  length: [20, 80]
+  polish_allowed: false
+  variants:
+    - "健康方面，规律作息、均衡饮食、适度运动，是最朴素也最有效的养生之道。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13
+
+# ======================= CH7-HEALTH-END（固定文本） =======================
+- id: CH7-HEALTH-END-FIXED
+  slot: CH7-HEALTH-END
+  when: {}
+  priority: 0
+  length: [1, 300]
+  variants:
+    - "以上是传统五行养生的参考，不构成医疗建议；身体不适请及时就医。"
+  status: draft
+  author: claude
+  reviewer: null
+  updated: 2026-11-13

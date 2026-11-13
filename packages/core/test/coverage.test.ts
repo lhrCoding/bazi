@@ -82,11 +82,11 @@ describe('第 1 批真实素材（开发期统计 draft）', () => {
     expect(r.gaps.filter((g) => [1, 2, 6].includes(chOf(g.slot)))).toEqual([]);
     expect(r.fallbackProblems.filter((p) => [1, 2, 6].includes(chOf(p)))).toEqual([]);
   });
-  it('缺口清单只在尚未写素材的第 4、7 章，且等于这些槽位的全部组合', () => {
+  it('缺口清单只在尚未写素材的第 4 章，且等于这些槽位的全部组合', () => {
     const chapters = [...new Set(r.gaps.map((g) => chOf(g.slot)))].sort();
-    expect(chapters).toEqual([4, 7]);
+    expect(chapters).toEqual([4]);
     const expected = r.slots
-      .filter((s) => [4, 7].includes(s.chapter))
+      .filter((s) => [4].includes(s.chapter))
       .reduce((n, s) => n + s.combos, 0);
     expect(r.gaps).toHaveLength(expected);
   });
