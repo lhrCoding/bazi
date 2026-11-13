@@ -182,7 +182,7 @@ export function lintEntries(
           add(e.id, 'L2', `${where}：字段 ${f} 不在字段字典（README §3）`);
           continue;
         }
-        if (f.startsWith('item.') && slot && !slot.loop)
+        if (f.startsWith('item.') && slot && !slot.loop && !slot.itemContext)
           add(e.id, 'L2', `${where}：非循环槽位不能引用 ${f}`);
         if (!(LEAF_OPS as readonly string[]).some((op) => op in leaf)) continue;
         const t = checkLeafType(leaf, spec);
@@ -211,7 +211,7 @@ export function lintEntries(
           add(e.id, 'L3', `变体 ${vi + 1}：占位符 {${path}} 不在字段字典`);
           continue;
         }
-        if (path.startsWith('item.') && slot && !slot.loop)
+        if (path.startsWith('item.') && slot && !slot.loop && !slot.itemContext)
           add(e.id, 'L3', `变体 ${vi + 1}：非循环槽位不能用 {${path}}`);
         if (filter !== undefined) {
           const isGod =

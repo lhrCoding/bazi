@@ -127,7 +127,7 @@ rules/texts/
 | strength.nohour_cong_possible | 布尔 | 三柱时 13 个扫描时柱中至少一个判为从格（strength.md §5 第 4 条）；有时辰恒为 false。只用于 CH2-NOHOUR-CONG 提示，不改变喜忌 |
 | strength.nohour_cong_hours | 列表 | 上述判为从格的时支（地支字，按子→亥排序、去重）；无则为空列表 |
 
-### 3.2 循环槽位的 item 字段（CH3-GOD、CH4-ELEMENT、CH5-STEP、CH6-* 等）
+### 3.2 循环槽位的 item 字段（CH3-GOD、CH4-ELEMENT、CH5-STEP、CH6-* 等；另 CH5-TRANSITION 虽不循环，也由代码传入下一步大运的 item.year / item.ganzhi）
 | 字段 | 说明 |
 |---|---|
 | item.ganzhi / item.year / item.start_year / item.end_year | 干支与年份（年份只能通过占位符出现） |
