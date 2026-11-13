@@ -21,6 +21,7 @@ export const API_ERROR_MESSAGES = {
   E_FP_MISMATCH: '链接中的出生信息与订单不一致，请使用付款后收到的完整链接。',
   E_RATE_LIMITED: '请求过于频繁，请稍后再试。',
   E_CHANNEL_UNAVAILABLE: '该支付方式暂不可用，请换一种方式。',
+  E_REPORT_LINK_INVALID: '链接无效或订单未支付。请使用付款后收到的完整链接。',
   E_INTERNAL: '服务暂时出了点问题，请稍后再试。',
 } as const;
 export type ApiErrorCode = keyof typeof API_ERROR_MESSAGES;

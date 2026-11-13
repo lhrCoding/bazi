@@ -26,6 +26,8 @@ export default defineConfig({
       ORDER_RATE_LIMIT: '10000',
       PAYMENT_MODE: 'mock',
       ALLOW_MOCK_PAYMENT: '1',
+      TEXTS_DEV_WORKSPACE: '1',
+      REPORT_RATE_LIMIT: '10000',
       BIRTH_FP_KEY: 'e2e0'.repeat(16),
       BIRTH_FP_KEY_ID: 'e2e',
       DATABASE_PATH: 'test-results/e2e-orders.db',

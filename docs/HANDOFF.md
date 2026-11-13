@@ -132,14 +132,14 @@
 | 电脑端二维码只预留了位置（mock 走跳转），二维码图片渲染随微信 Native 实现 | T50 |
 | 微信内「微信支付」需 openid 静默授权，目前点了会提示「后续版本接入」（mock 模式下直接走 mock） | T49 |
 | 换浏览器 / 换设备打开 `/pay/done` 时本机没有载荷，只能提示回原浏览器（P1「链接找回」未做） | P1 |
-| **`ALLOW_MOCK_PAYMENT=1` 只给 E2E 用**（生产构建里放行 mock 支付），部署时绝不能设；上线检查清单要加一条 | T59–T65 |
-| 新订单 texts_version：开发为 0，生产取 texts-releases/ 最大发布号；T53 接入 TextsStore 后统一取 `current` | T53 |
+| **`ALLOW_MOCK_PAYMENT=1`、`TEXTS_DEV_WORKSPACE=1` 只给 E2E 用**（生产构建里放行 mock 支付 / 草稿素材），部署时绝不能设；上线检查清单要加一条 | T59–T65 |
 | 页脚免责组件已放进报告占位页并有 E2E 断言；T53 正式报告页需保留 | T53 报告页 |
 | 排盘限流可用 `CHART_RATE_LIMIT` 放宽（只在 playwright.config.ts 设置，生产不设） | — |
 | ENGINE_VERSION 已升到 1.1.0（T40 出生地坐标换正式数据，四柱不变） | — |
 | `scripts/` 不在 lint / typecheck 范围内（只有被测试引用的部分才会被类型检查） | T63 CI 门禁完善 |
 | `scripts/` 引用了 `packages/core/test/helpers/cases.ts` 的 `toBirthInput` | T63 时移到共享位置 |
-| `apps/web/server/texts-store.ts` 的 `initTextsStoreOrExit` 未接入 Next 启动流程（现在没有发布快照，接入后生产无法启动） | T53 报告 API |
+| **生产启动需要至少一个素材发布快照**（instrumentation.ts 启动预加载，缺快照即退出）：上线前必须先完成第 1 批批准与 `texts:release`（见 D1、D4） | 上线前 |
+| 术语表、「已知局限」、R-CHECK 词表仍从 rules/ 运行时读取，未进发布快照：改 rules/ 会影响已售报告的术语加注（违背「同一订单逐字相同」）；部署也需带上 rules/ 这几个文件 | K01 建 glossary.yaml 时一并放进快照 |
 | 第 5 章依据需要的起运信息已在 ctx（`qiyun`）；第 3、4、5、7、8 章素材未写，报告这些章节为空或为测试素材 | 素材第 2、3 批（K09–K15） |
 | `glossary.yaml`、`wordlists/{forbidden,disease,finance}.txt` 未建，暂用 README §8 示例和 report-sections.md §7 禁用词表 | K01 |
 | README §4.1 尚未写明 `contains` 可匹配对象（代码已支持，CH6-REL 在用） | 随下次改 README |

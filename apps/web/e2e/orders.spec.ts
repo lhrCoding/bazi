@@ -32,3 +32,22 @@ test('不支持的渠道 → E_CHANNEL_UNAVAILABLE；未知订单 → 404', asyn
   );
   expect((await request.get(`/api/orders/${'A'.repeat(22)}/status`)).status()).toBe(404);
 });
+
+test('T53：付款后 POST /api/report 返回 9 章；篡改载荷 → 链接无效', async ({ request }) => {
+  const payload = cases[0]?.payload ?? '';
+  const { orderNo } = (await (
+    await request.post('/api/orders', { data: { payload, channel: 'mock' } })
+  ).json()) as { orderNo: string };
+  const ok = await request.post('/api/report', { data: { orderNo, payload } });
+  expect(ok.status()).toBe(200);
+  expect(ok.headers()['cache-control']).toBe('no-store');
+  const rep = (await ok.json()) as { chapters: { id: number }[] };
+  expect(rep.chapters).toHaveLength(9);
+  const bad = await request.post('/api/report', {
+    data: { orderNo, payload: cases[1]?.payload },
+  });
+  expect(bad.status()).toBe(403);
+  expect(((await bad.json()) as { error: { code: string } }).error.code).toBe(
+    'E_REPORT_LINK_INVALID',
+  );
+});

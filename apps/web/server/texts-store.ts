@@ -107,6 +107,8 @@ export function loadWorkspace(textsDir: string, allowed: readonly TextStatus[]):
 export interface TextsStoreEnv {
   NODE_ENV?: string | undefined;
   TEXTS_ALLOWED_STATUS?: string | undefined;
+  /** 仅 E2E：生产构建（next start）下改读工作区草稿。部署时绝不能设（HANDOFF 上线检查） */
+  TEXTS_DEV_WORKSPACE?: string | undefined;
 }
 
 /**
@@ -117,7 +119,7 @@ export function loadTextsStore(
   env: TextsStoreEnv,
   dirs: { releasesDir: string; workspaceDir: string },
 ): TextsStore {
-  if (env.NODE_ENV === 'production') {
+  if (env.NODE_ENV === 'production' && env.TEXTS_DEV_WORKSPACE !== '1') {
     const allowed = env.TEXTS_ALLOWED_STATUS
       ? parseAllowedStatus(env.TEXTS_ALLOWED_STATUS)
       : ['approved'];
