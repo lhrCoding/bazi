@@ -1027,3 +1027,184 @@ a {
   font-size: 12px;
   color: var(--color-ink-3);
 }
+
+/* ===== 支付确认面板 / 电脑端面板 / 支付返回页（design/pay.html、status.html） ===== */
+.paysheet {
+  gap: 10px;
+  overflow: auto;
+}
+.price {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin: 6px 0 4px;
+}
+.price b {
+  font-family: var(--font-serif);
+  font-size: 30px;
+  color: var(--color-zhu);
+  font-weight: 600;
+}
+.price span {
+  font-size: 12.5px;
+  color: var(--color-ink-3);
+}
+.sheet-items {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 12px;
+  font-size: 13.5px;
+  color: var(--color-ink-2);
+  list-style: none;
+  padding: 8px 0;
+  border-top: 1px solid var(--color-line-2);
+  border-bottom: 1px solid var(--color-line-2);
+}
+.sheet-items li::before {
+  content: '·';
+  color: var(--color-zhu);
+  margin-right: 6px;
+}
+.btn-wechat {
+  background: #07c160;
+  color: #fff;
+}
+.btn-alipay {
+  background: #1677ff;
+  color: #fff;
+}
+.btn-line {
+  background: transparent;
+  border: 1px solid var(--color-line);
+  color: var(--color-ink);
+  font-size: 16px;
+}
+.or {
+  text-align: center;
+  font-size: 12px;
+  color: var(--color-ink-3);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.or::before,
+.or::after {
+  content: '';
+  flex: 1;
+  border-top: 1px solid var(--color-line-2);
+}
+.guide {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  background: rgba(42, 37, 33, 0.82);
+  color: #fbf3ec;
+  text-align: right;
+  padding: 24px 24px 0;
+  font-size: 17px;
+  line-height: 1.8;
+}
+.paydesk {
+  position: fixed;
+  z-index: 60;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: min(720px, calc(100vw - 32px));
+  background: var(--color-paper-2);
+  border-radius: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  padding: 24px;
+  box-shadow: 0 8px 40px rgba(42, 37, 33, 0.2);
+}
+.paydesk h3 {
+  font-family: var(--font-serif);
+  font-size: 20px;
+  font-weight: 600;
+}
+.paydesk-r {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: center;
+  justify-content: center;
+  border-left: 1px solid var(--color-line-2);
+  padding-left: 24px;
+}
+.paydesk-r .close {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  border: 0;
+  background: none;
+  color: var(--color-ink-3);
+  cursor: pointer;
+  font-size: 14px;
+}
+.qrbox {
+  width: 100%;
+  min-height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px dashed var(--color-line);
+  border-radius: 6px;
+  padding: 16px;
+}
+.state {
+  text-align: center;
+  padding: 56px 8px 24px;
+}
+.state-icon {
+  display: inline-flex;
+  width: 52px;
+  height: 52px;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid var(--color-ink-3);
+  color: var(--color-ink-2);
+  border-radius: 4px;
+  font-family: var(--font-serif);
+  font-size: 26px;
+}
+.state-icon.good {
+  border-color: var(--color-zhu);
+  color: var(--color-zhu);
+}
+.state h1 {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 600;
+  margin-top: 14px;
+}
+.state-body {
+  color: var(--color-ink-2);
+  font-size: 14.5px;
+  margin-top: 8px;
+}
+.state-body p + p {
+  margin-top: 6px;
+}
+.state-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+  margin-top: 22px;
+}
+.state-actions .btn {
+  max-width: 280px;
+  text-decoration: none;
+}
+.linkbtn {
+  border: 0;
+  background: none;
+  color: var(--color-ink-2);
+  text-decoration: underline;
+  font: inherit;
+  font-size: 13.5px;
+  cursor: pointer;
+}

@@ -10,6 +10,9 @@ import { decodePayload, encodePayload, type PayloadV1 } from '@zhiming/core/birt
 import type { FreeResult } from '@zhiming/core/report';
 import { echoText } from '../birth-form-logic';
 import { LegalFooter } from '../legal-footer';
+import { detectEnv, type PayEnv } from '../pay-env';
+import type { Channel } from '../../server/orders/schema';
+import { PaySheet } from './pay-sheet';
 
 type State =
   | { kind: 'loading' }
@@ -339,7 +342,15 @@ function YongMod({ r }: { r: FreeResult }) {
   );
 }
 
-function PayGuide({ r, payRef }: { r: FreeResult; payRef: React.RefObject<HTMLElement | null> }) {
+function PayGuide({
+  r,
+  payRef,
+  onPay,
+}: {
+  r: FreeResult;
+  payRef: React.RefObject<HTMLElement | null>;
+  onPay: () => void;
+}) {
   return (
     <section className="pay" ref={payRef} data-testid="pay">
       <h2>完整命理报告</h2>
@@ -375,8 +386,7 @@ function PayGuide({ r, payRef }: { r: FreeResult; payRef: React.RefObject<HTMLEl
           {r.nohourNotice}价格不变。
         </div>
       )}
-      {/* 支付入口在 T47（支付确认面板）接入 */}
-      <button type="button" className="btn btn-primary" data-testid="pay-btn">
+      <button type="button" className="btn btn-primary" data-testid="pay-btn" onClick={onPay}>
         ¥9.9 查看完整报告
       </button>
       <p className="promise">一次付清 · 没有会员和续费 · 报告内没有追加付费</p>
@@ -387,9 +397,11 @@ function PayGuide({ r, payRef }: { r: FreeResult; payRef: React.RefObject<HTMLEl
   );
 }
 
-export function ResultView() {
+export function ResultView({ channels }: { channels: readonly Channel[] }) {
   const [st, setSt] = useState<State>({ kind: 'loading' });
   const [stick, setStick] = useState(false);
+  const [payEnv, setPayEnv] = useState<PayEnv | null>(null);
+  const openPay = () => setPayEnv(detectEnv(navigator.userAgent));
   const payRef = useRef<HTMLElement | null>(null);
 
   const load = useCallback(async (encoded: string) => {
@@ -473,7 +485,7 @@ export function ResultView() {
             <StrengthMod r={st.data} />
             <YongMod r={st.data} />
           </div>
-          <PayGuide r={st.data} payRef={payRef} />
+          <PayGuide r={st.data} payRef={payRef} onPay={openPay} />
         </>
       )}
       <LegalFooter variant="result" />
@@ -485,11 +497,20 @@ export function ResultView() {
               <br />
               一次付清
             </div>
-            <button type="button" className="btn btn-primary">
+            <button type="button" className="btn btn-primary" onClick={openPay}>
               ¥9.9 查看完整报告
             </button>
           </div>
         </div>
+      )}
+      {st.kind === 'ok' && payEnv && (
+        <PaySheet
+          env={payEnv}
+          channels={channels}
+          payload={st.encoded}
+          nohourNotice={st.data.nohourNotice}
+          onClose={() => setPayEnv(null)}
+        />
       )}
     </div>
   );

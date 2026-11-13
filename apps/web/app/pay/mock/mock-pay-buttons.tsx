@@ -1,8 +1,10 @@
 'use client';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 export function MockPayButtons({ orderNo }: { orderNo: string }) {
   const [msg, setMsg] = useState<string | null>(null);
+  const router = useRouter();
   async function pay(drop: boolean) {
     const r = await fetch('/api/pay/mock', {
       method: 'POST',
@@ -14,7 +16,7 @@ export function MockPayButtons({ orderNo }: { orderNo: string }) {
       return;
     }
     // 真实渠道支付完成后回到返回页（T48 /pay/done）
-    window.location.assign(`/pay/done?o=${encodeURIComponent(orderNo)}`);
+    router.push(`/pay/done?o=${encodeURIComponent(orderNo)}`);
   }
   return (
     <div style={{ display: 'grid', gap: 10, marginTop: 16 }}>

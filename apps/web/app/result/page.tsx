@@ -1,6 +1,10 @@
 /** 免费结果页 /result#<载荷>（TASKS T45）。载荷在片段里，只能在浏览器读取，页面主体是客户端组件。 */
 import type { Metadata } from 'next';
+import { enabledChannels } from '../../server/pay-config';
 import { ResultView } from './result-view';
+
+// 已开通渠道按运行时环境变量决定
+export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   title: '八字结果 · 一元知命',
@@ -9,5 +13,5 @@ export const metadata: Metadata = {
 };
 
 export default function ResultPage() {
-  return <ResultView />;
+  return <ResultView channels={enabledChannels(process.env)} />;
 }

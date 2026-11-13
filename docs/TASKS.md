@@ -281,7 +281,7 @@
   内容：`PaymentProvider` 接口；mock 实现（模拟支付页 + 模拟回调）；`POST /api/orders`（规范化 → 排盘校验 → 指纹 → 建单，texts_version 取当前发布版）、`GET /api/orders/:no/status`（10 秒未回调时主动查单）、`POST /api/pay/notify/:channel`（幂等）。下单参数中不含出生信息。
   验收：mock 全流程走通；重复回调只处理一次；下单请求发给渠道的参数里搜不到出生信息（测试断言）。
 
-- [ ] **T48 环境识别与前端支付流程** 【UI】
+- [x] **T48 环境识别与前端支付流程** 【UI】
   依赖：T47, T45
   内容：UA 识别微信内 / 其他手机浏览器 / 电脑，按 ARCHITECTURE 8.2 展示支付方式；`localStorage['pending:'+订单号]` 保存载荷；`/pay/done` 返回页；轮询状态后跳 `/r/<订单号>#<载荷>`；微信内选支付宝时引导「在浏览器打开」。
   验收：三种 UA 的 E2E 显示正确的支付方式；mock 支付后自动到达报告页；`/pay/done` 的 URL 中无出生信息。
