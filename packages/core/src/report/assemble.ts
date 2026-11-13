@@ -570,6 +570,12 @@ export interface YearCard {
   tier: string;
   score: number;
   relations: { type: string; a: string; b: string }[];
+  /** 所在大运干支（起运前为 null） */
+  dayun: string | null;
+  /** 换运当年 / 当前大运最后一年的标注（UI.md §7.4） */
+  dayun_mark: '新一步第一年' | '最后一年' | null;
+  /** 卡片依据行：流年天干十神；冲合；评分与档位（原始分数只出现在这里） */
+  basis: string;
   head: ParaBlock[];
   domains: { career: ParaBlock[]; wealth: ParaBlock[]; love: ParaBlock[]; health: ParaBlock[] };
   do: ParaBlock[];
@@ -593,6 +599,7 @@ export function chapter5(b: ReportBuilder): Chapter {
       start_year: d.start_year,
       end_year: d.end_year,
       start_age: chart.dayun.steps[i]?.startAge ?? null,
+      ten_god: d.stem_ten_god,
       score: d.score,
       tier: d.tier,
       phase: d.phase,
@@ -620,6 +627,39 @@ export function chapter5(b: ReportBuilder): Chapter {
   return { id: 5, title: CHAPTER_TITLES[5] as string, blocks };
 }
 
+const BRANCH_KEY: Readonly<Record<string, 'year' | 'month' | 'day' | 'hour'>> = {
+  年支: 'year',
+  月支: 'month',
+  日支: 'day',
+  时支: 'hour',
+};
+
+/** 逐年卡片依据行，如「流年天干戊为比肩；申冲寅（日支）；评分 −0.23，落在「平稳」区间」 */
+export function yearCardBasis(
+  l: {
+    ganzhi: string;
+    stem_ten_god: string;
+    score: number;
+    tier: string;
+    relations: readonly { type: string; a: string; b: string }[];
+  },
+  chart: Chart,
+): string {
+  const ch = (label: string): string => {
+    if (label === '流年支') return l.ganzhi[1] ?? '';
+    if (label === '流年干') return l.ganzhi[0] ?? '';
+    const k = BRANCH_KEY[label];
+    return k ? (chart.pillars[k]?.[1] ?? label) : label;
+  };
+  const rels = l.relations.map((r) => `${ch(r.a)}${r.type}${ch(r.b)}（${r.b}）`);
+  const sc = `${l.score < 0 ? '−' : '+'}${Math.abs(l.score).toFixed(2)}`;
+  return [
+    `流年天干${l.ganzhi[0] ?? ''}为${l.stem_ten_god}`,
+    ...(rels.length > 0 ? [rels.join('、')] : []),
+    `评分 ${sc}，落在「${l.tier}」区间`,
+  ].join('；');
+}
+
 export function chapter6(b: ReportBuilder): Chapter {
   b.startChapter();
   const { ctx, chart } = b.input;
@@ -634,6 +674,13 @@ export function chapter6(b: ReportBuilder): Chapter {
       tier: l.tier,
       score: l.score,
       relations: l.relations,
+      dayun: l.dayun,
+      dayun_mark: ctx.dayun.some((d) => d.start_year === l.year)
+        ? '新一步第一年'
+        : ctx.dayun.some((d) => d.ganzhi === l.dayun && d.end_year === l.year)
+          ? '最后一年'
+          : null,
+      basis: yearCardBasis(l, chart),
       head: b.slot('CH6-HEAD', 1, item),
       domains: {
         career: b.slot('CH6-CAREER', 1, item),

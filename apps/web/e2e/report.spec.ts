@@ -121,3 +121,50 @@ test.describe('iPhone SE 宽度（375×667）', () => {
     }
   });
 });
+
+test.describe('T56 图二、图三、逐年卡片', () => {
+  for (const pick of ['hour', 'nohour'] as const) {
+    test(`卡片年份 / 干支与报告 JSON 一致；图二、图三齐全；无横向滚动（${pick}）`, async ({
+      page,
+      request,
+    }) => {
+      const c = pick === 'hour' ? cases[0]! : cases.find((x) => !x.hourKnown)!;
+      const respP = page.waitForResponse((r) => r.url().endsWith('/api/report'));
+      await page.goto(await paidLink(request, c.payload));
+      const rep = (await (await respP).json()) as {
+        chapters: {
+          id: number;
+          blocks: {
+            type: string;
+            kind?: string;
+            year?: number;
+            ganzhi?: string;
+            data?: { ganzhi: string; phase: string }[];
+          }[];
+        }[];
+      };
+      const cards = rep.chapters[6]!.blocks.filter((b) => b.type === 'yearCard');
+      expect(cards).toHaveLength(5);
+      const shown = page.getByTestId('year-card');
+      await expect(shown).toHaveCount(5);
+      for (let i = 0; i < 5; i++) {
+        await expect(shown.nth(i)).toHaveAttribute('data-year', String(cards[i]!.year));
+        await expect(shown.nth(i)).toHaveAttribute('data-ganzhi', cards[i]!.ganzhi!);
+        await expect(shown.nth(i)).toContainText(`${cards[i]!.year} ${cards[i]!.ganzhi}年`);
+        await expect(shown.nth(i)).toContainText('立春起');
+      }
+      const dayun = rep.chapters[5]!.blocks.find((b) => b.kind === 'dayun')!.data!;
+      const dc = page.getByTestId('dayun-chart');
+      await expect(dc.locator('svg g[data-ganzhi]')).toHaveCount(dayun.length);
+      await expect(dc.locator('g[data-phase="current"]')).toHaveCount(
+        dayun.filter((d) => d.phase === 'current').length,
+      );
+      await expect(page.getByTestId('dayun-list').locator('tbody tr')).toHaveCount(dayun.length);
+      const lc = page.getByTestId('liunian-chart');
+      await expect(lc.locator('svg g[data-year]')).toHaveCount(5);
+      await expect(lc).toContainText('今年');
+      await expect(lc).toContainText('每年以立春为界');
+      expect(await noHScroll(page), c.id).toBe(true);
+    });
+  }
+});

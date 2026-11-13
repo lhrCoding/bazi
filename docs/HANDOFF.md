@@ -127,7 +127,7 @@
 | E2E（`npm run e2e -w @zhiming/web`）：Playwright 1.65 自带内核不支持本机 macOS 12，暂用系统 Chrome（`channel: 'chrome'`）；CI 设 `PW_CHANNEL` 用自带 chromium。webServer 用 `next start`，有 standalone 警告但可用 | T64 |
 | better-sqlite3 用 12.11.1：13.x 要求 Node ≥ 22，本机是 Node 20.18.1（CI / 生产按架构用 Node 22） | 本机升级 Node 22 后可升级 |
 | standalone 部署需带上 `server/orders/migrations/*.sql`（已在 next.config.ts outputFileTracingIncludes 声明；better-sqlite3 在 next start 下已由 E2E 验证可用），Docker 构建时再确认一次 | T60 部署 |
-| 报告页图二、图三与逐年卡片目前是占位块 | T56 |
+| 图二大运柱旁未写档位文字（列宽只有约 42 px），档位文字放在图例与下方列表；若要严格按 UI.md §8「柱旁写档位文字」需改为横向滚动或缩写 | 视需要 |
 | 报告页「保存为长图」按钮暂为禁用 | T58 |
 | 术语加注「（……）」引擎输出为普通括号，前端无法区分，未按 UI.md §7.3 做小号灰字；需引擎输出标记（如段落里附 annotations 位置） | 有空时 / 素材定稿前 |
 | 报告封面回显不含出生地名称（报告 JSON 不带地名），选了出生地时只写「已按出生地校正真太阳时」 | 视需要 |

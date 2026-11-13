@@ -11,6 +11,7 @@ import type { Chapter, ReportEvent } from '@zhiming/core/report';
 import { echoText } from '../../birth-form-logic';
 import { LegalFooter } from '../../legal-footer';
 import { BlockView } from './blocks';
+import type { DayunRow } from './timeline';
 
 interface ReportData {
   meta: {
@@ -237,6 +238,10 @@ export function ReportView() {
     );
 
   const { data, payload } = st;
+  const dayunBlock = data.chapters[5]?.blocks.find((b) => b.type === 'chart' && b.kind === 'dayun');
+  const dayunRows = (dayunBlock && dayunBlock.type === 'chart'
+    ? dayunBlock.data
+    : []) as unknown as DayunRow[];
   return (
     <div className="rp-wrap">
       <SaveNotice first={first} onCopy={() => void copyLink()} />
@@ -260,7 +265,7 @@ export function ReportView() {
           <div className="rp-chno">第{CH_NO[c.id]}章</div>
           <h2 className="rp-chttl">{c.title}</h2>
           {c.blocks.map((b, i) => (
-            <BlockView key={i} b={b} />
+            <BlockView key={i} b={b} dayun={dayunRows} />
           ))}
         </section>
       ))}

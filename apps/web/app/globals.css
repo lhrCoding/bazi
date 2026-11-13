@@ -1683,3 +1683,259 @@ a {
 .rp-table-chart tbody td {
   font-size: 12px;
 }
+
+/* ===== 图二 / 图三 / 逐年卡片（UI.md §7.4、§8） ===== */
+.tl-chart {
+  display: block;
+  max-width: 560px;
+  margin: 0 auto;
+  font-family: var(--font-sans);
+  overflow: visible;
+}
+.tl-cur {
+  fill: var(--color-zhu-bg);
+}
+.tl-dash {
+  stroke: var(--color-line);
+  stroke-dasharray: 3 3;
+}
+.tl-base {
+  stroke: var(--color-ink-3);
+  stroke-width: 1;
+}
+.tl-bar.cur {
+  stroke: var(--color-zhu);
+  stroke-width: 1.5;
+}
+.tl-gz {
+  font-family: var(--font-serif);
+  font-size: 13px;
+  font-weight: 600;
+  fill: var(--color-ink);
+}
+.tl-curtxt {
+  font-size: 10px;
+  fill: var(--color-zhu);
+}
+.tl-age,
+.tl-year {
+  font-size: 10.5px;
+  fill: var(--color-ink-3);
+  font-variant-numeric: tabular-nums;
+}
+.tl-gzs {
+  font-family: var(--font-serif);
+  font-size: 12px;
+  fill: var(--color-ink-2);
+}
+.tl-band {
+  font-size: 10.5px;
+  fill: var(--color-ink-2);
+}
+.tl-line {
+  fill: none;
+  stroke: var(--color-ink-2);
+  stroke-width: 1.5;
+}
+.tl-pt {
+  fill: var(--color-paper-2);
+  stroke: var(--color-ink-2);
+  stroke-width: 1.5;
+}
+.tl-pt.now {
+  fill: var(--color-zhu);
+  stroke: var(--color-zhu);
+}
+.tl-now {
+  font-size: 10.5px;
+  fill: var(--color-zhu);
+}
+.tl-switch {
+  stroke: var(--color-zhu);
+  stroke-dasharray: 3 3;
+}
+.tl-switchtxt {
+  font-size: 10px;
+  fill: var(--color-zhu);
+}
+.tl-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  justify-content: center;
+  font-size: 11.5px;
+  color: var(--color-ink-2);
+  margin: 8px 0 10px;
+}
+.tl-legend i {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  margin-right: 4px;
+  vertical-align: -1px;
+}
+.tl-list {
+  font-size: 12.5px;
+}
+.tl-list td {
+  padding: 5px 4px;
+}
+.tl-list .gz {
+  font-family: var(--font-serif);
+  font-size: 15px;
+  font-weight: 600;
+}
+.tl-list tr.cur td {
+  background: var(--color-zhu-bg);
+}
+.tier-chip {
+  display: inline-block;
+  color: #fff;
+  font-size: 11.5px;
+  line-height: 1.5;
+  padding: 0 6px;
+  border-radius: 2px;
+  white-space: nowrap;
+}
+.yc {
+  border: 1px solid var(--color-line);
+  background: var(--color-paper-2);
+  border-radius: 6px;
+  padding: 14px 14px 4px;
+  margin: 0 0 14px;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+.yc-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+}
+.yc-ttl {
+  font-family: var(--font-serif);
+  font-size: 17px;
+}
+.yc-ttl b {
+  font-size: 26px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.yc-tags {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 13px;
+  color: var(--color-ink-2);
+}
+.yc-dots {
+  display: flex;
+  gap: 4px;
+  justify-content: flex-end;
+  margin-top: 4px;
+}
+.yc-dots i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  border: 1px solid var(--color-ink-3);
+}
+.yc-dots i.on {
+  background: var(--color-ink-2);
+  border-color: var(--color-ink-2);
+}
+.yc-meta {
+  font-size: 12px;
+  color: var(--color-ink-3);
+  margin: 6px 0 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--color-line-2);
+}
+.yc-theme {
+  font-family: var(--font-serif);
+  font-size: 16px;
+  line-height: 1.85;
+  margin-bottom: 10px;
+}
+.yc-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 1px solid var(--color-line-2);
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+.yc-dom {
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--color-line-2);
+  font-size: 13.5px;
+  line-height: 1.7;
+}
+.yc-dom:nth-child(odd) {
+  border-right: 1px solid var(--color-line-2);
+}
+.yc-dom b {
+  display: block;
+  color: var(--color-zhu);
+  font-size: 12px;
+  font-weight: normal;
+  letter-spacing: 2px;
+}
+@media (max-width: 400px) {
+  .yc-grid {
+    grid-template-columns: 1fr;
+  }
+  .yc-dom:nth-child(odd) {
+    border-right: 0;
+  }
+}
+.yc-do,
+.yc-watch {
+  font-size: 14px;
+  line-height: 1.75;
+  padding: 8px 10px;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+.yc-do {
+  background: var(--color-zhu-bg);
+}
+.yc-watch {
+  background: var(--color-paper-3);
+}
+.yc-do b,
+.yc-watch b {
+  font-weight: normal;
+  font-size: 12px;
+  margin-right: 8px;
+  padding: 0 5px;
+  border-radius: 2px;
+}
+.yc-do b {
+  color: var(--color-zhu);
+  border: 1px solid var(--color-zhu);
+}
+.yc-watch b {
+  color: var(--color-ink-2);
+  border: 1px solid var(--color-ink-3);
+}
+.yc-rel {
+  font-size: 13.5px;
+  line-height: 1.7;
+  padding: 6px 10px;
+  border: 1px dashed var(--color-line);
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+/* 大运列表不换行（干支不被挤成竖排）；图三档位名缩小 */
+.tl-list td,
+.tl-list th {
+  white-space: nowrap;
+}
+.tl-list .tier-chip {
+  font-size: 11px;
+  padding: 0 4px;
+}
+.tl-band {
+  font-size: 10px;
+}
