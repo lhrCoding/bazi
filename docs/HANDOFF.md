@@ -149,7 +149,7 @@
 | **生产启动需要至少一个素材发布快照**（instrumentation.ts 启动预加载，缺快照即退出）：上线前必须先完成第 1 批批准与 `texts:release`（见 D1、D4） | 上线前 |
 | 第 5 章依据需要的起运信息已在 ctx（`qiyun`）；第 3、4、5、7、8 章素材未写，报告这些章节为空或为测试素材 | 素材第 2、3 批（K09–K15） |
 | README §4.1 尚未写明 `contains` 可匹配对象（代码已支持，CH6-REL 在用） | 随下次改 README |
-| npm audit 提示 8 个 moderate（项目原有依赖，非 yaml / tsx / noble） | J 阶段上线前 |
+| npm audit 提示 7 个 moderate（项目原有依赖，非 yaml / tsx / noble）。Next.js 已于 2026-11-17 从 16.4.3 升到 16.4.6（修复 GHSA-mfr8-8qww-v76h；项目未用到受影响的 `'use cache'` / `unstable_cache`，用户同意升级） | J 阶段上线前 |
 
 ---
 
