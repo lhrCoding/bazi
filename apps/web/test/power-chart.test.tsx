@@ -11,7 +11,7 @@ import { assembleReport, buildCtx, type ChartBlock } from '@zhiming/core/report'
 import { loadCases } from '../../../packages/core/test/helpers/cases';
 import { PowerChart, type PowerRow } from '../app/power-chart';
 import { BlockView } from '../app/r/[no]/blocks';
-import { loadReportResources } from '../server/report-resources';
+import { loadGlossary, loadReportResources } from '../server/report-resources';
 import { loadWorkspace } from '../server/texts-store';
 
 const RULES = fileURLToPath(new URL('../../../rules', import.meta.url));
@@ -31,7 +31,7 @@ function report(id: string) {
     analysis,
     ctx: buildCtx(chart, analysis),
     library: lib,
-    glossary: res.glossary,
+    glossary: loadGlossary(join(RULES, 'texts')),
     textsVersion: 'dev',
     limitations: res.limitations,
   });

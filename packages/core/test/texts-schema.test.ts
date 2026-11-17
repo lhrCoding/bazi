@@ -18,7 +18,7 @@ import { readRulesFile } from './helpers/fixtures';
 
 const TEXTS_DIR = fileURLToPath(new URL('../../../rules/texts/', import.meta.url));
 const textFiles = readdirSync(TEXTS_DIR)
-  .filter((f) => f.endsWith('.yaml') && f !== 'batches.yaml')
+  .filter((f) => f.endsWith('.yaml') && f !== 'batches.yaml' && f !== 'glossary.yaml')
   .sort()
   .map((file) => ({ file, source: readFileSync(TEXTS_DIR + file, 'utf8') }));
 

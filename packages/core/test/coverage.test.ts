@@ -23,7 +23,7 @@ import { loadCases } from './helpers/cases';
 
 const read = (dir: string) =>
   readdirSync(dir)
-    .filter((f) => f.endsWith('.yaml') && f !== 'batches.yaml')
+    .filter((f) => f.endsWith('.yaml') && f !== 'batches.yaml' && f !== 'glossary.yaml')
     .map((file) => ({ file, source: readFileSync(dir + file, 'utf8') }));
 const REAL_DIR = fileURLToPath(new URL('../../../rules/texts/', import.meta.url));
 const real = parseTextsFiles(read(REAL_DIR));

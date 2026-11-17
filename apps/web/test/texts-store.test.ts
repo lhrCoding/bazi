@@ -39,10 +39,11 @@ function minimalSnapshot(version: number): Snapshot {
     updated: '2026-11-12',
   }));
   return {
-    format: 1,
+    format: 2,
     textsVersion: version,
     rulesVersion: 'abcd1234',
     releasedAt: '2026-11-12',
+    glossary: [{ term: '日主', note: `第 ${version} 版的日主释义` }],
     entries,
   };
 }
@@ -70,6 +71,9 @@ describe('生产：加载全部发布快照', () => {
     const s = loadReleases(d);
     expect([...s.libraries.keys()].sort()).toEqual(['1', '2']);
     expect(s.current).toBe('2');
+    // K01：术语表随版本冻结，旧版本订单仍用旧版释义
+    expect(s.glossaries.get('1')?.[0]?.note).toBe('第 1 版的日主释义');
+    expect(s.glossaries.get('2')?.[0]?.note).toBe('第 2 版的日主释义');
   });
 
   it('校验失败各给出原因：非 approved、缺兜底、文件名与版本不一致、格式错误、坏 JSON、空目录', () => {

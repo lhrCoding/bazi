@@ -19,7 +19,7 @@ import { readRulesFile } from './helpers/fixtures';
 const dir = fileURLToPath(new URL('../../../rules/texts/', import.meta.url));
 const entries = parseTextsFiles(
   readdirSync(dir)
-    .filter((f) => f.endsWith('.yaml') && f !== 'batches.yaml')
+    .filter((f) => f.endsWith('.yaml') && f !== 'batches.yaml' && f !== 'glossary.yaml')
     .map((file) => ({ file, source: readFileSync(dir + file, 'utf8') })),
 );
 const REF = Date.parse('2026-10-30T00:00:00+08:00');

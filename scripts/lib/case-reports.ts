@@ -12,9 +12,8 @@ import {
 import { rcheck, type RCheckResult } from '../../packages/core/src/report/check';
 import { buildCtx, type Ctx } from '../../packages/core/src/report/ctx';
 import { createLibrary, type TextStatus } from '../../packages/core/src/report/select';
-import { parseForbiddenWordsFromMd } from '../../packages/core/src/texts/lint';
 import type { TextEntry } from '../../packages/core/src/texts/schema';
-import { glossaryFromReadme } from '../../packages/core/src/texts/yaml';
+import { loadGlossary, loadWordlists } from '../../apps/web/server/report-resources';
 import { toBirthInput, type RawCase } from '../../packages/core/test/helpers/cases';
 
 export const PREVIEW_REF_DATE_MS = Date.parse('2026-10-30T00:00:00+08:00');
@@ -35,18 +34,9 @@ export function buildCaseReports(
 ): CaseReport[] {
   const read = (p: string): string => readFileSync(join(rulesDir, p), 'utf8');
   const library = createLibrary(entries, allowed);
-  const glossary = glossaryFromReadme(read('texts/README.md'));
+  const glossary = loadGlossary(join(rulesDir, 'texts'));
   const limitations = limitationsFromStrengthMd(read('strength.md'));
-  const whitelist = read('texts/wordlists/whitelist.txt')
-    .split('\n')
-    .map((l) => l.trim())
-    .filter((l) => l && !l.startsWith('#'));
-  const words = {
-    forbidden: parseForbiddenWordsFromMd(read('report-sections.md')),
-    disease: [],
-    finance: [],
-    whitelist,
-  };
+  const words = loadWordlists(rulesDir);
   const cases = (JSON.parse(read('cases.json')) as { cases: (RawCase & { title?: string })[] })
     .cases;
   return cases.map((c) => {

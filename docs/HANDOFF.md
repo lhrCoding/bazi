@@ -138,6 +138,7 @@
 | 日志哨兵目前只覆盖应用进程 stdout / stderr（E2E 服务输出 tee 到 apps/web/.e2e-logs/server.log）；Caddy 访问日志在 T61 Docker 化后补进哨兵 | T61 |
 | CH7-LOVE-YEARS 规范按「有合 / 有冲 / 都有」分 3 条，但字段字典没有对应字段，暂写 1 条通用条目（年份与关系由依据行列出）；要细分需在 ctx 增加如 `love_years.has_he / has_chong` 并同步 README §3 | 素材定稿前 |
 | 运营统计 `npm run stats`：免费排盘次数改为统计应用日志的计数事件（evt=chart，不含输入），原计划的 Caddy 访问日志随 T61 延后；生产需把容器 stdout 落盘后用 `--log` 传入；定时运行（cron）与 ALERT_WEBHOOK_URL 在部署时配置 | T61 / 部署 |
+| 「已知局限」（strength.md §8）与 R-CHECK 词表仍运行时读 rules/：前者属规则文件随 RULES_VERSION 变化，后者只影响检查不影响正文；部署需带上 rules/ 这几个文件。术语表已于 K01 冻结进发布快照（快照格式 v2） | T61 部署 |
 | CSP：接真实支付时把渠道域名加进 `server/security-headers.ts` 的 `PAYMENT_ORIGINS`（支付宝表单提交地址等），否则会被 CSP 拦截；style-src 为 'unsafe-inline'（style 属性无法带 nonce） | T49–T51 |
 | **`ALLOW_MOCK_PAYMENT=1`、`TEXTS_DEV_WORKSPACE=1` 只给 E2E 用**（生产构建里放行 mock 支付 / 草稿素材），部署时绝不能设；上线检查清单要加一条 | T59–T65 |
 | 页脚免责组件已放进报告占位页并有 E2E 断言；T53 正式报告页需保留 | T53 报告页 |
@@ -146,9 +147,7 @@
 | `scripts/` 引用了 `packages/core/test/helpers/cases.ts` 的 `toBirthInput`（不影响运行与 CI，低优先级） | 有空时 |
 | CI 新增 e2e（Playwright 自带 Chromium，PW_CHANNEL=chromium）与 build 任务，尚未在 GitHub 上实际跑过：远端 origin 停在 T16，本地领先约 50 个提交，推送需用户同意；推送后看一次 Actions 结果 | 推送远端后 |
 | **生产启动需要至少一个素材发布快照**（instrumentation.ts 启动预加载，缺快照即退出）：上线前必须先完成第 1 批批准与 `texts:release`（见 D1、D4） | 上线前 |
-| 术语表、「已知局限」、R-CHECK 词表仍从 rules/ 运行时读取，未进发布快照：改 rules/ 会影响已售报告的术语加注（违背「同一订单逐字相同」）；部署也需带上 rules/ 这几个文件 | K01 建 glossary.yaml 时一并放进快照 |
 | 第 5 章依据需要的起运信息已在 ctx（`qiyun`）；第 3、4、5、7、8 章素材未写，报告这些章节为空或为测试素材 | 素材第 2、3 批（K09–K15） |
-| `glossary.yaml`、`wordlists/{forbidden,disease,finance}.txt` 未建，暂用 README §8 示例和 report-sections.md §7 禁用词表 | K01 |
 | README §4.1 尚未写明 `contains` 可匹配对象（代码已支持，CH6-REL 在用） | 随下次改 README |
 | npm audit 提示 8 个 moderate（项目原有依赖，非 yaml / tsx / noble） | J 阶段上线前 |
 

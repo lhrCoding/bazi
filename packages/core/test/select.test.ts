@@ -213,7 +213,7 @@ describe('真实素材 + 真实案例（开发期允许 draft）', () => {
   const dir = fileURLToPath(new URL('../../../rules/texts/', import.meta.url));
   const entries = parseTextsFiles(
     readdirSync(dir)
-      .filter((f) => f.endsWith('.yaml') && f !== 'batches.yaml')
+      .filter((f) => f.endsWith('.yaml') && f !== 'batches.yaml' && f !== 'glossary.yaml')
       .map((file) => ({ file, source: readFileSync(dir + file, 'utf8') })),
   );
   const lib = createLibrary(entries, ['draft', 'reviewed', 'approved']);

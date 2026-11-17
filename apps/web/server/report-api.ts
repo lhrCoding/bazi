@@ -95,7 +95,8 @@ export async function handleReport(req: Request, deps: ReportDeps): Promise<Resp
     }
 
     const library = deps.texts.libraries.get(deps.textsKeyOf(order.textsVersion));
-    if (!library) {
+    const glossary = deps.texts.glossaries.get(deps.textsKeyOf(order.textsVersion));
+    if (!library || !glossary) {
       deps.logger.error({ orderNo, textsVersion: order.textsVersion }, 'texts version missing');
       throw new ApiError('E_INTERNAL', 500);
     }
@@ -107,7 +108,7 @@ export async function handleReport(req: Request, deps: ReportDeps): Promise<Resp
       analysis,
       ctx,
       library,
-      glossary: deps.resources.glossary,
+      glossary,
       textsVersion: deps.textsKeyOf(order.textsVersion),
       limitations: deps.resources.limitations,
     });

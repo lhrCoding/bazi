@@ -35,7 +35,7 @@ const REF = Date.parse('2026-10-30T00:00:00+08:00');
 const { cases } = loadCases();
 const read = (dir: string) =>
   readdirSync(dir)
-    .filter((f) => f.endsWith('.yaml') && f !== 'batches.yaml')
+    .filter((f) => f.endsWith('.yaml') && f !== 'batches.yaml' && f !== 'glossary.yaml')
     .map((file) => ({ file, source: readFileSync(dir + file, 'utf8') }));
 const library = createLibrary(
   parseTextsFiles([

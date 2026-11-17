@@ -20,7 +20,11 @@ const fixture = parseTextsFiles(
     .filter((f) => f.endsWith('.yaml'))
     .map((file) => ({ file, source: readFileSync(dir + file, 'utf8') })),
 ).map((e): TextEntry => ({ ...e, status: 'approved', reviewer: '用户（T1、2026-11-12）' }));
-const META = { rulesVersion: 'abcd1234', releasedAt: '2026-11-12' };
+const META = {
+  rulesVersion: 'abcd1234',
+  releasedAt: '2026-11-12',
+  glossary: [{ term: '日主', note: '你出生那天的天干，代表你自己' }],
+};
 const OK = { lint: [], staticCoverage: [], dynamic: [] };
 const edit = (id: string, f: (e: TextEntry) => TextEntry): TextEntry[] =>
   fixture.map((e) => (e.id === id ? f(e) : e));
@@ -37,6 +41,7 @@ describe('首次发布', () => {
     expect(s.textsVersion).toBe(1);
     expect(s.entries.map((e) => e.id)).toEqual([...fixture.map((e) => e.id)].sort());
     expect(SnapshotSchema.safeParse(JSON.parse(JSON.stringify(s))).success).toBe(true);
+    expect(s.glossary).toEqual(META.glossary); // K01：术语表冻结进快照
   });
   it('非 approved 条目不进入快照', () => {
     const src = edit('CH3-SHENSHA-ANY', (e) => ({ ...e, status: 'reviewed' }));

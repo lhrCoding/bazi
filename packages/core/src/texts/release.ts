@@ -1,7 +1,7 @@
 /**
  * 素材发布快照与比对（TASKS T38；rules/texts/README.md §5.2、§9.3，ARCHITECTURE §4.3.8）。
  *
- * 快照 = apps/web/texts-releases/v{N}.json：{ format, textsVersion, rulesVersion, releasedAt, entries（只含 approved） }。
+ * 快照 = apps/web/texts-releases/v{N}.json：{ format, textsVersion, rulesVersion, releasedAt, glossary（术语加注表，K01 起）, entries（只含 approved） }。
  * 发布规则：
  * - 只收 approved 条目；lint、静态覆盖率、动态抽样的问题由脚本算好传入，任一非空即拒绝。
  * - 与上一快照比对（approved 条目只允许追加变体，§5.2）：上一版的每个条目，
@@ -12,13 +12,15 @@
 import { TextEntrySchema, type TextEntry } from './schema';
 import { z } from 'zod';
 
-export const SNAPSHOT_FORMAT = 1;
+/** v2（K01）：快照内含术语加注表，已售报告的加注随版本冻结 */
+export const SNAPSHOT_FORMAT = 2;
 
 export const SnapshotSchema = z.strictObject({
   format: z.literal(SNAPSHOT_FORMAT),
   textsVersion: z.int().positive(),
   rulesVersion: z.string().min(1),
   releasedAt: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+  glossary: z.array(z.strictObject({ term: z.string().min(2), note: z.string().min(1) })).min(1),
   entries: z.array(TextEntrySchema),
 });
 export type Snapshot = z.infer<typeof SnapshotSchema>;
@@ -77,7 +79,12 @@ export interface ReleaseResult {
 export function buildRelease(
   source: readonly TextEntry[],
   prev: Snapshot | null,
-  meta: { rulesVersion: string; releasedAt: string },
+  meta: {
+    rulesVersion: string;
+    releasedAt: string;
+    /** 本版术语加注表（rules/texts/glossary.yaml），冻结进快照 */
+    glossary: readonly { term: string; note: string }[];
+  },
   checks: ReleaseChecks,
 ): ReleaseResult {
   const problems = [
@@ -95,6 +102,7 @@ export function buildRelease(
       textsVersion: (prev?.textsVersion ?? 0) + 1,
       rulesVersion: meta.rulesVersion,
       releasedAt: meta.releasedAt,
+      glossary: meta.glossary.map((g) => ({ term: g.term, note: g.note })),
       entries: [...entries].sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0)),
     },
     problems: [],

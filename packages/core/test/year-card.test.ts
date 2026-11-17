@@ -17,7 +17,7 @@ const dir = fileURLToPath(new URL('../../../rules/texts/', import.meta.url));
 const library = createLibrary(
   parseTextsFiles(
     readdirSync(dir)
-      .filter((f) => f.endsWith('.yaml') && f !== 'batches.yaml')
+      .filter((f) => f.endsWith('.yaml') && f !== 'batches.yaml' && f !== 'glossary.yaml')
       .map((file) => ({ file, source: readFileSync(dir + file, 'utf8') })),
   ),
   ['draft', 'reviewed', 'approved'],

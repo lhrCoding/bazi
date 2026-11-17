@@ -245,7 +245,7 @@ describe('错误样例都能检出', () => {
 describe('真实素材 + 20 个案例（开发期）', () => {
   const read = (dir: string) =>
     readdirSync(dir)
-      .filter((f) => f.endsWith('.yaml') && f !== 'batches.yaml')
+      .filter((f) => f.endsWith('.yaml') && f !== 'batches.yaml' && f !== 'glossary.yaml')
       .map((file) => ({ file, source: readFileSync(dir + file, 'utf8') }));
   const library = createLibrary(
     parseTextsFiles([

@@ -422,7 +422,7 @@ describe('rules/texts 实际素材', () => {
   const dir = fileURLToPath(new URL('../../../rules/texts/', import.meta.url));
   const entries = parseTextsFiles(
     readdirSync(dir)
-      .filter((f) => f.endsWith('.yaml') && f !== 'batches.yaml')
+      .filter((f) => f.endsWith('.yaml') && f !== 'batches.yaml' && f !== 'glossary.yaml')
       .map((file) => ({ file, source: readFileSync(dir + file, 'utf8') })),
   );
   const whitelist = readFileSync(dir + 'wordlists/whitelist.txt', 'utf8')

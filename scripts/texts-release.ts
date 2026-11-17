@@ -14,14 +14,13 @@ import { buildCtx } from '../packages/core/src/report/ctx';
 import { randomBirthInputs, runSample } from '../packages/core/src/report/sample';
 import { createLibrary } from '../packages/core/src/report/select';
 import { computeCoverage } from '../packages/core/src/texts/coverage';
-import { parseForbiddenWordsFromMd } from '../packages/core/src/texts/lint';
 import {
   buildRelease,
   RELEASE_WARN_ONLY_RULES,
   SnapshotSchema,
   type Snapshot,
 } from '../packages/core/src/texts/release';
-import { glossaryFromReadme } from '../packages/core/src/texts/yaml';
+import { loadGlossary, loadWordlists } from '../apps/web/server/report-resources';
 import { toBirthInput, type RawCase } from '../packages/core/test/helpers/cases';
 import { loadAndLintTexts } from './lib/texts-load';
 
@@ -54,10 +53,6 @@ const staticCoverage = [
 const dynamic: string[] = [];
 const warnings: string[] = [];
 if (approved.length > 0 && staticCoverage.length === 0) {
-  const whitelist = read('rules/texts/wordlists/whitelist.txt')
-    .split('\n')
-    .map((l) => l.trim())
-    .filter((l) => l && !l.startsWith('#'));
   const caseInputs = cases.map(toBirthInput);
   const m = runSample(
     [
@@ -67,13 +62,8 @@ if (approved.length > 0 && staticCoverage.length === 0) {
     ],
     {
       library: createLibrary(approved, ['approved']),
-      glossary: glossaryFromReadme(read('rules/texts/README.md')),
-      words: {
-        forbidden: parseForbiddenWordsFromMd(read('rules/report-sections.md')),
-        disease: [],
-        finance: [],
-        whitelist,
-      },
+      glossary: loadGlossary(join(ROOT, 'rules', 'texts')),
+      words: loadWordlists(join(ROOT, 'rules')),
       limitations: limitationsFromStrengthMd(read('rules/strength.md')),
       textsVersion: 'release-check',
       refDateMs: Date.parse('2026-10-30T00:00:00+08:00'),
@@ -107,7 +97,11 @@ const prev: Snapshot | null =
 const r = buildRelease(
   entries,
   prev,
-  { rulesVersion: RULES_VERSION, releasedAt: today },
+  {
+    rulesVersion: RULES_VERSION,
+    releasedAt: today,
+    glossary: loadGlossary(join(ROOT, 'rules', 'texts')),
+  },
   { lint, staticCoverage, dynamic },
 );
 for (const w of warnings) console.warn(`警告：${w}`);

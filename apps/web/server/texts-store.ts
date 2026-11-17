@@ -20,7 +20,8 @@ import {
   type TextStatus,
 } from '@zhiming/core/report';
 import { SnapshotSchema, TEXT_STATUSES } from '@zhiming/core/texts';
-import { parseTextsFiles } from '@zhiming/core/texts/yaml';
+import { parseTextsFiles, type GlossaryItem } from '@zhiming/core/texts/yaml';
+import { loadGlossary } from './report-resources';
 
 export class TextsStoreError extends Error {
   constructor(readonly problems: readonly string[]) {
@@ -32,6 +33,8 @@ export class TextsStoreError extends Error {
 export interface TextsStore {
   /** texts_version（'1'、'2'… 或开发模式 'dev'）→ 素材库 */
   libraries: ReadonlyMap<string, TextLibrary>;
+  /** 同版本的术语加注表（发布快照内冻结；开发模式读 glossary.yaml） */
+  glossaries: ReadonlyMap<string, readonly GlossaryItem[]>;
   /** 新订单使用的版本（最大发布号；开发模式为 'dev'） */
   current: string;
 }
@@ -41,6 +44,7 @@ const SNAPSHOT_FILE = /^v(\d+)\.json$/;
 export function loadReleases(dir: string): TextsStore {
   const problems: string[] = [];
   const libraries = new Map<string, TextLibrary>();
+  const glossaries = new Map<string, readonly GlossaryItem[]>();
   const files = readdirSync(dir).filter((f) => f.endsWith('.json'));
   for (const f of files) {
     const m = SNAPSHOT_FILE.exec(f);
@@ -72,6 +76,7 @@ export function loadReleases(dir: string): TextsStore {
       const lib = createLibrary(s.entries, ['approved']);
       assertLibraryComplete(lib);
       libraries.set(String(s.textsVersion), lib);
+      glossaries.set(String(s.textsVersion), s.glossary);
     } catch (e) {
       if (!(e instanceof TextLibraryError)) throw e;
       problems.push(...e.problems.map((p) => `${f}：${p}`));
@@ -81,7 +86,7 @@ export function loadReleases(dir: string): TextsStore {
     problems.push(`${dir} 中没有任何素材发布快照（先运行 npm run texts:release）`);
   if (problems.length > 0) throw new TextsStoreError(problems);
   const current = String(Math.max(...[...libraries.keys()].map(Number)));
-  return { libraries, current };
+  return { libraries, glossaries, current };
 }
 
 /** TEXTS_ALLOWED_STATUS：逗号分隔，如 "approved,reviewed"；未设置时开发模式默认全部草稿可见 */
@@ -101,7 +106,11 @@ export function loadWorkspace(textsDir: string, allowed: readonly TextStatus[]):
     .filter((f) => f.endsWith('.yaml') && f !== 'batches.yaml' && f !== 'glossary.yaml')
     .map((file) => ({ file, source: readFileSync(join(textsDir, file), 'utf8') }));
   const lib = createLibrary(parseTextsFiles(files), allowed);
-  return { libraries: new Map([['dev', lib]]), current: 'dev' };
+  return {
+    libraries: new Map([['dev', lib]]),
+    glossaries: new Map([['dev', loadGlossary(textsDir)]]),
+    current: 'dev',
+  };
 }
 
 export interface TextsStoreEnv {

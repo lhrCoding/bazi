@@ -11,8 +11,7 @@ import { join } from 'node:path';
 import { limitationsFromStrengthMd } from '../packages/core/src/report/assemble';
 import { randomBirthInputs, runSample } from '../packages/core/src/report/sample';
 import { createLibrary } from '../packages/core/src/report/select';
-import { parseForbiddenWordsFromMd } from '../packages/core/src/texts/lint';
-import { glossaryFromReadme } from '../packages/core/src/texts/yaml';
+import { loadGlossary, loadWordlists } from '../apps/web/server/report-resources';
 import { toBirthInput, type RawCase } from '../packages/core/test/helpers/cases';
 import { loadAndLintTexts } from './lib/texts-load';
 
@@ -31,19 +30,10 @@ const library = createLibrary(
   entries,
   approvedOnly ? ['approved'] : ['draft', 'reviewed', 'approved'],
 );
-const whitelistFile = read('rules/texts/wordlists/whitelist.txt');
 const opts = {
   library,
-  glossary: glossaryFromReadme(read('rules/texts/README.md')),
-  words: {
-    forbidden: parseForbiddenWordsFromMd(read('rules/report-sections.md')),
-    disease: [],
-    finance: [],
-    whitelist: whitelistFile
-      .split('\n')
-      .map((l) => l.trim())
-      .filter((l) => l && !l.startsWith('#')),
-  },
+  glossary: loadGlossary(join(ROOT, 'rules/texts')),
+  words: loadWordlists(join(ROOT, 'rules')),
   limitations: limitationsFromStrengthMd(read('rules/strength.md')),
   textsVersion: 'dev',
   refDateMs: Date.parse('2026-10-30T00:00:00+08:00'),

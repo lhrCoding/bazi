@@ -134,7 +134,7 @@ describe('真实素材渲染（C16，开发期允许 draft）', () => {
   const lib = createLibrary(
     parseTextsFiles(
       readdirSync(dir)
-        .filter((f) => f.endsWith('.yaml') && f !== 'batches.yaml')
+        .filter((f) => f.endsWith('.yaml') && f !== 'batches.yaml' && f !== 'glossary.yaml')
         .map((file) => ({ file, source: readFileSync(dir + file, 'utf8') })),
     ),
     ['draft', 'reviewed', 'approved'],
